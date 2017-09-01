@@ -5,9 +5,9 @@ from helper import Helper as hlp
 
 
 class Pulsar():
-    def __init__(self,parent,x,y):
+    def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
-        self.id=parent.parent.createurId.prochainid()
+        self.id=idSuivant
         self.proprietaire="inconnu"
         self.x=x
         self.y=y
@@ -40,9 +40,9 @@ class Ville():
         self.taille=20
                
 class Mine():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
         self.parent=parent
-        self.id=self.parent.parent.parent.createurId.prochainid()
+        self.id=idSuivant
         self.x=x
         self.y=y
         self.systemeid=systemeid
@@ -50,9 +50,9 @@ class Mine():
         self.entrepot=0
                 
 class Planete():
-    def __init__(self,parent,type,dist,taille,angle):
+    def __init__(self,parent,type,dist,taille,angle,idSuivant):
         self.parent=parent
-        self.id=self.parent.parent.createurId.prochainid()
+        self.id=idSuivant #ici
         self.parent=parent
         self.posXatterrissage=random.randrange(5000)
         self.posYatterrissage=random.randrange(5000)
@@ -65,9 +65,9 @@ class Planete():
         self.angle=angle
         
 class Etoile():
-    def __init__(self,parent,x,y):
+    def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
-        self.id=self.parent.parent.createurId.prochainid()
+        self.id=idSuivant
         self.type=random.choice(["rouge","rouge","rouge",
                                  "jaune","jaune",
                                  "bleu"])
@@ -82,7 +82,7 @@ class Systeme():
         self.diametre=50 # UA unite astronomique = 150000000km
         self.x=x
         self.y=y
-        self.etoile=Etoile(self,x,y)
+        self.etoile=Etoile(self,x,y,self.parent.createurId.prochainid())
         self.planetes=[]
         self.planetesvisites=[]
         self.creerplanetes()
@@ -96,12 +96,12 @@ class Systeme():
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(50)/100 # en masse solaire
                 angle=random.randrange(360)
-                self.planetes.append(Planete(self,type,distsol,taille,angle))
+                self.planetes.append(Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid()))#ici
                 
 class Vaisseau():
-    def __init__(self,parent,nom,systeme):
+    def __init__(self,parent,nom,systeme,idSuivant):
         self.parent=parent
-        self.id=self.parent.parent.createurId.prochainid()
+        self.id=idSuivant
         self.proprietaire=nom
         self.taille=16
         self.base=systeme
@@ -157,7 +157,7 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        mine=Mine(self,nom,systemeid,planeteid,x,y)
+                        mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.infrastructures.append(mine)
                         self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
                         
@@ -180,7 +180,7 @@ class Joueur():
     def creervaisseau(self,id):
         for i in self.systemesvisites:
             if i.id==id:
-                v=Vaisseau(self,self.nom,i)
+                v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid())
                 self.vaisseauxinterstellaires.append(v)
                 return 1
         
@@ -286,7 +286,7 @@ class Modele():
         for i in range(20):
             x=random.randrange(self.diametre*10)/10
             y=random.randrange(self.diametre*10)/10
-            self.pulsars.append(Pulsar(self,x,y))
+            self.pulsars.append(Pulsar(self,x,y,self.createurId.prochainid()))
             
         np=len(self.joueurscles) + nbias  # on ajoute le nombre d'ias
         planes=[]

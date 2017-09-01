@@ -23,6 +23,7 @@ class Vue():
         self.creercadres(ip,nom)
         self.changecadre(self.cadresplash)
         
+        
     def changemode(self,cadre):
         if self.modecourant:
             self.modecourant.pack_forget()
@@ -119,6 +120,7 @@ class Vue():
             print("aucune planete selectionnee pour atterrissage")
         
     def creerpartie(self):
+        self.parent.egoserveur;
         nom=self.nomsplash.get()
         ip=self.ipsplash.get()
         if nom and ip:
