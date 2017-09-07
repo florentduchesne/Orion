@@ -82,8 +82,8 @@ class Planete():
         self.type=type
         self.taille=taille
         self.angle=angle
-        self.ressource=Ressource()
-        self.ressourceACollecter=Ressource()
+        self.ressource=Ressource(self)
+        self.ressourceACollecter=Ressource(self)
         
         #Changer moi, je ne suis pas du tout équillibré :(
         self.ressource.Eau=10
