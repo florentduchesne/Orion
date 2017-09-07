@@ -164,9 +164,14 @@ class Vue():
         
         self.modes["galaxie"]=VueGalaxie(self)
         self.modes["systemes"]={}
+        #self.modes["systemes"]=VueSysteme(self)
         self.modes["planetes"]={}
+        #planeteInit = mod.joueurs[self.nom].maplanete
+        #systeme = planeteInit.parent
+        #self.modes["planetes"]=VuePlanete(self,systeme,planeteInit)
         
         g=self.modes["galaxie"]
+        #g=self.modes["planetes"]
         g.labid.config(text=self.nom)
         g.labid.config(fg=mod.joueurs[self.nom].couleur)
         
@@ -174,7 +179,8 @@ class Vue():
         g.afficherdecor() #pourrait etre remplace par une image fait avec PIL -> moins d'objets
         self.changecadre(self.cadrejeu,1)
         self.changemode(self.modes["galaxie"])
-        
+        #self.changemode(self.modes["planetes"])
+      
     def affichermine(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
@@ -533,6 +539,12 @@ class VueSysteme(Perspective):
         for p in i.planetes:
             x,y=hlp.getAngledPoint(math.radians(p.angle),p.distance*self.UA2pixel,xl,yl)
             n=p.taille*self.UA2pixel
+
+            if p.proprietaire == "inconnu":
+                self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,"inconnu", i.id,int(x),int(y)))
+            else:
+                self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,p.proprietaire,i.id,int(x),int(y)))
+              
             self.canevas.create_oval(x-n,y-n,x+n,y+n,fill="red",tags=(i.proprietaire,"planete",p.id,"inconnu",i.id,int(x),int(y)))
             x,y=hlp.getAngledPoint(math.radians(p.angle),p.distance*UAmini,100,100)
             self.minimap.create_oval(x-mini,y-mini,x+mini,y+mini,fill="red",tags=())

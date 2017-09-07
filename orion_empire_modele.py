@@ -52,8 +52,15 @@ class Modele():
         
         
         for i in self.joueurscles:
-            self.joueurs[i]=Joueur(self,i,planes.pop(0),couleurs.pop(0))
+            #parent,nom,systemeorigine,couleur
+            systemeOriginine = planes.pop(0)
+            couleurProp = couleurs.pop(0)
+            self.joueurs[i]=Joueur(self,i,systemeOriginine,couleurProp)
+            #faire fonction qui va changer le propri�taire de la planete/systemesolaire
             
+            systemeOriginine.setProprietairePlanete(self.joueurs[i],  couleurProp)
+            #self.parent.changerTagsVue(i,couleurProp)
+                        
         for i in range(nbias): # IA
             nomia="IA_"+str(i)
             self.joueurscles.append(nomia)

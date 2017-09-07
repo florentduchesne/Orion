@@ -75,13 +75,14 @@ class Planete():
         self.parent=parent
         self.posXatterrissage=random.randrange(5000)
         self.posYatterrissage=random.randrange(5000)
-        self.infrastructures=[Ville(self)]
+        self.infrastructures=[]
         self.proprietaire="inconnu"
         self.visiteurs={}
         self.distance=dist
         self.type=type
         self.taille=taille
         self.angle=angle
+        self.couleur="red"
         self.ressource=Ressource(self)
         self.ressourceACollecter=Ressource(self)
         
@@ -91,6 +92,18 @@ class Planete():
         self.ressourceACollecter.titanium=100
         self.ressourceACollecter.uranium=100
         
+    def initplanete(self):
+        if self.proprietaire != "inconnu":
+            self.infrastructures=[Ville(self)]
+
+
+    def setProprietairePlanete(self, proprio, couleur):
+        print('changement de proprio : ', proprio, '   pour la planete id# ', self.id)
+        self.couleur=couleur
+        print('print proprio : ', proprio)
+        self.proprietaire=proprio
+
+
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
@@ -123,8 +136,26 @@ class Systeme():
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(50)/100 # en masse solaire
                 angle=random.randrange(360)
-                self.planetes.append(Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid()))#ici
+
+                planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid())
+                planete.initplanete()
+                self.planetes.append(planete)#ici
                 
+                
+    def setProprietairePlanete(self, proprio, couleur):
+        #self.proprietaire=proprio
+        print('systeme = ', self.id, ' le nombre de planete dans le systeme : ', len(self.planetes))
+        numPlaneteProprio = random.randrange(0,len(self.planetes))
+        planeteProprio = self.planetes[numPlaneteProprio]
+        planeteProprio.setProprietairePlanete(proprio.id, couleur)
+        planeteProprio.infrastructures=[Ville(self)]
+        
+        proprio.maplanete=planeteProprio
+        
+        #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)
+
+
+
 class Vaisseau():
     def __init__(self,parent,nom,systeme,idSuivant):
         self.parent=parent
@@ -181,6 +212,7 @@ class Joueur():
         self.nom=nom
         self.systemeorigine=systemeorigine
         self.couleur=couleur
+        self.maplanete=None
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
