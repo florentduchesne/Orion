@@ -550,7 +550,11 @@ class VueSysteme(Perspective):
         pass
                 
     def creervaisseau(self): 
-        pass
+        if self.maselection:
+            self.parent.parent.creervaisseau(self.maselection[2])
+            self.maselection=None
+            self.canevas.delete("selecteur")
+    
     
     def creerstation(self):
         print("Creer station EN CONSTRUCTION")

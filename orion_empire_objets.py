@@ -127,10 +127,20 @@ class Vaisseau():
         
     def avancer(self):
         rep=None
-        if self.cible:
+        if self.cible and isinstance(self.cible, Systeme): #Deplacement dans la galaxie
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+                rep=self.cible
+                self.base=self.cible
+                self.cible=None
+            return rep
+        
+        elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
+            x=self.cible.x
+            y=self.cible.y
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
