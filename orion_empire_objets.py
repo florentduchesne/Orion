@@ -131,6 +131,19 @@ class Vaisseau():
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
+
+class Ressource():
+    def __init__(self,parent):
+        self.parent=parent
+        self.Electricite=0
+        self.Uranium=0
+        self.Humain=0
+        self.Nourriture=0
+        self.Eau=0
+        self.Bronze=0
+        self.Titanium=0
+        self.Point_Science=0
+        self.Argent=0
     
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
