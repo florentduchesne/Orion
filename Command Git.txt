@@ -1,0 +1,17 @@
+//connection dans un dossier pour download le projet
+git clone https://github.com/florentduchesne/Orion.git
+
+//Aller dans le dossier Orion
+cd orion
+
+//avoir le status du dossier courant
+git status
+
+//Rajoute tout le modif/fichier
+git add *
+
+//Commit
+git commit -am "Commentaire"
+
+//Pour l'upload - master c'est une variable, la branche qu'on veut upload
+git push origin master

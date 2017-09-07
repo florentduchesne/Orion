@@ -14,6 +14,7 @@ from helper import Helper as hlp
 from IdMaker import Id
 from threadRessources import ThreadRessources
 
+
 class Controleur():
     def __init__(self):
         print("IN CONTROLEUR")
@@ -106,37 +107,7 @@ class Controleur():
             self.vue.root.after(50,self.prochaintour)
         else:
             print("Aucun serveur connu")
-            
-    def prochaintour1(self): # la boucle de jeu principale, qui sera appelle par la fonction bouclejeu du timer
-        if self.serveur: # s'il existe un serveur
-            if self.attente==0:
-                self.cadre=self.cadre+1 # increment du compteur de cadre
-                self.modele.prochaineaction(self.cadre)    # mise a jour du modele
-                self.vue.afficherpartie(self.modele) # mise a jour de la vue
-            if self.actions: # si on a des actions a partager 
-                rep=self.serveur.faireaction([self.monnom,self.cadre,self.actions]) # on les envoie 
-            else:
-                rep=self.serveur.faireaction([self.monnom,self.cadre,0]) # sinon on envoie rien au serveur on ne fait que le pigner 
-                                                                        # (HTTP requiert une requete du client pour envoyer une reponse)
-            self.actions=[] # on s'assure que les actions a envoyer sont maintenant supprimer (on ne veut pas les envoyer 2 fois)
-            if rep[0]: # si le premier element de reponse n'est pas vide
-                for i in rep[2]:   # pour chaque action a faire (rep[2] est dictionnaire d'actions en provenance des participants
-                                   # dont les cles sont les cadres durant lesquels ses actions devront etre effectuees
-                    if i not in self.modele.actionsafaire.keys(): # si la cle i n'existe pas
-                        self.modele.actionsafaire[i]=[] #faire une entree dans le dictonnaire
-                    for k in rep[2][i]: # pour toutes les actions lies a une cle du dictionnaire d'actions recu
-                        self.modele.actionsafaire[i].append(k) # ajouter cet action au dictionnaire sous l'entree dont la cle correspond a i
-            if rep[1]=="attend": # si jamais rep[0] est vide MAIS que rep[1] == 'attend', on veut alors patienter
-                if self.attente==0:
-                    #self.cadre=self.cadre-1  # donc on revient au cadre initial
-                    self.attente=1
-                print("ALERTE EN ATTENTE",self.monnom,self.cadre)
-            else:
-                self.attente=0
-                #print(self.cadre)
-            self.vue.root.after(50,self.prochaintour)
-        else:
-            print("Aucun serveur connu")
+
             
     def fermefenetre(self):
         if self.serveur:

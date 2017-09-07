@@ -2,6 +2,19 @@ import random
 from helper import Helper as hlp
 import math
 
+class Ressource():
+    def __init__(self,parent):
+        self.parent=parent
+        self.electricite=0
+        self.uranium=0
+        self.humain=0
+        self.nourriture=0
+        self.eau=0
+        self.bronze=0
+        self.titanium=0
+        self.point_science=0
+        self.argent=0
+
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
@@ -46,6 +59,14 @@ class Mine():
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.entrepot=0
+        
+    def creerMine(self):
+        self.ressource.Humain-5;
+        self.ressource.Electricite-5;
+        
+    def detruireMine(self):
+        self.ressource.Humain+5;
+        self.ressource.Electricite+5;
                 
 class Planete():
     def __init__(self,parent,type,dist,taille,angle,idSuivant):
@@ -61,6 +82,14 @@ class Planete():
         self.type=type
         self.taille=taille
         self.angle=angle
+        self.ressource=Ressource(self)
+        self.ressourceACollecter=Ressource(self)
+        
+        #Changer moi, je ne suis pas du tout équillibré :(
+        self.ressource.Eau=10
+        self.ressourceACollecter.bronze=100
+        self.ressourceACollecter.titanium=100
+        self.ressourceACollecter.uranium=100
         
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
@@ -109,7 +138,7 @@ class Vaisseau():
         self.y=self.base.y
         self.taille=16
         self.cargo=0
-        self.electricite=100
+        self.electricite=1000
         self.humain=10
         self.bronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
@@ -117,10 +146,20 @@ class Vaisseau():
         
     def avancer(self):
         rep=None
-        if self.cible:
+        if self.cible and isinstance(self.cible, Systeme): #Deplacement dans la galaxie
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+                rep=self.cible
+                self.base=self.cible
+                self.cible=None
+            return rep
+        
+        elif self.cible and isinstance(self.cible, Planete): #deplacement dans un systÃ¨me
+            x=self.cible.x
+            y=self.cible.y
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
@@ -133,21 +172,6 @@ class Vaisseau():
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
-
-class Ressource():
-    def __init__(self,parent):
-        self.parent=parent
-        self.electricite=0
-        self.uranium=0
-        self.humain=0
-        self.nourriture=0
-        self.eau=0
-        self.bronze=0
-        self.titanium=0
-        self.point_science=0
-        self.argent=0
-    
-
         
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
