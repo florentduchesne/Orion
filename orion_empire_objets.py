@@ -14,6 +14,8 @@ class Ressource():
         self.titanium=0
         self.point_science=0
         self.argent=0
+        self.allocationhumain=0
+        self.allocationelectricite=0
 
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
@@ -59,14 +61,13 @@ class Mine():
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.entrepot=0
-        
-    def creerMine(self):
-        self.ressource.Humain-5;
-        self.ressource.Electricite-5;
+        self.besoinhumain=5
+        self.besoinelectricite=5     
+    
         
     def detruireMine(self):
-        self.ressource.Humain+5;
-        self.ressource.Electricite+5;
+        self.ressource.Humain+self.besoinhumain;
+        self.ressource.Electricite+self.besoinelectricite;
                 
 class Planete():
     def __init__(self,parent,type,dist,taille,angle,idSuivant):
@@ -92,6 +93,7 @@ class Planete():
         self.ressourceACollecter.titanium=100
         self.ressourceACollecter.uranium=100
         
+<<<<<<< HEAD
     def initplanete(self):
         if self.proprietaire != "inconnu":
             self.infrastructures=[Ville(self)]
@@ -104,6 +106,16 @@ class Planete():
         self.proprietaire=proprio
 
 
+=======
+    def creerMineRestriction(self):
+        if (self.joueur.ressource.humain - self.besoinhumain)> 0 and (self.joueur.ressource.electricite - self.besoinelectricite) > 0:
+            self.ressource.Humain-self.besoinhumain;
+            self.ressource.Electricite-self.besoinelectricite;
+            return True
+        else :
+            return False
+        
+>>>>>>> b2e7898a288ba732928f0f2d968dfd8a6daa0d59
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
@@ -169,12 +181,21 @@ class Vaisseau():
         self.y=self.base.y
         self.taille=16
         self.cargo=0
-        self.electricite=1000
-        self.humain=10
-        self.bronze= 100
+        self.uranium=1000
+        self.besoinhumain=10
+        self.besoinbronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None 
         
+    def creerVaisseauRestriction(self):
+        if (self.joueur.ressource.humain - self.besoinhumain) > 0:
+            if (self.joueur.ressource.bronze - self.besoinbronze) > 0 :
+                if (self.joueur.ressource.uranium - self.uranium) > 0:
+                    self.joueur.ressource.humain - self.besoinhumain
+                    self.joueur.ressource.bronze - self.besoinbronze
+                    self.joueur.ressource.uranium - self.uranium
+        
+
     def avancer(self):
         rep=None
         if self.cible and isinstance(self.cible, Systeme): #Deplacement dans la galaxie
