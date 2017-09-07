@@ -70,7 +70,13 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.ressource=Ressource()
-        self.ressource.Eau=10;
+        self.ressourceACollecter=Ressource()
+        
+        #Changer moi, je ne suis pas du tout équillibré :(
+        self.ressource.Eau=10
+        self.ressourceACollecter.bronze=100
+        self.ressourceACollecter.titanium=100
+        self.ressourceACollecter.uranium=100
         
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
