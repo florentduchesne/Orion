@@ -2,12 +2,7 @@ import random
 
 import math
 from helper import Helper as hlp
-<<<<<<< HEAD
-#osuehfzsoiueh
-=======
 from orion_empire_objets import *
-
->>>>>>> 6ab82f451664aaa97ba58d3dded6ba098501bf7b
 
 
 class Modele():
