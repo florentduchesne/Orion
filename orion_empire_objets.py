@@ -46,6 +46,14 @@ class Mine():
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.entrepot=0
+        
+    def creerMine(self):
+        self.ressource.Humain-5;
+        self.ressource.Electricite-5;
+        
+    def detruireMine(self):
+        self.ressource.Humain+5;
+        self.ressource.Electricite+5;
                 
 class Planete():
     def __init__(self,parent,type,dist,taille,angle,idSuivant):
@@ -61,6 +69,8 @@ class Planete():
         self.type=type
         self.taille=taille
         self.angle=angle
+        self.ressource=Ressource()
+        self.ressource.Eau=10;
         
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
