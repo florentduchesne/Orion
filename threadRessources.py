@@ -22,6 +22,5 @@ class ThreadRessources(threading.Thread):
                                 print ("un mine!")
                             elif(isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Ville)):
                                 print ("une ville!")
-                            
             except:
-                print("Error: unable to start thread")
+                pass
