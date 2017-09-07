@@ -2,7 +2,7 @@ import random
 
 import math
 from helper import Helper as hlp
-
+#osuehfzsoiueh
 
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
