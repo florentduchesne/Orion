@@ -545,7 +545,7 @@ class VueSysteme(Perspective):
             else:
                 self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,p.proprietaire,i.id,int(x),int(y)))
               
-            self.canevas.create_oval(x-n,y-n,x+n,y+n,fill="red",tags=(i.proprietaire,"planete",p.id,"inconnu",i.id,int(x),int(y)))
+            #self.canevas.create_oval(x-n,y-n,x+n,y+n,fill="red",tags=(i.proprietaire,"planete",p.id,"inconnu",i.id,int(x),int(y)))
             x,y=hlp.getAngledPoint(math.radians(p.angle),p.distance*UAmini,100,100)
             self.minimap.create_oval(x-mini,y-mini,x+mini,y+mini,fill="red",tags=())
         
@@ -599,7 +599,8 @@ class VueSysteme(Perspective):
             idplanete=t[2]
             idsysteme=t[4]
             self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
-            if t[1] == "planete" and t[3]=="inconnu":
+            if t[1] == "planete":
+                print(t)
                 self.montreplaneteselection()
                 
             # ici je veux envoyer un message comme quoi je visite cette planete
@@ -778,4 +779,3 @@ class VuePlanete(Perspective):
 if __name__ == '__main__':
     m=Vue(0,"jmd","127.0.0.1")
     m.root.mainloop()
-    
