@@ -23,7 +23,6 @@ class Vue():
         self.creercadres(ip,nom)
         self.changecadre(self.cadresplash)
         
-        
     def changemode(self,cadre):
         if self.modecourant:
             self.modecourant.pack_forget()
@@ -68,23 +67,23 @@ class Vue():
         self.canevaslobby.pack()
         self.listelobby=Listbox(bg="red",borderwidth=0,relief=FLAT)
         self.diametre=Entry(bg="pink")
-        self.diametre.insert(0, 5)
+        self.diametre.insert(0, 50)
         self.densitestellaire=Entry(bg="pink")
-        self.densitestellaire.insert(0, 2)
+        self.densitestellaire.insert(0, 25)
         self.qteIA=Entry(bg="pink")
         self.qteIA.insert(0, 4)
         self.btnlancerpartie=Button(text="Lancer partie",bg="pink",command=self.lancerpartie,state=DISABLED)
         self.canevaslobby.create_window(440,240,window=self.listelobby,width=200,height=400)
-        self.canevaslobby.create_window(200,200,window=self.diametre,width=100,height=30)
-        self.canevaslobby.create_text(20,200,text="Diametre en annee lumiere")
+        self.canevaslobby.create_window(250,200,window=self.diametre,width=100,height=30)
+        self.canevaslobby.create_text(90,200,text="Diametre en annee lumiere")
         
-        self.canevaslobby.create_window(200,250,window=self.densitestellaire,width=100,height=30)
-        self.canevaslobby.create_text(20,250,text="Nb systeme/AL cube")
+        self.canevaslobby.create_window(250,250,window=self.densitestellaire,width=100,height=30)
+        self.canevaslobby.create_text(90,250,text="Nb systeme/AL cube")
         
-        self.canevaslobby.create_window(200,300,window=self.qteIA,width=100,height=30)
-        self.canevaslobby.create_text(20,300,text="Nb d'IA")
+        self.canevaslobby.create_window(250,300,window=self.qteIA,width=100,height=30)
+        self.canevaslobby.create_text(90,300,text="Nb d'IA")
         
-        self.canevaslobby.create_window(200,450,window=self.btnlancerpartie,width=100,height=30)
+        self.canevaslobby.create_window(250,450,window=self.btnlancerpartie,width=100,height=30)
 
     def voirgalaxie(self):
         # A FAIRE comme pour voirsysteme et voirplanete, tester si on a deja la vuegalaxie
@@ -120,7 +119,6 @@ class Vue():
             print("aucune planete selectionnee pour atterrissage")
         
     def creerpartie(self):
-        self.parent.egoserveur;
         nom=self.nomsplash.get()
         ip=self.ipsplash.get()
         if nom and ip:
@@ -133,10 +131,15 @@ class Vue():
         ip=self.ipsplash.get()
         if nom and ip:
             self.parent.inscrirejoueur()
+            if self.parent.egoserveur == 0:
+                self.diametre.config(state="disable")
+                self.densitestellaire.config(state="disable")
+                self.qteIA.config(state="disable")
             self.changecadre(self.cadrelobby)
             self.parent.boucleattente()
             
     def lancerpartie(self):
+       
         diametre=self.diametre.get()
         densitestellaire=self.densitestellaire.get()
         qteIA=self.qteIA.get()  # IA
@@ -189,18 +192,18 @@ class Perspective(Frame):
         self.modele=None
         self.cadreetatactif=None
         self.images={}
-        self.cadrevue=Frame(self,width=400,height=400, bg="lightgreen")
+        self.cadrevue=Frame(self,width=500,height=500, bg="lightgreen") #500x500
         self.cadrevue.pack(side=LEFT,expand=1,fill=BOTH)
         
         self.cadreinfo=Frame(self,width=200,height=200,bg="darkgrey")
         self.cadreinfo.pack(side=LEFT,fill=Y)
         self.cadreinfo.pack_propagate(0)
-        self.cadreetat=Frame(self.cadreinfo,width=200,height=200,bg="grey20")
+        self.cadreetat=Frame(self.cadreinfo,width=800,height=600,bg="grey20")
         self.cadreetat.pack()
         
         self.scrollX=Scrollbar(self.cadrevue,orient=HORIZONTAL)
         self.scrollY=Scrollbar(self.cadrevue)
-        self.canevas=Canvas(self.cadrevue,width=300,height=200,bg="grey11",
+        self.canevas=Canvas(self.cadrevue,width=800,height=600,bg="grey11",
                              xscrollcommand=self.scrollX.set,
                              yscrollcommand=self.scrollY.set)
         
@@ -247,11 +250,13 @@ class VueGalaxie(Perspective):
         self.modele=self.parent.modele
         self.maselection=None
         self.AL2pixel=100
-        
+        print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
         self.hauteur=self.largeur
         
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
+        #############################
+        
         
         self.labid.bind("<Button>",self.identifierplanetemere)
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.creervaisseau)
@@ -325,7 +330,7 @@ class VueGalaxie(Perspective):
                 s=self.canevas.find_withtag(j.id)
                 self.canevas.addtag_withtag(i, s)
                 self.canevas.itemconfig(s,fill=couleur)
-                
+                self.minimap.config(bg="grey11")
                 self.minimap.create_oval((j.x*me)-m,(j.y*me)-m,(j.x*me)+m,(j.y*me)+m,fill=couleur)
                 
     # ************************ FIN DE LA SECTION D'AMORCE DE LA PARTIE
@@ -485,6 +490,7 @@ class VueSysteme(Perspective):
         self.maselection=None
         
         self.UA2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomiques       
+        print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.UA2pixel)
         self.hauteur=self.largeur
         
@@ -520,6 +526,7 @@ class VueSysteme(Perspective):
         n=i.etoile.taille*self.UA2pixel/2
         mini=2
         UAmini=4
+        self.minimap.config(bg="grey11")
         self.canevas.create_oval(xl-n,yl-n,xl+n,yl+n,fill="yellow",dash=(1,2),width=4,outline="white",
                                  tags=("systeme",i.id,"etoile",str(n),))
         self.minimap.create_oval(100-mini,100-mini,100+mini,100+mini,fill="yellow")
@@ -668,15 +675,25 @@ class VuePlanete(Perspective):
         yl=self.hauteur/2
         mini=2
         UAmini=4
+        self.minimap.config(bg="sandy brown")
         for i in p.infrastructures:
-            pass
+            i.x
+            i.y
+            self.canevas.create_image(i.x,i.y,image=self.images["ville"])
+            minix = (i.x *200) / self.largeur
+            miniy = (i.y *200) / self.hauteur
+            self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
         
-        self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
+        #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
         
         canl=int(p.posXatterrissage-100)/self.largeur
         canh=int(p.posYatterrissage-100)/self.hauteur
         self.canevas.xview(MOVETO,canl)
-        self.canevas.yview(MOVETO, canh)  
+        self.canevas.yview(MOVETO, canh)
+        
+        #minix = (p.posXatterrissage *200) / self.largeur
+        #miniy = (p.posYatterrissage *200) / self.hauteur
+        #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")  
             
     def chargeimages(self):
         im = Image.open("./images/ville_100.png")
@@ -710,10 +727,13 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
         else:
-            if self.macommande:
+            if self.macommande == "mine":
                 x=self.canevas.canvasx(evt.x)
                 y=self.canevas.canvasy(evt.y)
                 self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                minix = (x *200) / self.largeur
+                miniy = (y *200) / self.hauteur
+                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                 self.macommande=None
             
     def montresystemeselection(self):

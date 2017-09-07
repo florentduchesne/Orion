@@ -119,7 +119,9 @@ class Vaisseau():
         self.y=self.base.y
         self.taille=16
         self.cargo=0
-        self.energie=100
+        self.electricite=1000
+        self.humain=10
+        self.bronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None 
         
@@ -145,16 +147,18 @@ class Vaisseau():
 class Ressource():
     def __init__(self,parent):
         self.parent=parent
-        self.Electricite=0
-        self.Uranium=0
-        self.Humain=0
-        self.Nourriture=0
-        self.Eau=0
-        self.Bronze=0
-        self.Titanium=0
-        self.Point_Science=0
-        self.Argent=0
+        self.electricite=0
+        self.uranium=0
+        self.humain=0
+        self.nourriture=0
+        self.eau=0
+        self.bronze=0
+        self.titanium=0
+        self.point_science=0
+        self.argent=0
     
+
+        
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
         self.parent=parent

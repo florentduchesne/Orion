@@ -4,8 +4,6 @@ import math
 from helper import Helper as hlp
 from orion_empire_objets import *
 
-
-
 class Modele():
     def __init__(self,parent,joueurs,dd):
         self.parent=parent

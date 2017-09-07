@@ -13,6 +13,7 @@ from orion_empire_vue import *
 from helper import Helper as hlp
 from IdMaker import Id
 
+
 class Controleur():
     def __init__(self):
         print("IN CONTROLEUR")
