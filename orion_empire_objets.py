@@ -109,7 +109,7 @@ class Vaisseau():
         self.y=self.base.y
         self.taille=16
         self.cargo=0
-        self.electricite=100
+        self.electricite=1000
         self.humain=10
         self.bronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
