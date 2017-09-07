@@ -2,6 +2,19 @@ import random
 from helper import Helper as hlp
 import math
 
+class Ressource():
+    def __init__(self,parent):
+        self.parent=parent
+        self.electricite=0
+        self.uranium=0
+        self.humain=0
+        self.nourriture=0
+        self.eau=0
+        self.bronze=0
+        self.titanium=0
+        self.point_science=0
+        self.argent=0
+
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
@@ -149,21 +162,6 @@ class Vaisseau():
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
-
-class Ressource():
-    def __init__(self,parent):
-        self.parent=parent
-        self.electricite=0
-        self.uranium=0
-        self.humain=0
-        self.nourriture=0
-        self.eau=0
-        self.bronze=0
-        self.titanium=0
-        self.point_science=0
-        self.argent=0
-    
-
         
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
