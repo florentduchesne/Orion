@@ -1,4 +1,3 @@
-
 class Id():
     id=0
     def prochainid():
