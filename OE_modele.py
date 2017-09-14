@@ -1,3 +1,4 @@
+from OE_objetsJoueur import *
 from OE_objets import *
 
 
