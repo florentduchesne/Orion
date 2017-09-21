@@ -7,7 +7,6 @@ from OE_modele import *
 from OE_vue import *
 from helper import Helper as hlp
 from IdMaker import Id
-from OE_threadRessources import ThreadRessources
 
 
 class Controleur():
@@ -22,8 +21,6 @@ class Controleur():
         self.monnom=self.generernom() # un generateur de nom pour faciliter le deboggage (comme il genere un nom quasi aleatoire et on peut demarrer plusieurs 'participants' sur une meme machine pour tester)
         self.modele=None
         self.serveur=None
-        self.threadRessources = ThreadRessources(self)
-        self.threadRessources.start()
         self.vue=Vue(self,self.monip,self.monnom)
         self.vue.root.mainloop()
         
@@ -141,5 +138,4 @@ class Controleur():
         
 if __name__=="__main__":
     c=Controleur()
-    c.threadRessources.termine = True
     print("End Orion_empire")

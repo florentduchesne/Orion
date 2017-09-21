@@ -17,6 +17,7 @@ class Modele():
         self.systemes=[]
         self.terrain=[]
         self.creersystemes(int(qteIA))  # nombre d'ias a ajouter
+        self.compteur = 20
         
     def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter
         
@@ -79,6 +80,27 @@ class Modele():
             
         for i in self.pulsars:
             i.evoluer()
+        
+        self.augmenterRessources()
             
     def changerproprietaire(self,nom,couleur,syst):
         self.parent.changerproprietaire(nom,couleur,syst)
+        
+    def augmenterRessources(self):
+        if self.compteur == 0:
+            self.compteur = 40
+            for i in range(self.systemes.__len__()):#boucle a travers les systemes
+                for j in range(self.systemes.__getitem__(i).planetes.__len__()):#boucle a travers les planetes
+                    for k in range(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__len__()):#boucle a travers les infrastructures
+                        self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.humain += 2 #on augmente la population
+                        if( isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Mine)):
+                            print ("un mine!")
+                            if(self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.bronze > 0):
+                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.bronze -= 5
+                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.bronze += 5
+                            print (self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.bronze)
+                        elif(isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Ville)):
+                            #print ("une ville!")
+                            pass
+        else:
+            self.compteur -= 1
