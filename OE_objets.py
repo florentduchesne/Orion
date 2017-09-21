@@ -118,7 +118,8 @@ class Systeme():
         numPlaneteProprio = random.randrange(0,len(self.planetes))
         planeteProprio = self.planetes[numPlaneteProprio]
         planeteProprio.setProprietairePlanete(proprio.id, couleur)
-        planeteProprio.infrastructures=[Ville(self)]
+                        #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
+        planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid())]
         
         proprio.maplanete=planeteProprio
         
