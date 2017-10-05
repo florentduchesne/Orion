@@ -34,6 +34,15 @@ class VuePlanete(Perspective):
     
     def creermine(self):
         self.macommande="mine"
+        
+    def creervehiculetank(self):
+        self.macommande="vehiculetank"
+        
+    def creervehiculecommerce(self):
+        self.macommande="vehiculecommerce"
+        
+    def creervehiculeavion(self):
+        self.macommande="vehiculeavion"
     
     def creermanufacture(self):
         pass
@@ -143,6 +152,15 @@ class VuePlanete(Perspective):
                 miniy = (y *200) / self.hauteur
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                 self.macommande=None
+            elif self.macommande == "vehiculetank":
+                self.macommande=None
+                pass
+            elif self.macommande == "vehiculecommerce":
+                self.macommande=None
+                pass
+            elif self.macommande == "vehiculeavion":
+                self.macommande=None
+                pass
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)

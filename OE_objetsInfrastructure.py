@@ -6,6 +6,7 @@ class Infrastructure():
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        
 
 class Ville(Infrastructure):
     def __init__(self, parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"):
