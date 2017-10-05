@@ -62,32 +62,46 @@ class VuePlanete(Perspective):
         yl=self.hauteur/2
         mini=2
         UAmini=4
-        self.minimap.config(bg="sandy brown")
+        self.minimap.config(bg="green")
+         #Dessin des tuiles de pelouse sur la surface de la map.
+        x = 0
+        y = 0
+        for i in range(0,int((self.hauteur/50) +1)):
+            for j in range(0,int((self.largeur /50)+1)):
+                self.canevas.create_image(x,y,image=self.images["gazon"])   
+                x+=50
+            y+=50
+            x=0
+            
+        #Dessin des infrastructues de la planete.
         for i in p.infrastructures:
-            i.x
-            i.y
-            self.canevas.create_image(i.x,i.y,image=self.images["ville"])
-            minix = (i.x *200) / self.largeur
-            miniy = (i.y *200) / self.hauteur
-            self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
-        
+            if i.type == "ville":
+                scrollBarX = i.x
+                scrollBarY = i.y
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"])
+                minix = (i.x *200) / self.largeur
+                miniy = (i.y *200) / self.hauteur
+                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
+            
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
+        #Centre sur la ville principal.
+        canl=int(scrollBarX-400)/self.largeur
+        canh=int(scrollBarY-400)/self.hauteur
         
-        canl=int(p.posXatterrissage-100)/self.largeur
-        canh=int(p.posYatterrissage-100)/self.hauteur
         self.canevas.xview(MOVETO,canl)
         self.canevas.yview(MOVETO, canh)
         
         #minix = (p.posXatterrissage *200) / self.largeur
         #miniy = (p.posYatterrissage *200) / self.hauteur
-        #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")  
-            
+        #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/ville_100.png")
+        im = Image.open("./images/ville_50.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/mine_100.png")
+        im = Image.open("./images/mine_50.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
-        
+        im = Image.open("./images/gazon50x50.png")
+        self.images["gazon"] = ImageTk.PhotoImage(im)
+		
     def afficherdecor(self):
         pass
                 
