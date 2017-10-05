@@ -167,12 +167,16 @@ class Vue():
         self.modes["systemes"]={}
         #self.modes["systemes"]=VueSysteme(self)
         self.modes["planetes"]={}
-        #planeteInit = mod.joueurs[self.nom].maplanete
-        #systeme = planeteInit.parent
-        #self.modes["planetes"]=VuePlanete(self,systeme,planeteInit)
+        
+        
+        #s = VuePlanete(self,systeme,planeteInit)
+        #self.modes["planetes"] = s
+        #s.initplanete(systeme.id,planeteInit.id)
+        
         
         g=self.modes["galaxie"]
         #g=self.modes["planetes"]
+        #g = self.modes["planetes"]
         g.labid.config(text=self.nom)
         g.labid.config(fg=mod.joueurs[self.nom].couleur)
         
@@ -181,6 +185,19 @@ class Vue():
         self.changecadre(self.cadrejeu,1)
         self.changemode(self.modes["galaxie"])
         #self.changemode(self.modes["planetes"])
+        planeteInit = mod.joueurs[self.nom].maplanete
+        systeme = planeteInit.parent
+        self.voirsysteme(systeme)
+        
+        sysid=systeme.id
+        planeid=planeteInit.id
+        if planeid in self.modes["planetes"].keys():
+            s=self.modes["planetes"][planeid]
+        else:
+            s=VuePlanete(self,sysid,planeid)
+            self.modes["planetes"][planeid]=s
+            s.initplanete(sysid,planeid)
+        self.changemode(s)
       
     def affichermine(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():

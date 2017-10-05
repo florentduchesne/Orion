@@ -107,7 +107,25 @@ class Joueur():
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
-
+        #self.detecterCible()
+       # self.choisirCible()
+       # self.retirerVaiseauMort()
+        
+    def detecterCible(self):
+        for jKey in self.parent.joueurscles:
+            if jKey is self.nom:
+                pass
+            else:
+                j=self.parent.joueurs.get(jKey)
+                for vaisseau in self.vaisseauxinterplanetaires:
+                    vaisseau.listeCibleAttaquer.clear()
+                    for vaisseauEnnemi in j.vaisseaux:
+                        if vaisseau.systemePresent.id == vaisseauEnnemi.systemePresent.id:
+                            distance = hlp.calcDistance(vaisseau.position[0],vaisseau.position[1],vaisseauEnnemi.position[0],vaisseauEnnemi.position[1])
+                            
+                    
+                
+        
 #  DEBUT IA
 class IA(Joueur):
     def __init__(self,parent,nom,systemeorigine,couleur):
