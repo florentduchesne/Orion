@@ -16,7 +16,6 @@ class Ville(Infrastructure):
         self.y=y
         self.proprietaire=proprio
         self.taille=20
-        self.type = "ville"
                
 class Mine(Infrastructure):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):

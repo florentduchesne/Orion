@@ -167,13 +167,11 @@ class Vue():
         self.modes["systemes"]={}
         #self.modes["systemes"]=VueSysteme(self)
         self.modes["planetes"]={}
-        
-        
+               
         #s = VuePlanete(self,systeme,planeteInit)
         #self.modes["planetes"] = s
         #s.initplanete(systeme.id,planeteInit.id)
-        
-        
+               
         g=self.modes["galaxie"]
         #g=self.modes["planetes"]
         #g = self.modes["planetes"]
@@ -209,8 +207,6 @@ class Vue():
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
         self.parent.fermefenetre()
         
-
-
 if __name__ == '__main__':
     m=Vue(0,"jmd","127.0.0.1")
     m.root.mainloop()

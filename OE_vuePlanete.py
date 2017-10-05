@@ -3,6 +3,7 @@ from tkinter import *
 from PIL import Image,ImageDraw, ImageTk
 from helper import Helper as hlp
 from OE_vuePerspective import *
+import OE_objetsInfrastructure
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -64,6 +65,10 @@ class VuePlanete(Perspective):
         UAmini=4
         self.minimap.config(bg="green")
          #Dessin des tuiles de pelouse sur la surface de la map.
+        for rows in p.tuiles:
+            for t in rows:
+                self.canevas.create_image(t.x,t.y,image=self.images[t.image])
+        """
         x = 0
         y = 0
         for i in range(0,int((self.hauteur/50) +1)):
@@ -72,10 +77,12 @@ class VuePlanete(Perspective):
                 x+=50
             y+=50
             x=0
-            
+        """  
+        scrollBarX = 0
+        scrollBarY = 0
         #Dessin des infrastructues de la planete.
         for i in p.infrastructures:
-            if i.type == "ville":
+            if isinstance(i, OE_objetsInfrastructure.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"])
