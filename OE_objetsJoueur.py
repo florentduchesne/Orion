@@ -4,6 +4,7 @@ import math
 from OE_objetsVaisseaux import *
 from OE_objetsInfrastructure import *
 from OE_objetsRessource import Ressource
+from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
 
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
@@ -17,11 +18,15 @@ class Joueur():
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
+        self.vehiculeplanetaire=[]
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
-                      "creermine":self.creermine}
+                      "creermine":self.creermine,
+                      "creervehicueltank":self.creervehiculetank,
+                      "creervehicuelcommerce":self.creervehiculecommerce,
+                      "creervehicuelavion":self.creervehiculeavion}
         
     def creermine(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -55,6 +60,28 @@ class Joueur():
                 v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid())
                 self.vaisseauxinterstellaires.append(v)
                 return 1
+            
+    def creervehiculetank(self, id):
+        for i in self.systemesvisites:
+            if i.id == id:
+                vt = vehiculeTank(self, self.nom, i, self.parent.createurId.prochainid())
+                self.vehiculeplanetaire.append(vt)
+                return 1
+
+    def creervehiculecommerce(self, id):
+        for i in self.systemesvisites:
+            if i.id == id:
+                vt = vehiculeCommerce(self, self.nom, i, self.parent.createurId.prochainid())
+                self.vehiculeplanetaire.append(vt)
+                return 1
+    
+    def creervehiculeavion(self, id):
+        for i in self.systemesvisites:
+            if i.id == id:
+                vt = vehiculeAvion(self, self.nom, i, self.parent.createurId.prochainid())
+                self.vehiculeplanetaire.append(vt)
+                return 1
+        
         
     def ciblerdestination(self,ids):
         idori,iddesti=ids
@@ -80,7 +107,25 @@ class Joueur():
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
-
+        #self.detecterCible()
+       # self.choisirCible()
+       # self.retirerVaiseauMort()
+        
+    def detecterCible(self):
+        for jKey in self.parent.joueurscles:
+            if jKey is self.nom:
+                pass
+            else:
+                j=self.parent.joueurs.get(jKey)
+                for vaisseau in self.vaisseauxinterplanetaires:
+                    vaisseau.listeCibleAttaquer.clear()
+                    for vaisseauEnnemi in j.vaisseaux:
+                        if vaisseau.systemePresent.id == vaisseauEnnemi.systemePresent.id:
+                            distance = hlp.calcDistance(vaisseau.position[0],vaisseau.position[1],vaisseauEnnemi.position[0],vaisseauEnnemi.position[1])
+                            
+                    
+                
+        
 #  DEBUT IA
 class IA(Joueur):
     def __init__(self,parent,nom,systemeorigine,couleur):
