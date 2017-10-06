@@ -62,14 +62,14 @@ class Planete():
         tuiles = []
         x = 0
         y = 0
-        for i in range(0,int((5000/50)+1)):
+        for i in range(0,int((5000/100)+1)):
             list = []
             tuiles.append(list)
-            for j in range(0,int((5000/50)+1)):
+            for j in range(0,int((5000/100)+1)):
                 gazon = TuileGazon(x,y)
                 tuiles[i].append(gazon)
-                x+=50
-            y+=50
+                x+=100
+            y+=100
             x=0
         return tuiles
        
