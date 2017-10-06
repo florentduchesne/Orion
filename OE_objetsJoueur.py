@@ -2,7 +2,7 @@ import random
 from helper import Helper as hlp
 import math
 from OE_objetsVaisseaux import *
-from OE_objetsInfrastructure import *
+from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
 from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
 
