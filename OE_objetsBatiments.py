@@ -156,8 +156,8 @@ class Ferme(BatimentRessources):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
 
 class Mine(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment):
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 class CampBucherons(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
