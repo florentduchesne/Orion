@@ -24,9 +24,12 @@ class VuePlanete(Perspective):
         
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
         self.btncreervaisseau.pack()
-        
+        self.btncreermur=Button(self.cadreetataction,text="Creer Mur",command=self.creermur)
+        self.btncreermur.pack()
         self.btncreerstation=Button(self.cadreetataction,text="Creer Manufacture",command=self.creermanufacture)
         self.btncreerstation.pack()
+        self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
+        self.btncreertour.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir System",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
         
@@ -43,6 +46,12 @@ class VuePlanete(Perspective):
         
     def creervehiculeavion(self):
         self.macommande="vehiculeavion"
+        
+    def creertour(self):
+        self.macommande="tour"
+    
+    def creermur(self):
+        self.macommande="mur"
     
     def creermanufacture(self):
         pass
@@ -146,13 +155,24 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
         else:
-            if self.macommande == "mine":
-                x=self.canevas.canvasx(evt.x)
-                y=self.canevas.canvasy(evt.y)
+            x=self.canevas.canvasx(evt.x)
+            y=self.canevas.canvasy(evt.y)
+            minix = (x *200) / self.largeur
+            miniy = (y *200) / self.hauteur
+            if self.macommande == "mine":                
                 self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                minix = (x *200) / self.largeur
-                miniy = (y *200) / self.hauteur
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                self.macommande=None
+                print("Vue Mine")
+            elif self.macommande == "tour":
+                self.parent.parent.creertour(self.parent.nom,self.systemid,self.planeteid,x,y)
+                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="purple")
+                self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="purple")
+                self.macommande=None
+            elif self.macommande == "mur":
+                self.parent.parent.creermur(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                self.minimap.create_rectangle(minix-10,miniy-1.5,minix+10,miniy+1.5,fill="white")
+                self.canevas.create_rectangle(x-200,y-15,x+200,y+15,fill="white")
                 self.macommande=None
             elif self.macommande == "vehiculetank":
                 self.macommande=None

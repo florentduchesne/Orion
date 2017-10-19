@@ -78,6 +78,7 @@ class Mur(BatimentDefense):
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        print("Objet Mur Creer")
         #======================================================
         """RESSOURCE"""
         self.bois=300
@@ -153,6 +154,7 @@ class Ville(BatimentInfrastructure):
 class Mine(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
+        print("Objet Mine Creer")
         
 class Ferme(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
