@@ -45,9 +45,13 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "mine")
-                        j.infrastructures.append(mine)
-                        self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        ressourcesMine = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
+                        if(ressourcesMine):
+                            mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Mine")
+                            j.infrastructures.append(mine)
+                            self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        else:
+                            print("construction de mine impossible")
                         
     def atterrirplanete(self,d):
         nom,systeid,planeid=d

@@ -49,7 +49,7 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(self)
+        self.ressource=Ressource()
         self.ressourceACollecter=Ressource(self)
         self.tuiles = self.generationMap()
         

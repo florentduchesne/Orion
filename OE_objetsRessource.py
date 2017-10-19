@@ -1,8 +1,7 @@
 class Ressource():
-    def __init__(self,parent, electricite = 0, uranium = 0, humain = 0, nourriture = 0, eau = 0, bronze = 0,
+    def __init__(self, electricite = 0, uranium = 0, humain = 0, nourriture = 0, eau = 0, bronze = 0,
                 titanium = 0, point_science = 0, allocationHumain = 0, allocationElectricite = 0,
                 bois = 0, charbon = 0, metasic = 0, moral = 0):
-        self.parent=parent
         self.electricite = electricite
         self.uranium = uranium
         self.humain = humain

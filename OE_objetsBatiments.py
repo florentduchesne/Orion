@@ -9,7 +9,6 @@ class BatimentRessources():
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
-        self.CoutRessourcesAmelioration = None
         self.nomBatiment = nomBatiment
         
 #superclasse des usines a vaisseaux, usines a drones, etc.     
@@ -21,7 +20,6 @@ class BatimentManufacture():
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
-        self.CoutRessourcesAmelioration = None
         self.nomBatiment = nomBatiment
         
 #super-classe des hopitaux, des hotels de ville, des laboratoires, etc.
@@ -33,7 +31,6 @@ class BatimentInfrastructure():
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
-        self.CoutRessourcesAmelioration = None
         self.nomBatiment = nomBatiment
         
 #super-classe des defenses
