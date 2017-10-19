@@ -63,7 +63,7 @@ class VueSysteme(Perspective):
         for p in i.planetes:
             x,y=hlp.getAngledPoint(math.radians(p.angle),p.distance*self.UA2pixel,xl,yl)
             n=p.taille*self.UA2pixel
-
+            
             if p.proprietaire == "inconnu":
                 self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,"inconnu", i.id,int(x),int(y)))
             else:

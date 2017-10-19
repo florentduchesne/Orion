@@ -14,8 +14,8 @@ class Vaisseau():
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
-        self.x=self.base.x
-        self.y=self.base.y
+        self.x=5
+        self.y=5
         self.taille=16
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
@@ -43,6 +43,8 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
+            print(self.cible.x,self.x,self.cible.y,self.y)
+
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
@@ -51,16 +53,17 @@ class Vaisseau():
                 self.base=self.cible
                 self.cible=None
             return rep
-        else:
-            print(self.cible.x,self.x,self.cible.y,self.y)
-            x=self.cible.x
-            y=self.cible.y
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
-                rep= None
-                self.base=self.cible
-                self.cible=None
-            return rep
+            
+#        else:
+ #           print(self.cible.x,self.x,self.cible.y,self.y)
+  #          x=self.cible.x
+   #         y=self.cible.y
+    #        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+     #       if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+      #          rep= None
+       #         self.base=self.cible
+        #        self.cible=None
+         #   return rep
         
     def ciblerdestination(self,p):
         self.cible=p
