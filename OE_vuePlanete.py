@@ -94,9 +94,10 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"])
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"])               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
+                
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
             
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
