@@ -21,6 +21,7 @@ class Vaisseau():
         self.besoinbronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None 
+        print("jexiste")
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:

@@ -6,6 +6,7 @@ from helper import Helper as hlp
 from OE_vuePerspective import Perspective
 
 
+
 class VueGalaxie(Perspective):
     def __init__(self,parent):
         Perspective.__init__(self,parent)
@@ -18,12 +19,7 @@ class VueGalaxie(Perspective):
         
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         #############################
-        
-        
-        self.labid.bind("<Button>",self.identifierplanetemere)
-        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.creervaisseau)
-        self.btncreervaisseau.pack()
-        
+  
         self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir systeme",command=self.voirsysteme)
@@ -114,12 +110,7 @@ class VueGalaxie(Perspective):
         self.canevas.xview(MOVETO, xx-eex)
         eey=int(ii)/self.hauteur/2
         self.canevas.yview(MOVETO, yy-eey)
-        
-    def creervaisseau(self): 
-        if self.maselection:
-            self.parent.parent.creervaisseau(self.maselection[2])
-            self.maselection=None
-            self.canevas.delete("selecteur")
+
     
     def creerstation(self):
         print("Creer station EN CONSTRUCTION")
@@ -130,22 +121,6 @@ class VueGalaxie(Perspective):
         self.afficherselection()
         
         e=self.AL2pixel
-        for i in mod.joueurscles:
-            i=mod.joueurs[i]
-            for j in i.vaisseauxinterstellaires:
-                jx=j.x*e
-                jy=j.y*e
-                x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
-                x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                
         for i in mod.pulsars:
             t=i.taille
             self.canevas.create_oval((i.x*e)-t,(i.y*e)-t,(i.x*e)+t,(i.y*e)+t,fill="orchid3",dash=(1,1),
@@ -178,32 +153,14 @@ class VueGalaxie(Perspective):
                         self.canevas.create_oval((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                  outline=joueur.couleur,
                                                  tags=("select","selecteur"))
-            elif self.maselection[1]=="vaisseauinterstellaire":
-                for i in joueur.vaisseauxinterstellaires:
-                    if i.id == self.maselection[2]:
-                        x=i.x
-                        y=i.y
-                        t=10
-                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
-                                                      outline=joueur.couleur,
-                                                      tags=("select","selecteur"))
       
     def cliquervue(self,evt):
         self.changecadreetat(None)
         t=self.canevas.gettags("current")
-        if t and t[0]!="current":
-            
-            if t[1]=="vaisseauinterstellaire":
-                print("IN VAISSEAUINTERSTELLAIRE",t)
-                self.maselection=[self.parent.nom,t[1],t[2]]
-                self.montrevaisseauxselection()
-            
-            elif t[1]=="systeme":
+        if t and t[0]!="current":    
+            if t[1]=="systeme":
                 print("IN SYSTEME",t)
-                if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
-                    print("IN systeme + select VAISSEAUINTERSTELLAIRE")
-                    self.parent.parent.ciblerdestination(self.maselection[2],t[2])
-                elif self.parent.nom in t:
+                if self.parent.nom in t:
                     print("IN systeme  PAS SELECTION")
                     self.maselection=[self.parent.nom,t[1],t[2]]
                     self.montresystemeselection()
@@ -223,9 +180,6 @@ class VueGalaxie(Perspective):
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)
         
-    def montrevaisseauxselection(self):
-        self.changecadreetat(self.cadreetatmsg)
-    
     def afficherartefacts(self,joueurs):
         pass #print("ARTEFACTS de ",self.nom)
     
