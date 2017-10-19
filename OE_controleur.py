@@ -2,7 +2,7 @@
 
 import Pyro4
 import socket
-from subprocess import Popen 
+from subprocess import Popen
 from OE_modele import *
 from OE_vue import *
 from helper import Helper as hlp
