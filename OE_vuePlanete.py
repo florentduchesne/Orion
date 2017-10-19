@@ -152,41 +152,7 @@ class VuePlanete(Perspective):
             if t[0]==self.parent.nom:
                 pass
             elif t[1]=="systeme":
-                """
-<<<<<<< HEAD
                 pass
-        else:
-            if self.macommande == "mine":
-                x=self.canevas.canvasx(evt.x)
-                y=self.canevas.canvasy(evt.y)
-                self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                minix = (x *200) / self.largeur
-                miniy = (y *200) / self.hauteur
-                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                self.macommande=None
-                
-                
-            elif self.macommande == "vehiculetank":
-                x=self.canevas.canvasx(evt.x)
-                y=self.canevas.canvasy(evt.y)
-                self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                minix = (x *200) / self.largeur
-                miniy = (y *200) / self.hauteur
-                self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                self.macommande=None
-                pass
-            
-            
-            
-            elif self.macommande == "vehiculecommerce":
-                self.macommande=None
-                pass
-            elif self.macommande == "vehiculeavion":
-                self.macommande=None
-                pass
-=======
-                pass  
-                """
             elif t[2]=="tuile":
                 if self.macommande == "mine":
                     x=int(t[1])
