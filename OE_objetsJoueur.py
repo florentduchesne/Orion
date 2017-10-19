@@ -25,9 +25,40 @@ class Joueur():
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
                       "creermur":self.creermur,
+                      "creertour":self.creertour,
+                      "creercanon":self.creercanon,
+                      "creerbouclier":self.creerbouclier,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion}
+        
+    def creertour(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        tour=Tour(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.infrastructures.append(tour)
+                        self.parent.parent.affichertour(nom,systemeid,planeteid,x,y)
+
+    def creercanon(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        canon=Canon(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.infrastructures.append(canon)
+                        self.parent.parent.affichercanon(nom,systemeid,planeteid,x,y)
+        
+    def creerbouclier(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid()) 
     
     def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -36,7 +67,8 @@ class Joueur():
                 for j in i.planetes:
                     if j.id==planeteid:
                         mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        #self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        j.infrastructures.append(mur)
+                        self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
 
     def creermine(self,listeparams):
         print("Joueur mine")
