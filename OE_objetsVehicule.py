@@ -3,17 +3,17 @@
 
 
 class Vehicule():
-    def __init__(self, parent, nom, planete, idSuivant, idplanete):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
         self.parent = parent
         self.id = idSuivant
-        self.idplanete = idplanete
+        self.planeteid = planeteid
+        self.systemeid=systemeid
         self.proprietaire = nom
         self.taille = 0 #a noter dans les sous-classes de vehicule
-        self.base = planete
         self.angletrajet=0
         self.angleinverse=0
-        self.x=self.base.x
-        self.y=self.base.y
+        self.x=x
+        self.y=y
         self.cible=None 
         
     def ciblerDestination(self):
@@ -24,8 +24,8 @@ class Vehicule():
     
     
 class vehiculeTank(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
+        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
