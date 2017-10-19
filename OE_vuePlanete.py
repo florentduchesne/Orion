@@ -170,10 +170,6 @@ class VuePlanete(Perspective):
                 minix = (x *200) / self.largeur
                 miniy = (y *200) / self.hauteur
                 self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                #(30, 10, 120, 80, outline="#fb0", fill="#fb0")
-                """
-                    creer l'image du vehicule avec la grandeur...
-                """
                 self.macommande=None
                 pass
             
