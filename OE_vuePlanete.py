@@ -31,6 +31,12 @@ class VuePlanete(Perspective):
         self.btncreertank=Button(self.cadreetataction,text="Creer Tank",command=self.creervehiculetank)
         self.btncreertank.pack()
         
+        self.btncreercanon=Button(self.cadreetataction,text="Creer Canon",command=self.creercanon)
+        self.btncreercanon.pack()
+        
+        self.btncreerbouclier=Button(self.cadreetataction,text="Creer Bouclier",command=self.creerbouclier)
+        self.btncreerbouclier.pack()
+        
         self.btncreerstation=Button(self.cadreetataction,text="Creer Manufacture",command=self.creermanufacture)
         self.btncreerstation.pack()
         self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
@@ -39,6 +45,12 @@ class VuePlanete(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         
         self.changecadreetat(self.cadreetataction)
+        
+        self.remplirCadreRessources()
+    
+    def remplirCadreRessources(self):
+        self.testLabel = Label(self.parent.cadreRessourcesJoueur,text="Allo toi")
+        self.testLabel.grid(row=0,column=1)
     
     def creermine(self):
         self.macommande="mine"
@@ -57,11 +69,18 @@ class VuePlanete(Perspective):
     
     def creermur(self):
         self.macommande="mur"
-    
+        
+    def creercanon(self):
+        self.macommande="canon"
+        
+    def creerbouclier(self):
+        self.macommande="bouclier"
+        
     def creermanufacture(self):
         pass
     
     def voirsysteme(self):
+        self.parent.cadreRessourcesPlanete.pack_forget()
         for i in self.modele.joueurs[self.parent.nom].systemesvisites:
             if i.id==self.systeme:
                 self.parent.voirsysteme(i)
@@ -136,7 +155,12 @@ class VuePlanete(Perspective):
         self.images["eau"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
-        
+        im = Image.open("./images/tour1.png")
+        self.images["tour"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/wall.png")
+        self.images["mur"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/canon.png")
+        self.images["canon"] = ImageTk.PhotoImage(im)
 		
     def afficherdecor(self):
         pass
@@ -165,7 +189,7 @@ class VuePlanete(Perspective):
                 pass
             elif t[1]=="systeme":
                 pass
-            elif t[2]=="tuile":
+            elif self.maselection == None and t[2]=="tuile":
                 if self.macommande == "mine":
                     x=int(t[1])
                     y=int(t[0])
@@ -176,22 +200,37 @@ class VuePlanete(Perspective):
                     self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                     self.macommande=None
                 elif self.macommande == "tour":
-                    x=self.canevas.canvasx(evt.x)
-                    y=self.canevas.canvasy(evt.y)
+                    x=int(t[1])
+                    y=int(t[0])
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
-                    #self.parent.parent.creertour(self.parent.nom,self.systemid,self.planeteid,x,y)
+                    self.parent.parent.creertour(self.parent.nom,self.systemeid,self.planeteid,x,y)
                     self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="purple")
-                    self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="purple")
                     self.macommande=None
                 elif self.macommande == "mur":
-                    x=self.canevas.canvasx(evt.x)
-                    y=self.canevas.canvasy(evt.y)
+                    x=int(t[1])
+                    y=int(t[0])
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.parent.parent.creermur(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_rectangle(minix-10,miniy-1.5,minix+10,miniy+1.5,fill="white")
-                    self.canevas.create_rectangle(x-200,y-15,x+200,y+15,fill="white")
+                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+                    self.macommande=None
+                elif self.macommande == "bouclier":
+                    x=int(t[1])
+                    y=int(t[0])
+                    minix = (x *200) / self.largeur
+                    miniy = (y *200) / self.hauteur
+                    self.parent.parent.creerbouclier(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="cyan2")
+                    self.canevas.create_oval(x-100,y-100,x+100,y+100,fill="cyan2")
+                    self.macommande=None
+                elif self.macommande == "canon":
+                    x=int(t[1])
+                    y=int(t[0])
+                    minix = (x *200) / self.largeur
+                    miniy = (y *200) / self.hauteur
+                    self.parent.parent.creercanon(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="brown")
                     self.macommande=None
                 elif self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)
@@ -199,8 +238,10 @@ class VuePlanete(Perspective):
                     self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
-                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
+
                     self.macommande=None
+                    self.maselection=None
                    
                 elif self.macommande == "vehiculecommerce":
                     self.macommande=None
@@ -208,7 +249,10 @@ class VuePlanete(Perspective):
                 elif self.macommande == "vehiculeavion":
                     self.macommande=None
                     pass
-            elif t[2] == "vehiculetank":
+            elif self.maselection != None and t[2] == "tuile":
+                self.maselection = [self.parent.monnom,t[1],t[2]]
+                print("coucou")
+                print(self.maselection)
                 pass
 
             

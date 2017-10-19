@@ -111,8 +111,8 @@ class Controleur():
         self.modele.creervaisseau(planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
-    def ciblerdestination(self,idorigine,iddestination):
-        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination]])
+    def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
+        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
@@ -128,16 +128,33 @@ class Controleur():
     def creervehiculetank(self, joueur,systeme,planete,x,y):
         self.actions.append([self.monnom,"creervehiculetank",[self.monnom,systeme,planete,x,y]])
         
+    def creertour(self,joueur,systeme,planete,x,y):
+        self.actions.append([self.monnom,"creertour",[self.monnom,systeme,planete,x,y]])
+        
+    def creercanon(self,joueur,systeme,planete,x,y):
+        self.actions.append([self.monnom,"creercanon",[self.monnom,systeme,planete,x,y]])
         
     def creermur(self,joueur,systeme,planete,x,y):
-            self.actions.append([self.monnom,"creermur",[self.monnom,systeme,planete,x,y]])
-            print("Controleur Mur")
+        self.actions.append([self.monnom,"creermur",[self.monnom,systeme,planete,x,y]])
+        print("Controleur Mur")
+        
+    def creerbouclier(self,joueur,systeme,planete,x,y):
+        self.actions.append([self.monnom,"creerbouclier",[self.monnom,systeme,planete,x,y]])
     
     def affichermine(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichermine(joueur,systemeid,planeteid,x,y)
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
+        
+    def affichertour(self,joueur,systemeid,planeteid,x,y):
+        self.vue.affichertour(joueur,systemeid,planeteid,x,y)
+        
+    def affichercanon(self,joueur,systemeid,planeteid,x,y):
+        self.vue.affichercanon(joueur,systemeid,planeteid,x,y)
+        
+    def affichermur(self,joueur,systemeid,planeteid,x,y):
+        self.vue.affichermur(joueur,systemeid,planeteid,x,y)
         
     def voirplanete(self,idsysteme,idplanete):
         pass

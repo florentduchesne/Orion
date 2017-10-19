@@ -51,6 +51,16 @@ class Vaisseau():
                 self.base=self.cible
                 self.cible=None
             return rep
+        else:
+            print(self.cible.x,self.x,self.cible.y,self.y)
+            x=self.cible.x
+            y=self.cible.y
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+                rep= None
+                self.base=self.cible
+                self.cible=None
+            return rep
         
     def ciblerdestination(self,p):
         self.cible=p

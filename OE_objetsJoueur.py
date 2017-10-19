@@ -5,6 +5,8 @@ from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
 from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
+from OE_coord import *
+
 
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
@@ -25,9 +27,40 @@ class Joueur():
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
                       "creermur":self.creermur,
+                      "creertour":self.creertour,
+                      "creercanon":self.creercanon,
+                      "creerbouclier":self.creerbouclier,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion}
+        
+    def creertour(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        tour=Tour(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.infrastructures.append(tour)
+                        self.parent.parent.affichertour(nom,systemeid,planeteid,x,y)
+
+    def creercanon(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        canon=Canon(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.infrastructures.append(canon)
+                        self.parent.parent.affichercanon(nom,systemeid,planeteid,x,y)
+        
+    def creerbouclier(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid()) 
     
     def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -36,7 +69,8 @@ class Joueur():
                 for j in i.planetes:
                     if j.id==planeteid:
                         mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        #self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        j.infrastructures.append(mur)
+                        self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
 
     def creermine(self,listeparams):
         print("Joueur mine")
@@ -103,19 +137,25 @@ class Joueur():
         
         
     def ciblerdestination(self,ids):
-        idori,iddesti=ids
+        idori,iddesti,idsyteme,xy=ids
         for i in self.vaisseauxinterstellaires:
             if i.id== idori:
                 for j in self.parent.systemes:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+ #                               i.ciblerdestination(p)
+                                i.ciblerdestination(Coord(xy))
+                                return
                 for j in self.systemesvisites:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+  #                              i.ciblerdestination(p)
+                                i.ciblerdestination(Coord(xy))
+                                return
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
@@ -126,6 +166,16 @@ class Joueur():
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+       
+        for i in self.vehiculeplanetaire:
+            if i.cible:
+                rep=i.avancer()
+                if rep:
+                    if rep.proprietaire=="inconnu":
+                        if rep not in self.systemesvisites:
+                            self.systemesvisites.append(rep)
+                            self.parent.changerproprietaire(self.nom,self.couleur,rep)
+        
         #self.detecterCible()
        # self.choisirCible()
        # self.retirerVaiseauMort()
