@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
+from helper import Helper as hlp
+import math
 
 class Vehicule():
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
@@ -14,9 +15,14 @@ class Vehicule():
         self.angleinverse=0
         self.x=x
         self.y=y
+        self.vitesse = 0.5
         self.cible=None 
         
-    def ciblerDestination(self):
+    def ciblerdestination(self, p):
+        self.cible = p
+        self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
+        self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
+        dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         pass
     
     def rechargeBatterie(self):
@@ -31,6 +37,16 @@ class vehiculeTank(Vehicule):
         self.vie = 0
         self.vitesseDeplacement=0
         self.puissance = 0
+        
+    def avancer(self):
+        x=self.cible.x
+        y=self.cible.y
+        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+            rep=self.cible
+            self.base=self.cible
+            self.cible=None
+        return rep
         
     def attaque(self):
         pass

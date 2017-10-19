@@ -120,8 +120,8 @@ class VueSysteme(Perspective):
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                jx=j.y*100
-                jy=j.x*100
+                jx=j.y*e
+                jy=j.x*e
                 x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
                 x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                 x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
