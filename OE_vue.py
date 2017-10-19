@@ -208,6 +208,24 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+    
+    def affichertour(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["tour"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+    
+    def affichermur(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["mur"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                
+    def affichercanon(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["canon"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
                 
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
