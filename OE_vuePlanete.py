@@ -117,6 +117,8 @@ class VuePlanete(Perspective):
         self.images["mine"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/eau100x100.png")
+        self.images["eau"] = ImageTk.PhotoImage(im)
 		
     def afficherdecor(self):
         pass
