@@ -158,6 +158,7 @@ class VuePlanete(Perspective):
       
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
+        print("print t")
         print(t)
         if t and t[0]!="current":
             if t[0]==self.parent.nom:
@@ -199,10 +200,6 @@ class VuePlanete(Perspective):
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                    #(30, 10, 120, 80, outline="#fb0", fill="#fb0")
-                    """
-                        creer l'image du vehicule avec la grandeur...
-                    """
                     self.macommande=None
                    
                 elif self.macommande == "vehiculecommerce":
@@ -211,6 +208,8 @@ class VuePlanete(Perspective):
                 elif self.macommande == "vehiculeavion":
                     self.macommande=None
                     pass
+            elif t[2] == "vehiculetank":
+                pass
 
             
     def montresystemeselection(self):

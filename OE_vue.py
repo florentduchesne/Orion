@@ -207,7 +207,7 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))
                 
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
