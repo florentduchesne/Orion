@@ -24,11 +24,22 @@ class Joueur():
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
+                      "creermur":self.creermur,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion}
-        
+    
+    def creermur(self,listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        #self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+
     def creermine(self,listeparams):
+        print("Joueur mine")
         nom,systemeid,planeteid,x,y=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
