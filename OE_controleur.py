@@ -123,10 +123,17 @@ class Controleur():
         
     
     def creermine(self,joueur,systeme,planete,x,y):
-            self.actions.append([self.monnom,"creermine",[self.monnom,systeme,planete,x,y]])
+        self.actions.append([self.monnom,"creermine",[self.monnom,systeme,planete,x,y]])
+        
+    def creervehiculetank(self, joueur,systeme,planete,x,y):
+        self.actions.append([self.monnom,"creervehiculetank",[self.monnom,systeme,planete,x,y]])
+        
         
     def affichermine(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichermine(joueur,systemeid,planeteid,x,y)
+        
+    def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
+        self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
         
     def voirplanete(self,idsysteme,idplanete):
         pass

@@ -203,6 +203,12 @@ class Vue():
                 im=self.modes["planetes"][i].images["mine"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im)
                 
+    def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["vehiculetank"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
         self.parent.fermefenetre()

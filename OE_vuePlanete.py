@@ -25,6 +25,9 @@ class VuePlanete(Perspective):
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
         self.btncreervaisseau.pack()
         
+        self.btncreertank=Button(self.cadreetataction,text="Creer Tank",command=self.creervehiculetank)
+        self.btncreertank.pack()
+        
         self.btncreerstation=Button(self.cadreetataction,text="Creer Manufacture",command=self.creermanufacture)
         self.btncreerstation.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir System",command=self.voirsysteme)
@@ -119,6 +122,9 @@ class VuePlanete(Perspective):
         self.images["gazon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/eau100x100.png")
         self.images["eau"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/tankhaut.png")
+        self.images["vehiculetank"] = ImageTk.PhotoImage(im)
+        
 		
     def afficherdecor(self):
         pass
@@ -154,9 +160,24 @@ class VuePlanete(Perspective):
                 miniy = (y *200) / self.hauteur
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                 self.macommande=None
+                
+                
             elif self.macommande == "vehiculetank":
+                x=self.canevas.canvasx(evt.x)
+                y=self.canevas.canvasy(evt.y)
+                self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                minix = (x *200) / self.largeur
+                miniy = (y *200) / self.hauteur
+                self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                #(30, 10, 120, 80, outline="#fb0", fill="#fb0")
+                """
+                    creer l'image du vehicule avec la grandeur...
+                """
                 self.macommande=None
                 pass
+            
+            
+            
             elif self.macommande == "vehiculecommerce":
                 self.macommande=None
                 pass
