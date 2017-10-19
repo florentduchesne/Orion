@@ -41,6 +41,7 @@ class Planete():
         self.posXatterrissage=random.randrange(5000)
         self.posYatterrissage=random.randrange(5000)
         self.infrastructures=[]
+        self.vehiculeplanetaire=[]
         self.proprietaire="inconnu"
         self.visiteurs={}
         self.distance=dist
@@ -64,12 +65,14 @@ class Planete():
         tuiles = []
         x = 0
         y = 0
-        image="gazon","eau"
+        #image="gazon","eau"
+        image="gazon"
         for i in range(0,int((5000/100)+1)):
             list = []
             tuiles.append(list)
             for j in range(0,int((5000/100)+1)):
-                gazon = TuileGazon(x,y,image[random.randrange(2)-1])
+                #gazon = TuileGazon(x,y,image[random.randrange(2)-1])
+                gazon = TuileGazon(x,y,image)
                 tuiles[i].append(gazon)
                 x+=100
             y+=100

@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*-
 
-
+from helper import Helper as hlp
+import math
 
 class Vehicule():
-    def __init__(self, parent, nom, planete, idSuivant, idplanete):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
         self.parent = parent
         self.id = idSuivant
-        self.idplanete = idplanete
+        self.planeteid = planeteid
+        self.systemeid=systemeid
         self.proprietaire = nom
         self.taille = 0 #a noter dans les sous-classes de vehicule
-        self.base = planete
         self.angletrajet=0
         self.angleinverse=0
-        self.x=self.base.x
-        self.y=self.base.y
+        self.x=x
+        self.y=y
+        self.vitesse = 0.5
         self.cible=None 
         
-    def ciblerDestination(self):
+    def ciblerdestination(self, p):
+        self.cible = p
+        self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
+        self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
+        dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         pass
     
     def rechargeBatterie(self):
@@ -24,13 +30,23 @@ class Vehicule():
     
     
 class vehiculeTank(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
+        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
         self.vitesseDeplacement=0
         self.puissance = 0
+        
+    def avancer(self):
+        x=self.cible.x
+        y=self.cible.y
+        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+            rep=self.cible
+            self.base=self.cible
+            self.cible=None
+        return rep
         
     def attaque(self):
         pass

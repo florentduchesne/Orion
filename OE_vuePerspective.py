@@ -9,18 +9,20 @@ class Perspective(Frame):
         self.modele=None
         self.cadreetatactif=None
         self.images={}
+        
         self.cadrevue=Frame(self,width=500,height=500, bg="lightgreen") #500x500
         self.cadrevue.pack(side=LEFT,expand=1,fill=BOTH)
         
         self.cadreinfo=Frame(self,width=200,height=200,bg="darkgrey")
         self.cadreinfo.pack(side=LEFT,fill=Y)
         self.cadreinfo.pack_propagate(0)
-        self.cadreetat=Frame(self.cadreinfo,width=800,height=600,bg="grey20")
+        
+        self.cadreetat=Frame(self.cadreinfo,width=1400,height=600,bg="grey20")
         self.cadreetat.pack()
         
         self.scrollX=Scrollbar(self.cadrevue,orient=HORIZONTAL)
         self.scrollY=Scrollbar(self.cadrevue)
-        self.canevas=Canvas(self.cadrevue,width=800,height=600,bg="grey11",
+        self.canevas=Canvas(self.cadrevue,width=1400,height=800,bg="grey11",
                              xscrollcommand=self.scrollX.set,
                              yscrollcommand=self.scrollY.set)
         

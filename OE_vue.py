@@ -42,8 +42,21 @@ class Vue():
     def creercadres(self,ip,nom):
         self.creercadresplash(ip, nom)
         self.creercadrelobby()
-        self.cadrejeu=Frame(self.root,bg="blue")
         self.modecourant=None
+        self.creercadreJeu()
+    
+    def creercadreJeu(self):
+        self.cadrejeu=Frame(self.root,bg="blue")
+        
+        self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg="SpringGreen3")
+        self.cadreRessourcesJoueur.pack(fill=X)
+        self.titreJoueur = Label(self.cadreRessourcesJoueur,text="Joueur",bg="SpringGreen3")
+        self.titreJoueur.grid(row=0,column=0)
+        
+        self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg="SpringGreen4")
+        self.cadreRessourcesPlanete.pack(fill=X)
+        self.titrePlanete = Label(self.cadreRessourcesPlanete,text="Planete",bg="SpringGreen4")
+        self.titrePlanete.grid(row=0,column=0)
                 
     def creercadresplash(self,ip,nom):
         self.cadresplash=Frame(self.root)
@@ -72,7 +85,7 @@ class Vue():
         self.densitestellaire=Entry(bg="pink")
         self.densitestellaire.insert(0, 25)
         self.qteIA=Entry(bg="pink")
-        self.qteIA.insert(0, 4)
+        self.qteIA.insert(0, 0)
         self.btnlancerpartie=Button(text="Lancer partie",bg="pink",command=self.lancerpartie,state=DISABLED)
         self.canevaslobby.create_window(440,240,window=self.listelobby,width=200,height=400)
         self.canevaslobby.create_window(250,200,window=self.diametre,width=100,height=30)
@@ -111,10 +124,12 @@ class Vue():
             planeid=maselection[2]
             if planeid in self.modes["planetes"].keys():
                 s=self.modes["planetes"][planeid]
+                self.cadreRessourcesPlanete.pack(fill=X)
             else:
                 s=VuePlanete(self,sysid,planeid)
                 self.modes["planetes"][planeid]=s
                 s.initplanete(sysid,planeid)
+                self.cadreRessourcesPlanete.pack(fill=X)
             self.changemode(s)
         else:
             print("aucune planete selectionnee pour atterrissage")
@@ -203,6 +218,30 @@ class Vue():
                 im=self.modes["planetes"][i].images["mine"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im)
                 
+    def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["vehiculetank"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))   
+    
+    def affichertour(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["tour"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+    
+    def affichermur(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["mur"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                
+    def affichercanon(self,joueur,systemeid,planeteid,x,y):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["canon"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                                
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
         self.parent.fermefenetre()
