@@ -37,6 +37,8 @@ class VueSysteme(Perspective):
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
         self.changecadreetat(self.cadreetataction)
+        
+        
     
     def voirplanete(self):
         self.parent.voirplanete(self.maselection)
@@ -69,7 +71,7 @@ class VueSysteme(Perspective):
               
             #self.canevas.create_oval(x-n,y-n,x+n,y+n,fill="red",tags=(i.proprietaire,"planete",p.id,"inconnu",i.id,int(x),int(y)))
             x,y=hlp.getAngledPoint(math.radians(p.angle),p.distance*UAmini,100,100)
-            self.minimap.create_oval(x-mini,y-mini,x+mini,y+mini,fill="red",tags=())
+            self.minimap.create_oval(x-mini,y-mini,x+mini,y+mini,fill=p.couleur,tags=())
         
         # NOTE Il y a un probleme ici je ne parviens pas a centrer l'objet convenablement comme dans la fonction 'identifierplanetemere'
         canl=int(self.canevas.cget("width"))/2

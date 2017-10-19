@@ -34,6 +34,12 @@ class VuePlanete(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         
         self.changecadreetat(self.cadreetataction)
+        
+        self.remplirCadreRessources()
+    
+    def remplirCadreRessources(self):
+        self.testLabel = Label(self.parent.cadreRessourcesJoueur,text="Allo toi")
+        self.testLabel.grid(row=0,column=1)
     
     def creermine(self):
         self.macommande="mine"
@@ -51,6 +57,7 @@ class VuePlanete(Perspective):
         pass
     
     def voirsysteme(self):
+        self.parent.cadreRessourcesPlanete.pack_forget()
         for i in self.modele.joueurs[self.parent.nom].systemesvisites:
             if i.id==self.systeme:
                 self.parent.voirsysteme(i)
@@ -169,11 +176,7 @@ class VuePlanete(Perspective):
                     self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
-                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                    #(30, 10, 120, 80, outline="#fb0", fill="#fb0")
-                    """
-                        creer l'image du vehicule avec la grandeur...
-                    """
+                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
                     self.macommande=None
                    
                 elif self.macommande == "vehiculecommerce":
