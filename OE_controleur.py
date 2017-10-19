@@ -111,8 +111,8 @@ class Controleur():
         self.modele.creervaisseau(planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
-    def ciblerdestination(self,idorigine,iddestination):
-        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination]])
+    def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
+        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])

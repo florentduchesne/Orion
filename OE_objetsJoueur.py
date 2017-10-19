@@ -5,6 +5,8 @@ from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
 from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
+from OE_coord import *
+
 
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
@@ -84,19 +86,25 @@ class Joueur():
         
         
     def ciblerdestination(self,ids):
-        idori,iddesti=ids
+        idori,iddesti,idsyteme,xy=ids
         for i in self.vaisseauxinterstellaires:
             if i.id== idori:
                 for j in self.parent.systemes:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+ #                               i.ciblerdestination(p)
+                                i.ciblerdestination(Coord(xy))
+                                return
                 for j in self.systemesvisites:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+  #                              i.ciblerdestination(p)
+                                i.ciblerdestination(Coord(xy))
+                                return
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:

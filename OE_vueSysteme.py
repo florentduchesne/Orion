@@ -161,30 +161,50 @@ class VueSysteme(Perspective):
       
     def cliquervue(self,evt):
         self.changecadreetat(None)
-        
+        e=self.UA2pixel
+        xy=evt.x/e,evt.y/e
         t=self.canevas.gettags("current")
         if t and t[0]!="current":
-            if t[1] == "planete":
-                self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
-                print(t)
-                self.montreplaneteselection()
+            
+            if t[1] == "planete"  :
+                
+                if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
+                    print("IN systeme + select VAISSEAUINTERSTELLAIRE")
+                    print(xy)
+                    self.parent.parent.ciblerdestination(self.maselection[2],t[2],self.systeme.id,xy)
+                else:     
+                    self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
+                    print(t)
+                    self.montreplaneteselection()
                 
             elif t[1]=="vaisseauinterstellaire":
                 print("IN VAISSEAUINTERSTELLAIRE",t)
                 self.maselection=[self.parent.nom,t[1],t[2]]
                 self.montrevaisseauxselection()  
-                
-            # if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
-            #  print("IN systeme + select VAISSEAUINTERSTELLAIRE")
-            #   self.parent.parent.ciblerdestination(self.maselection[2],t[2])
-                
+            
+            elif t[1]=="systeme":
+                if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
+                    print("IN systeme + select VAISSEAUINTERSTELLAIRE")
+                    self.parent.parent.ciblerdestination(self.maselection[2],t[2],self.systeme.id,xy)
+                           
+                elif self.parent.nom in t:
+                    print("IN systeme  PAS SELECTION")
+                    self.maselection=[self.parent.nom,t[1],t[2]]
+                    self.montresystemeselection()
+                else:    
+                    print("IN systeme + RIEN")
+                    self.maselection=None
+                    self.lbselectecible.pack_forget()
+                    self.canevas.delete("selecteur")
+            else:
+                print("Objet inconnu")
             # ici je veux envoyer un message comme quoi je visite cette planete
             # et me mettre en mode planete sur cette planete, d'une shot
             # ou est-ce que je fais selection seulement pour etre enteriner par un autre bouton
             
             #self.parent.parent.atterrirdestination(nom,idsysteme,idplanete)
         else:
-            print("Region inconnue")
+            print("Region inconnue")               
             self.maselection=None
             self.lbselectecible.pack_forget()
             self.canevas.delete("selecteur")

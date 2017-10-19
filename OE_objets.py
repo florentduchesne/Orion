@@ -51,7 +51,9 @@ class Planete():
         self.ressource=Ressource(self)
         self.ressourceACollecter=Ressource(self)
         self.tuiles = self.generationMap()
-        
+   #     self.x
+    #    self.y
+     #   
         #Changer moi, je ne suis pas du tout �quillibr� :(
         self.ressource.Eau=10
         self.ressourceACollecter.bronze=100
