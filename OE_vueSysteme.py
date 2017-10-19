@@ -164,11 +164,8 @@ class VueSysteme(Perspective):
         
         t=self.canevas.gettags("current")
         if t and t[0]!="current":
-            nom=t[0]
-            idplanete=t[2]
-            idsysteme=t[4]
-            self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
             if t[1] == "planete":
+                self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
                 print(t)
                 self.montreplaneteselection()
                 
@@ -176,6 +173,7 @@ class VueSysteme(Perspective):
                 print("IN VAISSEAUINTERSTELLAIRE",t)
                 self.maselection=[self.parent.nom,t[1],t[2]]
                 self.montrevaisseauxselection()  
+                
             # if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
             #  print("IN systeme + select VAISSEAUINTERSTELLAIRE")
             #   self.parent.parent.ciblerdestination(self.maselection[2],t[2])
