@@ -91,12 +91,29 @@ class VueSysteme(Perspective):
         print("Creer station EN CONSTRUCTION")
          
     def afficherpartie(self,mod):
-        pass
+        self.canevas.delete("artefact")
+        e=self.UA2pixel
+        for i in mod.joueurscles:
+            i=mod.joueurs[i]
+            for j in i.vaisseauxinterstellaires:
+                jx=j.x*e
+                jy=j.y*e
+                x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
             
     def changerproprietaire(self):
         pass
                
     def afficherselection(self):
+        e=self.UA2pixel
         if self.maselection!=None:
             joueur=self.modele.joueurs[self.parent.nom]
             if self.maselection[1]=="planete":
@@ -106,8 +123,18 @@ class VueSysteme(Perspective):
                         y=int(self.maselection[4])
                         t=20
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
-                                                 outline=joueur.couleur,
-                                                 tags=("select","selecteur"))
+                                                outline=joueur.couleur,
+                                                tags=("select","selecteur"))
+            elif self.maselection[1]=="vaisseauinterstellaire":
+                for i in joueur.vaisseauxinterstellaires:
+                    if i.id == self.maselection[2]:
+                        x=i.x
+                        y=i.y
+                        t=10
+                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                                    outline=joueur.couleur,
+                                                    tags=("select","selecteur"))
+      
       
     def cliquervue(self,evt):
         self.changecadreetat(None)
