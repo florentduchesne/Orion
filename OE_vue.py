@@ -72,7 +72,7 @@ class Vue():
         self.densitestellaire=Entry(bg="pink")
         self.densitestellaire.insert(0, 25)
         self.qteIA=Entry(bg="pink")
-        self.qteIA.insert(0, 4)
+        self.qteIA.insert(0, 0)
         self.btnlancerpartie=Button(text="Lancer partie",bg="pink",command=self.lancerpartie,state=DISABLED)
         self.canevaslobby.create_window(440,240,window=self.listelobby,width=200,height=400)
         self.canevaslobby.create_window(250,200,window=self.diametre,width=100,height=30)
