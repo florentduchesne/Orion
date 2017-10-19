@@ -3,6 +3,7 @@ from helper import Helper as hlp
 import math
 from OE_objets import *
 from OE_projectile import *
+from numpy.distutils.fcompiler import none
 
 class Vaisseau():
     def __init__(self,parent,nom,systeme,idSuivant):
@@ -16,20 +17,9 @@ class Vaisseau():
         self.x=self.base.x
         self.y=self.base.y
         self.taille=16
-        self.cargo=0
-        self.uranium=1000
-        self.besoinhumain=10
-        self.besoinbronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
-       
-        #variable pour l'attaque à modifier pour les sous-classe
-        self.range=50
-        self.cible=None 
-        self.enAttaque=False
+        self.cible=None
         self.vie = 100 
-        self.listeCibleAttaquer=[]
-        self.systemePresent = systeme
-
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -69,6 +59,17 @@ class Vaisseau():
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
         
+            
+class VaisseauAttaque(Vaisseau):
+    def __init__(self, Degats, portee):
+        self.dommage = Degats
+        self.range = portee
+        self.cibleAttaque=None 
+        self.enAttaque=False
+        self.listeCibleAttaquer=[]
+        
+        
+        
     def attaquer(self):       
         if self.cibleAttaque.vie>0:
             #print(self.cibleAttaque.vie)
@@ -84,5 +85,103 @@ class Vaisseau():
             self.cibleAttaque=None  
             self.planetteCible=None 
             
+class VaisseauCommercial(Vaisseau):
+    def __init__(self, max):
+        self.ressource = Ressource()
+        self.maxRessource = max
+        self.vitesse = 0.001*5
         
+    def RemplirVaisseau(self, ressource, quantite):
+        pass
     
+    def EchangerRessource(self,ressource, quantite):
+        pass
+
+class VaisseauNova(Vaisseau):
+    def __init__(self):
+        self.nova = none
+        self.vitesse = 0.01*5
+    
+    def RecolterNova(self):
+        self.nova += 1
+        
+class VaisseauColonisation(Vaisseau):
+    def __init__(self,maxPersonne, maxAliments):
+        self.maxPersonnes = maxPersonne
+        self.nbPersonne = 0
+        self.maxAliments = maxAliments
+        self.aliments = 0
+        self.vie += self.vie+ 50
+        self.vitesse = 0.003*5
+        
+    def AjouterPersonne (self, nombre):
+        if self.nbPersonne+nombre < self.maxPersonne:
+            self.nbPersonne = self.nbPersonne + nombre
+    
+    def AjouterAliments (self, nombre):   
+        if self.aliments+nombre < self.maxAliments:
+            self.aliments = self.aliments + nombre
+            
+    def DevenirVille (self, planete):
+        pass
+
+class VaisseauSuicide(Vaisseau):
+    def __init__(self, portee):
+        self.dommage = 100
+        self.vie = 50
+        self.vitesse = 0.003*5
+        self.portee = portee
+    
+    def AutoDesctruction(self): 
+        pass
+    
+class VaisseauBiologique(Vaisseau):
+    def __init__(self, maladie):
+        self.maladie = maladie
+        self.vitesse = 0.005*5
+        
+    def IncuberMaladie(self):
+        pass
+    
+    def Contaminer(self):
+        pass
+        
+class VaisseauMere(VaisseauAttaque):
+    def __init__(self, maxVaisseau):
+        self.maxVaisseau = maxVaisseau
+        self.systemePresent = self.base
+        self.attaque = 15
+        self.vie = self.vie * 2
+        self.vitesse = 0.01*5
+    
+    def RemplirVaisseau(self):
+        pass
+
+class VaisseauChaseur(VaisseauAttaque):
+    def __init__(self):
+        self.attaque = 20
+        self.vitesse = 0.001*5
+
+    
+class VaisseauBombarde(VaisseauAttaque):
+    def __init__(self):
+        self.attaque = 30
+        self.vitesse = 0.005*5
+        self.portee = self.portee + 5
+
+class VaisseauLaser(VaisseauAttaque):
+    def __init__(self):
+        self.attaque = 45
+        self.vitesse = 0.01*5
+        self.portee = self.portee + 10
+    
+class VaisseauTank(VaisseauAttaque):
+    def __init__(self):
+        self.attaque = 15
+        self.vie = self.vie + 50
+        self.vitesse = 0.003*5
+        self.portee = self.portee + 5
+    
+
+      
+

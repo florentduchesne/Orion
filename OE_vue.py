@@ -72,7 +72,7 @@ class Vue():
         self.densitestellaire=Entry(bg="pink")
         self.densitestellaire.insert(0, 25)
         self.qteIA=Entry(bg="pink")
-        self.qteIA.insert(0, 4)
+        self.qteIA.insert(0, 0)
         self.btnlancerpartie=Button(text="Lancer partie",bg="pink",command=self.lancerpartie,state=DISABLED)
         self.canevaslobby.create_window(440,240,window=self.listelobby,width=200,height=400)
         self.canevaslobby.create_window(250,200,window=self.diametre,width=100,height=30)
@@ -207,7 +207,7 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))   
     
     def affichertour(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
@@ -226,7 +226,7 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["canon"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im)
-                
+                                
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
         self.parent.fermefenetre()
