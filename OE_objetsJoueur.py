@@ -24,17 +24,28 @@ class Joueur():
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
-                      "creervehicueltank":self.creervehiculetank,
-                      "creervehicuelcommerce":self.creervehiculecommerce,
-                      "creervehicuelavion":self.creervehiculeavion}
-        
-    def creermine(self,listeparams):
+                      "creermur":self.creermur,
+                      "creervehiculetank":self.creervehiculetank,
+                      "creervehiculecommerce":self.creervehiculecommerce,
+                      "creervehiculeavion":self.creervehiculeavion}
+    
+    def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        #self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+
+    def creermine(self,listeparams):
+        print("Joueur mine")
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "mine")
                         j.infrastructures.append(mine)
                         self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
                         
@@ -61,12 +72,16 @@ class Joueur():
                 self.vaisseauxinterstellaires.append(v)
                 return 1            
 
-    def creervehiculetank(self, id):
+    def creervehiculetank(self, listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
         for i in self.systemesvisites:
-            if i.id == id:
-                vt = vehiculeTank(self, self.nom, i, self.parent.createurId.prochainid())
-                self.vehiculeplanetaire.append(vt)
-                return 1
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.vehiculeplanetaire.append(tank)
+                        self.vehiculeplanetaire.append(tank)
+                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y)
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
