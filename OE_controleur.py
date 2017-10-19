@@ -2,7 +2,7 @@
 
 import Pyro4
 import socket
-from subprocess import Popen 
+from subprocess import Popen
 from OE_modele import *
 from OE_vue import *
 from helper import Helper as hlp
@@ -109,7 +109,6 @@ class Controleur():
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
     def creervaisseau(self,planete):
         self.modele.creervaisseau(planete)
-        print("controleur ok")
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def ciblerdestination(self,idorigine,iddestination):

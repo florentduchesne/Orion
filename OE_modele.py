@@ -65,7 +65,6 @@ class Modele():
             
     def creervaisseau(self,planete):
         self.parent.actions.append([self.parent.monnom,"creervaisseau",planete])
-        print("modele ok")
             
     def prochaineaction(self,cadre):
         if cadre in self.actionsafaire:

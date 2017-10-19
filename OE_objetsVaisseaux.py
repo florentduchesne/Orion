@@ -25,8 +25,6 @@ class Vaisseau():
         #variable pour l'attaque à modifier pour les sous-classe
         self.range=50
         self.cible=None 
-
-        print("jexiste")
         self.enAttaque=False
         self.vie = 100 
         self.listeCibleAttaquer=[]
