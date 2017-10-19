@@ -16,7 +16,6 @@ class VueGalaxie(Perspective):
         print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
         self.hauteur=self.largeur
-        
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         #############################
   
