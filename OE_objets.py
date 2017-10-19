@@ -41,6 +41,7 @@ class Planete():
         self.posXatterrissage=random.randrange(5000)
         self.posYatterrissage=random.randrange(5000)
         self.infrastructures=[]
+        self.vehiculeplanetaire=[]
         self.proprietaire="inconnu"
         self.visiteurs={}
         self.distance=dist
