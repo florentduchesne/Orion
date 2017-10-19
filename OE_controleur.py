@@ -109,7 +109,6 @@ class Controleur():
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
     def creervaisseau(self,planete):
         self.modele.creervaisseau(planete)
-        print("controleur ok")
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def ciblerdestination(self,idorigine,iddestination):
