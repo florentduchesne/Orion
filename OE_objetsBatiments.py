@@ -81,6 +81,7 @@ class Mur(BatimentDefense):
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        print("Objet Mur Creer")
         #======================================================
         """RESSOURCE"""
         self.bois=300
@@ -152,6 +153,7 @@ class Canon(BatimentDefense):
 class Puit(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "puit"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
+
         
 class Ferme(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ferme"):
