@@ -122,6 +122,16 @@ class Joueur():
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+       
+        for i in self.vehiculeplanetaire:
+            if i.cible:
+                rep=i.avancer()
+                if rep:
+                    if rep.proprietaire=="inconnu":
+                        if rep not in self.systemesvisites:
+                            self.systemesvisites.append(rep)
+                            self.parent.changerproprietaire(self.nom,self.couleur,rep)
+        
         #self.detecterCible()
        # self.choisirCible()
        # self.retirerVaiseauMort()

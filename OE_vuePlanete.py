@@ -165,7 +165,7 @@ class VuePlanete(Perspective):
                 pass
             elif t[1]=="systeme":
                 pass
-            elif t[2]=="tuile":
+            elif self.maselection == None and t[2]=="tuile":
                 if self.macommande == "mine":
                     x=int(t[1])
                     y=int(t[0])
@@ -201,6 +201,7 @@ class VuePlanete(Perspective):
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                     self.macommande=None
+                    self.maselection=None
                    
                 elif self.macommande == "vehiculecommerce":
                     self.macommande=None
@@ -208,7 +209,10 @@ class VuePlanete(Perspective):
                 elif self.macommande == "vehiculeavion":
                     self.macommande=None
                     pass
-            elif t[2] == "vehiculetank":
+            elif self.maselection != None and t[2] == "tuile":
+                self.maselection = [self.parent.monnom,t[1],t[2]]
+                print("coucou")
+                print(self.maselection)
                 pass
 
             
