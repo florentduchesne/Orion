@@ -152,7 +152,7 @@ class VuePlanete(Perspective):
             if t[0]==self.parent.nom:
                 pass
             elif t[1]=="systeme":
-                pass  
+                pass
             elif t[2]=="tuile":
                 if self.macommande == "mine":
                     x=int(t[1])
