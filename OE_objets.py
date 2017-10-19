@@ -1,9 +1,11 @@
 import random
+import numpy as np
 from helper import Helper as hlp
 import math
 from OE_objetsRessource import Ressource
 from OE_objetsVaisseaux import *
-from OE_objetsInfrastructure import *
+from OE_objetsBatiments import *
+from OE_objetsDeco import *
 
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
@@ -48,13 +50,30 @@ class Planete():
         self.couleur="red"
         self.ressource=Ressource(self)
         self.ressourceACollecter=Ressource(self)
+        self.tuiles = self.generationMap()
         
         #Changer moi, je ne suis pas du tout �quillibr� :(
         self.ressource.Eau=10
         self.ressourceACollecter.bronze=100
         self.ressourceACollecter.titanium=100
         self.ressourceACollecter.uranium=100
-        
+    
+    def generationMap(self): 
+        tuiles = []
+        x = 0
+        y = 0
+        image="gazon","eau"
+        for i in range(0,int((5000/100)+1)):
+            list = []
+            tuiles.append(list)
+            for j in range(0,int((5000/100)+1)):
+                gazon = TuileGazon(x,y,image[random.randrange(2)-1])
+                tuiles[i].append(gazon)
+                x+=100
+            y+=100
+            x=0
+        return tuiles
+       
     def initplanete(self):
         if self.proprietaire != "inconnu":
             self.infrastructures=[Ville(self)]
@@ -73,13 +92,6 @@ class Planete():
             return True
         else :
             return False
-
-class TuileGazon():
-    def __init__(self,x,y):
-        self.taille = 50
-        self.image="gazon"
-        self.x = x
-        self.y = y
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):

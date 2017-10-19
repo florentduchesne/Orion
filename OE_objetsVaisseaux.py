@@ -2,6 +2,7 @@ import random
 from helper import Helper as hlp
 import math
 from OE_objets import *
+from OE_projectile import *
 
 class Vaisseau():
     def __init__(self,parent,nom,systeme,idSuivant):
@@ -20,8 +21,17 @@ class Vaisseau():
         self.besoinhumain=10
         self.besoinbronze= 100
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
+       
+        #variable pour l'attaque à modifier pour les sous-classe
+        self.range=50
         self.cible=None 
+
         print("jexiste")
+        self.enAttaque=False
+        self.vie = 100 
+        self.listeCibleAttaquer=[]
+        self.systemePresent = systeme
+
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -61,3 +71,20 @@ class Vaisseau():
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
         
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            #print(self.cibleAttaque.vie)
+            self.enAttaque=True
+            protile = Projectile(self,self.cibleAttaque)
+            self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
+        else: 
+            #print("retirer cible")
+            self.enAttaque=False         
+            #self.cibleAttaque.proprietaire="inconnu"
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+
+            self.cibleAttaque=None  
+            self.planetteCible=None 
+            
+        
+    

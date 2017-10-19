@@ -3,6 +3,7 @@ from tkinter import *
 from PIL import Image,ImageDraw, ImageTk
 from helper import Helper as hlp
 from OE_vuePerspective import *
+import OE_objetsBatiments
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -19,7 +20,7 @@ class VuePlanete(Perspective):
         self.hauteur=self.largeur
         
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
-        self.canevas.config(bg="sandy brown")
+        self.canevas.config(bg="green")
         
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
         self.btncreervaisseau.pack()
@@ -33,6 +34,15 @@ class VuePlanete(Perspective):
     
     def creermine(self):
         self.macommande="mine"
+        
+    def creervehiculetank(self):
+        self.macommande="vehiculetank"
+        
+    def creervehiculecommerce(self):
+        self.macommande="vehiculecommerce"
+        
+    def creervehiculeavion(self):
+        self.macommande="vehiculeavion"
     
     def creermanufacture(self):
         pass
@@ -64,6 +74,10 @@ class VuePlanete(Perspective):
         UAmini=4
         self.minimap.config(bg="green")
          #Dessin des tuiles de pelouse sur la surface de la map.
+        for rows in p.tuiles:
+            for t in rows:
+                self.canevas.create_image(t.x,t.y,image=self.images[t.image])
+        """
         x = 0
         y = 0
         for i in range(0,int((self.hauteur/50) +1)):
@@ -72,10 +86,12 @@ class VuePlanete(Perspective):
                 x+=50
             y+=50
             x=0
-            
+        """  
+        scrollBarX = 0
+        scrollBarY = 0
         #Dessin des infrastructues de la planete.
         for i in p.infrastructures:
-            if i.type == "ville":
+            if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"])
@@ -95,12 +111,14 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/ville_50.png")
+        im = Image.open("./images/ville_100.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/mine_50.png")
+        im = Image.open("./images/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/gazon50x50.png")
+        im = Image.open("./images/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/eau100x100.png")
+        self.images["eau"] = ImageTk.PhotoImage(im)
 		
     def afficherdecor(self):
         pass
@@ -136,6 +154,15 @@ class VuePlanete(Perspective):
                 miniy = (y *200) / self.hauteur
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                 self.macommande=None
+            elif self.macommande == "vehiculetank":
+                self.macommande=None
+                pass
+            elif self.macommande == "vehiculecommerce":
+                self.macommande=None
+                pass
+            elif self.macommande == "vehiculeavion":
+                self.macommande=None
+                pass
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)
