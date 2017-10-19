@@ -1,6 +1,13 @@
 from OE_objetsRessource import Ressource
 
-listeDesCoutsBatiments = {"Mine":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+#Dictionnaire Des couts, d'allocation et de l'age.
+# Exemple d'utilisation
+# dictionaireCouteAllocationAgeBatiments["Mine"][0] C'est le cout
+# dictionaireCouteAllocationAgeBatiments["Mine"][1] C'est l'allocation maximum du batiment
+# dictionaireCouteAllocationAgeBatiments["Mine"][2] C'est l'age requis, l'age 1 est celle de base
+
+dictionaireCouteAllocationAgeBatiments = {
+"Mine":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Mine2":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Mine3":[Ressource(bois=500, titanium=300), Ressource(allocationElectricite=10, allocationHumain=10), 3],
 "Camp_Bucherons":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
