@@ -19,6 +19,7 @@ class Vaisseau():
         self.taille=16
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
+        self.vie = 100 
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -65,7 +66,6 @@ class VaisseauAttaque(Vaisseau):
         self.range = portee
         self.cibleAttaque=None 
         self.enAttaque=False
-        self.vie = 100 
         self.listeCibleAttaquer=[]
         
         
@@ -89,6 +89,7 @@ class VaisseauCommercial(Vaisseau):
     def __init__(self, max):
         self.ressource = Ressource()
         self.maxRessource = max
+        self.vitesse = 0.001*5
         
     def RemplirVaisseau(self, ressource, quantite):
         pass
@@ -99,6 +100,7 @@ class VaisseauCommercial(Vaisseau):
 class VaisseauNova(Vaisseau):
     def __init__(self):
         self.nova = none
+        self.vitesse = 0.01*5
     
     def RecolterNova(self):
         self.nova += 1
@@ -109,6 +111,8 @@ class VaisseauColonisation(Vaisseau):
         self.nbPersonne = 0
         self.maxAliments = maxAliments
         self.aliments = 0
+        self.vie += self.vie+ 50
+        self.vitesse = 0.003*5
         
     def AjouterPersonne (self, nombre):
         if self.nbPersonne+nombre < self.maxPersonne:
@@ -122,8 +126,11 @@ class VaisseauColonisation(Vaisseau):
         pass
 
 class VaisseauSuicide(Vaisseau):
-    def __init__(self):
+    def __init__(self, portee):
         self.dommage = 100
+        self.vie = 50
+        self.vitesse = 0.003*5
+        self.portee = portee
     
     def AutoDesctruction(self): 
         pass
@@ -131,6 +138,7 @@ class VaisseauSuicide(Vaisseau):
 class VaisseauBiologique(Vaisseau):
     def __init__(self, maladie):
         self.maladie = maladie
+        self.vitesse = 0.005*5
         
     def IncuberMaladie(self):
         pass
@@ -142,25 +150,37 @@ class VaisseauMere(VaisseauAttaque):
     def __init__(self, maxVaisseau):
         self.maxVaisseau = maxVaisseau
         self.systemePresent = self.base
+        self.attaque = 15
+        self.vie = self.vie * 2
+        self.vitesse = 0.01*5
     
     def RemplirVaisseau(self):
         pass
 
 class VaisseauChaseur(VaisseauAttaque):
     def __init__(self):
-        pass
+        self.attaque = 20
+        self.vitesse = 0.001*5
+
     
 class VaisseauBombarde(VaisseauAttaque):
     def __init__(self):
-        pass
+        self.attaque = 30
+        self.vitesse = 0.005*5
+        self.portee = self.portee + 5
 
 class VaisseauLaser(VaisseauAttaque):
     def __init__(self):
-        pass
+        self.attaque = 45
+        self.vitesse = 0.01*5
+        self.portee = self.portee + 10
     
 class VaisseauTank(VaisseauAttaque):
     def __init__(self):
-        pass
+        self.attaque = 15
+        self.vie = self.vie + 50
+        self.vitesse = 0.003*5
+        self.portee = self.portee + 5
     
 
       
