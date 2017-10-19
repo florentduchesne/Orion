@@ -1,12 +1,12 @@
 import OE_objetsBatiments
-from ListeDesCoutsEtAllocationBatiments import listeDesCoutsBatiments
+from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments
 
 class ConstructeurBatimentHelper():
     def __init__(self):
         self.dictionnaire = self.creerDictionnaire()
     
     def creerDictionnaire(self):
-        return listeDesCoutsBatiments
+        return dictionnaireCoutAllocationAgeBatiments
     
     def construireBatiment(self, ressourceJoueur, nomBatiment):
         coutBatiment = self.dictionnaire[nomBatiment][0]
