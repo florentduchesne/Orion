@@ -63,8 +63,9 @@ class Modele():
             self.joueurs[nomia]=ia  #IA
             self.ias.append(ia)  #IA
             
-    def creervaisseau(self,systeme):
-        self.parent.actions.append([self.parent.monnom,"creervaisseau",systeme])
+    def creervaisseau(self,planete):
+        self.parent.actions.append([self.parent.monnom,"creervaisseau",planete])
+        print("modele ok")
             
     def prochaineaction(self,cadre):
         if cadre in self.actionsafaire:

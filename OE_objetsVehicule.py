@@ -3,9 +3,10 @@
 
 
 class Vehicule():
-    def __init__(self, parent, nom, planete, idSuivant):
+    def __init__(self, parent, nom, planete, idSuivant, idplanete):
         self.parent = parent
         self.id = idSuivant
+        self.idplanete = idplanete
         self.proprietaire = nom
         self.taille = 0 #a noter dans les sous-classes de vehicule
         self.base = planete
@@ -15,7 +16,7 @@ class Vehicule():
         self.y=self.base.y
         self.cible=None 
         
-    def cibleDestination(self):
+    def ciblerDestination(self):
         pass
     
     def rechargeBatterie(self):

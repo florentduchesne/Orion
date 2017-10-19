@@ -91,7 +91,7 @@ class Controleur():
                 self.vue.modecourant.afficherpartie(self.modele) # mise a jour de la vue
             if rep[0]: # si le premier element de reponse n'est pas vide
                 for i in rep[2]:   # pour chaque action a faire (rep[2] est dictionnaire d'actions en provenance des participants
-                                   # dont les cles sont les cadres durant lesquels ses actions devront etre effectuees
+                    # dont les cles sont les cadres durant lesquels ses actions devront etre effectuees
                     if i not in self.modele.actionsafaire.keys(): # si la cle i n'existe pas
                         self.modele.actionsafaire[i]=[] #faire une entree dans le dictonnaire
                     for k in rep[2][i]: # pour toutes les actions lies a une cle du dictionnaire d'actions recu
@@ -107,8 +107,9 @@ class Controleur():
         self.vue.root.destroy()
         
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
-    def creervaisseau(self,systeme):
-        self.modele.creervaisseau(systeme)
+    def creervaisseau(self,planete):
+        self.modele.creervaisseau(planete)
+        print("controleur ok")
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def ciblerdestination(self,idorigine,iddestination):

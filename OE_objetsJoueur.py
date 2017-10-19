@@ -55,12 +55,16 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,id):
+        print("Karine a trouver le probleme")
         for i in self.systemesvisites:
+            print(i.id)
+            print(id)
             if i.id==id:
                 v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid())
                 self.vaisseauxinterstellaires.append(v)
-                return 1
-            
+                print("coucouc joueur")
+                return 1            
+
     def creervehiculetank(self, id):
         for i in self.systemesvisites:
             if i.id == id:

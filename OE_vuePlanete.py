@@ -20,7 +20,7 @@ class VuePlanete(Perspective):
         self.hauteur=self.largeur
         
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
-        self.canevas.config(bg="sandy brown")
+        self.canevas.config(bg="green")
         
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
         self.btncreervaisseau.pack()
@@ -111,12 +111,14 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/ville_50.png")
+        im = Image.open("./images/ville_100.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/mine_50.png")
+        im = Image.open("./images/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/gazon50x50.png")
+        im = Image.open("./images/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/eau100x100.png")
+        self.images["eau"] = ImageTk.PhotoImage(im)
 		
     def afficherdecor(self):
         pass
