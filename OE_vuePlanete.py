@@ -79,7 +79,7 @@ class VuePlanete(Perspective):
          #Dessin des tuiles de pelouse sur la surface de la map.
         for rows in p.tuiles:
             for t in rows:
-                self.canevas.create_image(t.x,t.y,image=self.images[t.image])
+                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(t.x,t.y,"tuile"))
         """
         x = 0
         y = 0
@@ -147,10 +147,13 @@ class VuePlanete(Perspective):
       
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
+        print(t)
         if t and t[0]!="current":
             if t[0]==self.parent.nom:
                 pass
             elif t[1]=="systeme":
+                """
+<<<<<<< HEAD
                 pass
         else:
             if self.macommande == "mine":
@@ -181,6 +184,38 @@ class VuePlanete(Perspective):
             elif self.macommande == "vehiculeavion":
                 self.macommande=None
                 pass
+=======
+                pass  
+                """
+            elif t[2]=="tuile":
+                if self.macommande == "mine":
+                    x=int(t[1])
+                    y=int(t[0])
+                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
+                    self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                    minix = (x *200) / self.largeur
+                    miniy = (y *200) / self.hauteur
+                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                    self.macommande=None
+                elif self.macommande == "vehiculetank":
+                    x=self.canevas.canvasx(evt.x)
+                    y=self.canevas.canvasy(evt.y)
+                    self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                    minix = (x *200) / self.largeur
+                    miniy = (y *200) / self.hauteur
+                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                    #(30, 10, 120, 80, outline="#fb0", fill="#fb0")
+                    """
+                        creer l'image du vehicule avec la grandeur...
+                    """
+                    self.macommande=None
+                   
+                elif self.macommande == "vehiculecommerce":
+                    self.macommande=None
+                    pass
+                elif self.macommande == "vehiculeavion":
+                    self.macommande=None
+                    pass
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)
