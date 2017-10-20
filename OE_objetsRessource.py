@@ -24,9 +24,6 @@ class Ressource():
         if self.uranium < ressource.uranium:
             return False
         #if self.humain >= ressource.humain:# - ressource.allocationHumain:
-        #    print("elec :")
-        #    print(self.electricite)
-        #    print(ressource.electricite)
         #    return False
         if self.nourriture < ressource.nourriture:
             return False

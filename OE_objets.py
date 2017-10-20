@@ -92,13 +92,14 @@ class Planete():
         print('print proprio : ', proprio)
         self.proprietaire=proprio
 
+    """
     def creerMineRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain)> 0 and (self.joueur.ressource.electricite - self.besoinelectricite) > 0:
             self.ressource.Humain-self.besoinhumain;
             self.ressource.Electricite-self.besoinelectricite;
             return True
         else :
-            return False
+            return False"""
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
