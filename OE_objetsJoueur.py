@@ -145,21 +145,24 @@ class Joueur():
                         for p in j.planetes:
                             if p.id== iddesti:
                                 #i.cible=j
- #                               i.ciblerdestination(p)
-                                i.ciblerdestination(Coord(xy))
+                                print("cible trouver")
+                                i.ciblerdestination(p)
+                                
+                                #i.ciblerdestination(Coord(xy))
                                 return
                 for j in self.systemesvisites:
                     if j.id== idsyteme:
                         for p in j.planetes:
                             if p.id== iddesti:
                                 #i.cible=j
-  #                              i.ciblerdestination(p)
-                                i.ciblerdestination(Coord(xy))
+                                i.ciblerdestination(p)
+                                #i.ciblerdestination(Coord(xy))
                                 return
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
             if i.cible:
+                print("avancer")
                 rep=i.avancer()
                 if rep:
                     if rep.proprietaire=="inconnu":

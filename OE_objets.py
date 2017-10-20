@@ -34,7 +34,7 @@ class Pulsar():
             self.taille=self.mintaille+(self.moment*self.pas)
                 
 class Planete():
-    def __init__(self,parent,type,dist,taille,angle,idSuivant):
+    def __init__(self,parent,type,dist,taille,angle,idSuivant,x,y):
         self.parent=parent
         self.id=idSuivant #ici
         self.parent=parent
@@ -52,9 +52,9 @@ class Planete():
         self.ressource=Ressource()
         self.ressourceACollecter=Ressource(self)
         self.tuiles = self.generationMap()
-   #     self.x
-    #    self.y
-     #   
+        self.x = x
+        self.y =y
+       
         #Changer moi, je ne suis pas du tout �quillibr� :(
         self.ressource.Eau=10
         self.ressourceACollecter.bronze=100
@@ -130,8 +130,11 @@ class Systeme():
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(50)/100 # en masse solaire
                 angle=random.randrange(360)
-
-                planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid())
+                x,y=hlp.getAngledPoint((math.radians(angle)),distsol,self.x,self.y)
+                x = self.diametre/2 +x
+                y = self.diametre/2 +y
+                print(x,y)
+                planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
                 planete.initplanete()
                 self.planetes.append(planete)#ici
                 
