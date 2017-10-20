@@ -50,16 +50,18 @@ class Planete():
         self.angle=angle
         self.couleur="red"
         self.ressource=Ressource()
-        self.ressourceACollecter=Ressource(self)
+        self.ressourceACollecter=Ressource()
         self.tuiles = self.generationMap()
         self.x = x
         self.y =y
        
         #Changer moi, je ne suis pas du tout �quillibr� :(
-        self.ressource.Eau=10
-        self.ressourceACollecter.bronze=100
-        self.ressourceACollecter.titanium=100
-        self.ressourceACollecter.uranium=100
+        self.ressource.eau=10
+        self.ressource.bois=100
+        self.ressource.bronze=100
+        self.ressourceACollecter.bronze=2000
+        self.ressourceACollecter.titanium=2000
+        self.ressourceACollecter.uranium=2000
     
     def generationMap(self): 
         tuiles = []

@@ -10,7 +10,7 @@ class ConstructeurBatimentHelper():
     
     def construireBatiment(self, ressourceJoueur, nomBatiment):
         coutBatiment = self.dictionnaire[nomBatiment][0]
-        if(ressourceJoueur.estPlusGrandQue(coutBatiment)):
+        if(ressourceJoueur.estPlusGrandOuEgal(coutBatiment)):
             ressourceJoueur.soustraireRessources(coutBatiment)
             print("assez de ressources")
             return True
