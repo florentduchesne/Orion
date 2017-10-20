@@ -20,14 +20,8 @@ class Ressource():
         #self.argent=0
     def estPlusGrandOuEgal(self, ressource):
         if self.electricite < ressource.electricite:# - ressource.allocationElectricite:
-            print("elec :")
-            print(self.electricite)
-            print(ressource.electricite)
             return False
         if self.uranium < ressource.uranium:
-            print("elec :")
-            print(self.electricite)
-            print(ressource.electricite)
             return False
         #if self.humain >= ressource.humain:# - ressource.allocationHumain:
         #    print("elec :")
@@ -37,14 +31,8 @@ class Ressource():
         if self.nourriture < ressource.nourriture:
             return False
         if self.eau < ressource.eau:
-            print("elec :")
-            print(self.electricite)
-            print(ressource.electricite)
             return False
         if self.bronze < ressource.bronze:
-            print("elec :")
-            print(self.bronze)
-            print(ressource.bronze)
             return False
         if self.titanium < ressource.titanium:
             return False
@@ -53,9 +41,6 @@ class Ressource():
         #if self.allocationElectricite >= ressource.allocationElectricite:
         #    return False
         if self.bois < ressource.bois:
-            print("bois :")
-            print(self.bois)
-            print(ressource.bois)
             return False
         if self.charbon < ressource.charbon:
             return False

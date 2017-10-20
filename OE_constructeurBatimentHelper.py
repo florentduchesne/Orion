@@ -16,4 +16,8 @@ class ConstructeurBatimentHelper():
             return True
         else:
             print("pas assez de ressources")
+            print("cout : ")
+            print(coutBatiment)
+            print("ressources disponibles :")
+            print(ressourceJoueur)
             return False
