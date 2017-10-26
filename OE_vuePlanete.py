@@ -234,22 +234,23 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[2]=="tuile":
-                if self.macommande == "vehiculetank":
-                    x=self.canevas.canvasx(evt.x)
-                    y=self.canevas.canvasy(evt.y)
-                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
-
-                    self.macommande=None
-                    self.maselection=None
-                else:
-                    x=int(t[1])
-                    y=int(t[0])
-                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
-                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                    self.macommande=None
+                if self.macommande is not None:
+                    if self.macommande == "vehiculetank":
+                        x=self.canevas.canvasx(evt.x)
+                        y=self.canevas.canvasy(evt.y)
+                        self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
+                        minix = (x *200) / self.largeur
+                        miniy = (y *200) / self.hauteur
+                        self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
+    
+                        self.macommande=None
+                        self.maselection=None
+                    else:
+                        x=int(t[1])
+                        y=int(t[0])
+                        print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
+                        self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                        self.macommande=None
             elif self.maselection != None and t[2] == "tuile":
                 self.maselection = [self.parent.monnom,t[1],t[2]]
                 print("coucou")
