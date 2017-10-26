@@ -1,5 +1,5 @@
 import OE_objetsRessource
-
+import math
 #super-classe des mines, camps de bucherons, etc.
 class BatimentRessources():
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment):
@@ -50,8 +50,11 @@ class StationSpatiale(BatimentDefense):
         self.id=idsuivant
         self.x=x
         self.y=y
+        self.planetex = x
+        self.planetey = y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        self.angle=0
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
@@ -62,6 +65,12 @@ class StationSpatiale(BatimentDefense):
         self.dommage=50
         self.protection=100
         #======================================================
+    
+    def orbiter(self):
+        self.angle +=1
+        if self.angle >= 360:
+            self.angle -= 360
+        
     
     def AugmenterNiveau(self):
         coutTitanium=10

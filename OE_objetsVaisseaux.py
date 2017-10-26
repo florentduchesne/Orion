@@ -6,7 +6,7 @@ from OE_projectile import *
 from numpy.distutils.fcompiler import none
 
 class Vaisseau():
-    def __init__(self,parent,nom,systeme,idSuivant,niveau):
+    def __init__(self,parent,nom,systeme,idSuivant):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -14,13 +14,13 @@ class Vaisseau():
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
-        self.x=5
-        self.y=5
-        self.taille=16
+        self.x=35
+        self.y=35
+        self.taille=30
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau = niveau
+        self.niveau = 1
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -48,8 +48,10 @@ class Vaisseau():
 
             x=self.cible.x
             y=self.cible.y
+            self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
+            
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
                 self.cible=None

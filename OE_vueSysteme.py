@@ -31,6 +31,7 @@ class VueSysteme(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
         self.btnvuesysteme.pack(side=BOTTOM)
+
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
@@ -106,16 +107,16 @@ class VueSysteme(Perspective):
             self.canevas.delete("selecteur")
            
     def creerstation(self):
-        print("Creer station EN CONSTRUCTION")
-         
+        print("Creer station EN CONSTRUCTION")  
+
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                jx=j.y*e
-                jy=j.x*e
+                jx=j.x*e
+                jy=j.y*e
                 x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
                 x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                 x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)

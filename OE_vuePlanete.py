@@ -67,8 +67,9 @@ class VuePlanete(Perspective):
         
         
         ##############AUTRES##############
-        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
-        self.btncreerstation.pack()
+        
+        #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
+        #self.btncreerstation.pack()
         
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
@@ -190,22 +191,23 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/ville_100.png")
+        im = Image.open("./images/Batiments/ville_100.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/mine_100.png")
+        im = Image.open("./images/Batiments/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/gazon100x100.png")
+        im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/eau100x100.png")
+        im = Image.open("./images/Tiles/eau100x100.png")
         self.images["eau"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/tankhaut.png")
+        im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/tour1.png")
+        im = Image.open("./images/Batiments/tour1.png")
         self.images["tour"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/wall.png")
+        im = Image.open("./images/Batiments/wall.png")
         self.images["mur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/canon.png")
+        im = Image.open("./images/Batiments/canon.png")
         self.images["canon"] = ImageTk.PhotoImage(im)
+    
 		
     def afficherdecor(self):
         pass
@@ -244,6 +246,7 @@ class VuePlanete(Perspective):
                 pass
             elif t[1]=="systeme":
                 pass
+#<<<<<<< HEAD
             elif self.maselection == None and t[4]=="tuile":
                 if self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)
@@ -261,8 +264,9 @@ class VuePlanete(Perspective):
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande=None
+            
             '''
-            elif self.maselection != None and t[4] == "tuile":
+            elif self.maselection != None and t[2] == "tuile":
                 self.maselection = [self.parent.monnom,t[1],t[2]]
                 print("coucou")
                 print(self.maselection)
