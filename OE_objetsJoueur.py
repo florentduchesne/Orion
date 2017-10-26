@@ -205,7 +205,7 @@ class Joueur():
 class IA(Joueur):
     def __init__(self,parent,nom,systemeorigine,couleur):
         Joueur.__init__(self,parent,nom,systemeorigine,couleur)
-        self.contexte="galaxie"
+        self.contexte="systeme"
         self.delaiaction=random.randrange(5,10)*20  # le delai est calcule pour chaque prochaine action en seconde
         #self.derniereaction=time.time()
         
@@ -217,7 +217,7 @@ class IA(Joueur):
     def analysesituation(self):
         #t=time.time()
         if self.delaiaction==0:
-            if self.contexte=="galaxie":
+            if self.contexte=="systeme":
                 if len(self.vaisseauxinterstellaires)==0:
                     c=self.parent.parent.cadre+5
                     if c not in self.parent.actionsafaire.keys(): 
