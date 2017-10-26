@@ -67,8 +67,9 @@ class VuePlanete(Perspective):
         
         
         ##############AUTRES##############
-        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
-        self.btncreerstation.pack()
+        
+        #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
+        #self.btncreerstation.pack()
         
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
@@ -206,6 +207,7 @@ class VuePlanete(Perspective):
         self.images["mur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/canon.png")
         self.images["canon"] = ImageTk.PhotoImage(im)
+    
 		
     def afficherdecor(self):
         pass
