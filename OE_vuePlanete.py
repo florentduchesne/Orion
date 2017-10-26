@@ -191,7 +191,7 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/Batiments/cc.png")
+        im = Image.open("./images/Batiments/Ville1.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
