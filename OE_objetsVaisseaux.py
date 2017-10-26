@@ -6,7 +6,7 @@ from OE_projectile import *
 from numpy.distutils.fcompiler import none
 
 class Vaisseau():
-    def __init__(self,parent,nom,systeme,idSuivant,niveau):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -14,13 +14,14 @@ class Vaisseau():
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
-        self.x=5
-        self.y=5
-        self.taille=16
+        self.x=x-1
+        self.y=y-1
+        self.taille=30
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau = niveau
+        self.niveau = 1
+        self.idSysteme =idSysteme
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -44,12 +45,14 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
-            print(self.cible.x,self.x,self.cible.y,self.y)
+           # print(self.cible.x,self.x,self.cible.y,self.y)
 
             x=self.cible.x
             y=self.cible.y
+            self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
+            
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
                 self.cible=None
@@ -127,8 +130,7 @@ class VaisseauCommercial(Vaisseau):
         self.niveau += 1
         if self.niveau%2:
             self.maxRessources += 5
-        if self.niveau%5 == 0:
-            self.portee+=1
+      
 
 class VaisseauNova(Vaisseau):
     def __init__(self):
@@ -164,9 +166,7 @@ class VaisseauColonisation(Vaisseau):
             self.maxAliments +=1
         else :
             self.maxPersonnes +=1
-            
-        if self.niveau%5 == 0:
-            self.portee+=1
+        
         
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):

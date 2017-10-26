@@ -155,7 +155,7 @@ class VuePlanete(Perspective):
          #Dessin des tuiles de pelouse sur la surface de la map.
         for rows in p.tuiles:
             for t in rows:
-                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(t.x,t.y,"tuile"))
+                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(None, None, t.x,t.y,"tuile"))
         """
         x = 0
         y = 0
@@ -173,7 +173,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"])               
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"tuile"))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
                 
@@ -191,22 +191,24 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/ville_100.png")
+        im = Image.open("./images/Batiments/cc.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/mine_100.png")
+        im = Image.open("./images/Batiments/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/gazon100x100.png")
+        im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/eau100x100.png")
+        im = Image.open("./images/Tiles/eau100x100.png")
         self.images["eau"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/tankhaut.png")
+        im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/tour1.png")
+        im = Image.open("./images/Batiments/canon.png")
         self.images["tour"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/wall.png")
+        im = Image.open("./images/Batiments/wall.png")
         self.images["mur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/canon.png")
+        im = Image.open("./images/Batiments/canon1.png").resize((100,100))
         self.images["canon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/bouclier.png")
+        self.images["bouclier"] = ImageTk.PhotoImage(im)
     
 		
     def afficherdecor(self):
@@ -228,34 +230,50 @@ class VuePlanete(Perspective):
         t=self.canevas.gettags("current")
         print("print t")
         print(t)
+        
+        
+        if self.maselection ==None and t[4] != 'tuile':
+            self.maselection = t
+            pass
+        elif self.maselection != None and t[4] == 'tuile':
+            if self.maselection[4] == 'vehiculetank': 
+                print('le tank va finir par avancer!!!')
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1])
+                self.maselection = None                
+                pass
+        
+        
+        
         if t and t[0]!="current":
             if t[0]==self.parent.nom:
                 pass
             elif t[1]=="systeme":
                 pass
-            elif self.maselection == None and t[2]=="tuile":
-                if self.macommande is not None:
-                    if self.macommande == "vehiculetank":
-                        x=self.canevas.canvasx(evt.x)
-                        y=self.canevas.canvasy(evt.y)
-                        self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                        minix = (x *200) / self.largeur
-                        miniy = (y *200) / self.hauteur
-                        self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
-    
-                        self.macommande=None
-                        self.maselection=None
-                    else:
-                        x=int(t[1])
-                        y=int(t[0])
-                        print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
-                        self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                        self.macommande=None
+            elif self.maselection == None and t[4]=="tuile":
+                if self.macommande == "vehiculetank":
+                    x=self.canevas.canvasx(evt.x)
+                    y=self.canevas.canvasy(evt.y)
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
+                    minix = (x *200) / self.largeur
+                    miniy = (y *200) / self.hauteur
+                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
+
+                    self.macommande=None
+                    self.maselection=None
+                elif self.macommande != None:
+                    x=int(t[3])
+                    y=int(t[2])
+                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                    self.macommande=None
+            
+            '''
             elif self.maselection != None and t[2] == "tuile":
                 self.maselection = [self.parent.monnom,t[1],t[2]]
                 print("coucou")
                 print(self.maselection)
                 pass
+            '''
 
             
     def montresystemeselection(self):
@@ -281,10 +299,10 @@ class VuePlanete(Perspective):
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
     
-    def afficherBatiment(self, x, y, im):
+    def afficherBatiment(self, x, y, im, t):
         minix = (x *200) / self.largeur
         miniy = (y *200) / self.hauteur
-        self.canevas.create_image(x,y, image=im)
+        self.canevas.create_image(x,y, image=im, tags = t)
         self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
         
     def afficherMine(self, x, y, im):
