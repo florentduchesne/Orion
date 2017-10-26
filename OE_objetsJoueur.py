@@ -106,12 +106,17 @@ class Joueur():
             if i.id==systeme_id:
                 self.systemesvisites.append(i)
                 
-    def creervaisseau(self,id):
+    def creervaisseau(self,ids):
+        idsystem,idplanete=ids
         for i in self.systemesvisites:
-            if i.id==id:
-                v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid())
-                self.vaisseauxinterstellaires.append(v)
-                return 1            
+            if i.id==idsystem:
+                for p in i.planetes:
+                    print("vais creer")
+                    if idplanete==p.id:
+                        print("vais creer")
+                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        self.vaisseauxinterstellaires.append(v)
+                        return 1            
 
     def creervehiculetank(self, listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -165,7 +170,7 @@ class Joueur():
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
             if i.cible:
-                print("avancer")
+                #print("avancer")
                 rep=i.avancer()
                 if rep:
                     if rep.proprietaire=="inconnu":

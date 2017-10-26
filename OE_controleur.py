@@ -107,8 +107,8 @@ class Controleur():
         self.vue.root.destroy()
         
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
-    def creervaisseau(self,planete):
-        self.modele.creervaisseau(planete)
+    def creervaisseau(self,systeme,planete):
+        self.modele.creervaisseau(systeme,planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
