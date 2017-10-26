@@ -60,7 +60,10 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid()) 
+                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.infrastructures.append(bouclier)
+                        self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
+                        
     
     def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
