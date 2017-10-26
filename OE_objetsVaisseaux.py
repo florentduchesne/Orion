@@ -129,8 +129,7 @@ class VaisseauCommercial(Vaisseau):
         self.niveau += 1
         if self.niveau%2:
             self.maxRessources += 5
-        if self.niveau%5 == 0:
-            self.portee+=1
+      
 
 class VaisseauNova(Vaisseau):
     def __init__(self):
@@ -166,9 +165,7 @@ class VaisseauColonisation(Vaisseau):
             self.maxAliments +=1
         else :
             self.maxPersonnes +=1
-            
-        if self.niveau%5 == 0:
-            self.portee+=1
+        
         
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):

@@ -191,7 +191,7 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/Batiments/ville_100.png")
+        im = Image.open("./images/Batiments/cc.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine_100.png")
         self.images["mine"] = ImageTk.PhotoImage(im)
@@ -201,12 +201,14 @@ class VuePlanete(Perspective):
         self.images["eau"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/Batiments/tour1.png")
+        im = Image.open("./images/Batiments/canon.png")
         self.images["tour"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/wall.png")
         self.images["mur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/Batiments/canon.png")
+        im = Image.open("./images/Batiments/canon1.png").resize((100,100))
         self.images["canon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/bouclier.png")
+        self.images["bouclier"] = ImageTk.PhotoImage(im)
     
 		
     def afficherdecor(self):
