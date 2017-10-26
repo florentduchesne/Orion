@@ -48,68 +48,222 @@ class Vue():
     def creercadreJeu(self):
         self.cadrejeu=Frame(self.root,bg="blue")
         
-        self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg="SpringGreen3")
+        self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg="LightSteelBlue4")
         self.cadreRessourcesJoueur.pack(fill=X)
         
-        self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg="SpringGreen4")
+        self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg="SkyBlue4")
         self.cadreRessourcesPlanete.pack(fill=X)
-        self.titrePlanete = Label(self.cadreRessourcesPlanete,text="Planete",bg="SpringGreen4")
-        self.titrePlanete.grid(row=0,column=0)
+        
         self.envoyerRessourcesVersCadreJoueur()
+        self.envoyerRessourcesVersCadrePlanete()
         
     def envoyerRessourcesVersCadreJoueur(self):
         self.chargerImagesRes()
         i = 0
-        self.titreJoueur = Label(self.cadreRessourcesJoueur,text="Joueur: ",bg="SpringGreen3")
+        couleur = "LightSteelBlue4"
+        cadre = self.cadreRessourcesJoueur
+        self.titreJoueur = Label(cadre,text="Joueur: ",bg=couleur)
         self.titreJoueur.grid(row=0,column=i)
         i+=1
-        self.imgUra = Label(self.cadreRessourcesJoueur,image=self.images["uranium"],bg="SpringGreen3")
+        self.imgUra = Label(cadre,image=self.images["uranium"],bg=couleur)
         self.imgUra.grid(row=0,column=i)
         i+=1
-        self.imgTita = Label(self.cadreRessourcesJoueur,image=self.images["titanium"],bg="SpringGreen3")
+        self.qteJrUranium = Label(cadre,text="0",bg=couleur)
+        self.qteJrUranium.grid(row=0,column=i)
+        i+=1
+        self.imgTita = Label(cadre,image=self.images["titanium"],bg=couleur)
         self.imgTita.grid(row=0,column=i)
         i+=1
-        self.imgLac = Label(self.cadreRessourcesJoueur,image=self.images["lacrima"],bg="SpringGreen3")
+        self.qteJrTitanium = Label(cadre,text="0",bg=couleur)
+        self.qteJrTitanium.grid(row=0,column=i)
+        i+=1
+        self.imgLac = Label(cadre,image=self.images["lacrima"],bg=couleur)
         self.imgLac.grid(row=0,column=i)
         i+=1
-        self.imgSante = Label(self.cadreRessourcesJoueur,image=self.images["sante"],bg="SpringGreen3")
+        self.qteJrLacrima = Label(cadre,text="0",bg=couleur)
+        self.qteJrLacrima.grid(row=0,column=i)
+        i+=1
+        self.imgSante = Label(cadre,image=self.images["sante"],bg=couleur)
         self.imgSante.grid(row=0,column=i)
         i+=1
-        self.imgptScience = Label(self.cadreRessourcesJoueur,image=self.images["point_Science"],bg="SpringGreen3")
+        self.qteJrSante = Label(cadre,text="0",bg=couleur)
+        self.qteJrSante.grid(row=0,column=i)
+        i+=1
+        self.imgptScience = Label(cadre,image=self.images["point_Science"],bg=couleur)
         self.imgptScience.grid(row=0,column=i)
         i+=1
-        self.imgNourr = Label(self.cadreRessourcesJoueur,image=self.images["nourriture"],bg="SpringGreen3")
+        self.qteJrScience = Label(cadre,text="0",bg=couleur)
+        self.qteJrScience.grid(row=0,column=i)
+        i+=1
+        self.imgNourr = Label(cadre,image=self.images["nourriture"],bg=couleur)
         self.imgNourr.grid(row=0,column=i)
         i+=1
-        self.imgHum = Label(self.cadreRessourcesJoueur,image=self.images["humain"],bg="SpringGreen3")
+        self.qteJrNourriture = Label(cadre,text="0",bg=couleur)
+        self.qteJrNourriture.grid(row=0,column=i)
+        i+=1
+        self.imgHum = Label(cadre,image=self.images["humain"],bg=couleur)
         self.imgHum.grid(row=0,column=i)
         i+=1
-        self.imgElec = Label(self.cadreRessourcesJoueur,image=self.images["electricite"],bg="SpringGreen3")
+        self.qteJrHumain = Label(cadre,text="0",bg=couleur)
+        self.qteJrHumain.grid(row=0,column=i)
+        i+=1
+        self.imgElec = Label(cadre,image=self.images["electricite"],bg=couleur)
         self.imgElec.grid(row=0,column=i)
         i+=1
-        self.imgEau = Label(self.cadreRessourcesJoueur,image=self.images["eau"],bg="SpringGreen3")
+        self.qteJrElectricite = Label(cadre,text="0",bg=couleur)
+        self.qteJrElectricite.grid(row=0,column=i)
+        i+=1
+        self.imgEau = Label(cadre,image=self.images["eau"],bg=couleur)
         self.imgEau.grid(row=0,column=i)
         i+=1
-        self.imgBr = Label(self.cadreRessourcesJoueur,image=self.images["bronze"],bg="SpringGreen3")
+        self.qteJrEau = Label(cadre,text="0",bg=couleur)
+        self.qteJrEau.grid(row=0,column=i)
+        i+=1
+        self.imgBr = Label(cadre,image=self.images["bronze"],bg=couleur)
         self.imgBr.grid(row=0,column=i)
         i+=1
-        self.imgBio = Label(self.cadreRessourcesJoueur,image=self.images["biohazard"],bg="SpringGreen3")
+        self.qteJrBronze = Label(cadre,text="0",bg=couleur)
+        self.qteJrBronze.grid(row=0,column=i)
+        i+=1
+        self.imgBio = Label(cadre,image=self.images["biohazard"],bg=couleur)
         self.imgBio.grid(row=0,column=i)
         i+=1
-        self.imgChar = Label(self.cadreRessourcesJoueur,image=self.images["charbon"],bg="SpringGreen3")
+        self.qteJrBio = Label(cadre,text="0",bg=couleur)
+        self.qteJrBio.grid(row=0,column=i)
+        i+=1
+        self.imgChar = Label(cadre,image=self.images["charbon"],bg=couleur)
         self.imgChar.grid(row=0,column=i)
         i+=1
-        self.imgAr = Label(self.cadreRessourcesJoueur,image=self.images["argent"],bg="SpringGreen3")
+        self.qteJrCharbon = Label(cadre,text="0",bg=couleur)
+        self.qteJrCharbon.grid(row=0,column=i)
+        i+=1
+        self.imgAr = Label(cadre,image=self.images["argent"],bg=couleur)
         self.imgAr.grid(row=0,column=i)
         i+=1
-        self.imgBois = Label(self.cadreRessourcesJoueur,image=self.images["bois"],bg="SpringGreen3")
+        self.qteJrArgent = Label(cadre,text="0",bg=couleur)
+        self.qteJrArgent.grid(row=0,column=i)
+        i+=1
+        self.imgBois = Label(cadre,image=self.images["bois"],bg=couleur)
         self.imgBois.grid(row=0,column=i)
         i+=1
-        self.imgMet = Label(self.cadreRessourcesJoueur,image=self.images["metasic"],bg="SpringGreen3")
+        self.qteJrBois = Label(cadre,text="0",bg=couleur)
+        self.qteJrBois.grid(row=0,column=i)
+        i+=1
+        self.imgMet = Label(cadre,image=self.images["metasic"],bg=couleur)
         self.imgMet.grid(row=0,column=i)
         i+=1
-        self.imgMoral = Label(self.cadreRessourcesJoueur,image=self.images["moral"],bg="SpringGreen3")
+        self.qteJrMet = Label(cadre,text="0",bg=couleur)
+        self.qteJrMet.grid(row=0,column=i)
+        i+=1
+        self.imgMoral = Label(cadre,image=self.images["moral"],bg=couleur)
         self.imgMoral.grid(row=0,column=i)
+        i+=1
+        self.qteJrMoral = Label(cadre,text="0",bg=couleur)
+        self.qteJrMoral.grid(row=0,column=i)
+        i+=1
+        
+    def envoyerRessourcesVersCadrePlanete(self):
+        i = 0
+        couleur = "SkyBlue4"
+        cadre = self.cadreRessourcesPlanete
+        self.titreJoueur = Label(cadre,text="Planete: ",bg=couleur)
+        self.titreJoueur.grid(row=0,column=i)
+        i+=1
+        self.imgUra = Label(cadre,image=self.images["uranium"],bg=couleur)
+        self.imgUra.grid(row=0,column=i)
+        i+=1
+        self.qteUranium = Label(cadre,text="0",bg=couleur)
+        self.qteUranium.grid(row=0,column=i)
+        i+=1
+        self.imgTita = Label(cadre,image=self.images["titanium"],bg=couleur)
+        self.imgTita.grid(row=0,column=i)
+        i+=1
+        self.qteTitanium = Label(cadre,text="0",bg=couleur)
+        self.qteTitanium.grid(row=0,column=i)
+        i+=1
+        self.imgLac = Label(cadre,image=self.images["lacrima"],bg=couleur)
+        self.imgLac.grid(row=0,column=i)
+        i+=1
+        self.qteLacrima = Label(cadre,text="0",bg=couleur)
+        self.qteLacrima.grid(row=0,column=i)
+        i+=1
+        self.imgSante = Label(cadre,image=self.images["sante"],bg=couleur)
+        self.imgSante.grid(row=0,column=i)
+        i+=1
+        self.qteSante = Label(cadre,text="0",bg=couleur)
+        self.qteSante.grid(row=0,column=i)
+        i+=1
+        self.imgptScience = Label(cadre,image=self.images["point_Science"],bg=couleur)
+        self.imgptScience.grid(row=0,column=i)
+        i+=1
+        self.qteScience = Label(cadre,text="0",bg=couleur)
+        self.qteScience.grid(row=0,column=i)
+        i+=1
+        self.imgNourr = Label(cadre,image=self.images["nourriture"],bg=couleur)
+        self.imgNourr.grid(row=0,column=i)
+        i+=1
+        self.qteNourriture = Label(cadre,text="0",bg=couleur)
+        self.qteNourriture.grid(row=0,column=i)
+        i+=1
+        self.imgHum = Label(cadre,image=self.images["humain"],bg=couleur)
+        self.imgHum.grid(row=0,column=i)
+        i+=1
+        self.qteHumain = Label(cadre,text="0",bg=couleur)
+        self.qteHumain.grid(row=0,column=i)
+        i+=1
+        self.imgElec = Label(cadre,image=self.images["electricite"],bg=couleur)
+        self.imgElec.grid(row=0,column=i)
+        i+=1
+        self.qteElectricite = Label(cadre,text="0",bg=couleur)
+        self.qteElectricite.grid(row=0,column=i)
+        i+=1
+        self.imgEau = Label(cadre,image=self.images["eau"],bg=couleur)
+        self.imgEau.grid(row=0,column=i)
+        i+=1
+        self.qteEau = Label(cadre,text="0",bg=couleur)
+        self.qteEau.grid(row=0,column=i)
+        i+=1
+        self.imgBr = Label(cadre,image=self.images["bronze"],bg=couleur)
+        self.imgBr.grid(row=0,column=i)
+        i+=1
+        self.qteBronze = Label(cadre,text="0",bg=couleur)
+        self.qteBronze.grid(row=0,column=i)
+        i+=1
+        self.imgBio = Label(cadre,image=self.images["biohazard"],bg=couleur)
+        self.imgBio.grid(row=0,column=i)
+        i+=1
+        self.qteBio = Label(cadre,text="0",bg=couleur)
+        self.qteBio.grid(row=0,column=i)
+        i+=1
+        self.imgChar = Label(cadre,image=self.images["charbon"],bg=couleur)
+        self.imgChar.grid(row=0,column=i)
+        i+=1
+        self.qteCharbon = Label(cadre,text="0",bg=couleur)
+        self.qteCharbon.grid(row=0,column=i)
+        i+=1
+        self.imgAr = Label(cadre,image=self.images["argent"],bg=couleur)
+        self.imgAr.grid(row=0,column=i)
+        i+=1
+        self.qteArgent = Label(cadre,text="0",bg=couleur)
+        self.qteArgent.grid(row=0,column=i)
+        i+=1
+        self.imgBois = Label(cadre,image=self.images["bois"],bg=couleur)
+        self.imgBois.grid(row=0,column=i)
+        i+=1
+        self.qteBois = Label(cadre,text="0",bg=couleur)
+        self.qteBois.grid(row=0,column=i)
+        i+=1
+        self.imgMet = Label(cadre,image=self.images["metasic"],bg=couleur)
+        self.imgMet.grid(row=0,column=i)
+        i+=1
+        self.qteMet = Label(cadre,text="0",bg=couleur)
+        self.qteMet.grid(row=0,column=i)
+        i+=1
+        self.imgMoral = Label(cadre,image=self.images["moral"],bg=couleur)
+        self.imgMoral.grid(row=0,column=i)
+        i+=1
+        self.qteMoral = Label(cadre,text="0",bg=couleur)
+        self.qteMoral.grid(row=0,column=i)
         i+=1
     
     def chargerImagesRes(self):
@@ -147,8 +301,7 @@ class Vue():
         self.images["metasic"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/moral.png").resize((l,h))
         self.images["moral"] = ImageTk.PhotoImage(im)
-           
-    
+             
     def creercadresplash(self,ip,nom):
         self.cadresplash=Frame(self.root)
         self.canevasplash=Canvas(self.cadresplash,width=640,height=480,bg="red")
