@@ -21,6 +21,7 @@ class Joueur():
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
         self.vehiculeplanetaire=[]
+        self.ressources = Ressource(bois = 46, bronze = 53)
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "atterrirplanete":self.atterrirplanete,
@@ -82,8 +83,8 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        ressourcesMine = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
-                        if(ressourcesMine):
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
+                        if(aAssezDeRessources):
                             mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Mine")
                             j.infrastructures.append(mine)
                             self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
