@@ -238,7 +238,8 @@ class VuePlanete(Perspective):
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
-                self.maselection = None
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], t[0], t[1])
+                self.maselection = None                
                 pass
         
         
@@ -248,7 +249,6 @@ class VuePlanete(Perspective):
                 pass
             elif t[1]=="systeme":
                 pass
-#<<<<<<< HEAD
             elif self.maselection == None and t[4]=="tuile":
                 if self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)

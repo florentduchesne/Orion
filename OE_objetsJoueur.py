@@ -23,6 +23,7 @@ class Joueur():
         self.vehiculeplanetaire=[]
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
+                      "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
@@ -110,12 +111,17 @@ class Joueur():
             if i.id==systeme_id:
                 self.systemesvisites.append(i)
                 
-    def creervaisseau(self,id):
+    def creervaisseau(self,ids):
+        idsystem,idplanete=ids
         for i in self.systemesvisites:
-            if i.id==id:
-                v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid())
-                self.vaisseauxinterstellaires.append(v)
-                return 1            
+            if i.id==idsystem:
+                for p in i.planetes:
+                    print("vais creer")
+                    if idplanete==p.id:
+                        print("vais creer")
+                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        self.vaisseauxinterstellaires.append(v)
+                        return 1            
 
     def creervehiculetank(self, listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -165,11 +171,21 @@ class Joueur():
                                 i.ciblerdestination(p)
                                 #i.ciblerdestination(Coord(xy))
                                 return
+     
+    def ciblerdestinationvehicule(self, ids):
+        print('une étape du déplacement de plus!!!')
+        idorigine, iddestination, idplanete = ids
+        '''
+        for i in self.vehiculeplanetaire:
+            if i.id == idorigine:
+                i.ciblerdestination()
+        '''
+        pass
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
             if i.cible:
-                print("avancer")
+                #print("avancer")
                 rep=i.avancer()
                 if rep:
                     if rep.proprietaire=="inconnu":
@@ -209,7 +225,7 @@ class Joueur():
 class IA(Joueur):
     def __init__(self,parent,nom,systemeorigine,couleur):
         Joueur.__init__(self,parent,nom,systemeorigine,couleur)
-        self.contexte="galaxie"
+        self.contexte="systeme"
         self.delaiaction=random.randrange(5,10)*20  # le delai est calcule pour chaque prochaine action en seconde
         #self.derniereaction=time.time()
         
@@ -221,7 +237,7 @@ class IA(Joueur):
     def analysesituation(self):
         #t=time.time()
         if self.delaiaction==0:
-            if self.contexte=="galaxie":
+            if self.contexte=="systeme":
                 if len(self.vaisseauxinterstellaires)==0:
                     c=self.parent.parent.cadre+5
                     if c not in self.parent.actionsafaire.keys(): 
