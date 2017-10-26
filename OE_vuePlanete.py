@@ -74,12 +74,7 @@ class VuePlanete(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         
         self.changecadreetat(self.cadreetataction)
-        
-        self.remplirCadreRessources()
     
-    def remplirCadreRessources(self):
-        self.testLabel = Label(self.parent.cadreRessourcesJoueur,text="Allo toi")
-        self.testLabel.grid(row=0,column=1)
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):

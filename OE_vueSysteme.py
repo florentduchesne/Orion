@@ -6,8 +6,6 @@ from helper import Helper as hlp
 from OE_vuePerspective import *
 
 
-
-
 class VueSysteme(Perspective):
     def __init__(self,parent):
         Perspective.__init__(self,parent)
@@ -38,8 +36,6 @@ class VueSysteme(Perspective):
         self.lbselectecible.pack()
         self.changecadreetat(self.cadreetataction)
         
-        
-    
     def voirplanete(self):
         self.parent.voirplanete(self.maselection)
 
@@ -108,9 +104,7 @@ class VueSysteme(Perspective):
             self.parent.parent.creervaisseau(self.maselection[5])
             self.maselection=None
             self.canevas.delete("selecteur")
-        
-    
-    
+           
     def creerstation(self):
         print("Creer station EN CONSTRUCTION")
          

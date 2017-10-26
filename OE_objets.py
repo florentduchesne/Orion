@@ -135,8 +135,8 @@ class Systeme():
                 angle=random.randrange(360)
                 x,y=hlp.getAngledPoint((math.radians(angle)),distsol,self.x,self.y)
                 x = self.diametre/2 +x
-                y = self.diametre/2 +y
-                print(x,y)
+                y = y#self.diametre/2 -y
+                #print(x,y)
                 planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
                 planete.initplanete()
                 self.planetes.append(planete)#ici
