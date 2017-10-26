@@ -156,6 +156,9 @@ class Controleur():
     def affichermur(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichermur(joueur,systemeid,planeteid,x,y)
         
+    def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
+        self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+        
     def voirplanete(self,idsysteme,idplanete):
         pass
     

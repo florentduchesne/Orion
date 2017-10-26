@@ -211,6 +211,7 @@ class VuePlanete(Perspective):
         self.images["mur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/canon.png")
         self.images["canon"] = ImageTk.PhotoImage(im)
+    
 		
     def afficherdecor(self):
         pass
@@ -269,7 +270,7 @@ class VuePlanete(Perspective):
                     miniy = (y *200) / self.hauteur
                     self.parent.parent.creerbouclier(self.parent.nom,self.systemeid,self.planeteid,x,y)
                     self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="cyan2")
-                    self.canevas.create_oval(x-100,y-100,x+100,y+100,fill="cyan2")
+                    self.canevas.create_oval(x-500,y-500,x+500,y+500,outline= "white", width = 5)
                     self.macommande=None
                 elif self.macommande == "canon":
                     x=int(t[1])
