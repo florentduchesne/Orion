@@ -31,6 +31,7 @@ class VueSysteme(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
         self.btnvuesysteme.pack(side=BOTTOM)
+
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
@@ -106,8 +107,8 @@ class VueSysteme(Perspective):
             self.canevas.delete("selecteur")
            
     def creerstation(self):
-        print("Creer station EN CONSTRUCTION")
-         
+        print("Creer station EN CONSTRUCTION")  
+
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         e=self.UA2pixel
