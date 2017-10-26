@@ -112,9 +112,9 @@ class Joueur():
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
-                    print("vais creer")
+                    #print("vais creer")
                     if idplanete==p.id:
-                        print("vais creer")
+                       # print("vais creer")
                         v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
                         self.vaisseauxinterstellaires.append(v)
                         return 1            
