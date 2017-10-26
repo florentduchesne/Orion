@@ -6,7 +6,7 @@ from OE_projectile import *
 from numpy.distutils.fcompiler import none
 
 class Vaisseau():
-    def __init__(self,parent,nom,systeme,idSuivant):
+    def __init__(self,parent,nom,systeme,idSuivant,niveau):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -20,6 +20,7 @@ class Vaisseau():
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
+        self.niveau = niveau
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -73,7 +74,9 @@ class Vaisseau():
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         #print("Distance",dist," en ", int(dist/self.vitesse))
-        
+    
+    def augmentation(self) :
+        self.niveau += 1
             
 class VaisseauAttaque(Vaisseau):
     def __init__(self, Degats, portee):
@@ -82,8 +85,7 @@ class VaisseauAttaque(Vaisseau):
         self.cibleAttaque=None 
         self.enAttaque=False
         self.listeCibleAttaquer=[]
-        
-        
+            
         
     def attaquer(self):       
         if self.cibleAttaque.vie>0:
@@ -99,6 +101,17 @@ class VaisseauAttaque(Vaisseau):
 
             self.cibleAttaque=None  
             self.planetteCible=None 
+    
+    def augmentation(self) :
+        self.niveau += 1
+        if self.niveau%2:
+            self.dommage += 2      
+        else :
+            self.vie +=2
+      
+        if self.niveau%5 == 0:
+            self.portee+=1
+            
             
 class VaisseauCommercial(Vaisseau):
     def __init__(self, max):
@@ -111,6 +124,13 @@ class VaisseauCommercial(Vaisseau):
     
     def EchangerRessource(self,ressource, quantite):
         pass
+    
+    def augmentation (self):
+        self.niveau += 1
+        if self.niveau%2:
+            self.maxRessources += 5
+        if self.niveau%5 == 0:
+            self.portee+=1
 
 class VaisseauNova(Vaisseau):
     def __init__(self):
@@ -139,7 +159,17 @@ class VaisseauColonisation(Vaisseau):
             
     def DevenirVille (self, planete):
         pass
-
+    
+    def augmentation(self):
+        self.niveau += 1
+        if self.niveau%2:
+            self.maxAliments +=1
+        else :
+            self.maxPersonnes +=1
+            
+        if self.niveau%5 == 0:
+            self.portee+=1
+        
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):
         self.dommage = 100
@@ -171,6 +201,18 @@ class VaisseauMere(VaisseauAttaque):
     
     def RemplirVaisseau(self):
         pass
+    
+    def augmentation(self) :
+        self.niveau += 1
+        if self.niveau%2 :
+            self.vie +=1
+            self.attaque+=1
+        else :
+            self.maxVaisseau +=1
+            
+        if self.niveau%5 == 0:
+            self.portee+=1
+            
 
 class VaisseauChaseur(VaisseauAttaque):
     def __init__(self):
@@ -197,6 +239,14 @@ class VaisseauTank(VaisseauAttaque):
         self.vitesse = 0.003*5
         self.portee = self.portee + 5
     
+    def augmentation(self) :
+        self.niveau += 1
+        if self.niveau%2:
+            self.dommage += 2
+        if self.niveau%5 == 0:
+            self.portee+=1
+            
+        self.vie += 2
 
       
 
