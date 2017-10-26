@@ -23,6 +23,7 @@ class Joueur():
         self.vehiculeplanetaire=[]
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
+                      "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
                       "creermine":self.creermine,
@@ -161,6 +162,16 @@ class Joueur():
                                 i.ciblerdestination(p)
                                 #i.ciblerdestination(Coord(xy))
                                 return
+     
+    def ciblerdestinationvehicule(self, ids):
+        print('une étape du déplacement de plus!!!')
+        idorigine, iddestination, idplanete = ids
+        '''
+        for i in self.vehiculeplanetaire:
+            if i.id == idorigine:
+                i.ciblerdestination()
+        '''
+        pass
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
