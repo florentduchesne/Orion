@@ -32,7 +32,8 @@ class Joueur():
                       "creerbouclier":self.creerbouclier,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
-                      "creervehiculeavion":self.creervehiculeavion}
+                      "creervehiculeavion":self.creervehiculeavion,
+                      "creerstationspatiale":self.creerstationspatiale}
         
     def creertour(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -63,7 +64,7 @@ class Joueur():
                         bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.infrastructures.append(bouclier)
                         self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
-                        
+        
     
     def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -74,6 +75,9 @@ class Joueur():
                         mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.infrastructures.append(mur)
                         self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
+                        
+    def creerstationspatiale(self,id):
+        print("station dans joueur")
 
     def creermine(self,listeparams):
         print("Joueur mine")
