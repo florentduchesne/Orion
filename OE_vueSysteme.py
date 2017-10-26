@@ -102,12 +102,17 @@ class VueSysteme(Perspective):
                 
     def creervaisseau(self): 
         if self.maselection:
-            self.parent.parent.creervaisseau(self.maselection[5])
+            self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2])#5 = id sys 3 = id planete
             self.maselection=None
             self.canevas.delete("selecteur")
            
     def creerstation(self):
-        print("Creer station EN CONSTRUCTION")  
+        if self.maselection:
+            print("Creer station EN CONSTRUCTION")  
+            self.parent.parent.creerstationspatiale(self.maselection[5])
+            self.maselection=None
+            self.canevas.delete("selecteur")
+        
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
@@ -115,19 +120,20 @@ class VueSysteme(Perspective):
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                jx=j.x*e
-                jy=j.y*e
-                x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
-                x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                
+                if j.idSysteme==self.systeme.id:
+                    jx=j.x*e
+                    jy=j.y*e
+                    x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                    x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                    x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                    x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                    self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                    self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                    self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                    
 
             
     def changerproprietaire(self):
