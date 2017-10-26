@@ -22,26 +22,55 @@ class VuePlanete(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         self.canevas.config(bg="green")
         
-        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
-        self.btncreervaisseau.pack()
-
+        ##############BATIMENTS RESSOURCES##############
+        self.btncreerMine=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
+        self.btncreerMine.pack()
+        self.btncreerCampBucherons=Button(self.cadreetataction,text="Creer Camp de bûcherons",command=self.creerCampBucherons)
+        self.btncreerCampBucherons.pack()
+        self.btncreerPuit=Button(self.cadreetataction,text="Creer Puit",command=self.creerpuit)
+        self.btncreerPuit.pack()
+        self.btncreerFerme=Button(self.cadreetataction,text="Creer Ferme",command=self.creerFerme)
+        self.btncreerFerme.pack()
+        self.btncreerCentraleElectrique=Button(self.cadreetataction,text="Creer Centrale Electrique",command=self.creerCentraleElectrique)
+        self.btncreerCentraleElectrique.pack()
+        
+        ##############BATIMENTS INFRASTRUCTURES##############
+        self.btncreerHopital=Button(self.cadreetataction,text="Creer Hôpital",command=self.creerHopital)
+        self.btncreerHopital.pack()
+        self.btncreerEcole=Button(self.cadreetataction,text="Creer École",command=self.creerEcole)
+        self.btncreerEcole.pack()
+        self.btncreerLaboratoire=Button(self.cadreetataction,text="Creer Laboratoire",command=self.creerLaboratoire)
+        self.btncreerLaboratoire.pack()
+        self.btncreerBanque=Button(self.cadreetataction,text="Creer Banque",command=self.creerBanque)
+        self.btncreerBanque.pack()
+        
+        ##############BATIMENTS MANUFACTURES##############
+        self.btncreerUsineVehicules=Button(self.cadreetataction,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
+        self.btncreerUsineVehicules.pack()
+        self.btncreerUsineVaisseaux=Button(self.cadreetataction,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
+        self.btncreerUsineVaisseaux.pack()
+        self.btncreerUsineDrones=Button(self.cadreetataction,text="Creer Usine à Drones",command=self.creerUsineDrones)
+        self.btncreerUsineDrones.pack()
+        
+        ##############BATIMENTS DEFENSES##############
         self.btncreermur=Button(self.cadreetataction,text="Creer Mur",command=self.creermur)
         self.btncreermur.pack()
-
+        self.btncreercanon=Button(self.cadreetataction,text="Creer Canon",command=self.creercanon)
+        self.btncreercanon.pack()
+        self.btncreerbouclier=Button(self.cadreetataction,text="Creer Bouclier",command=self.creerbouclier)
+        self.btncreerbouclier.pack()
+        self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
+        self.btncreertour.pack()
+        ##############UNITES AU SOL##############
         self.btncreertank=Button(self.cadreetataction,text="Creer Tank",command=self.creervehiculetank)
         self.btncreertank.pack()
         
-        self.btncreercanon=Button(self.cadreetataction,text="Creer Canon",command=self.creercanon)
-        self.btncreercanon.pack()
         
-        self.btncreerbouclier=Button(self.cadreetataction,text="Creer Bouclier",command=self.creerbouclier)
-        self.btncreerbouclier.pack()
-        
-        self.btncreerstation=Button(self.cadreetataction,text="Creer Manufacture",command=self.creermanufacture)
+        ##############AUTRES##############
+        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
-        self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
-        self.btncreertour.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir System",command=self.voirsysteme)
+        
+        self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
         
         self.changecadreetat(self.cadreetataction)
@@ -52,32 +81,53 @@ class VuePlanete(Perspective):
         self.testLabel = Label(self.parent.cadreRessourcesJoueur,text="Allo toi")
         self.testLabel.grid(row=0,column=1)
     
+    ##############BATIMENTS RESSOURCES##############
     def creermine(self):
         self.macommande="mine"
-        
-    def creervehiculetank(self):
-        self.macommande="vehiculetank"
-        
-    def creervehiculecommerce(self):
-        self.macommande="vehiculecommerce"
-        
-    def creervehiculeavion(self):
-        self.macommande="vehiculeavion"
-        
+    def creerCampBucherons(self):
+        self.macommande="campbucherons"
+    def creerpuit(self):
+        self.macommande="puit"
+    def creerFerme(self):
+        self.macommande="ferme"
+    def creerCentraleElectrique(self):
+        self.macommande="centraleelectrique"
+    ##############BATIMENTS INFRASTRUCTURES##############
+    def creerHopital(self):
+        self.macommande="hopital"
+    def creerEcole(self):
+        self.macommande="ecole"
+    def creerLaboratoire(self):
+        self.macommande="laboratoire"
+    def creerBanque(self):
+        self.macommande="banque"
+    ##############BATIMENTS MANUFACTURES##############
+    def creerUsineVehicules(self):
+        self.macommande="vehicules"
+    def creerUsineVaisseaux(self):
+        self.macommande="vaisseaux"
+    def creerUsineDrones(self):
+        self.macommande="drones"
+    ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="tour"
-    
     def creermur(self):
         self.macommande="mur"
-        
     def creercanon(self):
         self.macommande="canon"
-        
     def creerbouclier(self):
         self.macommande="bouclier"
-        
-    def creermanufacture(self):
-        pass
+    ##############UNITES AU SOL##############
+    def creervehiculetank(self):
+        self.macommande="vehiculetank"
+    def creervehiculecommerce(self):
+        self.macommande="vehiculecommerce"
+    def creervehiculeavion(self):
+        self.macommande="vehiculeavion"
+    ##############AUTRES##############
+    def creerstation(self):
+        self.macommande="station"
+        print("Creer station EN CONSTRUCTION")
     
     def voirsysteme(self):
         self.parent.cadreRessourcesPlanete.pack_forget()
@@ -167,9 +217,6 @@ class VuePlanete(Perspective):
                 
     def creervaisseau(self):
         pass
-    
-    def creerstation(self):
-        print("Creer station EN CONSTRUCTION")
          
     def afficherpartie(self,mod):
         pass
@@ -195,9 +242,9 @@ class VuePlanete(Perspective):
                     y=int(t[0])
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                    #minix = (x *200) / self.largeur
+                    #miniy = (y *200) / self.hauteur
+                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                     self.macommande=None
                 elif self.macommande == "tour":
                     x=int(t[1])
@@ -213,7 +260,7 @@ class VuePlanete(Perspective):
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.parent.parent.creermur(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
                     self.macommande=None
                 elif self.macommande == "bouclier":
                     x=int(t[1])
@@ -279,3 +326,10 @@ class VuePlanete(Perspective):
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
         
+    def afficherMine(self, x, y, im):
+        minix = (x *200) / self.largeur
+        miniy = (y *200) / self.hauteur
+        self.canevas.create_image(x,y, image=im)
+        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+        pass
+    

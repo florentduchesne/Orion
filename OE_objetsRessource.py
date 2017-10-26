@@ -18,32 +18,32 @@ class Ressource():
         self.moral = moral
         
         #self.argent=0
-    def estPlusGrandQue(self, ressource):
-        if self.electricite > ressource.electricite - ressource.allocationElectricite:
+    def estPlusGrandOuEgal(self, ressource):
+        if self.electricite < ressource.electricite:# - ressource.allocationElectricite:
             return False
-        if self.uranium > ressource.uranium:
+        if self.uranium < ressource.uranium:
             return False
-        if self.humain > ressource.humain - ressource.allocationHumain:
+        #if self.humain >= ressource.humain:# - ressource.allocationHumain:
+        #    return False
+        if self.nourriture < ressource.nourriture:
             return False
-        if self.nourriture > ressource.nourriture:
+        if self.eau < ressource.eau:
             return False
-        if self.eau > ressource.eau:
+        if self.bronze < ressource.bronze:
             return False
-        if self.bronze > ressource.bronze:
+        if self.titanium < ressource.titanium:
             return False
-        if self.titanium > ressource.titanium:
+        if self.point_science < ressource.point_science:
             return False
-        if self.point_science > ressource.point_science:
+        #if self.allocationElectricite >= ressource.allocationElectricite:
+        #    return False
+        if self.bois < ressource.bois:
             return False
-        if self.allocationElectricite > ressource.allocationElectricite:
+        if self.charbon < ressource.charbon:
             return False
-        if self.bois > ressource.bois:
+        if self.metasic < ressource.metasic:
             return False
-        if self.charbon > ressource.charbon:
-            return False
-        if self.metasic > ressource.metasic:
-            return False
-        if self.moral > ressource.moral:
+        if self.moral < ressource.moral:
             return False
         return True
     

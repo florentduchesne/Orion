@@ -123,7 +123,7 @@ class Controleur():
     
     def creermine(self,joueur,systeme,planete,x,y):
         self.actions.append([self.monnom,"creermine",[self.monnom,systeme,planete,x,y]])
-        print("Contoleur Mine")
+        print("Controleur Mine")
         
     def creervehiculetank(self, joueur,systeme,planete,x,y):
         self.actions.append([self.monnom,"creervehiculetank",[self.monnom,systeme,planete,x,y]])

@@ -50,16 +50,18 @@ class Planete():
         self.angle=angle
         self.couleur="red"
         self.ressource=Ressource()
-        self.ressourceACollecter=Ressource(self)
+        self.ressourceACollecter=Ressource()
         self.tuiles = self.generationMap()
         self.x = x
         self.y =y
        
         #Changer moi, je ne suis pas du tout �quillibr� :(
-        self.ressource.Eau=10
-        self.ressourceACollecter.bronze=100
-        self.ressourceACollecter.titanium=100
-        self.ressourceACollecter.uranium=100
+        self.ressource.eau=10
+        self.ressource.bois=100
+        self.ressource.bronze=100
+        self.ressourceACollecter.bronze=2000
+        self.ressourceACollecter.titanium=2000
+        self.ressourceACollecter.uranium=2000
     
     def generationMap(self): 
         tuiles = []
@@ -90,13 +92,14 @@ class Planete():
         print('print proprio : ', proprio)
         self.proprietaire=proprio
 
+    """
     def creerMineRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain)> 0 and (self.joueur.ressource.electricite - self.besoinelectricite) > 0:
             self.ressource.Humain-self.besoinhumain;
             self.ressource.Electricite-self.besoinelectricite;
             return True
         else :
-            return False
+            return False"""
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):

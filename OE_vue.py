@@ -216,7 +216,9 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["mine"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                self.modes["planetes"][i].afficherMine(x, y, im)
+                #self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                #self.modes["planetes"][i].minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
