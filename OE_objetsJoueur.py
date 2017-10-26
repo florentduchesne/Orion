@@ -165,7 +165,10 @@ class Joueur():
      
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
-        idorigine, iddestination, idplanete = ids
+        idorigine, x, y, idplanete = ids
+        for i in self.vehiculeplanetaire:
+            
+            pass
         '''
         for i in self.vehiculeplanetaire:
             if i.id == idorigine:
