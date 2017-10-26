@@ -237,9 +237,9 @@ class VuePlanete(Perspective):
                     y=int(t[0])
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
+                    #minix = (x *200) / self.largeur
+                    #miniy = (y *200) / self.hauteur
+                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
                     self.macommande=None
                 elif self.macommande == "tour":
                     x=int(t[1])
@@ -255,7 +255,7 @@ class VuePlanete(Perspective):
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.parent.parent.creermur(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
                     self.macommande=None
                 elif self.macommande == "bouclier":
                     x=int(t[1])
@@ -321,3 +321,10 @@ class VuePlanete(Perspective):
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
         
+    def afficherMine(self, x, y, im):
+        minix = (x *200) / self.largeur
+        miniy = (y *200) / self.hauteur
+        self.canevas.create_image(x,y, image=im)
+        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+        pass
+    
