@@ -5,6 +5,8 @@ from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
 from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
+from OE_coord import *
+
 
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
@@ -77,9 +79,13 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "mine")
-                        j.infrastructures.append(mine)
-                        self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        ressourcesMine = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
+                        if(ressourcesMine):
+                            mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Mine")
+                            j.infrastructures.append(mine)
+                            self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        else:
+                            print("construction de mine impossible")
                         
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
@@ -131,23 +137,32 @@ class Joueur():
         
         
     def ciblerdestination(self,ids):
-        idori,iddesti=ids
+        idori,iddesti,idsyteme,xy=ids
         for i in self.vaisseauxinterstellaires:
             if i.id== idori:
                 for j in self.parent.systemes:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+                                print("cible trouver")
+                                i.ciblerdestination(p)
+                                
+                                #i.ciblerdestination(Coord(xy))
+                                return
                 for j in self.systemesvisites:
-                    if j.id== iddesti:
-                        #i.cible=j
-                        i.ciblerdestination(j)
-                        return
+                    if j.id== idsyteme:
+                        for p in j.planetes:
+                            if p.id== iddesti:
+                                #i.cible=j
+                                i.ciblerdestination(p)
+                                #i.ciblerdestination(Coord(xy))
+                                return
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
             if i.cible:
+                print("avancer")
                 rep=i.avancer()
                 if rep:
                     if rep.proprietaire=="inconnu":

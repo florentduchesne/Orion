@@ -111,8 +111,8 @@ class Controleur():
         self.modele.creervaisseau(planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
-    def ciblerdestination(self,idorigine,iddestination):
-        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination]])
+    def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
+        self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
@@ -123,7 +123,7 @@ class Controleur():
     
     def creermine(self,joueur,systeme,planete,x,y):
         self.actions.append([self.monnom,"creermine",[self.monnom,systeme,planete,x,y]])
-        print("Contoleur Mine")
+        print("Controleur Mine")
         
     def creervehiculetank(self, joueur,systeme,planete,x,y):
         self.actions.append([self.monnom,"creervehiculetank",[self.monnom,systeme,planete,x,y]])

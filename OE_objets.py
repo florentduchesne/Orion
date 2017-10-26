@@ -34,7 +34,7 @@ class Pulsar():
             self.taille=self.mintaille+(self.moment*self.pas)
                 
 class Planete():
-    def __init__(self,parent,type,dist,taille,angle,idSuivant):
+    def __init__(self,parent,type,dist,taille,angle,idSuivant,x,y):
         self.parent=parent
         self.id=idSuivant #ici
         self.parent=parent
@@ -49,26 +49,32 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(self)
-        self.ressourceACollecter=Ressource(self)
+        self.ressource=Ressource()
+        self.ressourceACollecter=Ressource()
         self.tuiles = self.generationMap()
-        
+        self.x = x
+        self.y =y
+       
         #Changer moi, je ne suis pas du tout �quillibr� :(
-        self.ressource.Eau=10
-        self.ressourceACollecter.bronze=100
-        self.ressourceACollecter.titanium=100
-        self.ressourceACollecter.uranium=100
+        self.ressource.eau=10
+        self.ressource.bois=100
+        self.ressource.bronze=100
+        self.ressourceACollecter.bronze=2000
+        self.ressourceACollecter.titanium=2000
+        self.ressourceACollecter.uranium=2000
     
     def generationMap(self): 
         tuiles = []
         x = 0
         y = 0
-        image="gazon","eau"
+        #image="gazon","eau"
+        image="gazon"
         for i in range(0,int((5000/100)+1)):
             list = []
             tuiles.append(list)
             for j in range(0,int((5000/100)+1)):
-                gazon = TuileGazon(x,y,image[random.randrange(2)-1])
+                #gazon = TuileGazon(x,y,image[random.randrange(2)-1])
+                gazon = TuileGazon(x,y,image)
                 tuiles[i].append(gazon)
                 x+=100
             y+=100
@@ -86,13 +92,14 @@ class Planete():
         print('print proprio : ', proprio)
         self.proprietaire=proprio
 
+    """
     def creerMineRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain)> 0 and (self.joueur.ressource.electricite - self.besoinelectricite) > 0:
             self.ressource.Humain-self.besoinhumain;
             self.ressource.Electricite-self.besoinelectricite;
             return True
         else :
-            return False
+            return False"""
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
@@ -126,8 +133,11 @@ class Systeme():
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(50)/100 # en masse solaire
                 angle=random.randrange(360)
-
-                planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid())
+                x,y=hlp.getAngledPoint((math.radians(angle)),distsol,self.x,self.y)
+                x = self.diametre/2 +x
+                y = self.diametre/2 +y
+                print(x,y)
+                planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
                 planete.initplanete()
                 self.planetes.append(planete)#ici
                 

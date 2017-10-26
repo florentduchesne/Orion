@@ -1,5 +1,6 @@
 from OE_objetsJoueur import *
 from OE_objets import *
+from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
 
 
 class Modele():
@@ -18,6 +19,7 @@ class Modele():
         self.terrain=[]
         self.creersystemes(int(qteIA))  # nombre d'ias a ajouter
         self.compteur = 20
+        self.constructeurBatimentHelper = ConstructeurBatimentHelper()
         
     def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter
         
