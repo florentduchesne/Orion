@@ -21,6 +21,7 @@ class Joueur():
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
         self.vehiculeplanetaire=[]
+        self.ressources = Ressource(bois = 46, bronze = 53)
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -33,7 +34,8 @@ class Joueur():
                       "creerbouclier":self.creerbouclier,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
-                      "creervehiculeavion":self.creervehiculeavion}
+                      "creervehiculeavion":self.creervehiculeavion,
+                      "creerstationspatiale":self.creerstationspatiale}
         
     def creertour(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -64,7 +66,7 @@ class Joueur():
                         bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.infrastructures.append(bouclier)
                         self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
-                        
+        
     
     def creermur(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -75,6 +77,9 @@ class Joueur():
                         mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.infrastructures.append(mur)
                         self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
+                        
+    def creerstationspatiale(self,id):
+        print("station dans joueur")
 
     def creermine(self,listeparams):
         print("Joueur mine")
@@ -83,8 +88,8 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        ressourcesMine = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
-                        if(ressourcesMine):
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
+                        if(aAssezDeRessources):
                             mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Mine")
                             j.infrastructures.append(mine)
                             self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
@@ -170,7 +175,10 @@ class Joueur():
      
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
-        idorigine, iddestination, idplanete = ids
+        idorigine, x, y, idplanete = ids
+        for i in self.vehiculeplanetaire:
+            
+            pass
         '''
         for i in self.vehiculeplanetaire:
             if i.id == idorigine:

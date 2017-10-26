@@ -107,7 +107,12 @@ class VueSysteme(Perspective):
             self.canevas.delete("selecteur")
            
     def creerstation(self):
-        print("Creer station EN CONSTRUCTION")  
+        if self.maselection:
+            print("Creer station EN CONSTRUCTION")  
+            self.parent.parent.creerstationspatiale(self.maselection[5])
+            self.maselection=None
+            self.canevas.delete("selecteur")
+        
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")

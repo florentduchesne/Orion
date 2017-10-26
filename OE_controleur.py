@@ -111,11 +111,14 @@ class Controleur():
         self.modele.creervaisseau(systeme,planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
+    def creerstationspatiale(self,planete):
+        print("station dans controleur")
+        
     def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
         self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])
         
-    def ciblerdestinationvehicule(self, idorigine, iddestination, idplanete ):
-        self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,iddestination,idplanete]])
+    def ciblerdestinationvehicule(self, idorigine, x, y, idplanete ):
+        self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete]])
         pass
         
     def visitersysteme(self,systeme_id):

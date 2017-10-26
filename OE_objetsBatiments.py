@@ -50,11 +50,12 @@ class StationSpatiale(BatimentDefense):
         self.id=idsuivant
         self.x=x
         self.y=y
-        self.planetex = x
-        self.planetey = y
+        self.planetex = planeteid.x
+        self.planetey = planeteid.y
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.angle=0
+        self.taille = 5
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
@@ -70,7 +71,8 @@ class StationSpatiale(BatimentDefense):
         self.angle +=1
         if self.angle >= 360:
             self.angle -= 360
-        
+        self.x = self.planetex + (self.orbite * math.cos((math.pi *2) * (1.0*self.angle/360.0)))
+        self.y = self.planetey +(self.orbite * math.sin((math.pi * 2) * (1.0*self.angle/360.0)))
     
     def AugmenterNiveau(self):
         coutTitanium=10

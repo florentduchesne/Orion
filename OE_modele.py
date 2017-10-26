@@ -19,6 +19,7 @@ class Modele():
         self.terrain=[]
         self.creersystemes(int(qteIA))  # nombre d'ias a ajouter
         self.compteur = 20
+        self.compteurLabel = 20
         self.constructeurBatimentHelper = ConstructeurBatimentHelper()
         
     def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter
@@ -85,6 +86,8 @@ class Modele():
             i.evoluer()
         
         self.augmenterRessources()
+        
+        self.miseAJourLabelsRessources()
             
     def changerproprietaire(self,nom,couleur,syst):
         self.parent.changerproprietaire(nom,couleur,syst)
@@ -95,15 +98,22 @@ class Modele():
             for i in range(self.systemes.__len__()):#boucle a travers les systemes
                 for j in range(self.systemes.__getitem__(i).planetes.__len__()):#boucle a travers les planetes
                     for k in range(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__len__()):#boucle a travers les infrastructures
-                        self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.humain += 2 #on augmente la population
+                        self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["humain"] += 2 #on augmente la population
                         if( isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Mine)):
-                            print ("un mine!")
-                            if(self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.bronze > 0):
-                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.bronze -= 5
-                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.bronze += 5
-                            print (self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.bronze)
+                            if(self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.dictRess["bronze"] > 0):
+                                print ("un mine!")
+                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.dictRess["bronze"] -= 5
+                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["bronze"] += 5
+                            print (self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["bronze"])
                         elif(isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Ville)):
                             #print ("une ville!")
                             pass
         else:
             self.compteur -= 1
+            
+    def miseAJourLabelsRessources(self):
+        if self.compteurLabel == 0:
+            self.compteurLabel = 40
+            self.parent.vue.miseAJourLabelsRessources()
+        else:
+            self.compteurLabel -= 1
