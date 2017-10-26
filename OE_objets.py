@@ -133,9 +133,12 @@ class Systeme():
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(50)/100 # en masse solaire
                 angle=random.randrange(360)
-                x,y=hlp.getAngledPoint((math.radians(angle)),distsol,self.x,self.y)
+                
+                x,y=hlp.getAngledPoint(math.radians(angle),distsol,0,0)
                 x = self.diametre/2 +x
-                y = y#self.diametre/2 -y
+
+                y = self.diametre/2 +y
+
                 #print(x,y)
                 planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
                 planete.initplanete()

@@ -14,9 +14,9 @@ class Vaisseau():
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
-        self.x=5
-        self.y=5
-        self.taille=16
+        self.x=35
+        self.y=35
+        self.taille=30
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
@@ -47,8 +47,10 @@ class Vaisseau():
 
             x=self.cible.x
             y=self.cible.y
+            self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
+            
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
                 self.cible=None
