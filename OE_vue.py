@@ -460,18 +460,20 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images[nom]
-                self.modes["planetes"][i].afficherBatiment(x, y, im)
+                self.modes["planetes"][i].afficherBatiment(x, y, im, (joueur, planeteid,x ,y ,nom))
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))   
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank"))   
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 self.modes["planetes"][i].canevas.create_oval(x-250,y-250,x+250,y+250,outline= couleur, width = 5)
+                im = self.modes["planetes"][i].images["bouclier"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
 
 
     def fermerfenetre(self):
