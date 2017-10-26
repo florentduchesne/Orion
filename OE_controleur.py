@@ -120,41 +120,27 @@ class Controleur():
     def atterrirdestination(self,joueur,systeme,planete):
         self.actions.append([self.monnom,"atterrirplanete",[self.monnom,systeme,planete]])
         
-    
-    def creermine(self,joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creermine",[self.monnom,systeme,planete,x,y]])
-        print("Controleur Mine")
+    ######################CREATION BATIMENT######################
+    def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
+        self.actions.append([self.monnom,"creer" + nomBatiment,[self.monnom,systeme,planete,x,y]])
+        print("Controleur Creation Batiment")
         
-    def creervehiculetank(self, joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creervehiculetank",[self.monnom,systeme,planete,x,y]])
-        
-    def creertour(self,joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creertour",[self.monnom,systeme,planete,x,y]])
-        
-    def creercanon(self,joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creercanon",[self.monnom,systeme,planete,x,y]])
-        
-    def creermur(self,joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creermur",[self.monnom,systeme,planete,x,y]])
-        print("Controleur Mur")
-        
-    def creerbouclier(self,joueur,systeme,planete,x,y):
-        self.actions.append([self.monnom,"creerbouclier",[self.monnom,systeme,planete,x,y]])
-    
+    ######################AFFICHAGE BATIMENT######################
     def affichermine(self,joueur,systemeid,planeteid,x,y):
-        self.vue.affichermine(joueur,systemeid,planeteid,x,y)
+        #self.vue.affichermine(joueur,systemeid,planeteid,x,y)
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mine")
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
         
     def affichertour(self,joueur,systemeid,planeteid,x,y):
-        self.vue.affichertour(joueur,systemeid,planeteid,x,y)
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "tour")
         
     def affichercanon(self,joueur,systemeid,planeteid,x,y):
-        self.vue.affichercanon(joueur,systemeid,planeteid,x,y)
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "canon")
         
     def affichermur(self,joueur,systemeid,planeteid,x,y):
-        self.vue.affichermur(joueur,systemeid,planeteid,x,y)
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mur")
         
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)

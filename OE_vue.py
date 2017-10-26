@@ -50,14 +50,105 @@ class Vue():
         
         self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg="SpringGreen3")
         self.cadreRessourcesJoueur.pack(fill=X)
-        self.titreJoueur = Label(self.cadreRessourcesJoueur,text="Joueur",bg="SpringGreen3")
-        self.titreJoueur.grid(row=0,column=0)
         
         self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg="SpringGreen4")
         self.cadreRessourcesPlanete.pack(fill=X)
         self.titrePlanete = Label(self.cadreRessourcesPlanete,text="Planete",bg="SpringGreen4")
         self.titrePlanete.grid(row=0,column=0)
-                
+        self.envoyerRessourcesVersCadreJoueur()
+        
+    def envoyerRessourcesVersCadreJoueur(self):
+        self.chargerImagesRes()
+        i = 0
+        self.titreJoueur = Label(self.cadreRessourcesJoueur,text="Joueur: ",bg="SpringGreen3")
+        self.titreJoueur.grid(row=0,column=i)
+        i+=1
+        self.imgUra = Label(self.cadreRessourcesJoueur,image=self.images["uranium"],bg="SpringGreen3")
+        self.imgUra.grid(row=0,column=i)
+        i+=1
+        self.imgTita = Label(self.cadreRessourcesJoueur,image=self.images["titanium"],bg="SpringGreen3")
+        self.imgTita.grid(row=0,column=i)
+        i+=1
+        self.imgLac = Label(self.cadreRessourcesJoueur,image=self.images["lacrima"],bg="SpringGreen3")
+        self.imgLac.grid(row=0,column=i)
+        i+=1
+        self.imgSante = Label(self.cadreRessourcesJoueur,image=self.images["sante"],bg="SpringGreen3")
+        self.imgSante.grid(row=0,column=i)
+        i+=1
+        self.imgptScience = Label(self.cadreRessourcesJoueur,image=self.images["point_Science"],bg="SpringGreen3")
+        self.imgptScience.grid(row=0,column=i)
+        i+=1
+        self.imgNourr = Label(self.cadreRessourcesJoueur,image=self.images["nourriture"],bg="SpringGreen3")
+        self.imgNourr.grid(row=0,column=i)
+        i+=1
+        self.imgHum = Label(self.cadreRessourcesJoueur,image=self.images["humain"],bg="SpringGreen3")
+        self.imgHum.grid(row=0,column=i)
+        i+=1
+        self.imgElec = Label(self.cadreRessourcesJoueur,image=self.images["electricite"],bg="SpringGreen3")
+        self.imgElec.grid(row=0,column=i)
+        i+=1
+        self.imgEau = Label(self.cadreRessourcesJoueur,image=self.images["eau"],bg="SpringGreen3")
+        self.imgEau.grid(row=0,column=i)
+        i+=1
+        self.imgBr = Label(self.cadreRessourcesJoueur,image=self.images["bronze"],bg="SpringGreen3")
+        self.imgBr.grid(row=0,column=i)
+        i+=1
+        self.imgBio = Label(self.cadreRessourcesJoueur,image=self.images["biohazard"],bg="SpringGreen3")
+        self.imgBio.grid(row=0,column=i)
+        i+=1
+        self.imgChar = Label(self.cadreRessourcesJoueur,image=self.images["charbon"],bg="SpringGreen3")
+        self.imgChar.grid(row=0,column=i)
+        i+=1
+        self.imgAr = Label(self.cadreRessourcesJoueur,image=self.images["argent"],bg="SpringGreen3")
+        self.imgAr.grid(row=0,column=i)
+        i+=1
+        self.imgBois = Label(self.cadreRessourcesJoueur,image=self.images["bois"],bg="SpringGreen3")
+        self.imgBois.grid(row=0,column=i)
+        i+=1
+        self.imgMet = Label(self.cadreRessourcesJoueur,image=self.images["metasic"],bg="SpringGreen3")
+        self.imgMet.grid(row=0,column=i)
+        i+=1
+        self.imgMoral = Label(self.cadreRessourcesJoueur,image=self.images["moral"],bg="SpringGreen3")
+        self.imgMoral.grid(row=0,column=i)
+        i+=1
+    
+    def chargerImagesRes(self):
+        l = 18
+        h = 18
+        im = Image.open("./images/icone_Ressources/uranium.png").resize((int(l),int(h)))
+        self.images["uranium"] = ImageTk.PhotoImage(im) 
+        im = Image.open("./images/icone_Ressources/titanium.png").resize((l,h))
+        self.images["titanium"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/lacrima.png").resize((l,h))
+        self.images["lacrima"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/sante.png").resize((l,h))
+        self.images["sante"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/point_Science.png").resize((l,h))
+        self.images["point_Science"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/nourriture.png").resize((l,h))
+        self.images["nourriture"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/humain.png").resize((l,h))
+        self.images["humain"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/electricite.png").resize((l,h))
+        self.images["electricite"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/eau.png").resize((l,h))
+        self.images["eau"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/bronze.png").resize((l,h))
+        self.images["bronze"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/biohazard.png").resize((l,h))
+        self.images["biohazard"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/charbon.png").resize((l,h))
+        self.images["charbon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/argent.png").resize((l,h))
+        self.images["argent"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/bois.png").resize((l,h))
+        self.images["bois"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/metasic.png").resize((l,h))
+        self.images["metasic"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/icone_Ressources/moral.png").resize((l,h))
+        self.images["moral"] = ImageTk.PhotoImage(im)
+           
+    
     def creercadresplash(self,ip,nom):
         self.cadresplash=Frame(self.root)
         self.canevasplash=Canvas(self.cadresplash,width=640,height=480,bg="red")
@@ -212,42 +303,31 @@ class Vue():
             s.initplanete(sysid,planeid)
         self.changemode(s)
       
-    def affichermine(self,joueur,systemeid,planeteid,x,y):
+    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images[nom]
+                self.modes["planetes"][i].afficherBatiment(x, y, im)
+                
+    """def affichermine(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["mine"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
-                
+                self.modes["planetes"][i].afficherMine(x, y, im)
+                #self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                #self.modes["planetes"][i].minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+                """
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))   
-    
-    def affichertour(self,joueur,systemeid,planeteid,x,y):
-        for i in self.modes["planetes"].keys():
-            if i == planeteid:
-                im=self.modes["planetes"][i].images["tour"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
-    
-    def affichermur(self,joueur,systemeid,planeteid,x,y):
-        for i in self.modes["planetes"].keys():
-            if i == planeteid:
-                im=self.modes["planetes"][i].images["mur"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
-                
-    def affichercanon(self,joueur,systemeid,planeteid,x,y):
-        for i in self.modes["planetes"].keys():
-            if i == planeteid:
-                im=self.modes["planetes"][i].images["canon"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
-    
+
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 self.modes["planetes"][i].canevas.create_oval(x-250,y-250,x+250,y+250,outline= couleur, width = 5)
-    
-                                    
+
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)
         self.parent.fermefenetre()
