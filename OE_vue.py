@@ -456,20 +456,26 @@ class Vue():
             s.initplanete(sysid,planeid)
         self.changemode(s)
       
-    def affichermine(self,joueur,systemeid,planeteid,x,y):
+    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images[nom]
+                self.modes["planetes"][i].afficherBatiment(x, y, im)
+                
+    """def affichermine(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["mine"]
                 self.modes["planetes"][i].afficherMine(x, y, im)
                 #self.modes["planetes"][i].canevas.create_image(x,y,image=im)
                 #self.modes["planetes"][i].minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
-                
+                """
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (x ,y ,"vehiculetank"))   
-    
+    """
     def affichertour(self,joueur,systemeid,planeteid,x,y):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
@@ -486,7 +492,7 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["canon"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im)"""
                                 
     def fermerfenetre(self):
         # Ici, on pourrait mettre des actions a faire avant de fermer (sauvegarder, avertir etc)

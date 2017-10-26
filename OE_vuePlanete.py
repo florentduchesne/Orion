@@ -23,7 +23,7 @@ class VuePlanete(Perspective):
         self.canevas.config(bg="green")
         
         ##############BATIMENTS RESSOURCES##############
-        self.btncreerMine=Button(self.cadreetataction,text="Creer Mine",command=self.creermine)
+        self.btncreerMine=Button(self.cadreetataction,text="Creer Mine",command=self.creerMine)
         self.btncreerMine.pack()
         self.btncreerCampBucherons=Button(self.cadreetataction,text="Creer Camp de bûcherons",command=self.creerCampBucherons)
         self.btncreerCampBucherons.pack()
@@ -77,7 +77,7 @@ class VuePlanete(Perspective):
     
     
     ##############BATIMENTS RESSOURCES##############
-    def creermine(self):
+    def creerMine(self):
         self.macommande="mine"
     def creerCampBucherons(self):
         self.macommande="campbucherons"
@@ -232,65 +232,22 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[2]=="tuile":
-                if self.macommande == "mine":
-                    x=int(t[1])
-                    y=int(t[0])
-                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
-                    self.parent.parent.creermine(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    #minix = (x *200) / self.largeur
-                    #miniy = (y *200) / self.hauteur
-                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="red")
-                    self.macommande=None
-                elif self.macommande == "tour":
-                    x=int(t[1])
-                    y=int(t[0])
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.parent.parent.creertour(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="purple")
-                    self.macommande=None
-                elif self.macommande == "mur":
-                    x=int(t[1])
-                    y=int(t[0])
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.parent.parent.creermur(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
-                    self.macommande=None
-                elif self.macommande == "bouclier":
-                    x=int(t[1])
-                    y=int(t[0])
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.parent.parent.creerbouclier(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="cyan2")
-                    self.canevas.create_oval(x-100,y-100,x+100,y+100,fill="cyan2")
-                    self.macommande=None
-                elif self.macommande == "canon":
-                    x=int(t[1])
-                    y=int(t[0])
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.parent.parent.creercanon(self.parent.nom,self.systemeid,self.planeteid,x,y)
-                    self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="brown")
-                    self.macommande=None
-                elif self.macommande == "vehiculetank":
+                if self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
-                    self.parent.parent.creervehiculetank(self.parent.nom,self.systemeid,self.planeteid,x,y)
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
 
                     self.macommande=None
                     self.maselection=None
-                   
-                elif self.macommande == "vehiculecommerce":
+                else:
+                    x=int(t[1])
+                    y=int(t[0])
+                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande=None
-                    pass
-                elif self.macommande == "vehiculeavion":
-                    self.macommande=None
-                    pass
             elif self.maselection != None and t[2] == "tuile":
                 self.maselection = [self.parent.monnom,t[1],t[2]]
                 print("coucou")
@@ -320,6 +277,12 @@ class VuePlanete(Perspective):
         
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
+    
+    def afficherBatiment(self, x, y, im):
+        minix = (x *200) / self.largeur
+        miniy = (y *200) / self.hauteur
+        self.canevas.create_image(x,y, image=im)
+        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
         
     def afficherMine(self, x, y, im):
         minix = (x *200) / self.largeur
