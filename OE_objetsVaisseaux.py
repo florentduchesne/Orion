@@ -6,7 +6,7 @@ from OE_projectile import *
 from numpy.distutils.fcompiler import none
 
 class Vaisseau():
-    def __init__(self,parent,nom,systeme,idSuivant,niveau):
+    def __init__(self,parent,nom,systeme,idSuivant):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -20,7 +20,7 @@ class Vaisseau():
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau = niveau
+        self.niveau = 1
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
