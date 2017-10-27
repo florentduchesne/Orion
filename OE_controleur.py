@@ -129,13 +129,16 @@ class Controleur():
         
     ######################CREATION BATIMENT######################
     def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
-        self.actions.append([self.monnom,"creer" + nomBatiment,[self.monnom,systeme,planete,x,y]])
+        self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
         print("Controleur Creation Batiment")
         
     ######################AFFICHAGE BATIMENT######################
-    def affichermine(self,joueur,systemeid,planeteid,x,y):
+    """def affichermine(self,joueur,systemeid,planeteid,x,y):
         #self.vue.affichermine(joueur,systemeid,planeteid,x,y)
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mine")
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mine")"""
+        
+    def afficherBatiment(self, joueur, systemeid, planeteid, x, y, nomBatiment):
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, nomBatiment)
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)

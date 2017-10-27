@@ -10,7 +10,7 @@ dictionnaireCoutAllocationAgeBatiments = {
 "Mine":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Mine2":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Mine3":[Ressource(bois=500, titanium=300), Ressource(allocationElectricite=10, allocationHumain=10), 3],
-"Camp_Bucherons":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"Camp_Bucherons1":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Camp_Bucherons2":[Ressource(bois=100, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Camp_Bucherons3":[Ressource(bois=200, titanium=200), Ressource(allocationElectricite=20, allocationHumain=20), 3],
 "Usine_Vehicule":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 1],

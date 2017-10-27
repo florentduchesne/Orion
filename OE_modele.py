@@ -97,7 +97,7 @@ class Modele():
             self.compteur = 40
             for systeme in self.systemes:#boucle a travers les systemes
                 for planete in systeme.planetes:#boucle a travers les planetes
-                    for infra in planete.infrastructures:#boucle a travers les infrastructures
+                    for infra in planete.infrastructures:#boucle a travers les batiments
                         if(isinstance(infra, BatimentRessources)):
                             planete.ressourceACollecter.soustraireRessources(infra.productionRessources)#diminue les ressources disponibles sur la planete
                             planete.ressource.additionnerRessources(infra.productionRessources)#augmente les ressources de la ville

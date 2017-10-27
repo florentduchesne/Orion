@@ -79,9 +79,9 @@ class VuePlanete(Perspective):
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):
-        self.macommande="mine"
+        self.macommande="Mine"
     def creerCampBucherons(self):
-        self.macommande="campbucherons"
+        self.macommande="Camp_Bucherons1"
     def creerpuit(self):
         self.macommande="puit"
     def creerFerme(self):
@@ -106,13 +106,13 @@ class VuePlanete(Perspective):
         self.macommande="drones"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
-        self.macommande="tour"
+        self.macommande="Tour"
     def creermur(self):
-        self.macommande="mur"
+        self.macommande="Mur"
     def creercanon(self):
         self.macommande="canon"
     def creerbouclier(self):
-        self.macommande="bouclier"
+        self.macommande="Bouclier"
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
@@ -192,7 +192,7 @@ class VuePlanete(Perspective):
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
         im = Image.open("./images/Batiments/mine1.png")
-        self.images["mine"] = ImageTk.PhotoImage(im)
+        self.images["Mine"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine2.png")
         self.images["mine2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine3.png")

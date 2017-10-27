@@ -27,7 +27,9 @@ class Joueur():
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
-                      "creermine":self.creermine,
+                      "creerbatiment":self.creerBatiment,
+                      #"creermine":self.creermine,
+                      #"creercampBucherons":self.creerCampBucherons,
                       "creermur":self.creermur,
                       "creertour":self.creertour,
                       "creercanon":self.creercanon,
@@ -36,6 +38,12 @@ class Joueur():
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale}
+        self.listeSousClassesBatiment = {"Mine":Mine,
+                                         "Camp_Bucherons1":CampBucherons,
+                                         "Mur":Mur,
+                                         "Tour":Tour,
+                                         "Bouclier":Bouclier
+                                         }
         
     def creertour(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
@@ -81,7 +89,20 @@ class Joueur():
     def creerstationspatiale(self,id):
         print("station dans joueur")
 
-    def creermine(self,listeparams):
+    def creerBatiment(self, listeparams):
+        nom, systemeid, planeteid, x, y, nomBatiment =listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                        if(aAssezDeRessources):
+                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                            j.infrastructures.append(batiment)
+                            self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
+                        else:
+                            print("construction de mine impossible")
+    """def creermine(self,listeparams):
         nom,systemeid,planeteid,x,y=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
@@ -95,6 +116,19 @@ class Joueur():
                         else:
                             print("construction de mine impossible")
                         
+    def creerCampBucherons(self, listeparams):
+        nom,systemeid,planeteid,x,y=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Camp_Bucherons")
+                        if(aAssezDeRessources):
+                            mine=CampBucherons(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Camp_Bucherons")
+                            j.infrastructures.append(mine)
+                            self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        else:
+                            print("construction de mine impossible")"""
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
         for i in self.systemesvisites:
