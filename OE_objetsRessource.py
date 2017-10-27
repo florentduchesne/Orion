@@ -32,7 +32,7 @@ class Ressource():
 
     def additionnerRessources(self, ressource):
         for cleRess in self.dictRess:
-            self.dictRess[cleRess] -= ressource.dictRess[cleRess]
+            self.dictRess[cleRess] += ressource.dictRess[cleRess]
         
 class RessourceSpeciale():
     def __init__(self, cellule_mutante = 0, robot_chips = 0, lacrima = 0, nova = 0):

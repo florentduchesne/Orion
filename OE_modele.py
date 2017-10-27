@@ -98,20 +98,9 @@ class Modele():
             for i in range(self.systemes.__len__()):#boucle a travers les systemes
                 for j in range(self.systemes[i].planetes.__len__()):#boucle a travers les planetes
                     for k in range(self.systemes[i].planetes[j].infrastructures.__len__()):#boucle a travers les infrastructures
-                        if(isinstance(self.systemes[i].planetes[j].infrastructures[k], Mine)):
-                            if(self.systemes[i].planetes[j].ressourceACollecter.dictRess["bronze"] > 0):
-                                print ("un mine!")
-                                self.systemes[i].planetes[j].ressourceACollecter.dictRess["bronze"] -= 5
-                                self.systemes[i].planetes[j].ressource.dictRess["bronze"] += 5
-                            print (self.systemes[i].planetes[j].ressource.dictRess["bronze"])
-                        elif(isinstance(self.systemes[i].planetes[j].infrastructures[k], Ville)):
-                            self.systemes[i].planetes[j].ressource.dictRess["humain"] += 1 #on augmente la population
-                        elif(isinstance(self.systemes[i].planetes[j].infrastructures[k], CampBucherons)):
-                            if(self.systemes[i].planetes[j].ressourceACollecter.dictRess["bois"] > 0):
-                                print ("un mine!")
-                                self.systemes[i].planetes[j].ressourceACollecter.dictRess["bois"] -= self.systemes[i].planetes[j].infrastructures[k].production
-                                self.systemes[i].planetes[j].ressource.dictRess["bois"] += self.systemes[i].planetes[j].infrastructures[k].production
-                            print (self.systemes[i].planetes[j].ressource.dictRess["bois"])
+                        if(isinstance(self.systemes[i].planetes[j].infrastructures[k], BatimentRessources)):
+                            self.systemes[i].planetes[j].ressourceACollecter.soustraireRessources(self.systemes[i].planetes[j].infrastructures[k].productionRessources)#baisse les ressources disponibles sur la planete
+                            self.systemes[i].planetes[j].ressource.additionnerRessources(self.systemes[i].planetes[j].infrastructures[k].productionRessources)#augmente les ressources de la ville
         else:
             self.compteur -= 1
             
