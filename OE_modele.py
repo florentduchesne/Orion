@@ -95,12 +95,12 @@ class Modele():
     def augmenterRessources(self):
         if self.compteur == 0:
             self.compteur = 40
-            for i in range(self.systemes.__len__()):#boucle a travers les systemes
-                for j in range(self.systemes[i].planetes.__len__()):#boucle a travers les planetes
-                    for k in range(self.systemes[i].planetes[j].infrastructures.__len__()):#boucle a travers les infrastructures
-                        if(isinstance(self.systemes[i].planetes[j].infrastructures[k], BatimentRessources)):
-                            self.systemes[i].planetes[j].ressourceACollecter.soustraireRessources(self.systemes[i].planetes[j].infrastructures[k].productionRessources)#baisse les ressources disponibles sur la planete
-                            self.systemes[i].planetes[j].ressource.additionnerRessources(self.systemes[i].planetes[j].infrastructures[k].productionRessources)#augmente les ressources de la ville
+            for systeme in self.systemes:#boucle a travers les systemes
+                for planete in systeme.planetes:#boucle a travers les planetes
+                    for infra in planete.infrastructures:#boucle a travers les infrastructures
+                        if(isinstance(infra, BatimentRessources)):
+                            planete.ressourceACollecter.soustraireRessources(infra.productionRessources)#diminue les ressources disponibles sur la planete
+                            planete.ressource.additionnerRessources(infra.productionRessources)#augmente les ressources de la ville
         else:
             self.compteur -= 1
             
