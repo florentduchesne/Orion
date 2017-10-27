@@ -79,20 +79,20 @@ class VuePlanete(Perspective):
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):
-        self.macommande="Mine"
+        self.macommande="Mine1"
     def creerCampBucherons(self):
         self.macommande="Camp_Bucherons1"
     def creerpuit(self):
-        self.macommande="puit"
+        self.macommande="Puit1"
     def creerFerme(self):
-        self.macommande="ferme"
+        self.macommande="Ferme1"
     def creerCentraleElectrique(self):
         self.macommande="centraleelectrique"
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerHopital(self):
-        self.macommande="hopital"
+        self.macommande="Hopital"
     def creerEcole(self):
-        self.macommande="ecole"
+        self.macommande="Ecole"
     def creerLaboratoire(self):
         self.macommande="laboratoire"
     def creerBanque(self):
@@ -110,7 +110,7 @@ class VuePlanete(Perspective):
     def creermur(self):
         self.macommande="Mur"
     def creercanon(self):
-        self.macommande="canon"
+        self.macommande="Canon"
     def creerbouclier(self):
         self.macommande="Bouclier"
     ##############UNITES AU SOL##############
@@ -192,11 +192,11 @@ class VuePlanete(Perspective):
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
         im = Image.open("./images/Batiments/mine1.png")
-        self.images["Mine"] = ImageTk.PhotoImage(im)
+        self.images["Mine1"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine2.png")
-        self.images["mine2"] = ImageTk.PhotoImage(im)
+        self.images["Mine2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/mine3.png")
-        self.images["mine3"] = ImageTk.PhotoImage(im)
+        self.images["Mine3"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Camp_Bucherons1.png")
         self.images["Camp_Bucherons1"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Camp_Bucherons2.png")
@@ -243,13 +243,13 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/canon.png")
-        self.images["tour"] = ImageTk.PhotoImage(im)
+        self.images["Tour"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/wall.png")
-        self.images["mur"] = ImageTk.PhotoImage(im)
+        self.images["Mur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/canon1.png").resize((100,100))
-        self.images["canon"] = ImageTk.PhotoImage(im)
+        self.images["Canon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/bouclier.png")
-        self.images["bouclier"] = ImageTk.PhotoImage(im)
+        self.images["Bouclier"] = ImageTk.PhotoImage(im)
     
 		
     def afficherdecor(self):

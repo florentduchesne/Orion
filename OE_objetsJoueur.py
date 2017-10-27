@@ -38,7 +38,7 @@ class Joueur():
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale}
-        self.listeSousClassesBatiment = {"Mine":Mine,
+        self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Mur":Mur,
                                          "Tour":Tour,
