@@ -22,9 +22,6 @@ class Ressource():
     def estPlusGrandOuEgal(self, ressource):
         
         for cleRess in self.dictRess:
-            print("cle : " + cleRess)
-            print("valeur self : " + str(self.dictRess[cleRess]))
-            print("valeur autre: " + str(ressource.dictRess[cleRess]))
             if self.dictRess[cleRess] < ressource.dictRess[cleRess]:
                 return False
         return True

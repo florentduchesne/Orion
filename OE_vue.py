@@ -121,9 +121,16 @@ class Vue():
     def miseAJourLabelsRessources(self):
         for i in self.parent.modele.joueurscles:
             if self.parent.modele.joueurs[i].nom == self.parent.monnom:
-                for j in self.dictionnaireLabelsJoueur:
-                    self.dictionnaireLabelsJoueur[j][0].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
-    
+                for j in self.dictionnaireLabelsJoueur: 
+                    self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
+        if(isinstance(self.modecourant, VuePlanete)):
+            for systeme in self.parent.modele.systemes:
+                for planete in systeme.planetes:
+                    if(planete.id == self.modecourant.planeteid):
+                        for j in self.dictionnaireLabelsPlanete: 
+                            self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.ressource.dictRess[j]))
+                        return
+        
     def chargerImagesRes(self):
         l = 18
         h = 18

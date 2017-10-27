@@ -82,7 +82,6 @@ class Joueur():
         print("station dans joueur")
 
     def creermine(self,listeparams):
-        print("Joueur mine")
         nom,systemeid,planeteid,x,y=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:

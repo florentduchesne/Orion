@@ -96,18 +96,22 @@ class Modele():
         if self.compteur == 0:
             self.compteur = 40
             for i in range(self.systemes.__len__()):#boucle a travers les systemes
-                for j in range(self.systemes.__getitem__(i).planetes.__len__()):#boucle a travers les planetes
-                    for k in range(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__len__()):#boucle a travers les infrastructures
-                        self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["humain"] += 2 #on augmente la population
-                        if( isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Mine)):
-                            if(self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.dictRess["bronze"] > 0):
+                for j in range(self.systemes[i].planetes.__len__()):#boucle a travers les planetes
+                    for k in range(self.systemes[i].planetes[j].infrastructures.__len__()):#boucle a travers les infrastructures
+                        if(isinstance(self.systemes[i].planetes[j].infrastructures[k], Mine)):
+                            if(self.systemes[i].planetes[j].ressourceACollecter.dictRess["bronze"] > 0):
                                 print ("un mine!")
-                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressourceACollecter.dictRess["bronze"] -= 5
-                                self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["bronze"] += 5
-                            print (self.systemes.__getitem__(i).planetes.__getitem__(j).ressource.dictRess["bronze"])
-                        elif(isinstance(self.systemes.__getitem__(i).planetes.__getitem__(j).infrastructures.__getitem__(k), Ville)):
-                            #print ("une ville!")
-                            pass
+                                self.systemes[i].planetes[j].ressourceACollecter.dictRess["bronze"] -= 5
+                                self.systemes[i].planetes[j].ressource.dictRess["bronze"] += 5
+                            print (self.systemes[i].planetes[j].ressource.dictRess["bronze"])
+                        elif(isinstance(self.systemes[i].planetes[j].infrastructures[k], Ville)):
+                            self.systemes[i].planetes[j].ressource.dictRess["humain"] += 1 #on augmente la population
+                        elif(isinstance(self.systemes[i].planetes[j].infrastructures[k], CampBucherons)):
+                            if(self.systemes[i].planetes[j].ressourceACollecter.dictRess["bois"] > 0):
+                                print ("un mine!")
+                                self.systemes[i].planetes[j].ressourceACollecter.dictRess["bois"] -= self.systemes[i].planetes[j].infrastructures[k].production
+                                self.systemes[i].planetes[j].ressource.dictRess["bois"] += self.systemes[i].planetes[j].infrastructures[k].production
+                            print (self.systemes[i].planetes[j].ressource.dictRess["bois"])
         else:
             self.compteur -= 1
             
