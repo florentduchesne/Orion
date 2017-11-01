@@ -87,7 +87,7 @@ class VuePlanete(Perspective):
     def creerFerme(self):
         self.macommande="Ferme1"
     def creerCentraleElectrique(self):
-        self.macommande="centraleelectrique"
+        self.macommande="Centrale_Charbon"
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerHopital(self):
         self.macommande="Hopital"
@@ -297,6 +297,7 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[4]=="tuile":
+                print("creation batiment")
                 if self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)

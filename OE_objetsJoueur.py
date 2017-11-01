@@ -28,12 +28,6 @@ class Joueur():
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
                       "creerbatiment":self.creerBatiment,
-                      #"creermine":self.creermine,
-                      #"creercampBucherons":self.creerCampBucherons,
-                      #"creermur":self.creermur,
-                      #"creertour":self.creertour,
-                      #"creercanon":self.creercanon,
-                      #"creerbouclier":self.creerbouclier,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
@@ -46,50 +40,10 @@ class Joueur():
                                          "Ferme1:":Ferme,
                                          "Canon":Canon,
                                          "Puit1":Puit,
-                                         "Ferme1":Ferme
+                                         "Ferme1":Ferme,
+                                         "Centrale_Charbon":CentraleElectrique
                                          }
-        """
-    def creertour(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        tour=Tour(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(tour)
-                        self.parent.parent.affichertour(nom,systemeid,planeteid,x,y)
-
-    def creercanon(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        canon=Canon(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(canon)
-                        self.parent.parent.affichercanon(nom,systemeid,planeteid,x,y)
-        
-    def creerbouclier(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(bouclier)
-                        self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
-        
-    
-    def creermur(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(mur)
-                        self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
-               """         
+      
     def creerstationspatiale(self,id):
         print("station dans joueur")
 

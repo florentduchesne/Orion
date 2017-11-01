@@ -132,25 +132,12 @@ class Controleur():
         self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
         print("Controleur Creation Batiment")
         
-    ######################AFFICHAGE BATIMENT######################
-    """def affichermine(self,joueur,systemeid,planeteid,x,y):
-        #self.vue.affichermine(joueur,systemeid,planeteid,x,y)
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mine")"""
-        
+    ######################AFFICHAGE BATIMENT#####################
     def afficherBatiment(self, joueur, systemeid, planeteid, x, y, nomBatiment):
         self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, nomBatiment)
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
-        """
-    def affichertour(self,joueur,systemeid,planeteid,x,y):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "tour")
-        
-    def affichercanon(self,joueur,systemeid,planeteid,x,y):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "canon")
-        
-    def affichermur(self,joueur,systemeid,planeteid,x,y):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mur")"""
         
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
