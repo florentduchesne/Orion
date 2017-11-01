@@ -96,7 +96,7 @@ class VuePlanete(Perspective):
     def creerLaboratoire(self):
         self.macommande="laboratoire"
     def creerBanque(self):
-        self.macommande="banque"
+        self.macommande="Banque"
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
         self.macommande="vehicules"
@@ -203,6 +203,12 @@ class VuePlanete(Perspective):
         self.images["Camp_Bucherons2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Camp_Bucherons3.png")
         self.images["Camp_Bucherons3"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine1.png")
+        self.images["Puit1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine2.png")
+        self.images["Puit2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine3.png")
+        self.images["Puit3"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Batiments/Usine_Vehicule.png")
         self.images["Usine_Vehicule"] = ImageTk.PhotoImage(im)

@@ -119,7 +119,7 @@ class Bouclier(BatimentDefense):
         #======================================================
 
 class Tour(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idsuivant
@@ -138,7 +138,7 @@ class Tour(BatimentDefense):
         #======================================================
 
 class Canon(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idsuivant

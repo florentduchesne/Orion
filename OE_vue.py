@@ -336,8 +336,9 @@ class Vue():
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
+                print("creation bouclier")
                 self.modes["planetes"][i].canevas.create_oval(x-250,y-250,x+250,y+250,outline= couleur, width = 5)
-                im = self.modes["planetes"][i].images["bouclier"]
+                im = self.modes["planetes"][i].images["Bouclier"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im)
 
 

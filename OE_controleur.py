@@ -142,7 +142,7 @@ class Controleur():
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
-        
+        """
     def affichertour(self,joueur,systemeid,planeteid,x,y):
         self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "tour")
         
@@ -150,7 +150,7 @@ class Controleur():
         self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "canon")
         
     def affichermur(self,joueur,systemeid,planeteid,x,y):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mur")
+        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, "mur")"""
         
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)

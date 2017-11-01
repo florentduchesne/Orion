@@ -10,7 +10,7 @@ dictionnaireCoutAllocationAgeBatiments = {
 "Mine1":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Mine2":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Mine3":[Ressource(bois=500, titanium=300), Ressource(allocationElectricite=10, allocationHumain=10), 3],
-"Camp_Bucherons1":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"Camp_Bucherons1":[Ressource(bronze=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Camp_Bucherons2":[Ressource(bois=100, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Camp_Bucherons3":[Ressource(bois=200, titanium=200), Ressource(allocationElectricite=20, allocationHumain=20), 3],
 "Usine_Vehicule":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 1],
@@ -34,13 +34,15 @@ dictionnaireCoutAllocationAgeBatiments = {
 "Puit1":[Ressource(), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Puit2":[Ressource(bronze=50, titanium=50), Ressource(allocationElectricite=10, allocationHumain=5), 2],
 "Banque":[Ressource(titanium=300, bronze=300), Ressource(allocationElectricite=20, allocationHumain=15), 2],
-"Ferme1":[Ressource(), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"Ferme1":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Ferme2":[Ressource(bronze=100, bois=100), Ressource(allocationElectricite=15, allocationHumain=15), 2],
 "Mur":[Ressource(bois=50), Ressource(), 1],
 "Tour":[Ressource(bois=150), Ressource(allocationHumain=10), 1],
+"Canon":[Ressource(bronze=100), Ressource(allocationElectricite=50, allocationHumain=25), 1],###############temporaire###########
 "Canon_Ion":[Ressource(titanium=300, bronze=100), Ressource(allocationElectricite=50, allocationHumain=25), 3],
 "Canon_Acid":[Ressource(titanium=500), Ressource(allocationElectricite=25, allocationHumain=25), 3],
-"Bouclier":[Ressource(titanium=1000, metasic=500), Ressource(allocationElectricite=55, allocationHumain=50), 3]
+"Bouclier":[Ressource(bronze=10), Ressource(allocationElectricite=55, allocationHumain=50), 3]##############temporaire#########
+#"Bouclier":[Ressource(titanium=1000, metasic=500), Ressource(allocationElectricite=55, allocationHumain=50), 3]
 }
 
 
