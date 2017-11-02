@@ -242,6 +242,8 @@ class Vue():
             self.changemode(s)
         else:
             print("aucune planete selectionnee pour atterrissage")
+     
+        
         
     def creerpartie(self):
         nom=self.nomsplash.get()

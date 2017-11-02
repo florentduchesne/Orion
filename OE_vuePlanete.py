@@ -22,48 +22,72 @@ class VuePlanete(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         self.canevas.config(bg="green")
         
+        ##############MenuPrincipale##############
+        self.btnBatiment=Button(self.cadreetataction,text="Creer un Batiment ressource",command=self.AfficherBatiment)
+        self.btnBatiment.pack(side=TOP)
+        self.btnInfrastructure=Button(self.cadreetataction,text="Creer une Infrastructure",command=self.AfficherInfrastructure)
+        self.btnInfrastructure.pack(side=TOP)
+        self.btnManufacture=Button(self.cadreetataction,text="Creer une Manufacture",command=self.AfficherManufacture)
+        self.btnManufacture.pack(side=TOP)
+        self.btnDefense=Button(self.cadreetataction,text="Creer une Defense",command=self.AfficherDefense)
+        self.btnDefense.pack(side=TOP)
+        self.btnVehicule=Button(self.cadreetataction,text="Creer un Vehicule",command=self.AfficherVehicule)
+        self.btnVehicule.pack(side=TOP)
+        
         ##############BATIMENTS RESSOURCES##############
-        self.btncreerMine=Button(self.cadreetataction,text="Creer Mine",command=self.creerMine)
-        self.btncreerMine.pack()
-        self.btncreerCampBucherons=Button(self.cadreetataction,text="Creer Camp de bûcherons",command=self.creerCampBucherons)
-        self.btncreerCampBucherons.pack()
-        self.btncreerPuit=Button(self.cadreetataction,text="Creer Puit",command=self.creerpuit)
-        self.btncreerPuit.pack()
-        self.btncreerFerme=Button(self.cadreetataction,text="Creer Ferme",command=self.creerFerme)
-        self.btncreerFerme.pack()
-        self.btncreerCentraleElectrique=Button(self.cadreetataction,text="Creer Centrale Electrique",command=self.creerCentraleElectrique)
-        self.btncreerCentraleElectrique.pack()
+        self.btncreerMine=Button(self.cadreBatiment,text="Mine",command=self.creerMine)
+        self.btncreerMine.pack(side=TOP)
+        self.btncreerCampBucherons=Button(self.cadreBatiment,text="Camp de bûcherons",command=self.creerCampBucherons)
+        self.btncreerCampBucherons.pack(side=TOP)
+        self.btncreerPuit=Button(self.cadreBatiment,text="Puit",command=self.creerpuit)
+        self.btncreerPuit.pack(side=TOP)
+        self.btncreerFerme=Button(self.cadreBatiment,text="Ferme",command=self.creerFerme)
+        self.btncreerFerme.pack(side=TOP)
+        self.btnRetour=Button(self.cadreBatiment,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+        
         
         ##############BATIMENTS INFRASTRUCTURES##############
-        self.btncreerHopital=Button(self.cadreetataction,text="Creer Hôpital",command=self.creerHopital)
-        self.btncreerHopital.pack()
-        self.btncreerEcole=Button(self.cadreetataction,text="Creer École",command=self.creerEcole)
-        self.btncreerEcole.pack()
-        self.btncreerLaboratoire=Button(self.cadreetataction,text="Creer Laboratoire",command=self.creerLaboratoire)
-        self.btncreerLaboratoire.pack()
-        self.btncreerBanque=Button(self.cadreetataction,text="Creer Banque",command=self.creerBanque)
-        self.btncreerBanque.pack()
+        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole)
+        self.btncreerEcole.pack(side=TOP)
+        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital)
+        self.btncreerHopital.pack(side=TOP)
+        self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque)
+        self.btncreerBanque.pack(side=TOP)
+        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire)
+        self.btncreerLaboratoire.pack(side=TOP)
+        self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
         
         ##############BATIMENTS MANUFACTURES##############
-        self.btncreerUsineVehicules=Button(self.cadreetataction,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
-        self.btncreerUsineVehicules.pack()
-        self.btncreerUsineVaisseaux=Button(self.cadreetataction,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
-        self.btncreerUsineVaisseaux.pack()
-        self.btncreerUsineDrones=Button(self.cadreetataction,text="Creer Usine à Drones",command=self.creerUsineDrones)
-        self.btncreerUsineDrones.pack()
+        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique)
+        self.btncreerCentraleElectrique.pack(side=TOP)
+        self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
+        self.btncreerUsineVehicules.pack(side=TOP)
+        self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
+        self.btncreerUsineVaisseaux.pack(side=TOP)
+        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones)
+        self.btncreerUsineDrones.pack(side=TOP)
+        self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+       
         
         ##############BATIMENTS DEFENSES##############
-        self.btncreermur=Button(self.cadreetataction,text="Creer Mur",command=self.creermur)
-        self.btncreermur.pack()
-        self.btncreercanon=Button(self.cadreetataction,text="Creer Canon",command=self.creercanon)
-        self.btncreercanon.pack()
-        self.btncreerbouclier=Button(self.cadreetataction,text="Creer Bouclier",command=self.creerbouclier)
-        self.btncreerbouclier.pack()
-        self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
-        self.btncreertour.pack()
-        ##############UNITES AU SOL##############
-        self.btncreertank=Button(self.cadreetataction,text="Creer Tank",command=self.creervehiculetank)
-        self.btncreertank.pack()
+        self.btncreermur=Button(self.cadreDefense,text="Creer Mur",command=self.creermur)
+        self.btncreermur.pack(side=TOP)
+        self.btncreercanon=Button(self.cadreDefense,text="Creer Canon",command=self.creercanon)
+        self.btncreercanon.pack(side=TOP)
+        self.btncreertour=Button(self.cadreDefense,text="Creer Tour",command=self.creertour)
+        self.btncreertour.pack(side=TOP)
+        self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier)
+        self.btncreerbouclier.pack(side=TOP)
+        self.btnRetour=Button(self.cadreDefense,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+        ##############Vehicule##############
+        self.btncreertank=Button(self.cadreVehicule,text="Creer Tank",command=self.creervehiculetank)
+        self.btncreertank.pack(side=TOP)
+        self.btnRetour=Button(self.cadreVehicule,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
         
         
         ##############AUTRES##############
@@ -76,6 +100,19 @@ class VuePlanete(Perspective):
         
         self.changecadreetat(self.cadreetataction)
     
+    ##############MenuPrincipale##############
+    def AfficherBatiment(self):
+        self.changecadreetat(self.cadreBatiment)
+    def AfficherManufacture(self):
+        self.changecadreetat(self.cadreManufacture)
+    def AfficherInfrastructure(self):
+        self.changecadreetat(self.cadreInfrastructure)
+    def AfficherVehicule(self):
+        self.changecadreetat(self.cadreVehicule)
+    def AfficherDefense(self):
+        self.changecadreetat(self.cadreDefense)
+    def Retour(self):
+        self.changecadreetat(self.cadreetataction)
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):
