@@ -39,10 +39,10 @@ class vehiculeTank(Vehicule):
         self.puissance = 0
         
     def avancer(self):
-        print()
         rep = None
         x=self.cible.x
         y=self.cible.y
+        print(x,y)
         self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
         if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
             rep=self.cible

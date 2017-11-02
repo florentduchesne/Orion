@@ -116,6 +116,7 @@ class VuePlanete(Perspective):
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
+        self.maselection=None
     def creervehiculecommerce(self):
         self.macommande="vehiculecommerce"
     def creervehiculeavion(self):
@@ -280,20 +281,65 @@ class VuePlanete(Perspective):
                 
     def creervaisseau(self):
         pass
-         
+
     def afficherpartie(self,mod):
-        pass
-            
+        
+        self.canevas.delete("vehiculetank")
+        #self.canevas.delete("selecteur")
+        self.afficherselection()
+        #e=self.UA2pixel
+        for i in mod.joueurscles:
+            i=mod.joueurs[i]
+            for j in i.vehiculeplanetaire:
+                #if j.idSysteme==self.systeme.id:
+                jx=j.x
+                jy=j.y
+                #jx=j.x*e
+                #jy=j.y*e
+                x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                #ajouter if pour changer l'image selon l'angle de la destination...
+                im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
+                self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
+                '''
+                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                '''
+         
+         
     def changerproprietaire(self,prop,couleur,systeme): 
         pass
                
     def afficherselection(self):
-        pass
-      
+        
+        if self.maselection!=None:
+            #e=self.UA2pixel
+            joueur=self.modele.joueurs[self.parent.nom]
+            if self.maselection[4]=="vehiculetank":
+                for i in joueur.vehiculeplanetaire:
+                    if i.id == self.maselection[1]:
+                        x=i.x
+                        y=i.y
+                        t=10
+                        self.canevas
+                        
+                        '''
+                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                                    outline=joueur.couleur,
+                                                    tags=("select","selecteur"))
+                        '''
+        
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
-        print("print t")
+        print("print t : ")
         print(t)
+        print('event : ' + str(evt.x) + ' - ' + str(evt.y))
         
         
         if self.maselection ==None and t[4] != 'tuile':
@@ -302,7 +348,14 @@ class VuePlanete(Perspective):
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1], self.maselection[5])
+                print('destination : ' + str(evt.x) +' - ' + str(evt.y))
+                print('actuel : ' + str(self.maselection[2]) + ' - ' + str(self.maselection[3]))
+                
+                #coordonner x et y de la tuile selectionner pour le deplacement du tank
+                #le x et le y dans les tags est inversées...
+                xdeplacement = int(t[3])
+                ydeplacement = int(t[2])
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
                 self.maselection = None                
                 pass
         else:
