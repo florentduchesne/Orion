@@ -32,7 +32,8 @@ class Joueur():
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
-                      "creerstationspatiale":self.creerstationspatiale}
+                      "creerstationspatiale":self.creerstationspatiale,
+                      "ciblerEspace":self.ciblerEspace}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -182,7 +183,25 @@ class Joueur():
                                 i.ciblerdestination(p)
                                 #i.ciblerdestination(Coord(xy))
                                 return
-     
+                            
+    def ciblerEspace(self,ids):
+        idori,idsyteme,xy=ids
+        
+        
+        
+        #xy =Coord(xyEsp)
+        for i in self.vaisseauxinterstellaires:
+            if i.id== idori:
+                              
+                
+                xy =Coord((xy[0],xy[1]))
+                print("cible espace")
+                i.ciblerdestination(xy)
+                                
+                                #i.ciblerdestination(Coord(xy))
+                return
+
+                            
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
         idorigine, x, y, idplanete, idvehicule = ids
@@ -224,8 +243,8 @@ class Joueur():
         for i in self.stationspatiaux:
                 i.orbiter()
         
-        #self.detecterCible()
-       # self.choisirCible()
+        self.detecterCible()
+        #self.choisirCible()
        # self.retirerVaiseauMort()
         
     def detecterCible(self):
