@@ -67,8 +67,10 @@ class Vue():
         couleur = "LightSteelBlue4"
         cadre = self.cadreRessourcesJoueur
         
-        self.titreJoueur = Label(cadre,text="Joueur: ",bg=couleur)
-        self.titreJoueur.grid(row=0,column=0)
+        self.titreJoueur = (Label(cadre,image=self.images["joueur"],bg=couleur), Label(cadre,text="Joueur: ",bg=couleur))
+        self.titreJoueur[0].grid(row=0,column=i)
+        i = 1
+        self.titreJoueur[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsJoueur["humain"] = (Label(cadre,image=self.images["humain"],bg=couleur), Label(cadre,text="0",bg=couleur))
         self.dictionnaireLabelsJoueur["electricite"] = (Label(cadre,image=self.images["electricite"],bg=couleur), Label(cadre,text="0",bg=couleur))
@@ -85,7 +87,7 @@ class Vue():
         #self.dictionnaireLabelsJoueur["argent"] = (Label(cadre,image=self.images["argent"],bg=couleur), Label(cadre,text="0",bg=couleur))
         self.dictionnaireLabelsJoueur["point_science"] = (Label(cadre,image=self.images["point_science"],bg=couleur), Label(cadre,text="0",bg=couleur))
         
-        i = 1
+        i = 2
         
         for d in self.dictionnaireLabelsJoueur:
             self.dictionnaireLabelsJoueur[d][0].grid(row=0, column = i)
@@ -97,8 +99,10 @@ class Vue():
         i = 0
         couleur = "SkyBlue4"
         cadre = self.cadreRessourcesPlanete
-        self.titrePlanete = Label(cadre,text="Planete: ",bg=couleur)
-        self.titrePlanete.grid(row=0,column=i)
+        self.titrePlanete = (Label(cadre,image=self.images["planet"],bg=couleur), Label(cadre,text="Planète: ",bg=couleur))
+        self.titrePlanete[0].grid(row=0,column=i)
+        i = 1
+        self.titrePlanete[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsPlanete["humain"] = (Label(cadre,image=self.images["humain"],bg=couleur), Label(cadre,text="0",bg=couleur))
         self.dictionnaireLabelsPlanete["electricite"] = (Label(cadre,image=self.images["electricite"],bg=couleur), Label(cadre,text="0",bg=couleur))
@@ -116,7 +120,7 @@ class Vue():
         self.dictionnaireLabelsPlanete["point_science"] = (Label(cadre,image=self.images["point_science"],bg=couleur), Label(cadre,text="0",bg=couleur))
         
         
-        i = 1
+        i = 2
         for d in self.dictionnaireLabelsPlanete:
             self.dictionnaireLabelsPlanete[d][0].grid(row=0, column = i)
             i += 1
@@ -149,14 +153,18 @@ class Vue():
     def chargerImagesRes(self):
         l = 18
         h = 18
+        im = Image.open("./images/icone_Ressources/planet.png").resize((int(l),int(h)))
+        self.images["planet"] = ImageTk.PhotoImage(im) 
+        im = Image.open("./images/icone_Ressources/user.png").resize((l,h))
+        self.images["joueur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/uranium.png").resize((int(l),int(h)))
         self.images["uranium"] = ImageTk.PhotoImage(im) 
         im = Image.open("./images/icone_Ressources/titanium.png").resize((l,h))
         self.images["titanium"] = ImageTk.PhotoImage(im)
-        """im = Image.open("./images/icone_Ressources/lacrima.png").resize((l,h))
-        self.images["lacrima"] = ImageTk.PhotoImage(im)"""
-        """im = Image.open("./images/icone_Ressources/sante.png").resize((l,h))
-        self.images["sante"] = ImageTk.PhotoImage(im)"""
+        #im = Image.open("./images/icone_Ressources/lacrima.png").resize((l,h))
+        #self.images["lacrima"] = ImageTk.PhotoImage(im)"""
+        #im = Image.open("./images/icone_Ressources/sante.png").resize((l,h))
+        #self.images["sante"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/point_Science.png").resize((l,h))
         self.images["point_science"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/nourriture.png").resize((l,h))
@@ -169,12 +177,12 @@ class Vue():
         self.images["eau"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bronze.png").resize((l,h))
         self.images["bronze"] = ImageTk.PhotoImage(im)
-        """im = Image.open("./images/icone_Ressources/biohazard.png").resize((l,h))
-        self.images["biohazard"] = ImageTk.PhotoImage(im)"""
+        #im = Image.open("./images/icone_Ressources/biohazard.png").resize((l,h))
+        #self.images["biohazard"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/charbon.png").resize((l,h))
         self.images["charbon"] = ImageTk.PhotoImage(im)
-        """im = Image.open("./images/icone_Ressources/argent.png").resize((l,h))
-        self.images["argent"] = ImageTk.PhotoImage(im)"""
+        #im = Image.open("./images/icone_Ressources/argent.png").resize((l,h))
+        #self.images["argent"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bois.png").resize((l,h))
         self.images["bois"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/metasic.png").resize((l,h))

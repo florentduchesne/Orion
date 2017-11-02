@@ -23,6 +23,7 @@ class Joueur():
         self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
+        self.niveauVaisseau = 1
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -58,8 +59,12 @@ class Joueur():
             if i.id==idsystem:
                 for p in i.planetes:
                     if idplanete==p.id:
-                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.couleur,p)
                         self.stationspatiaux.append(station)
+                        print("Station Creer")
+                        print("taille: " + str(p.taille))
+                        print("distance: " + str(p.distance))
+                        print("angle: " + str(p.angle))                        
                         return 1            
                     
     def ameliorerBatiment(self, maSelection, planete, systeme):
@@ -68,8 +73,14 @@ class Joueur():
         #print(planete.infrastructures)
         planete = self.getPlanete(planete, systeme)
         for infra in planete.infrastructures:
-            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+            print("infra y : " + str(infra.y))
+            print("infra x : " + str(infra.x))
+            print("maSelection 2 : " + str(maSelection[2]))
+            print("maSelection 3 : " + str(maSelection[3]))
+            if int(maSelection[2]) == int(infra.x) and int(maSelection[3]) == int(infra.y):
                 print(infra.nomBatiment)
+                infra.ameliorer(self, planete)
+                return
         
     
     def getPlanete(self, planeteID, systemeID):
@@ -124,14 +135,14 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,ids):
-        idsystem,idplanete=ids
+        idsystem,idplanete=ids#,typeVaisseau=ids
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
                     #print("vais creer")
                     if idplanete==p.id:
                        # print("vais creer")
-                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,)#self.niveauVaisseau)
                         self.vaisseauxinterstellaires.append(v)
                         return 1            
 
