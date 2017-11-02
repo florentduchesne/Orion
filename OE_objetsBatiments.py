@@ -51,8 +51,6 @@ class StationSpatiale(BatimentDefense):
         self.id=idsuivant
         self.x=x
         self.y=y
-        self.planetex = planeteid.x
-        self.planetey = planeteid.y
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.angle=0

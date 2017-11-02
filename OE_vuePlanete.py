@@ -90,7 +90,7 @@ class VuePlanete(Perspective):
         self.macommande="Centrale_Charbon"
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerHopital(self):
-        self.macommande="Hopital"
+        self.macommande="Hopital1"
     def creerEcole(self):
         self.macommande="Ecole"
     def creerLaboratoire(self):
@@ -99,11 +99,11 @@ class VuePlanete(Perspective):
         self.macommande="Banque"
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
-        self.macommande="vehicules"
+        self.macommande="Usine_Vehicule"
     def creerUsineVaisseaux(self):
-        self.macommande="vaisseaux"
+        self.macommande="Usine_Vaisseau1"
     def creerUsineDrones(self):
-        self.macommande="drones"
+        self.macommande="Usine_Drone"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"
@@ -236,6 +236,23 @@ class VuePlanete(Perspective):
         self.images["ville2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville3.png")
         self.images["ville3"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Banque.png")
+        self.images["Banque"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Laboratoire.png")
+        self.images["Laboratoire"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit1.png")
+        self.images["Puit1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit2.png")
+        self.images["Puit2"] = ImageTk.PhotoImage(im)
+        
+        
+        im = Image.open("./images/Batiments/Ecole.png")
+        self.images["Ecole"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/College.png")
+        self.images["College"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Universite.png")
+        self.images["Universite"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Batiments/Ferme1.png")
         self.images["Ferme1"] = ImageTk.PhotoImage(im)
