@@ -122,7 +122,8 @@ class VueSysteme(Perspective):
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                if j.idSysteme==self.systeme.id:
+                #if j.idSysteme==self.systeme.id:
+                if True:
                     jx=j.x*e
                     jy=j.y*e
                     x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
@@ -130,9 +131,9 @@ class VueSysteme(Perspective):
                     x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                     x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
                     self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
                     self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
                     self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
                                              tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
                     
@@ -168,6 +169,7 @@ class VueSysteme(Perspective):
         self.changecadreetat(None)
         e=self.UA2pixel
         xy=evt.x/e,evt.y/e
+        xy2=evt.x,evt.y
         t=self.canevas.gettags("current")
         if t and t[0]!="current":
             
@@ -184,7 +186,7 @@ class VueSysteme(Perspective):
                 
             elif t[1]=="vaisseauinterstellaire":
                 print("IN VAISSEAUINTERSTELLAIRE",t)
-                self.maselection=[self.parent.nom,t[1],t[2]]
+                self.maselection=[self.parent.nom,t[1],t[2],xy2]
                 self.montrevaisseauxselection()  
             
             elif t[1]=="systeme":
@@ -213,7 +215,25 @@ class VueSysteme(Perspective):
             self.maselection=None
             self.lbselectecible.pack_forget()
             self.canevas.delete("selecteur")
-   
+    
+    def cliquervue2(self,evt):
+        print("vue 2")
+        self.changecadreetat(None)
+        e=self.UA2pixel
+ 
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        xy=(x/100,y/100)
+      
+        t=self.canevas.gettags("current")
+         
+        if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
+            print("IN systeme + select VAISSEAUINTERSTELLAIRE")
+            print(xy)
+           
+            self.parent.parent.ciblerEspace(self.maselection[2],self.systeme.id,xy)
+
+           
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadreetatmsg)
             
