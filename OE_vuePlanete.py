@@ -103,7 +103,7 @@ class VuePlanete(Perspective):
     def creerUsineVaisseaux(self):
         self.macommande="Usine_Vaisseau1"
     def creerUsineDrones(self):
-        self.macommande="drones"
+        self.macommande="Usine_Drone"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"

@@ -34,14 +34,20 @@ class Joueur():
                       "creerstationspatiale":self.creerstationspatiale}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
+                                         "Usine_Vehicule":UsineVehicule,
+                                         "Usine_Vaisseau1":UsineVaisseau,
+                                         "Usine_Drone":UsineDrone,
+                                         "Centrale_Charbon":CentraleElectrique,
+                                         "Hopital1":Hopital,
+                                         "Ecole":Ecole,
+                                         "Laboratoire":Laboratoire,
+                                         "Puit1":Puit,
+                                         "Banque":Banque,
+                                         "Ferme1:":Ferme,
                                          "Mur":Mur,
                                          "Tour":Tour,
-                                         "Bouclier":Bouclier,
-                                         "Ferme1:":Ferme,
                                          "Canon":Canon,
-                                         "Puit1":Puit,
-                                         "Ferme1":Ferme,
-                                         "Centrale_Charbon":CentraleElectrique
+                                         "Bouclier":Bouclier
                                          }
       
     def creerstationspatiale(self,listeparams):
@@ -82,7 +88,7 @@ class Joueur():
                             j.infrastructures.append(batiment)
                             self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
                         else:
-                            print("construction de mine impossible")
+                            print("construction du batiment impossible")
 
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
