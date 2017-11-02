@@ -33,9 +33,11 @@ class VueGalaxie(Perspective):
         if systeme==None:
             if self.maselection and self.maselection[0]==self.parent.nom and self.maselection[1]=="systeme":
                 sid=self.maselection[2]
-                for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+               # for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+                for i in self.modele.systemes:
                     if i.id==sid:
                         s=i
+                        print(s.planetes)
                         break
                 
                 self.parent.parent.visitersysteme(sid)
@@ -161,15 +163,15 @@ class VueGalaxie(Perspective):
         if t and t[0]!="current":    
             if t[1]=="systeme":
                 print("IN SYSTEME",t)
-                if self.parent.nom in t:
-                    print("IN systeme  PAS SELECTION")
-                    self.maselection=[self.parent.nom,t[1],t[2]]
-                    self.montresystemeselection()
-                else:    
-                    print("IN systeme + RIEN")
-                    self.maselection=None
-                    self.lbselectecible.pack_forget()
-                    self.canevas.delete("selecteur")
+               # if self.parent.nom in t:
+                print("IN systeme  PAS SELECTION")
+                self.maselection=[self.parent.nom,t[1],t[2]]
+                self.montresystemeselection()
+                #else:    
+                 #   print("IN systeme + RIEN")
+                  #  self.maselection=None
+                   # self.lbselectecible.pack_forget()
+                    #self.canevas.delete("selecteur")
             else:
                 print("Objet inconnu")
         else:

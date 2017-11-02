@@ -146,7 +146,7 @@ class VueSysteme(Perspective):
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
-        #self.canevas.delete("selecteur")
+        self.canevas.delete("selecteur")
         self.afficherselection()
         e=self.UA2pixel
         for i in mod.joueurscles:
@@ -178,13 +178,14 @@ class VueSysteme(Perspective):
                
     def afficherselection(self):
         if self.maselection!=None:
+            #print(self.maselection)
             e=self.UA2pixel
             joueur=self.modele.joueurs[self.parent.nom]
             if self.maselection[1]=="planete":
                 for i in self.systeme.planetes:
                     if i.id == self.maselection[2]:
-                        x=int(self.maselection[3])
-                        y=int(self.maselection[4])
+                        x=float(self.maselection[3])
+                        y=float(self.maselection[4])
                         t=i.taille*100 +10
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
                                                 outline=joueur.couleur,

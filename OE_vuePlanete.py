@@ -176,14 +176,14 @@ class VuePlanete(Perspective):
     
     def voirsysteme(self):
         self.parent.cadreRessourcesPlanete.pack_forget()
-        for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+        for i in self.modele.systemes:
             if i.id==self.systeme:
                 self.parent.voirsysteme(i)
             
     def initplanete(self,sys,plane):
         s=None
         p=None
-        for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+        for i in self.modele.systemes:
             if i.id==sys:
                 s=i
                 for j in i.planetes:
@@ -217,7 +217,10 @@ class VuePlanete(Perspective):
                 miniy = (i.y *200) / self.hauteur
                 
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
-            
+            else:
+               #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
+               pass
+                
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
         #Centre sur la ville principal.
         canl=int(scrollBarX-400)/self.largeur
