@@ -6,6 +6,7 @@ from OE_projectile import *
 from numpy.distutils.fcompiler import none
 
 class Vaisseau():
+    #self, parent, nom, systemeid, planeteid, x, y, idsuivant
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
         self.parent=parent
         self.id=idSuivant

@@ -49,6 +49,8 @@ class Perspective(Frame):
         self.cadreVehicule=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
         self.cadreDefense=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
         
+        self.cadreAmeliorationBatiments=Frame(self.cadreetat, width=200, height=200, bg="grey20")##CADRE QUI NOUS PERMET D'AMELIORER LES BATIMENTS
+        
         self.cadreetatmsg=Frame(self.cadreetat,width=200,height=200,bg="grey20")
         
         self.cadreminimap=Frame(self.cadreinfo,width=200,height=200,bg="grey20")
