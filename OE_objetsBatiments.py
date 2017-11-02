@@ -5,7 +5,7 @@ from DictionnaireCoutAllocationAgeBatiments import *
 
 #super-classe des mines, camps de bucherons, etc.
 class BatimentRessources():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, production, listeNiveaux = None):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, production, listeNiveaux = None, proprio = "patate"):
         self.parent=parent
         self.id=idSuivant
         self.x=x
@@ -44,7 +44,7 @@ class BatimentRessources():
         
 #superclasse des usines a vaisseaux, usines a drones, etc.     
 class BatimentManufacture():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, proprio = "patate"):
         self.parent=parent
         self.id=idSuivant
         self.x=x
@@ -58,7 +58,7 @@ class BatimentManufacture():
         
 #super-classe des hopitaux, des hotels de ville, des laboratoires, etc.
 class BatimentInfrastructure():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, proprio = "patate"):
         self.parent=parent
         self.id=idSuivant
         self.x=x
@@ -72,7 +72,7 @@ class BatimentInfrastructure():
         
 #super-classe des defenses
 class BatimentDefense():
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, proprio = "patate"):
         self.parent = parent
         self.id=idSuivant
         self.x=x
@@ -83,7 +83,7 @@ class BatimentDefense():
         print("AMELIORER DANS OBJ BATIMENT")
      
 class StationSpatiale():
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete, proprio = "patate"):
         #BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idSuivant
@@ -122,7 +122,7 @@ class StationSpatiale():
 
 
 class Mur(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment, proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idsuivant
@@ -140,7 +140,7 @@ class Mur(BatimentDefense):
         #======================================================
 
 class Bouclier(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment, proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent=parent
         self.id=idsuivant
@@ -159,7 +159,7 @@ class Bouclier(BatimentDefense):
         #======================================================
 
 class Tour(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment, proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idsuivant
@@ -178,7 +178,7 @@ class Tour(BatimentDefense):
         #======================================================
 
 class Canon(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment, proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idsuivant
@@ -200,23 +200,23 @@ class Canon(BatimentDefense):
         
 ################BATIMENTS RESSOURCES################
 class Puit(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "puit"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "puit", proprio = "patate"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(eau = 5), listeNiveaux = ["Puit2", "Puit3"])
 
 class Ferme(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ferme"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ferme", proprio = "patate"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(nourriture = 5), listeNiveaux = ["Ferme2", "Ferme3"])
 
 class Mine(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "mine"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "mine", proprio = "patate"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bronze = 5, charbon=5), listeNiveaux = ["Mine2", "Mine3"])
 
 class CampBucherons(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "campBucherons"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "campBucherons", proprio = "patate"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bois = 5), listeNiveaux = ["Camp_Bucherons2", "Camp_Bucherons3"])
 
 class CentraleElectrique(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "centraleElectrique"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "centraleElectrique", proprio = "patate"):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(electricite = 5), listeNiveaux = ["CentraleNucleaire", "Eolienne", "PanneauSolaire"])
     
 ################BATIMENTS INFRASTRUCTURES################
@@ -227,30 +227,30 @@ class Ville(BatimentInfrastructure):
         self.taille=20
         
 class Hopital(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "hopital"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "hopital", proprio = "patate"):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
         
 class Laboratoire(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire", proprio = "patate"):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 class Ecole(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ecole"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ecole", proprio = "patate"):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 class Banque(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "banque"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "banque", proprio = "patate"):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 ################BATIMENTS MANUFACTURES################
 class UsineVehicule(BatimentManufacture):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineVehicule"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineVehicule", proprio = "patate"):
         BatimentManufacture.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 class UsineVaisseau(BatimentManufacture):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineVaisseau"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineVaisseau", proprio = "patate"):
         BatimentManufacture.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
 
 class UsineDrone(BatimentManufacture):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineDrone"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "usineDrone", proprio = "patate"):
         BatimentManufacture.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)

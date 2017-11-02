@@ -112,7 +112,7 @@ class Joueur():
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
                         aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                         if(aAssezDeRessources):
-                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
                             j.infrastructures.append(batiment)
                             self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
                         else:
