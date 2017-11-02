@@ -112,9 +112,7 @@ class Controleur():
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def creerstationspatiale(self,systeme,planete):
-        self.modele.creerstationspatiale(systeme,planete)
-        print("station dans controleur")
-        
+        self.modele.creerstationspatiale(systeme,planete)        
         
     def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
         self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])

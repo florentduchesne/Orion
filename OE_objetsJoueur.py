@@ -59,8 +59,12 @@ class Joueur():
             if i.id==idsystem:
                 for p in i.planetes:
                     if idplanete==p.id:
-                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.couleur,p)
                         self.stationspatiaux.append(station)
+                        print("Station Creer")
+                        print("taille: " + str(p.taille))
+                        print("distance: " + str(p.distance))
+                        print("angle: " + str(p.angle))                        
                         return 1            
                     
     def ameliorerBatiment(self, maSelection, planete, systeme):

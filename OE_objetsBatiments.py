@@ -45,7 +45,7 @@ class BatimentDefense():
         self.systemeid=idSysteme
      
 class StationSpatiale():
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete):
         #BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
         self.id=idSuivant
@@ -54,10 +54,11 @@ class StationSpatiale():
         self.systemeid=idSysteme
         self.base=systeme
         self.angle=0
-        self.taille = 5
+        self.taille = ((planete.taille * 100) / 4)
         self.planetex = self.x
         self.planetey = self.y
-        self.orbite = 1
+        self.orbite = planete.taille + 0.3
+        self.couleurJoueur = couleurJoueur
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
