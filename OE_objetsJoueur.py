@@ -67,8 +67,14 @@ class Joueur():
         #print(planete.infrastructures)
         planete = self.getPlanete(planete, systeme)
         for infra in planete.infrastructures:
-            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+            print("infra y : " + str(infra.y))
+            print("infra x : " + str(infra.x))
+            print("maSelection 2 : " + str(maSelection[2]))
+            print("maSelection 3 : " + str(maSelection[3]))
+            if int(maSelection[2]) == int(infra.x) and int(maSelection[3]) == int(infra.y):
                 print(infra.nomBatiment)
+                infra.ameliorer(self, planete)
+                return
         
     
     def getPlanete(self, planeteID, systemeID):

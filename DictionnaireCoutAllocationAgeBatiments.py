@@ -8,7 +8,7 @@ from OE_objetsRessource import Ressource
 
 dictionnaireCoutAllocationAgeBatiments = {
 "Mine1":[Ressource(bois=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
-"Mine2":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=10, allocationHumain=10), 2],
+"Mine2":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "Mine3":[Ressource(bois=500, titanium=300), Ressource(allocationElectricite=10, allocationHumain=10), 3],
 "Camp_Bucherons1":[Ressource(bronze=50), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "Camp_Bucherons2":[Ressource(bois=100, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
@@ -45,4 +45,26 @@ dictionnaireCoutAllocationAgeBatiments = {
 #"Bouclier":[Ressource(titanium=1000, metasic=500), Ressource(allocationElectricite=55, allocationHumain=50), 3]
 }
 
-
+dictionnaireProductionRessources = {
+    "Mine1":Ressource(bronze=2),
+    "Mine2":Ressource(bronze=4, titanium = 2),
+    "Mine3":Ressource(bronze=6, titanium = 4, metasic = 4),
+    "Camp_Bucherons1":Ressource(bois=5),
+    "Camp_Bucherons2":Ressource(bois=10),
+    "Camp_Bucherons3":Ressource(bois=15),
+    "Centrale_Charbon":Ressource(charbon=5),
+    "Centrale_Nucleaire":Ressource(bois=50),
+    "Grosse_Centrale_Nucleaire":Ressource(bois=50),
+    "Eolienne":Ressource(bois=50),
+    "Panneau_Solaire":Ressource(bois=50),
+    "Ville":Ressource(bois=50),
+    "Ville2":Ressource(bois=50),
+    "Ville3":Ressource(bois=50),
+    "Ecole":Ressource(bois=50),
+    "College":Ressource(bois=50),
+    "Universite":Ressource(bois=50),
+    "Puit1":Ressource(bois=50),
+    "Puit2":Ressource(bois=50),
+    "Ferme1":Ressource(bois=50),
+    "Ferme2":Ressource(bois=50)
+}
