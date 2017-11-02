@@ -23,6 +23,7 @@ class Vaisseau():
         self.vie = 100 
         self.niveau =1 # niveau
         self.idSysteme =idSysteme
+        self.dansGalaxie = False
         #self.initialisation
         
     def initialisation(self):

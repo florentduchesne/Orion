@@ -59,6 +59,11 @@ class VueSysteme(Perspective):
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
+        
+        #voyage
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie",bg="darkgray",command =self.voyageGalax)
+        self.btnVoyage.pack()
+        
         self.changecadreetat(self.cadreetataction)
         
     def voirplanete(self):
@@ -155,8 +160,8 @@ class VueSysteme(Perspective):
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                #if j.idSysteme==self.systeme.id:
-                if True:
+                if j.idSysteme==self.systeme.id:
+                #if True:
                     jx=j.x*e
                     jy=j.y*e
                     x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
@@ -273,7 +278,7 @@ class VueSysteme(Perspective):
 
            
     def montrevaisseauxselection(self):
-        self.changecadreetat(self.cadreetatmsg)
+        self.changecadreetat(self.cadrevoyage)
             
     def montreplaneteselection(self):
         self.changecadreetat(self.cadreetataction)
@@ -295,3 +300,6 @@ class VueSysteme(Perspective):
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
         
+        
+    def voyageGalax(self):
+        self.parent.parent.voyageGalax(self.maselection[0],self.maselection[2])
