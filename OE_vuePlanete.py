@@ -155,17 +155,7 @@ class VuePlanete(Perspective):
          #Dessin des tuiles de pelouse sur la surface de la map.
         for rows in p.tuiles:
             for t in rows:
-                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(None, None, t.x,t.y,"tuile"))
-        """
-        x = 0
-        y = 0
-        for i in range(0,int((self.hauteur/50) +1)):
-            for j in range(0,int((self.largeur /50)+1)):
-                self.canevas.create_image(x,y,image=self.images["gazon"])   
-                x+=50
-            y+=50
-            x=0
-        """  
+                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(None, None, t.x,t.y,"tuile",t.estPrise)) 
         scrollBarX = 0
         scrollBarY = 0
         #Dessin des infrastructues de la planete.
@@ -173,7 +163,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"tuile"))               
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"ville"))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
                 
@@ -275,10 +265,7 @@ class VuePlanete(Perspective):
       
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
-        print("print t")
         print(t)
-        
-        
         if self.maselection ==None and t[4] != 'tuile':
             self.maselection = t
             pass
@@ -297,23 +284,32 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[4]=="tuile":
+                print(t)
                 print("creation batiment")
-                if self.macommande == "vehiculetank":
+                if self.macommande == "vehiculetank"  and t[5]=='0':
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
+                    itemX = self.canevas.find_withtag("current")
+                    self.canevas.itemconfig(itemX[0],  tags=(None, None, t[3],t[2],"tuile",'1'))
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
 
                     self.macommande=None
                     self.maselection=None
-                elif self.macommande != None:
+                elif self.macommande != None and t[5]=='0':
                     x=int(t[3])
                     y=int(t[2])
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande=None
+                    print(t)
+                    itemX = self.canevas.find_withtag("current")
+                    self.canevas.itemconfig(itemX[0],  tags=(None, None, t[3],t[2],"tuile",'1'))
+                        
+                    
+                    
             
             '''
             elif self.maselection != None and t[2] == "tuile":
