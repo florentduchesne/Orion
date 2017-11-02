@@ -308,8 +308,16 @@ class VuePlanete(Perspective):
         self.images["gazon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Tiles/eau100x100.png")
         self.images["eau"] = ImageTk.PhotoImage(im)
+        
         im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Vehicules/tankbas.png")
+        self.images["vehiculetankbas"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Vehicules/tankgauche.png")
+        self.images["vehiculetankgauche"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Vehicules/tankdroit.png")
+        self.images["vehiculetankdroit"] = ImageTk.PhotoImage(im)
+              
         im = Image.open("./images/Batiments/canon.png")
         self.images["Tour"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/wall.png")
@@ -319,7 +327,7 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/bouclier.png")
         self.images["Bouclier"] = ImageTk.PhotoImage(im)
     
-        
+
     def afficherdecor(self):
         pass
                 
@@ -344,9 +352,27 @@ class VuePlanete(Perspective):
                 x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                 x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                 x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                
                 #ajouter if pour changer l'image selon l'angle de la destination...
-                im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
-                self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
+                if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
+                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )  
+                    pass
+                elif j.angledegre >= 45 and j.angledegre <= 135:#haut
+                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                    pass
+                elif j.angledegre >= 135 and j.angledegre <= 225:#droit
+                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankdroit"]
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                    pass
+                else :#bas
+                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                    pass
+                #im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
+                #self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
+                
                 '''
                 self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
                                          tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
@@ -395,10 +421,8 @@ class VuePlanete(Perspective):
                 print('destination : ' + str(evt.x) +' - ' + str(evt.y))
                 print('actuel : ' + str(self.maselection[2]) + ' - ' + str(self.maselection[3]))
                 
-                #coordonner x et y de la tuile selectionner pour le deplacement du tank
-                #le x et le y dans les tags est inversées...
-                xdeplacement = int(t[3])
-                ydeplacement = int(t[2])
+                xdeplacement = self.canevas.canvasx(evt.x)
+                ydeplacement = self.canevas.canvasx(evt.y)
                 self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
                 self.maselection = None
                 pass

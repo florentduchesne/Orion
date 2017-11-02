@@ -7,7 +7,7 @@ from numpy.distutils.fcompiler import none
 
 class Vaisseau():
     #self, parent, nom, systemeid, planeteid, x, y, idsuivant
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,niveau):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -21,8 +21,14 @@ class Vaisseau():
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau = 1
+        self.niveau = niveau
         self.idSysteme =idSysteme
+        self.initialisation
+        
+    def initialisation(self):
+        if self.niveau>1 :
+            for ame in range(self.niveau):
+                self.augmentation
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -59,16 +65,17 @@ class Vaisseau():
                 self.cible=None
             return rep
             
-#        else:
- #           print(self.cible.x,self.x,self.cible.y,self.y)
-  #          x=self.cible.x
-   #         y=self.cible.y
-    #        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
-     #       if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
-      #          rep= None
-       #         self.base=self.cible
-        #        self.cible=None
-         #   return rep
+        elif self.cible!=None:
+            print(self.cible.x,self.x,self.cible.y,self.y)
+            x=self.cible.x
+            y=self.cible.y
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
+            #if self.x ==x and self.y == y:
+                rep= None
+                self.base=self.cible
+                self.cible=None
+            return rep
         
     def ciblerdestination(self,p):
         self.cible=p

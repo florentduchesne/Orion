@@ -71,7 +71,6 @@ class Modele():
         self.parent.actions.append([self.parent.monnom,"creervaisseau",ids])
         
     def creerstationspatiale(self,systeme,planete):
-        print("station dans modele")
         ids =systeme,planete
         self.parent.actions.append([self.parent.monnom,"creerstationspatiale",ids])
             
