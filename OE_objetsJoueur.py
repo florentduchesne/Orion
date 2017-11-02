@@ -90,7 +90,7 @@ class Joueur():
                             self.creervehiculetank(listeparams)
                             return
                         if(nomBatiment == "Bouclier"):
-                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                                 j.infrastructures.append(batiment)
@@ -98,7 +98,7 @@ class Joueur():
                             return
                         
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                         if(aAssezDeRessources):
                             batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                             j.infrastructures.append(batiment)
