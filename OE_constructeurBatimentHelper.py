@@ -1,4 +1,5 @@
 import OE_objetsBatiments
+from OE_objetsRessource import Ressource
 from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments
 
 class ConstructeurBatimentHelper():
@@ -8,10 +9,14 @@ class ConstructeurBatimentHelper():
     def creerDictionnaire(self):
         return dictionnaireCoutAllocationAgeBatiments
     
-    def construireBatiment(self, ressourceJoueur, nomBatiment):
+    def construireBatiment(self, ressourcePlanete, ressourceJoueur, nomBatiment):
+        ressourceTotal=Ressource()
+        ressourceTotal.additionnerRessources(ressourceJoueur)
+        ressourceTotal.additionnerRessources(ressourcePlanete)
+        
         coutBatiment = self.dictionnaire[nomBatiment][0]
-        if(ressourceJoueur.estPlusGrandOuEgal(coutBatiment)):
-            ressourceJoueur.soustraireRessources(coutBatiment)
+        if(ressourceTotal.estPlusGrandOuEgal(coutBatiment)):
+            ressourceJoueur.soustraireRessourcesJoueurETPlanet(ressourcePlanete, coutBatiment)
             print("assez de ressources")
             return True
         else:
@@ -19,5 +24,5 @@ class ConstructeurBatimentHelper():
             print("cout : ")
             print(coutBatiment)
             print("ressources disponibles :")
-            print(ressourceJoueur)
+            print(ressourcePlanete)
             return False

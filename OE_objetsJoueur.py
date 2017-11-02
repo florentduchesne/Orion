@@ -32,7 +32,8 @@ class Joueur():
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
-                      "creerstationspatiale":self.creerstationspatiale}
+                      "creerstationspatiale":self.creerstationspatiale,
+                      "ciblerEspace":self.ciblerEspace}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -64,6 +65,24 @@ class Joueur():
                         print("distance: " + str(p.distance))
                         print("angle: " + str(p.angle))                        
                         return 1            
+                    
+    def ameliorerBatiment(self, maSelection, planete, systeme):
+        print("AMELIORATION BATIMENT DANS OBJ JOUEUR")
+        print(maSelection)
+        #print(planete.infrastructures)
+        planete = self.getPlanete(planete, systeme)
+        for infra in planete.infrastructures:
+            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+                print(infra.nomBatiment)
+        
+    
+    def getPlanete(self, planeteID, systemeID):
+        for systeme in self.systemesvisites:
+            if systeme.id == systemeID:
+                for planete in systeme.planetes:
+                    if planete.id == planeteID:
+                        return planete
+        
 
     def creerBatiment(self, listeparams):
         nom, systemeid, planeteid, x, y, nomBatiment =listeparams
@@ -76,7 +95,7 @@ class Joueur():
                             self.creervehiculetank(listeparams)
                             return
                         if(nomBatiment == "Bouclier"):
-                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                                 j.infrastructures.append(batiment)
@@ -84,7 +103,7 @@ class Joueur():
                             return
                         
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                         if(aAssezDeRessources):
                             batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                             j.infrastructures.append(batiment)
@@ -168,7 +187,25 @@ class Joueur():
                                 i.ciblerdestination(p)
                                 #i.ciblerdestination(Coord(xy))
                                 return
-     
+                            
+    def ciblerEspace(self,ids):
+        idori,idsyteme,xy=ids
+        
+        
+        
+        #xy =Coord(xyEsp)
+        for i in self.vaisseauxinterstellaires:
+            if i.id== idori:
+                              
+                
+                xy =Coord((xy[0],xy[1]))
+                print("cible espace")
+                i.ciblerdestination(xy)
+                                
+                                #i.ciblerdestination(Coord(xy))
+                return
+
+                            
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
         idorigine, x, y, idplanete, idvehicule = ids
@@ -210,8 +247,8 @@ class Joueur():
         for i in self.stationspatiaux:
                 i.orbiter()
         
-        #self.detecterCible()
-       # self.choisirCible()
+        self.detecterCible()
+        #self.choisirCible()
        # self.retirerVaiseauMort()
         
     def detecterCible(self):

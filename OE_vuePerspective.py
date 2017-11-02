@@ -27,7 +27,7 @@ class Perspective(Frame):
                              yscrollcommand=self.scrollY.set)
         
         self.canevas.bind("<Button>",self.cliquervue)
-        
+        self.canevas.bind("<Button-3>",self.cliquervue2)
         self.scrollX.config(command=self.canevas.xview)
         self.scrollY.config(command=self.canevas.yview)
         self.canevas.grid(column=0,row=0,sticky=N+E+W+S)
@@ -49,6 +49,8 @@ class Perspective(Frame):
         self.cadreVehicule=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
         self.cadreDefense=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
         
+        self.cadreAmeliorationBatiments=Frame(self.cadreetat, width=200, height=200, bg="grey20")##CADRE QUI NOUS PERMET D'AMELIORER LES BATIMENTS
+        
         self.cadreetatmsg=Frame(self.cadreetat,width=200,height=200,bg="grey20")
         
         self.cadreminimap=Frame(self.cadreinfo,width=200,height=200,bg="grey20")
@@ -58,6 +60,9 @@ class Perspective(Frame):
         self.minimap.pack()
         
     def cliquervue(self,evt):
+        pass
+    
+    def cliquervue2(self,evt):
         pass
     
     def cliquerminimap(self,evt):
