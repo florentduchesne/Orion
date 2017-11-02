@@ -22,16 +22,40 @@ class VueSysteme(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         
         self.labid.bind("<Button>",self.identifierplanetemere)
-        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.creervaisseau)
+        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.AfficherChoixVaisseau)
         self.btncreervaisseau.pack()
         
+        ##############Base##############
         self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
         self.btnvuesysteme.pack(side=BOTTOM)
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
         self.btnvuesysteme.pack(side=BOTTOM)
-
+        
+        ##############Vaisseaux##############
+        self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = self.creervaisseau)#("chasseur"))
+        self.btnChasseur.pack(side=TOP)
+        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce",command = self.creervaisseau)#("commerce"))
+        self.btnCommerce.pack(side=TOP)
+        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde",command = self.creervaisseau)#("bombarde"))
+        self.btnBombarde.pack(side=TOP)
+        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = self.creervaisseau)#("chasseur"))
+        self.btnColonisation.pack(side=TOP)
+        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau)#("tank"))
+        self.btnTank.pack(side=TOP)
+        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = self.creervaisseau)#("mere"))
+        self.btnMere.pack(side=TOP)
+        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser",command = self.creervaisseau)#("laser"))
+        self.btnLaser.pack(side=TOP)
+        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova",command = self.creervaisseau)#("nova"))
+        self.btnNova.pack(side=TOP)
+        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide",command = self.creervaisseau)#("suicide"))
+        self.btnSuicide.pack(side=TOP)
+        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique",command = self.creervaisseau)#("biologique"))
+        self.btnBiologique.pack(side=TOP)
+        self.btnRetour=Button(self.cadreVaisseau,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
@@ -42,7 +66,13 @@ class VueSysteme(Perspective):
 
     def voirgalaxie(self):
         self.parent.voirgalaxie()
-            
+    
+    def AfficherChoixVaisseau(self):
+        self.changecadreetat(self.cadreVaisseau)
+        
+    def Retour(self):
+        self.changecadreetat(self.cadreetataction)
+    
     def initsysteme(self,i):
         self.systeme=i
         self.affichermodelestatique(i)
@@ -100,7 +130,7 @@ class VueSysteme(Perspective):
     def afficherdecor(self):
         pass
                 
-    def creervaisseau(self): 
+    def creervaisseau(self):#,type): 
         if self.maselection:
             self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2])#5 = id sys 3 = id planete
             self.maselection=None
@@ -108,7 +138,7 @@ class VueSysteme(Perspective):
            
     def creerstation(self):
         if self.maselection:
-            print("Creer station EN CONSTRUCTION")  
+            print(self.systeme.id)  
             self.parent.parent.creerstationspatiale(self.maselection[5],self.maselection[2])
             self.maselection=None
             self.canevas.delete("selecteur")
@@ -136,8 +166,12 @@ class VueSysteme(Perspective):
                     self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
                                              tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
                     
+            for j in i.stationspatiaux:
+                if j.systemeid==self.systeme.id:
+                    jx=(j.x*e)
+                    jy=(j.y*e)
+                    self.canevas.create_oval((jx-10),(jy-10),(jx+10),(jy+10),fill="white", tags=("artefact"))
 
-            
     def changerproprietaire(self):
         pass
                
