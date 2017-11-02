@@ -170,6 +170,7 @@ class VuePlanete(Perspective):
     def ameliorerBatiment(self):
         print("ON AMELIORE UN BATIMENT")
         self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        self.maselection = None
         
     def detruireBatiment(self):
         pass
@@ -432,7 +433,6 @@ class VuePlanete(Perspective):
             if t[0]==self.parent.nom:
                 self.montreAmeliorationBatiments()
                 self.macommande=None
-                self.maselection=None
                 print("montre menu amelioration")
                 pass
             elif t[1]=="systeme":
@@ -447,7 +447,7 @@ class VuePlanete(Perspective):
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
-
+                    #self.changerTagTuile(t[3],t[2],'1')
                     self.macommande=None
                     self.maselection=None
 
@@ -462,7 +462,6 @@ class VuePlanete(Perspective):
                     print("montre menu a droite")
                     self.macommande=None
                     self.maselection=None
-                    self.changerTagTuile(t[3],t[2],'1')
                         
                     
     def changerTagTuile(self,posy, posx, char):  
