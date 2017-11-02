@@ -314,8 +314,6 @@ class VuePlanete(Perspective):
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                    itemX = self.canevas.find_withtag("current")
-                    self.canevas.itemconfig(itemX[0],  tags=(None, None, t[3],t[2],"tuile",'1'))
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
@@ -328,20 +326,12 @@ class VuePlanete(Perspective):
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande=None
-                    print(t)
-                    itemX = self.canevas.find_withtag("current")
-                    self.canevas.itemconfig(itemX[0],  tags=(None, None, t[3],t[2],"tuile",'1'))
+                    self.changerTagTuile(t[3],t[2],'1')
                         
                     
-                    
-            
-            '''
-            elif self.maselection != None and t[2] == "tuile":
-                self.maselection = [self.parent.monnom,t[1],t[2]]
-                print("coucou")
-                print(self.maselection)
-                pass
-            '''
+    def changerTagTuile(self,posy, posx, char):  
+        itemX = self.canevas.find_withtag("current")
+        self.canevas.itemconfig(itemX[0],  tags=(None, None, posy,posx,"tuile",char))             
 
             
     def montresystemeselection(self):
