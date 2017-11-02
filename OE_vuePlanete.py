@@ -259,6 +259,11 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/Ferme2.png")
         self.images["Ferme2"] = ImageTk.PhotoImage(im)
         
+        im = Image.open("./images/Batiments/Hopital1.png")
+        self.images["Hopital1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Hopital2.png")
+        self.images["Hopital2"] = ImageTk.PhotoImage(im)
+        
         im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Tiles/eau100x100.png")
