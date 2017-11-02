@@ -139,7 +139,7 @@ class VueSysteme(Perspective):
     def creerstation(self):
         if self.maselection:
             print("Creer station EN CONSTRUCTION")  
-            self.parent.parent.creerstationspatiale(self.maselection[5])
+            self.parent.parent.creerstationspatiale(self.maselection[5],self.maselection[2])
             self.maselection=None
             self.canevas.delete("selecteur")
         

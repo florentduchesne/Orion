@@ -111,14 +111,16 @@ class Controleur():
         self.modele.creervaisseau(systeme,planete)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
-    def creerstationspatiale(self,planete):
+    def creerstationspatiale(self,systeme,planete):
+        self.modele.creerstationspatiale(systeme,planete)
         print("station dans controleur")
+        
         
     def ciblerdestination(self,idorigine,iddestination,idsysteme,xy):
         self.actions.append([self.monnom,"ciblerdestination",[idorigine,iddestination,idsysteme,xy]])
         
-    def ciblerdestinationvehicule(self, idorigine, x, y, idplanete ):
-        self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete]])
+    def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
+        self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
         pass
         
     def visitersysteme(self,systeme_id):
@@ -136,8 +138,8 @@ class Controleur():
     def afficherBatiment(self, joueur, systemeid, planeteid, x, y, nomBatiment):
         self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, nomBatiment)
         
-    def affichervehiculetank(self,joueur,systemeid,planeteid,x,y):
-        self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y)
+    def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
+        self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
@@ -147,6 +149,9 @@ class Controleur():
     
     def changerproprietaire(self,nom,couleur,systeme):
         self.vue.modes["galaxie"].changerproprietaire(nom,couleur,systeme)
+        
+    def changerValeurTuile(self,t):
+        self.modele.changerValeurTuile(t)
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)

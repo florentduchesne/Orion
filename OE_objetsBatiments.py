@@ -51,8 +51,6 @@ class StationSpatiale(BatimentDefense):
         self.id=idsuivant
         self.x=x
         self.y=y
-        self.planetex = planeteid.x
-        self.planetey = planeteid.y
         self.systemeid=systemeid
         self.planeteid=planeteid
         self.angle=0
@@ -169,7 +167,7 @@ class Ferme(BatimentRessources):
 
 class Mine(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "mine"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bronze = 5))
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bronze = 5, charbon=5))
 
 class CampBucherons(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "campBucherons"):
