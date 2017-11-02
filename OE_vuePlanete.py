@@ -11,7 +11,6 @@ class VuePlanete(Perspective):
         self.modele=self.parent.modele
         self.planete=plane
         self.systeme=syste
-        self.infrastructures={}
         self.maselection=None
         self.macommande=None
         
@@ -66,7 +65,11 @@ class VuePlanete(Perspective):
         self.btncreertank.pack()
         
         
-        ##############AUTRES##############
+        ##############CADRE AMELIORATION BATIMENT##############
+        self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment)
+        self.btnAmeliorerBatiment.pack()
+        self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment)
+        self.btnDetruireBatiment.pack()
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
@@ -124,6 +127,14 @@ class VuePlanete(Perspective):
     def creerstation(self):
         self.macommande="station"
         print("Creer station EN CONSTRUCTION")
+        
+    ##############AMELIORER BATIMENT##############
+    def ameliorerBatiment(self):
+        print("ON AMELIORE UN BATIMENT")
+        self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        
+    def detruireBatiment(self):
+        pass
     
     def voirsysteme(self):
         self.parent.cadreRessourcesPlanete.pack_forget()
@@ -257,7 +268,7 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/bouclier.png")
         self.images["Bouclier"] = ImageTk.PhotoImage(im)
     
-		
+        
     def afficherdecor(self):
         pass
                 
@@ -286,13 +297,15 @@ class VuePlanete(Perspective):
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
                 self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1])
-                self.maselection = None                
+                self.maselection = None
                 pass
-        
-        
         
         if t and t[0]!="current":
             if t[0]==self.parent.nom:
+                self.montreAmeliorationBatiments()
+                self.macommande=None
+                self.maselection=None
+                print("montre menu amelioration")
                 pass
             elif t[1]=="systeme":
                 pass
@@ -309,11 +322,22 @@ class VuePlanete(Perspective):
                     self.macommande=None
                     self.maselection=None
                 elif self.macommande != None:
+                    print("ma commande")
+                    print(self.macommande)
                     x=int(t[3])
                     y=int(t[2])
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                    self.macommande = None
+                else:
+                    self.montresystemeselection()
+                    print("montre menu a droite")
                     self.macommande=None
+                    self.maselection=None
+            #elif self.macommande == None:
+                
+                
+                
             
             '''
             elif self.maselection != None and t[2] == "tuile":
@@ -322,10 +346,13 @@ class VuePlanete(Perspective):
                 print(self.maselection)
                 pass
             '''
-
+    
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)
+        
+    def montreAmeliorationBatiments(self):
+        self.changecadreetat(self.cadreAmeliorationBatiments)
         
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadreetatmsg)

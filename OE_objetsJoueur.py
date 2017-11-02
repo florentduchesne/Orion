@@ -56,6 +56,24 @@ class Joueur():
                         station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
                         p.infrastructures.append(station)
                         return 1            
+                    
+    def ameliorerBatiment(self, maSelection, planete, systeme):
+        print("AMELIORATION BATIMENT DANS OBJ JOUEUR")
+        print(maSelection)
+        #print(planete.infrastructures)
+        planete = self.getPlanete(planete, systeme)
+        for infra in planete.infrastructures:
+            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+                print(infra.nomBatiment)
+        
+    
+    def getPlanete(self, planeteID, systemeID):
+        for systeme in self.systemesvisites:
+            if systeme.id == systemeID:
+                for planete in systeme.planetes:
+                    if planete.id == planeteID:
+                        return planete
+        
 
     def creerBatiment(self, listeparams):
         nom, systemeid, planeteid, x, y, nomBatiment =listeparams
