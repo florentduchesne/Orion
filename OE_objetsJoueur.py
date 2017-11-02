@@ -20,6 +20,7 @@ class Joueur():
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
+        self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
         self.actions={"creervaisseau":self.creervaisseau,
@@ -44,7 +45,7 @@ class Joueur():
                                          "Laboratoire":Laboratoire,
                                          "Puit1":Puit,
                                          "Banque":Banque,
-                                         "Ferme1:":Ferme,
+                                         "Ferme1":Ferme,
                                          "Mur":Mur,
                                          "Tour":Tour,
                                          "Canon":Canon,
@@ -52,17 +53,32 @@ class Joueur():
                                          }
       
     def creerstationspatiale(self,listeparams):
-        print("station dans joueur")
         idsystem,idplanete=listeparams
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
-                    print("vais creer1")
                     if idplanete==p.id:
-                        print("vais creer2")
                         station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
-                        p.infrastructures.append(station)
+                        self.stationspatiaux.append(station)
                         return 1            
+                    
+    def ameliorerBatiment(self, maSelection, planete, systeme):
+        print("AMELIORATION BATIMENT DANS OBJ JOUEUR")
+        print(maSelection)
+        #print(planete.infrastructures)
+        planete = self.getPlanete(planete, systeme)
+        for infra in planete.infrastructures:
+            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+                print(infra.nomBatiment)
+        
+    
+    def getPlanete(self, planeteID, systemeID):
+        for systeme in self.systemesvisites:
+            if systeme.id == systemeID:
+                for planete in systeme.planetes:
+                    if planete.id == planeteID:
+                        return planete
+        
 
     def creerBatiment(self, listeparams):
         nom, systemeid, planeteid, x, y, nomBatiment =listeparams
@@ -75,7 +91,7 @@ class Joueur():
                             self.creervehiculetank(listeparams)
                             return
                         if(nomBatiment == "Bouclier"):
-                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                                 j.infrastructures.append(batiment)
@@ -83,7 +99,7 @@ class Joueur():
                             return
                         
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                         if(aAssezDeRessources):
                             batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                             j.infrastructures.append(batiment)
@@ -216,11 +232,16 @@ class Joueur():
         for i in self.vehiculeplanetaire:
             if i.cible:
                 rep=i.avancer()
+                '''
                 if rep:
                     if rep.proprietaire=="inconnu":
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+                '''
+        
+        for i in self.stationspatiaux:
+                i.orbiter()
         
         self.detecterCible()
         #self.choisirCible()

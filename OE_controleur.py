@@ -152,6 +152,9 @@ class Controleur():
     
     def changerproprietaire(self,nom,couleur,systeme):
         self.vue.modes["galaxie"].changerproprietaire(nom,couleur,systeme)
+        
+    def changerValeurTuile(self,t):
+        self.modele.changerValeurTuile(t)
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)

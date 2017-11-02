@@ -1,5 +1,6 @@
 from OE_objetsRessource import *
 import math
+import random
 #super-classe des mines, camps de bucherons, etc.
 class BatimentRessources():
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, production):
@@ -36,25 +37,27 @@ class BatimentInfrastructure():
         
 #super-classe des defenses
 class BatimentDefense():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
         self.parent = parent
-        self.id=idsuivant
+        self.id=idSuivant
         self.x=x
         self.y=y
-        self.systemeid=systemeid
-        self.planeteid=planeteid
+        self.systemeid=idSysteme
      
-class StationSpatiale(BatimentDefense):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant):
-        BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
+class StationSpatiale():
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):
+        #BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
         self.parent = parent
-        self.id=idsuivant
+        self.id=idSuivant
         self.x=x
         self.y=y
-        self.systemeid=systemeid
-        self.planeteid=planeteid
+        self.systemeid=idSysteme
+        self.base=systeme
         self.angle=0
         self.taille = 5
+        self.planetex = self.x
+        self.planetey = self.y
+        self.orbite = 1
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
@@ -77,8 +80,8 @@ class StationSpatiale(BatimentDefense):
         coutTitanium=10
         if self.nom.ressource - coutTitanium > 0:
             pass
-    
-    
+
+
 class Mur(BatimentDefense):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
@@ -167,7 +170,7 @@ class Ferme(BatimentRessources):
 
 class Mine(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "mine"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bronze = 5))
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(bronze = 5, charbon=5))
 
 class CampBucherons(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "campBucherons"):

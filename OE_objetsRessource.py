@@ -33,6 +33,14 @@ class Ressource():
     def additionnerRessources(self, ressource):
         for cleRess in self.dictRess:
             self.dictRess[cleRess] += ressource.dictRess[cleRess]
+            
+    def soustraireRessourcesJoueurETPlanet(self, ressourceP, ressourceC):
+        for cleRess in self.dictRess:
+            if ressourceP.dictRess[cleRess] >= ressourceC.dictRess[cleRess]:
+                ressourceP.dictRess[cleRess] -= ressourceC.dictRess[cleRess]
+            elif ressourceP.dictRess[cleRess] + self.dictRess[cleRess] >= ressourceC.dictRess[cleRess]:
+                self.dictRess[cleRess] = self.dictRess[cleRess] - (ressourceC.dictRess[cleRess] - ressourceP.dictRess[cleRess])
+                ressourceP.dictRess[cleRess] = 0
         
 class RessourceSpeciale():
     def __init__(self, cellule_mutante = 0, robot_chips = 0, lacrima = 0, nova = 0):
