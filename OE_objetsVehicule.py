@@ -13,6 +13,7 @@ class Vehicule():
         self.taille = 0 #a noter dans les sous-classes de vehicule
         self.angletrajet=0
         self.angleinverse=0
+        self.angledegre=0
         self.x=x
         self.y=y
         self.vitesse = 0.5
@@ -22,6 +23,7 @@ class Vehicule():
         self.cible = p
         self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
+        self.angledegre = math.degrees(self.angleinverse)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         pass
     
