@@ -26,6 +26,8 @@ class VueGalaxie(Perspective):
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
+        
+    
     
     def voirsysteme(self,systeme=None):
         if systeme==None:
