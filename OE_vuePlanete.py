@@ -79,40 +79,40 @@ class VuePlanete(Perspective):
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):
-        self.macommande="mine"
+        self.macommande="Mine1"
     def creerCampBucherons(self):
-        self.macommande="campbucherons"
+        self.macommande="Camp_Bucherons1"
     def creerpuit(self):
-        self.macommande="puit"
+        self.macommande="Puit1"
     def creerFerme(self):
-        self.macommande="ferme"
+        self.macommande="Ferme1"
     def creerCentraleElectrique(self):
-        self.macommande="centraleelectrique"
+        self.macommande="Centrale_Charbon"
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerHopital(self):
-        self.macommande="hopital"
+        self.macommande="Hopital1"
     def creerEcole(self):
-        self.macommande="ecole"
+        self.macommande="Ecole"
     def creerLaboratoire(self):
         self.macommande="laboratoire"
     def creerBanque(self):
-        self.macommande="banque"
+        self.macommande="Banque"
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
-        self.macommande="vehicules"
+        self.macommande="Usine_Vehicule"
     def creerUsineVaisseaux(self):
-        self.macommande="vaisseaux"
+        self.macommande="Usine_Vaisseau1"
     def creerUsineDrones(self):
         self.macommande="drones"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
-        self.macommande="tour"
+        self.macommande="Tour"
     def creermur(self):
-        self.macommande="mur"
+        self.macommande="Mur"
     def creercanon(self):
-        self.macommande="canon"
+        self.macommande="Canon"
     def creerbouclier(self):
-        self.macommande="bouclier"
+        self.macommande="Bouclier"
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
@@ -191,10 +191,57 @@ class VuePlanete(Perspective):
         #miniy = (p.posYatterrissage *200) / self.hauteur
         #self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11") 
     def chargeimages(self):
-        im = Image.open("./images/Batiments/cc.png")
+        im = Image.open("./images/Batiments/mine1.png")
+        self.images["Mine1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine2.png")
+        self.images["Mine2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine3.png")
+        self.images["Mine3"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Camp_Bucherons1.png")
+        self.images["Camp_Bucherons1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Camp_Bucherons2.png")
+        self.images["Camp_Bucherons2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Camp_Bucherons3.png")
+        self.images["Camp_Bucherons3"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine1.png")
+        self.images["Puit1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine2.png")
+        self.images["Puit2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/mine3.png")
+        self.images["Puit3"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Usine_Vehicule.png")
+        self.images["Usine_Vehicule"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Usine_Vaisseau.png")
+        self.images["Usine_Vaisseau"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Usine_Vaisseau2.png")
+        self.images["Usine_Vaisseau2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Usine_Drone.png")
+        self.images["Usine_Drone"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Centrale_Charbon.png")
+        self.images["Centrale_Charbon"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Centrale_Nucleaire.png")
+        self.images["Centrale_Nucleaire"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Grosse_Centrale_Nucleaire.png")
+        self.images["Grosse_Centrale_Nucleaire"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Eolienne.png")
+        self.images["Eolienne"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Panneau_Solaire.png")
+        self.images["Panneau_Solaire"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Ville1.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/Batiments/mine_100.png")
-        self.images["mine"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Ville2.png")
+        self.images["ville2"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Ville3.png")
+        self.images["ville3"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Ferme1.png")
+        self.images["Ferme1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Ferme2.png")
+        self.images["Ferme2"] = ImageTk.PhotoImage(im)
+        
         im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Tiles/eau100x100.png")
@@ -202,13 +249,13 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Vehicules/tankhaut.png")
         self.images["vehiculetank"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/canon.png")
-        self.images["tour"] = ImageTk.PhotoImage(im)
+        self.images["Tour"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/wall.png")
-        self.images["mur"] = ImageTk.PhotoImage(im)
+        self.images["Mur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/canon1.png").resize((100,100))
-        self.images["canon"] = ImageTk.PhotoImage(im)
+        self.images["Canon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/bouclier.png")
-        self.images["bouclier"] = ImageTk.PhotoImage(im)
+        self.images["Bouclier"] = ImageTk.PhotoImage(im)
     
 		
     def afficherdecor(self):
@@ -238,7 +285,7 @@ class VuePlanete(Perspective):
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], t[0], t[1])
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1])
                 self.maselection = None                
                 pass
         
@@ -250,6 +297,7 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[4]=="tuile":
+                print("creation batiment")
                 if self.macommande == "vehiculetank":
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)

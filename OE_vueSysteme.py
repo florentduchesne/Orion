@@ -62,7 +62,7 @@ class VueSysteme(Perspective):
             n=p.taille*self.UA2pixel
             
             if p.proprietaire == "inconnu":
-                self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,"inconnu", i.id,int(x),int(y)))
+                self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,"inconnu", i.id,x,y))
             else:
                 self.canevas.create_oval(x-n,y-n,x+n,y+n,fill=p.couleur,tags=(i.proprietaire,"planete",p.id,p.proprietaire,i.id,int(x),int(y)))
               
@@ -116,6 +116,8 @@ class VueSysteme(Perspective):
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
+        #self.canevas.delete("selecteur")
+        self.afficherselection()
         e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
@@ -148,11 +150,11 @@ class VueSysteme(Perspective):
                     if i.id == self.maselection[2]:
                         x=int(self.maselection[3])
                         y=int(self.maselection[4])
-                        t=20
+                        t=i.taille*100 +10
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
                                                 outline=joueur.couleur,
                                                 tags=("select","selecteur"))
-            
+            if self.maselection[1]=="vaisseauinterstellaire":
                 for i in joueur.vaisseauxinterstellaires:
                     if i.id == self.maselection[2]:
                         x=i.x

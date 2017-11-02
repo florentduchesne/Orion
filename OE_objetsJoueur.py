@@ -21,62 +21,29 @@ class Joueur():
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
         self.vehiculeplanetaire=[]
+        self.ressources = Ressource(bois = 46, bronze = 53)
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
                       "atterrirplanete":self.atterrirplanete,
                       "visitersysteme":self.visitersysteme,
-                      "creermine":self.creermine,
-                      "creermur":self.creermur,
-                      "creertour":self.creertour,
-                      "creercanon":self.creercanon,
-                      "creerbouclier":self.creerbouclier,
+                      "creerbatiment":self.creerBatiment,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale}
-        
-    def creertour(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        tour=Tour(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(tour)
-                        self.parent.parent.affichertour(nom,systemeid,planeteid,x,y)
-
-    def creercanon(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        canon=Canon(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(canon)
-                        self.parent.parent.affichercanon(nom,systemeid,planeteid,x,y)
-        
-    def creerbouclier(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        bouclier=Bouclier(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(bouclier)
-                        self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
-        
-    
-    def creermur(self,listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
-        for i in self.systemesvisites:
-            if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        mur=Mur(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.infrastructures.append(mur)
-                        self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
-                        
+        self.listeSousClassesBatiment = {"Mine1":Mine,
+                                         "Camp_Bucherons1":CampBucherons,
+                                         "Mur":Mur,
+                                         "Tour":Tour,
+                                         "Bouclier":Bouclier,
+                                         "Ferme1:":Ferme,
+                                         "Canon":Canon,
+                                         "Puit1":Puit,
+                                         "Ferme1":Ferme,
+                                         "Centrale_Charbon":CentraleElectrique
+                                         }
+      
     def creerstationspatiale(self,listeparams):
         print("station dans joueur")
         idsystem,idplanete=listeparams
@@ -90,21 +57,33 @@ class Joueur():
                         p.infrastructures.append(station)
                         return 1            
 
-    def creermine(self,listeparams):
-        print("Joueur mine")
-        nom,systemeid,planeteid,x,y=listeparams
+    def creerBatiment(self, listeparams):
+        nom, systemeid, planeteid, x, y, nomBatiment =listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        ressourcesMine = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, "Mine")
-                        if(ressourcesMine):
-                            mine=Mine(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), "Mine")
-                            j.infrastructures.append(mine)
-                            self.parent.parent.affichermine(nom,systemeid,planeteid,x,y)
+                        ###ON FAIT LES CAS SPECIAUX###
+                        if(nomBatiment == "vehiculetank"):
+                            self.creervehiculetank(listeparams)
+                            return
+                        if(nomBatiment == "Bouclier"):
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                            if(aAssezDeRessources):
+                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                                j.infrastructures.append(batiment)
+                                self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
+                            return
+                        
+                        ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
+                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
+                        if(aAssezDeRessources):
+                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                            j.infrastructures.append(batiment)
+                            self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
                         else:
                             print("construction de mine impossible")
-                        
+
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
         for i in self.systemesvisites:
@@ -126,15 +105,15 @@ class Joueur():
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
-                    print("vais creer")
+                    #print("vais creer")
                     if idplanete==p.id:
-                        print("vais creer")
+                       # print("vais creer")
                         v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
                         self.vaisseauxinterstellaires.append(v)
                         return 1            
 
     def creervehiculetank(self, listeparams):
-        nom,systemeid,planeteid,x,y=listeparams
+        nom,systemeid,planeteid,x,y, nomBatiment=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
                 for j in i.planetes:
@@ -184,7 +163,10 @@ class Joueur():
      
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
-        idorigine, iddestination, idplanete = ids
+        idorigine, x, y, idplanete = ids
+        for i in self.vehiculeplanetaire:
+            
+            pass
         '''
         for i in self.vehiculeplanetaire:
             if i.id == idorigine:
