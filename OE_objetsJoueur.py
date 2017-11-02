@@ -77,8 +77,18 @@ class Joueur():
                         j.infrastructures.append(mur)
                         self.parent.parent.affichermur(nom,systemeid,planeteid,x,y)
                         
-    def creerstationspatiale(self,id):
+    def creerstationspatiale(self,listeparams):
         print("station dans joueur")
+        idsystem,idplanete=listeparams
+        for i in self.systemesvisites:
+            if i.id==idsystem:
+                for p in i.planetes:
+                    print("vais creer1")
+                    if idplanete==p.id:
+                        print("vais creer2")
+                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        p.infrastructures.append(station)
+                        return 1            
 
     def creermine(self,listeparams):
         print("Joueur mine")

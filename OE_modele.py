@@ -68,6 +68,11 @@ class Modele():
     def creervaisseau(self,idsysteme,idplanete):
         ids=idsysteme,idplanete
         self.parent.actions.append([self.parent.monnom,"creervaisseau",ids])
+        
+    def creerstationspatiale(self,systeme,planete):
+        print("station dans modele")
+        ids =systeme,planete
+        self.parent.actions.append([self.parent.monnom,"creerstationspatiale",ids])
             
     def prochaineaction(self,cadre):
         if cadre in self.actionsafaire:
