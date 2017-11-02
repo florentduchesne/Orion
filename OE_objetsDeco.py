@@ -5,3 +5,7 @@ class TuileGazon():
         self.image=image
         self.x = x
         self.y = y
+        self.estPrise = '0'
+        
+    def changerValeurTuile(self, t):
+        t.estPrise = True
