@@ -108,7 +108,7 @@ class VueSysteme(Perspective):
            
     def creerstation(self):
         if self.maselection:
-            print("Creer station EN CONSTRUCTION")  
+            print(self.systeme.id)  
             self.parent.parent.creerstationspatiale(self.maselection[5],self.maselection[2])
             self.maselection=None
             self.canevas.delete("selecteur")
@@ -136,8 +136,12 @@ class VueSysteme(Perspective):
                     self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
                                              tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
                     
+            for j in i.stationspatiaux:
+                if j.systemeid==self.systeme.id:
+                    jx=(j.x*e)
+                    jy=(j.y*e)
+                    self.canevas.create_oval((jx-10),(jy-10),(jx+10),(jy+10),fill="white", tags=("artefact"))
 
-            
     def changerproprietaire(self):
         pass
                
