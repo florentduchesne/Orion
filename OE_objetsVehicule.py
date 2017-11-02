@@ -16,9 +16,9 @@ class Vehicule():
         self.x=x
         self.y=y
         self.vitesse = 0.5
-        self.cible=None 
+        self.cible=None #tuple de x et y
         
-    def ciblerdestination(self, p):
+    def ciblerdestination(self,p):
         self.cible = p
         self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
@@ -35,14 +35,16 @@ class vehiculeTank(Vehicule):
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
-        self.vitesseDeplacement=0
+        self.vitesseDeplacement=2
         self.puissance = 0
         
     def avancer(self):
+        print()
+        rep = None
         x=self.cible.x
         y=self.cible.y
-        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
-        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
+        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
+        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
             rep=self.cible
             self.base=self.cible
             self.cible=None

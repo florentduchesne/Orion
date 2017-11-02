@@ -127,7 +127,7 @@ class Joueur():
                         tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
-                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y)
+                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
@@ -169,9 +169,12 @@ class Joueur():
      
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
-        idorigine, x, y, idplanete = ids
+        idorigine, x, y, idplanete, idvehicule = ids
         for i in self.vehiculeplanetaire:
-            
+            if i.id == idvehicule:
+                c = Coord((x,y))
+                i.ciblerdestination(c)
+                pass
             pass
         '''
         for i in self.vehiculeplanetaire:
