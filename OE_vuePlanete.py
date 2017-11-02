@@ -90,7 +90,7 @@ class VuePlanete(Perspective):
         self.macommande="Centrale_Charbon"
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerHopital(self):
-        self.macommande="Hopital"
+        self.macommande="Hopital1"
     def creerEcole(self):
         self.macommande="Ecole"
     def creerLaboratoire(self):
@@ -99,11 +99,11 @@ class VuePlanete(Perspective):
         self.macommande="Banque"
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
-        self.macommande="vehicules"
+        self.macommande="Usine_Vehicule"
     def creerUsineVaisseaux(self):
-        self.macommande="vaisseaux"
+        self.macommande="Usine_Vaisseau1"
     def creerUsineDrones(self):
-        self.macommande="drones"
+        self.macommande="Usine_Drone"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"
@@ -227,10 +227,32 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/Ville3.png")
         self.images["ville3"] = ImageTk.PhotoImage(im)
         
+        im = Image.open("./images/Batiments/Banque.png")
+        self.images["Banque"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Laboratoire.png")
+        self.images["Laboratoire"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit1.png")
+        self.images["Puit1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit2.png")
+        self.images["Puit2"] = ImageTk.PhotoImage(im)
+        
+        
+        im = Image.open("./images/Batiments/Ecole.png")
+        self.images["Ecole"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/College.png")
+        self.images["College"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Universite.png")
+        self.images["Universite"] = ImageTk.PhotoImage(im)
+        
         im = Image.open("./images/Batiments/Ferme1.png")
         self.images["Ferme1"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ferme2.png")
         self.images["Ferme2"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Hopital1.png")
+        self.images["Hopital1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Hopital2.png")
+        self.images["Hopital2"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
@@ -272,9 +294,11 @@ class VuePlanete(Perspective):
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1])
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1], self.maselection[5])
                 self.maselection = None                
                 pass
+        else:
+            self.maselection = None
         
         
         
