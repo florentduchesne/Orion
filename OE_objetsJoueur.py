@@ -20,6 +20,7 @@ class Joueur():
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
         self.vaisseauxinterplanetaires=[]
+        self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
         self.actions={"creervaisseau":self.creervaisseau,
@@ -34,27 +35,30 @@ class Joueur():
                       "creerstationspatiale":self.creerstationspatiale}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
+                                         "Usine_Vehicule":UsineVehicule,
+                                         "Usine_Vaisseau1":UsineVaisseau,
+                                         "Usine_Drone":UsineDrone,
+                                         "Centrale_Charbon":CentraleElectrique,
+                                         "Hopital1":Hopital,
+                                         "Ecole":Ecole,
+                                         "Laboratoire":Laboratoire,
+                                         "Puit1":Puit,
+                                         "Banque":Banque,
+                                         "Ferme1":Ferme,
                                          "Mur":Mur,
                                          "Tour":Tour,
-                                         "Bouclier":Bouclier,
-                                         "Ferme1:":Ferme,
                                          "Canon":Canon,
-                                         "Puit1":Puit,
-                                         "Ferme1":Ferme,
-                                         "Centrale_Charbon":CentraleElectrique
+                                         "Bouclier":Bouclier
                                          }
       
     def creerstationspatiale(self,listeparams):
-        print("station dans joueur")
         idsystem,idplanete=listeparams
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
-                    print("vais creer1")
                     if idplanete==p.id:
-                        print("vais creer2")
                         station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
-                        p.infrastructures.append(station)
+                        self.stationspatiaux.append(station)
                         return 1            
                     
     def ameliorerBatiment(self, maSelection, planete, systeme):
@@ -100,7 +104,7 @@ class Joueur():
                             j.infrastructures.append(batiment)
                             self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
                         else:
-                            print("construction de mine impossible")
+                            print("construction du batiment impossible")
 
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
@@ -139,7 +143,7 @@ class Joueur():
                         tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
-                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y)
+                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
@@ -181,9 +185,12 @@ class Joueur():
      
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
-        idorigine, x, y, idplanete = ids
+        idorigine, x, y, idplanete, idvehicule = ids
         for i in self.vehiculeplanetaire:
-            
+            if i.id == idvehicule:
+                c = Coord((x,y))
+                i.ciblerdestination(c)
+                pass
             pass
         '''
         for i in self.vehiculeplanetaire:
@@ -206,11 +213,16 @@ class Joueur():
         for i in self.vehiculeplanetaire:
             if i.cible:
                 rep=i.avancer()
+                '''
                 if rep:
                     if rep.proprietaire=="inconnu":
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+                '''
+        
+        for i in self.stationspatiaux:
+                i.orbiter()
         
         #self.detecterCible()
        # self.choisirCible()

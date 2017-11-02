@@ -21,48 +21,72 @@ class VuePlanete(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         self.canevas.config(bg="green")
         
+        ##############MenuPrincipale##############
+        self.btnBatiment=Button(self.cadreetataction,text="Creer un Batiment ressource",command=self.AfficherBatiment)
+        self.btnBatiment.pack(side=TOP)
+        self.btnInfrastructure=Button(self.cadreetataction,text="Creer une Infrastructure",command=self.AfficherInfrastructure)
+        self.btnInfrastructure.pack(side=TOP)
+        self.btnManufacture=Button(self.cadreetataction,text="Creer une Manufacture",command=self.AfficherManufacture)
+        self.btnManufacture.pack(side=TOP)
+        self.btnDefense=Button(self.cadreetataction,text="Creer une Defense",command=self.AfficherDefense)
+        self.btnDefense.pack(side=TOP)
+        self.btnVehicule=Button(self.cadreetataction,text="Creer un Vehicule",command=self.AfficherVehicule)
+        self.btnVehicule.pack(side=TOP)
+        
         ##############BATIMENTS RESSOURCES##############
-        self.btncreerMine=Button(self.cadreetataction,text="Creer Mine",command=self.creerMine)
-        self.btncreerMine.pack()
-        self.btncreerCampBucherons=Button(self.cadreetataction,text="Creer Camp de bûcherons",command=self.creerCampBucherons)
-        self.btncreerCampBucherons.pack()
-        self.btncreerPuit=Button(self.cadreetataction,text="Creer Puit",command=self.creerpuit)
-        self.btncreerPuit.pack()
-        self.btncreerFerme=Button(self.cadreetataction,text="Creer Ferme",command=self.creerFerme)
-        self.btncreerFerme.pack()
-        self.btncreerCentraleElectrique=Button(self.cadreetataction,text="Creer Centrale Electrique",command=self.creerCentraleElectrique)
-        self.btncreerCentraleElectrique.pack()
+        self.btncreerMine=Button(self.cadreBatiment,text="Mine",command=self.creerMine)
+        self.btncreerMine.pack(side=TOP)
+        self.btncreerCampBucherons=Button(self.cadreBatiment,text="Camp de bûcherons",command=self.creerCampBucherons)
+        self.btncreerCampBucherons.pack(side=TOP)
+        self.btncreerPuit=Button(self.cadreBatiment,text="Puit",command=self.creerpuit)
+        self.btncreerPuit.pack(side=TOP)
+        self.btncreerFerme=Button(self.cadreBatiment,text="Ferme",command=self.creerFerme)
+        self.btncreerFerme.pack(side=TOP)
+        self.btnRetour=Button(self.cadreBatiment,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+        
         
         ##############BATIMENTS INFRASTRUCTURES##############
-        self.btncreerHopital=Button(self.cadreetataction,text="Creer Hôpital",command=self.creerHopital)
-        self.btncreerHopital.pack()
-        self.btncreerEcole=Button(self.cadreetataction,text="Creer École",command=self.creerEcole)
-        self.btncreerEcole.pack()
-        self.btncreerLaboratoire=Button(self.cadreetataction,text="Creer Laboratoire",command=self.creerLaboratoire)
-        self.btncreerLaboratoire.pack()
-        self.btncreerBanque=Button(self.cadreetataction,text="Creer Banque",command=self.creerBanque)
-        self.btncreerBanque.pack()
+        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole)
+        self.btncreerEcole.pack(side=TOP)
+        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital)
+        self.btncreerHopital.pack(side=TOP)
+        self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque)
+        self.btncreerBanque.pack(side=TOP)
+        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire)
+        self.btncreerLaboratoire.pack(side=TOP)
+        self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
         
         ##############BATIMENTS MANUFACTURES##############
-        self.btncreerUsineVehicules=Button(self.cadreetataction,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
-        self.btncreerUsineVehicules.pack()
-        self.btncreerUsineVaisseaux=Button(self.cadreetataction,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
-        self.btncreerUsineVaisseaux.pack()
-        self.btncreerUsineDrones=Button(self.cadreetataction,text="Creer Usine à Drones",command=self.creerUsineDrones)
-        self.btncreerUsineDrones.pack()
+        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique)
+        self.btncreerCentraleElectrique.pack(side=TOP)
+        self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
+        self.btncreerUsineVehicules.pack(side=TOP)
+        self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
+        self.btncreerUsineVaisseaux.pack(side=TOP)
+        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones)
+        self.btncreerUsineDrones.pack(side=TOP)
+        self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+       
         
         ##############BATIMENTS DEFENSES##############
-        self.btncreermur=Button(self.cadreetataction,text="Creer Mur",command=self.creermur)
-        self.btncreermur.pack()
-        self.btncreercanon=Button(self.cadreetataction,text="Creer Canon",command=self.creercanon)
-        self.btncreercanon.pack()
-        self.btncreerbouclier=Button(self.cadreetataction,text="Creer Bouclier",command=self.creerbouclier)
-        self.btncreerbouclier.pack()
-        self.btncreertour=Button(self.cadreetataction,text="Creer Tour",command=self.creertour)
-        self.btncreertour.pack()
-        ##############UNITES AU SOL##############
-        self.btncreertank=Button(self.cadreetataction,text="Creer Tank",command=self.creervehiculetank)
-        self.btncreertank.pack()
+        self.btncreermur=Button(self.cadreDefense,text="Creer Mur",command=self.creermur)
+        self.btncreermur.pack(side=TOP)
+        self.btncreercanon=Button(self.cadreDefense,text="Creer Canon",command=self.creercanon)
+        self.btncreercanon.pack(side=TOP)
+        self.btncreertour=Button(self.cadreDefense,text="Creer Tour",command=self.creertour)
+        self.btncreertour.pack(side=TOP)
+        self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier)
+        self.btncreerbouclier.pack(side=TOP)
+        self.btnRetour=Button(self.cadreDefense,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
+        ##############Vehicule##############
+        self.btncreertank=Button(self.cadreVehicule,text="Creer Tank",command=self.creervehiculetank)
+        self.btncreertank.pack(side=TOP)
+        self.btnRetour=Button(self.cadreVehicule,text="Retour",command=self.Retour)
+        self.btnRetour.pack(side=BOTTOM)
         
         
         ##############CADRE AMELIORATION BATIMENT##############
@@ -79,6 +103,19 @@ class VuePlanete(Perspective):
         
         self.changecadreetat(self.cadreetataction)
     
+    ##############MenuPrincipale##############
+    def AfficherBatiment(self):
+        self.changecadreetat(self.cadreBatiment)
+    def AfficherManufacture(self):
+        self.changecadreetat(self.cadreManufacture)
+    def AfficherInfrastructure(self):
+        self.changecadreetat(self.cadreInfrastructure)
+    def AfficherVehicule(self):
+        self.changecadreetat(self.cadreVehicule)
+    def AfficherDefense(self):
+        self.changecadreetat(self.cadreDefense)
+    def Retour(self):
+        self.changecadreetat(self.cadreetataction)
     
     ##############BATIMENTS RESSOURCES##############
     def creerMine(self):
@@ -106,7 +143,7 @@ class VuePlanete(Perspective):
     def creerUsineVaisseaux(self):
         self.macommande="Usine_Vaisseau1"
     def creerUsineDrones(self):
-        self.macommande="drones"
+        self.macommande="Usine_Drone"
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"
@@ -119,6 +156,7 @@ class VuePlanete(Perspective):
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
+        self.maselection=None
     def creervehiculecommerce(self):
         self.macommande="vehiculecommerce"
     def creervehiculeavion(self):
@@ -166,17 +204,7 @@ class VuePlanete(Perspective):
          #Dessin des tuiles de pelouse sur la surface de la map.
         for rows in p.tuiles:
             for t in rows:
-                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(None, None, t.x,t.y,"tuile"))
-        """
-        x = 0
-        y = 0
-        for i in range(0,int((self.hauteur/50) +1)):
-            for j in range(0,int((self.largeur /50)+1)):
-                self.canevas.create_image(x,y,image=self.images["gazon"])   
-                x+=50
-            y+=50
-            x=0
-        """  
+                self.canevas.create_image(t.y,t.x,image=self.images[t.image], tags=(None, None, t.x,t.y,"tuile",t.estPrise)) 
         scrollBarX = 0
         scrollBarY = 0
         #Dessin des infrastructues de la planete.
@@ -184,7 +212,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"tuile"))               
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"ville"))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
                 
@@ -248,10 +276,32 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/Ville3.png")
         self.images["ville3"] = ImageTk.PhotoImage(im)
         
+        im = Image.open("./images/Batiments/Banque.png")
+        self.images["Banque"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Laboratoire.png")
+        self.images["Laboratoire"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit1.png")
+        self.images["Puit1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Puit2.png")
+        self.images["Puit2"] = ImageTk.PhotoImage(im)
+        
+        
+        im = Image.open("./images/Batiments/Ecole.png")
+        self.images["Ecole"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/College.png")
+        self.images["College"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Universite.png")
+        self.images["Universite"] = ImageTk.PhotoImage(im)
+        
         im = Image.open("./images/Batiments/Ferme1.png")
         self.images["Ferme1"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ferme2.png")
         self.images["Ferme2"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Batiments/Hopital1.png")
+        self.images["Hopital1"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/Batiments/Hopital2.png")
+        self.images["Hopital2"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Tiles/gazon100x100.png")
         self.images["gazon"] = ImageTk.PhotoImage(im)
@@ -274,21 +324,66 @@ class VuePlanete(Perspective):
                 
     def creervaisseau(self):
         pass
-         
+
     def afficherpartie(self,mod):
-        pass
-            
+        
+        self.canevas.delete("vehiculetank")
+        #self.canevas.delete("selecteur")
+        self.afficherselection()
+        #e=self.UA2pixel
+        for i in mod.joueurscles:
+            i=mod.joueurs[i]
+            for j in i.vehiculeplanetaire:
+                #if j.idSysteme==self.systeme.id:
+                jx=j.x
+                jy=j.y
+                #jx=j.x*e
+                #jy=j.y*e
+                x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                #ajouter if pour changer l'image selon l'angle de la destination...
+                im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
+                self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
+                '''
+                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                '''
+         
+         
     def changerproprietaire(self,prop,couleur,systeme): 
         pass
                
     def afficherselection(self):
-        pass
-      
+        
+        if self.maselection!=None:
+            #e=self.UA2pixel
+            joueur=self.modele.joueurs[self.parent.nom]
+            if self.maselection[4]=="vehiculetank":
+                for i in joueur.vehiculeplanetaire:
+                    if i.id == self.maselection[1]:
+                        x=i.x
+                        y=i.y
+                        t=10
+                        self.canevas
+                        
+                        '''
+                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                                    outline=joueur.couleur,
+                                                    tags=("select","selecteur"))
+                        '''
+        
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
-        print("print t")
-        print(t)
         
+        print("print t : ")
+        print(t)
+        print('event : ' + str(evt.x) + ' - ' + str(evt.y))
         
         if self.maselection ==None and t[4] != 'tuile':
             self.maselection = t
@@ -296,9 +391,18 @@ class VuePlanete(Perspective):
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
                 print('le tank va finir par avancer!!!')
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], evt.x,evt.y, t[1])
+                print('destination : ' + str(evt.x) +' - ' + str(evt.y))
+                print('actuel : ' + str(self.maselection[2]) + ' - ' + str(self.maselection[3]))
+                
+                #coordonner x et y de la tuile selectionner pour le deplacement du tank
+                #le x et le y dans les tags est inversées...
+                xdeplacement = int(t[3])
+                ydeplacement = int(t[2])
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
                 self.maselection = None
                 pass
+        else:
+            self.maselection = None
         
         if t and t[0]!="current":
             if t[0]==self.parent.nom:
@@ -310,8 +414,9 @@ class VuePlanete(Perspective):
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[4]=="tuile":
+                print(t)
                 print("creation batiment")
-                if self.macommande == "vehiculetank":
+                if self.macommande == "vehiculetank"  and t[5]=='0':
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
@@ -321,9 +426,8 @@ class VuePlanete(Perspective):
 
                     self.macommande=None
                     self.maselection=None
-                elif self.macommande != None:
-                    print("ma commande")
-                    print(self.macommande)
+
+                elif self.macommande != None and t[5]=='0':
                     x=int(t[3])
                     y=int(t[2])
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
@@ -334,19 +438,12 @@ class VuePlanete(Perspective):
                     print("montre menu a droite")
                     self.macommande=None
                     self.maselection=None
-            #elif self.macommande == None:
-                
-                
-                
-            
-            '''
-            elif self.maselection != None and t[2] == "tuile":
-                self.maselection = [self.parent.monnom,t[1],t[2]]
-                print("coucou")
-                print(self.maselection)
-                pass
-            '''
-    
+                    self.changerTagTuile(t[3],t[2],'1')
+                        
+                    
+    def changerTagTuile(self,posy, posx, char):  
+        itemX = self.canevas.find_withtag("current")
+        self.canevas.itemconfig(itemX[0],  tags=(None, None, posy,posx,"tuile",char))             
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)

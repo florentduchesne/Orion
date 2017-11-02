@@ -39,7 +39,15 @@ class Perspective(Frame):
         self.labid=Label(self.cadreinfo,text=self.parent.nom)
         self.labid.pack()
         
+        ##############Menu Principale##############
         self.cadreetataction=Frame(self.cadreetat,width=200,height=200,bg="grey20")
+        ##############Sous-menu##############
+        self.cadreVaisseau=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
+        self.cadreBatiment=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
+        self.cadreManufacture=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
+        self.cadreInfrastructure=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
+        self.cadreVehicule=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
+        self.cadreDefense=Frame(self.cadreetat, width=200, height=200,bg ="grey20")
         
         self.cadreAmeliorationBatiments=Frame(self.cadreetat, width=200, height=200, bg="grey20")##CADRE QUI NOUS PERMET D'AMELIORER LES BATIMENTS
         
