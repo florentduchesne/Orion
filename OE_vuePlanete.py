@@ -305,9 +305,9 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/canon1.png").resize((100,100))
         self.images["Canon"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/bouclier.png")
-        self.images["Bouclier"] = ImageTk.PhotoImage(im)
-    
-		
+        self.images["Bouclier"] = ImageTk.PhotoImage(im)    
+
+        
     def afficherdecor(self):
         pass
                 
