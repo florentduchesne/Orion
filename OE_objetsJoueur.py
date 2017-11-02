@@ -43,7 +43,7 @@ class Joueur():
                                          "Laboratoire":Laboratoire,
                                          "Puit1":Puit,
                                          "Banque":Banque,
-                                         "Ferme1:":Ferme,
+                                         "Ferme1":Ferme,
                                          "Mur":Mur,
                                          "Tour":Tour,
                                          "Canon":Canon,
