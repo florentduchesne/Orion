@@ -23,6 +23,7 @@ class Joueur():
         self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
+        self.niveauVaisseau = 1
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -124,14 +125,14 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,ids):
-        idsystem,idplanete=ids
+        idsystem,idplanete,typeVaisseau=ids
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
                     #print("vais creer")
                     if idplanete==p.id:
                        # print("vais creer")
-                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.niveauVaisseau)
                         self.vaisseauxinterstellaires.append(v)
                         return 1            
 
