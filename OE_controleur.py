@@ -122,6 +122,9 @@ class Controleur():
     
     def voyageGalax(self,idpropri,idvais):
         self.actions.append([self.monnom,"voyageGalax",[idpropri,idvais]])
+        
+    def voyageSystem(self,idSystem,idpropri,idvais):
+        self.actions.append([self.monnom,"voyageSystem",[idSystem,idpropri,idvais]])
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
