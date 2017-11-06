@@ -4,6 +4,7 @@ from PIL import Image,ImageDraw, ImageTk
 import random
 from helper import Helper as hlp
 from OE_vuePerspective import Perspective
+from OE_objetsVaisseaux import Vaisseau
 
 
 
@@ -33,9 +34,11 @@ class VueGalaxie(Perspective):
         if systeme==None:
             if self.maselection and self.maselection[0]==self.parent.nom and self.maselection[1]=="systeme":
                 sid=self.maselection[2]
-                for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+               # for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+                for i in self.modele.systemes:
                     if i.id==sid:
                         s=i
+                        print(s.planetes)
                         break
                 
                 self.parent.parent.visitersysteme(sid)
@@ -127,7 +130,25 @@ class VueGalaxie(Perspective):
             self.canevas.create_oval((i.x*e)-t,(i.y*e)-t,(i.x*e)+t,(i.y*e)+t,fill="orchid3",dash=(1,1),
                                                  outline="maroon1",width=2,
                                      tags=("inconnu","pulsar",i.id))
+            
+        for i in mod.joueurscles:
+            i=mod.joueurs[i]
+            for j in i.objetgalaxie:
                 
+                if (isinstance(j, Vaisseau)):
+                    jx=j.x*e
+                    jy=j.y*e
+                    x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                    x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                    x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                    x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                    self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
+                    self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
+                    self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+        
     def changerproprietaire(self,prop,couleur,systeme):
         #lp=self.canevas.find_withtag(systeme.id) 
         self.canevas.addtag_withtag(prop,systeme.id)
@@ -161,15 +182,15 @@ class VueGalaxie(Perspective):
         if t and t[0]!="current":    
             if t[1]=="systeme":
                 print("IN SYSTEME",t)
-                if self.parent.nom in t:
-                    print("IN systeme  PAS SELECTION")
-                    self.maselection=[self.parent.nom,t[1],t[2]]
-                    self.montresystemeselection()
-                else:    
-                    print("IN systeme + RIEN")
-                    self.maselection=None
-                    self.lbselectecible.pack_forget()
-                    self.canevas.delete("selecteur")
+               # if self.parent.nom in t:
+                print("IN systeme  PAS SELECTION")
+                self.maselection=[self.parent.nom,t[1],t[2]]
+                self.montresystemeselection()
+                #else:    
+                 #   print("IN systeme + RIEN")
+                  #  self.maselection=None
+                   # self.lbselectecible.pack_forget()
+                    #self.canevas.delete("selecteur")
             else:
                 print("Objet inconnu")
         else:

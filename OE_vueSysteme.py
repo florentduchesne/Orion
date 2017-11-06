@@ -36,29 +36,34 @@ class VueSysteme(Perspective):
         ##############Vaisseaux##############
         self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = self.creervaisseau)#("chasseur"))
         self.btnChasseur.pack(side=TOP)
-        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce",command = self.creervaisseau)#("commerce"))
+        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce",command = self.creervaisseau2("commerce"))
         self.btnCommerce.pack(side=TOP)
-        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde",command = self.creervaisseau)#("bombarde"))
+        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde",command = self.creervaisseau2("bombarde"))
         self.btnBombarde.pack(side=TOP)
-        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = self.creervaisseau)#("chasseur"))
+        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = self.creervaisseau2("chasseur"))
         self.btnColonisation.pack(side=TOP)
-        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau)#("tank"))
+        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau2("tank"))
         self.btnTank.pack(side=TOP)
-        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = self.creervaisseau)#("mere"))
+        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = self.creervaisseau2("mere"))
         self.btnMere.pack(side=TOP)
-        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser",command = self.creervaisseau)#("laser"))
+        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser",command = self.creervaisseau2("laser"))
         self.btnLaser.pack(side=TOP)
-        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova",command = self.creervaisseau)#("nova"))
+        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova",command = self.creervaisseau2("nova"))
         self.btnNova.pack(side=TOP)
-        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide",command = self.creervaisseau)#("suicide"))
+        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide",command = self.creervaisseau2("suicide"))
         self.btnSuicide.pack(side=TOP)
-        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique",command = self.creervaisseau)#("biologique"))
+        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique",command = self.creervaisseau2("biologique"))
         self.btnBiologique.pack(side=TOP)
         self.btnRetour=Button(self.cadreVaisseau,text="Retour",command=self.Retour)
         self.btnRetour.pack(side=BOTTOM)
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
+        
+        #voyage
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie",bg="darkgray",command =self.voyageGalax)
+        self.btnVoyage.pack()
+        
         self.changecadreetat(self.cadreetataction)
         
     def voirplanete(self):
@@ -130,12 +135,15 @@ class VueSysteme(Perspective):
     def afficherdecor(self):
         pass
                 
-    def creervaisseau(self):#,type): 
+    def creervaisseau(self,):#typeVaisseau):
         if self.maselection:
-            self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2])#5 = id sys 3 = id planete
+            self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2])#,typeVaisseau)#5 = id sys 3 = id planete
             self.maselection=None
             self.canevas.delete("selecteur")
-           
+     
+    def creervaisseau2(self,typeVaisseau):
+        pass       
+    
     def creerstation(self):
         if self.maselection:
             print(self.systeme.id)  
@@ -146,14 +154,14 @@ class VueSysteme(Perspective):
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
-        #self.canevas.delete("selecteur")
+        self.canevas.delete("selecteur")
         self.afficherselection()
         e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vaisseauxinterstellaires:
-                #if j.idSysteme==self.systeme.id:
-                if True:
+                if j.idSysteme==self.systeme.id:
+                #if True:
                     jx=j.x*e
                     jy=j.y*e
                     x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
@@ -177,13 +185,14 @@ class VueSysteme(Perspective):
                
     def afficherselection(self):
         if self.maselection!=None:
+            #print(self.maselection)
             e=self.UA2pixel
             joueur=self.modele.joueurs[self.parent.nom]
             if self.maselection[1]=="planete":
                 for i in self.systeme.planetes:
                     if i.id == self.maselection[2]:
-                        x=int(self.maselection[3])
-                        y=int(self.maselection[4])
+                        x=float(self.maselection[3])
+                        y=float(self.maselection[4])
                         t=i.taille*100 +10
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
                                                 outline=joueur.couleur,
@@ -268,7 +277,7 @@ class VueSysteme(Perspective):
 
            
     def montrevaisseauxselection(self):
-        self.changecadreetat(self.cadreetatmsg)
+        self.changecadreetat(self.cadrevoyage)
             
     def montreplaneteselection(self):
         self.changecadreetat(self.cadreetataction)
@@ -290,3 +299,6 @@ class VueSysteme(Perspective):
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
         
+        
+    def voyageGalax(self):
+        self.parent.parent.voyageGalax(self.maselection[0],self.maselection[2])

@@ -107,8 +107,8 @@ class Controleur():
         self.vue.root.destroy()
         
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
-    def creervaisseau(self,systeme,planete):
-        self.modele.creervaisseau(systeme,planete)
+    def creervaisseau(self,systeme,planete):#,typeVaisseau):
+        self.modele.creervaisseau(systeme,planete)#,typeVaisseau)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def creerstationspatiale(self,systeme,planete):
@@ -119,6 +119,9 @@ class Controleur():
     
     def ciblerEspace(self,idorigine,idsysteme,xy):
         self.actions.append([self.monnom,"ciblerEspace",[idorigine,idsysteme,xy]])
+    
+    def voyageGalax(self,idpropri,idvais):
+        self.actions.append([self.monnom,"voyageGalax",[idpropri,idvais]])
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])

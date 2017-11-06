@@ -108,9 +108,10 @@ class Systeme():
         self.creerplanetes()
         
     def creerplanetes(self):
-        systemeplanetaire=random.randrange(5) # 4 chance sur 5 d'avoir des planetes
+        systemeplanetaire=random.randrange(5)+1 # 4 chance sur 5 d'avoir des planetes
         if systemeplanetaire:
-            nbplanetes=random.randrange(12)+1
+            nbplanetes=(random.randrange(12))+1
+           
             for i in range(nbplanetes):
                 type=random.choice(["roc","gaz","glace"])
                 distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km

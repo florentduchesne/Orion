@@ -170,20 +170,21 @@ class VuePlanete(Perspective):
     def ameliorerBatiment(self):
         print("ON AMELIORE UN BATIMENT")
         self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        self.maselection = None
         
     def detruireBatiment(self):
         pass
     
     def voirsysteme(self):
         self.parent.cadreRessourcesPlanete.pack_forget()
-        for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+        for i in self.modele.systemes:
             if i.id==self.systeme:
                 self.parent.voirsysteme(i)
             
     def initplanete(self,sys,plane):
         s=None
         p=None
-        for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+        for i in self.modele.systemes:
             if i.id==sys:
                 s=i
                 for j in i.planetes:
@@ -217,7 +218,10 @@ class VuePlanete(Perspective):
                 miniy = (i.y *200) / self.hauteur
                 
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
-            
+            else:
+               #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
+               pass
+                
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
         #Centre sur la ville principal.
         canl=int(scrollBarX-400)/self.largeur
@@ -432,7 +436,6 @@ class VuePlanete(Perspective):
             if t[0]==self.parent.nom:
                 self.montreAmeliorationBatiments()
                 self.macommande=None
-                self.maselection=None
                 print("montre menu amelioration")
                 pass
             elif t[1]=="systeme":
@@ -447,7 +450,7 @@ class VuePlanete(Perspective):
                     minix = (x *200) / self.largeur
                     miniy = (y *200) / self.hauteur
                     self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
-
+                    #self.changerTagTuile(t[3],t[2],'1')
                     self.macommande=None
                     self.maselection=None
 
@@ -462,7 +465,6 @@ class VuePlanete(Perspective):
                     print("montre menu a droite")
                     self.macommande=None
                     self.maselection=None
-                    self.changerTagTuile(t[3],t[2],'1')
                         
                     
     def changerTagTuile(self,posy, posx, char):  
