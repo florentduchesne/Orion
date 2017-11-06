@@ -172,7 +172,6 @@ class VueSysteme(Perspective):
                     jx=(j.x*e)
                     jy=(j.y*e)
                     self.canevas.create_oval((jx-j.taille),(jy-j.taille),(jx+j.taille),(jy+j.taille),fill=j.couleurJoueur, tags=("artefact"), outline= "white", width = 1)
-                    
     def changerproprietaire(self):
         pass
                
