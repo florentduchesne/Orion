@@ -88,6 +88,8 @@ class Etoile():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
         self.id=idSuivant
+        self.x=x
+        self.y=y
         self.type=random.choice(["rouge","rouge","rouge",
                                  "jaune","jaune",
                                  "bleu"])
