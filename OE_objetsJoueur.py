@@ -81,7 +81,6 @@ class Joueur():
                 print(infra.nomBatiment)
                 infra.ameliorer(self, planete)
                 return
-        
     
     def getPlanete(self, planeteID, systemeID):
         for systeme in self.systemesvisites:

@@ -20,27 +20,15 @@ class BatimentRessources():
         print("AMELIORER DANS OBJ BATIMENT")
         print(self.listeNiveaux)
         nouveauNom = self.listeNiveaux[0]
-       
         
-        planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources ,nouveauNom)
+        planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
         if(planeteAAssezDeRessources):
             self.nomBatiment = nouveauNom
             self.listeNiveaux.remove(self.nomBatiment)
             
             print("assez de ressources pour l'amelioration")
-            planete.ressource.soustraireRessources(dictionnaireCoutAllocationAgeBatiments[self.nomBatiment][0])
             self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
             joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment)
-            
-            
-        
-        """
-        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, nomBatiment)
-                            if(aAssezDeRessources):
-                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
-                                j.infrastructures.append(batiment)
-                                self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)"""
-        
         
 #superclasse des usines a vaisseaux, usines a drones, etc.     
 class BatimentManufacture():
@@ -217,7 +205,7 @@ class CampBucherons(BatimentRessources):
 
 class CentraleElectrique(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "centraleElectrique", proprio = "patate"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(electricite = 5), listeNiveaux = ["CentraleNucleaire", "Eolienne", "PanneauSolaire"])
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, Ressource(electricite = 5), listeNiveaux = ["Centrale_Nucleaire", "Eolienne", "PanneauSolaire"])
     
 ################BATIMENTS INFRASTRUCTURES################
 class Ville(BatimentInfrastructure):

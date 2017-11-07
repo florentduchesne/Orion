@@ -101,6 +101,8 @@ class VuePlanete(Perspective):
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
         
+        self.jeMontreLeMenuDAmelioration = False
+        
         self.changecadreetat(self.cadreetataction)
     
     ##############MenuPrincipale##############
@@ -170,6 +172,7 @@ class VuePlanete(Perspective):
     def ameliorerBatiment(self):
         print("ON AMELIORE UN BATIMENT")
         self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        self.montresystemeselection()
         self.maselection = None
         
     def detruireBatiment(self):
@@ -411,6 +414,15 @@ class VuePlanete(Perspective):
     def cliquervue(self,evt):
         t=self.canevas.gettags("current")
         
+        
+        ##REMET LE MENU A DROITE PAR DEFAUT APRES AVOIR AMELIORE UN BATIMENT##
+        if(self.jeMontreLeMenuDAmelioration):
+            self.jeMontreLeMenuDAmelioration = False
+            self.montresystemeselection()
+            print("montre menu a droite")
+            self.macommande=None
+            self.maselection=None
+        
         print("print t : ")
         print(t)
         print('event : ' + str(evt.x) + ' - ' + str(evt.y))
@@ -433,16 +445,17 @@ class VuePlanete(Perspective):
             self.maselection = None
         
         if t and t[0]!="current":
-            if t[0]==self.parent.nom:
+            if t[0]==self.parent.nom:##SI ON CLIQUE SUR UN BATIMENT, ON MONTRE LE MENU D'AMELIORATION
                 self.montreAmeliorationBatiments()
                 self.macommande=None
-                print("montre menu amelioration")
+                self.jeMontreLeMenuDAmelioration = True
+                print("clic sur un batiment existant")
                 pass
             elif t[1]=="systeme":
                 pass
             elif self.maselection == None and t[4]=="tuile":
                 print(t)
-                print("creation batiment")
+                print("clic sur une tuile vide")
                 if self.macommande == "vehiculetank"  and t[5]=='0':
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
@@ -460,11 +473,6 @@ class VuePlanete(Perspective):
                     print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                else:
-                    self.montresystemeselection()
-                    print("montre menu a droite")
-                    self.macommande=None
-                    self.maselection=None
                         
                     
     def changerTagTuile(self,posy, posx, char):  
