@@ -20,7 +20,6 @@ class Ressource():
         
         #self.argent=0
     def estPlusGrandOuEgal(self, ressource):
-        
         for cleRess in self.dictRess:
             if self.dictRess[cleRess] < ressource.dictRess[cleRess]:
                 return False
