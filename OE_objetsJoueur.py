@@ -22,7 +22,9 @@ class Joueur():
         self.vaisseauxinterplanetaires=[]
         self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
+        self.objetgalaxie=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
+        self.niveauVaisseau = 1
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -33,7 +35,9 @@ class Joueur():
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale,
-                      "ciblerEspace":self.ciblerEspace}
+                      "ciblerEspace":self.ciblerEspace,
+                      "voyageGalax":self.voyageGalax,
+                      "voyageSystem":self.voyageSystem}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -58,8 +62,12 @@ class Joueur():
             if i.id==idsystem:
                 for p in i.planetes:
                     if idplanete==p.id:
-                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        station=StationSpatiale(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.couleur,p)
                         self.stationspatiaux.append(station)
+                        print("Station Creer")
+                        print("taille: " + str(p.taille))
+                        print("distance: " + str(p.distance))
+                        print("angle: " + str(p.angle))                        
                         return 1            
                     
     def ameliorerBatiment(self, maSelection, planete, systeme):
@@ -68,9 +76,14 @@ class Joueur():
         #print(planete.infrastructures)
         planete = self.getPlanete(planete, systeme)
         for infra in planete.infrastructures:
-            if maSelection[3] == infra.x and maSelection[2] == infra.y:
+            print("infra y : " + str(infra.y))
+            print("infra x : " + str(infra.x))
+            print("maSelection 2 : " + str(maSelection[2]))
+            print("maSelection 3 : " + str(maSelection[3]))
+            if int(maSelection[2]) == int(infra.x) and int(maSelection[3]) == int(infra.y):
                 print(infra.nomBatiment)
-        
+                infra.ameliorer(self, planete)
+                return
     
     def getPlanete(self, planeteID, systemeID):
         for systeme in self.systemesvisites:
@@ -101,7 +114,7 @@ class Joueur():
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
                         aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                         if(aAssezDeRessources):
-                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
                             j.infrastructures.append(batiment)
                             self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
                         else:
@@ -124,14 +137,14 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,ids):
-        idsystem,idplanete=ids
+        idsystem,idplanete=ids#,typeVaisseau=ids
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
                     #print("vais creer")
                     if idplanete==p.id:
                        # print("vais creer")
-                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y)
+                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,)#self.niveauVaisseau)
                         self.vaisseauxinterstellaires.append(v)
                         return 1            
 
@@ -201,7 +214,31 @@ class Joueur():
                                 #i.ciblerdestination(Coord(xy))
                 return
 
-                            
+    def voyageGalax(self,ids):
+        idpropri,idVais=ids
+        for i in self.vaisseauxinterstellaires:
+            if i.id == idVais:
+                for j in self.parent.systemes:
+                    if j.id==i.idSysteme:
+                        #i.x= j.x
+                       # i.y=j.y
+                        i.x= j.x-1
+                        i.y=j.y-1
+                        i.dansGalaxie=True
+                        self.objetgalaxie.append(i)
+
+    def voyageSystem(self,ids): 
+        idVais,idpropri,idSystem=ids
+        for i in self.vaisseauxinterstellaires:
+            if i.id == idVais:
+                for j in self.parent.systemes:
+                    if j.id==idSystem:
+                        i.idSysteme=j.id
+                        i.dansGalaxie=False
+                        i.x=25-2
+                        i.y=25-2
+                        self.objetgalaxie.remove(i)
+                               
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
         idorigine, x, y, idplanete, idvehicule = ids

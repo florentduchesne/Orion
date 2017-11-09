@@ -20,6 +20,10 @@ class Perspective(Frame):
         self.cadreetat=Frame(self.cadreinfo,width=1400,height=600,bg="grey20")
         self.cadreetat.pack()
         
+        self.cadrevoyage=Frame(self.cadreetat,width=1400,height=600,bg="grey20")
+        
+        #self.cadrevoyage.pack()
+        
         self.scrollX=Scrollbar(self.cadrevue,orient=HORIZONTAL)
         self.scrollY=Scrollbar(self.cadrevue)
         self.canevas=Canvas(self.cadrevue,width=1400,height=800,bg="grey11",
@@ -75,3 +79,6 @@ class Perspective(Frame):
         if cadre:
             self.cadreetatactif=cadre
             self.cadreetatactif.pack()
+ 
+        
+         
