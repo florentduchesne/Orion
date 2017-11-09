@@ -49,7 +49,7 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(bronze = 100, bois = 100, charbon=50, titanium=100)
+        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000)
         self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)
         self.tuiles = self.generationMap()
         self.x = x
