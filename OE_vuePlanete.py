@@ -4,6 +4,7 @@ from PIL import Image,ImageDraw, ImageTk
 from helper import Helper as hlp
 from OE_vuePerspective import *
 import OE_objetsBatiments
+from OE_objetsVehicule import vehiculeTank, vehiculeCharAssaut
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -85,6 +86,8 @@ class VuePlanete(Perspective):
         ##############Vehicule##############
         self.btncreertank=Button(self.cadreVehicule,text="Creer Tank",command=self.creervehiculetank)
         self.btncreertank.pack(side=TOP)
+        self.btncreertank=Button(self.cadreVehicule,text="Creer Char Assaut",command=self.creervehiculecharassaut)
+        self.btncreertank.pack(side=TOP)
         self.btnRetour=Button(self.cadreVehicule,text="Retour",command=self.Retour)
         self.btnRetour.pack(side=BOTTOM)
         
@@ -158,6 +161,9 @@ class VuePlanete(Perspective):
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
+        self.maselection=None
+    def creervehiculecharassaut(self):
+        self.macommande="vehiculecharassaut"
         self.maselection=None
     def creervehiculecommerce(self):
         self.macommande="vehiculecommerce"
@@ -323,6 +329,9 @@ class VuePlanete(Perspective):
         self.images["vehiculetankgauche"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Vehicules/tankdroit.png")
         self.images["vehiculetankdroit"] = ImageTk.PhotoImage(im)
+        
+        im = Image.open("./images/Vehicules/tanktemp.png")
+        self.images["vehiculecharassaut"] = ImageTk.PhotoImage(im)
               
         im = Image.open("./images/Batiments/canon.png")
         self.images["Tour"] = ImageTk.PhotoImage(im)
@@ -342,14 +351,15 @@ class VuePlanete(Perspective):
 
     def afficherpartie(self,mod):
         
-        self.canevas.delete("vehiculetank")
+        
         #self.canevas.delete("selecteur")
         self.afficherselection()
         #e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vehiculeplanetaire:
-                #if j.idSysteme==self.systeme.id:
+                
+                    #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
                 #jx=j.x*e
@@ -358,42 +368,39 @@ class VuePlanete(Perspective):
                 x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                 x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                 x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                
-                #ajouter if pour changer l'image selon l'angle de la destination...
-                if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
-                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )  
-                    pass
-                elif j.angledegre >= 45 and j.angledegre <= 135:#haut
-                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
-                    pass
-                elif j.angledegre >= 135 and j.angledegre <= 225:#droit
-                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankdroit"]
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
-                    pass
-                else :#bas
-                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
-                    pass
-                #im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
-                #self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
-                
-                '''
-                self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                '''
+                    
+                if isinstance(j, vehiculeTank):
+                    self.canevas.delete("vehiculetank")
+                    #ajouter if pour changer l'image selon l'angle de la destination...
+                    if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
+                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )  
+                        pass
+                    elif j.angledegre >= 45 and j.angledegre <= 135:#haut
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
+                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                        pass
+                    elif j.angledegre >= 135 and j.angledegre <= 225:#droit
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankdroit"]
+                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                        pass
+                    else :#bas
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
+                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                        
+                elif isinstance(j, vehiculeCharAssaut):
+                    self.canevas.delete("vehiculecharassaut")
+                    
+                    im=self.parent.modes["planetes"][j.planeteid].images["vehiculecharassaut"]
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculecharassaut",j.id) ) 
+                    pass            
          
          
     def changerproprietaire(self,prop,couleur,systeme): 
         pass
                
     def afficherselection(self):
-        
+        '''
         if self.maselection!=None:
             #e=self.UA2pixel
             joueur=self.modele.joueurs[self.parent.nom]
@@ -405,7 +412,7 @@ class VuePlanete(Perspective):
                         t=10
                         self.canevas
                         
-                        '''
+                        
                         self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                     outline=joueur.couleur,
                                                     tags=("select","selecteur"))
@@ -432,6 +439,16 @@ class VuePlanete(Perspective):
             pass
         elif self.maselection != None and t[4] == 'tuile':
             if self.maselection[4] == 'vehiculetank': 
+                print('le tank va finir par avancer!!!')
+                print('destination : ' + str(evt.x) +' - ' + str(evt.y))
+                print('actuel : ' + str(self.maselection[2]) + ' - ' + str(self.maselection[3]))
+                
+                xdeplacement = self.canevas.canvasx(evt.x)
+                ydeplacement = self.canevas.canvasx(evt.y)
+                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
+                self.maselection = None
+                pass
+            elif self.maselection[4] == 'vehiculecharassaut': 
                 print('le tank va finir par avancer!!!')
                 print('destination : ' + str(evt.x) +' - ' + str(evt.y))
                 print('actuel : ' + str(self.maselection[2]) + ' - ' + str(self.maselection[3]))

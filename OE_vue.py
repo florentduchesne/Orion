@@ -357,7 +357,13 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) )   
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) ) 
+    
+    def affichervehiculecharassaut(self,joueur,systemeid,planeteid,x,y,idvehicule):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images["vehiculecharassaut"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculecharassaut",idvehicule) ) 
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
         for i in self.modes["planetes"].keys():
