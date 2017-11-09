@@ -4,7 +4,8 @@ import math
 from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
-from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion
+from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion,\
+    vehiculeCharAssaut
 from OE_coord import *
 
 
@@ -32,6 +33,7 @@ class Joueur():
                       "visitersysteme":self.visitersysteme,
                       "creerbatiment":self.creerBatiment,
                       "creervehiculetank":self.creervehiculetank,
+                      "creervehiculecharassaut":self.creervehiculecharassaut,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale,
@@ -103,6 +105,9 @@ class Joueur():
                         if(nomBatiment == "vehiculetank"):
                             self.creervehiculetank(listeparams)
                             return
+                        if (nomBatiment == "vehiculecharassaut"):
+                            self.creervehiculecharassaut(listeparams)
+                            return
                         if(nomBatiment == "Bouclier"):
                             aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                             if(aAssezDeRessources):
@@ -158,6 +163,17 @@ class Joueur():
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
                         self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
+
+    def creervehiculecharassaut(self, listeparams):
+        nom,systemeid,planeteid,x,y, nomBatiment=listeparams
+        for i in self.systemesvisites:
+            if i.id==systemeid:
+                for j in i.planetes:
+                    if j.id==planeteid:
+                        charassaut=vehiculeCharAssaut(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.vehiculeplanetaire.append(charassaut)
+                        self.vehiculeplanetaire.append(charassaut)
+                        self.parent.parent.affichervehiculecharassaut(nom,systemeid,planeteid,x,y, charassaut.id)
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
@@ -278,8 +294,8 @@ class Joueur():
                 i.orbiter()
         
         self.detecterCible()
-        #self.choisirCible()
-       # self.retirerVaiseauMort()
+        self.choisirCible()
+        self.retirerVaiseauMort()
         
     def detecterCible(self):
         for jKey in self.parent.joueurscles:
@@ -287,14 +303,47 @@ class Joueur():
                 pass
             else:
                 j=self.parent.joueurs.get(jKey)
-                for vaisseau in self.vaisseauxinterplanetaires:
+                for vaisseau in self.vaisseauxinterstellaires:
                     vaisseau.listeCibleAttaquer.clear()
-                    for vaisseauEnnemi in j.vaisseaux:
-                        if vaisseau.systemePresent.id == vaisseauEnnemi.systemePresent.id:
-                            distance = hlp.calcDistance(vaisseau.position[0],vaisseau.position[1],vaisseauEnnemi.position[0],vaisseauEnnemi.position[1])
+                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                        if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
+                            distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                            if distance < vaisseau.range:
+                                vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                               # print("vaisseau detecter")
                             
                     
+    def choisirCible(self):    
+        for vseau in self.vaisseauxinterstellaires:
+            vseau.cibleAttaque=None
+            if len(vseau.listeCibleAttaquer)>0:
+                vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
+                vseau.attaquer()   
+            else:
+                pass      
+               
+#            elif vseau.cible != None:
+ #               if vseau.cible.proprietaire == "espace":
+#                    pass
+#                else:
+#                    vseau.attaquerPlanette()
+#            elif  vseau.planetteCible!=None:
+#                vseau.cibleAttaque=vseau.planetteCible
+#                vseau.attaquer()  
                 
+        #for pnette in self.planetescontrolees:
+        #    pnette.cibleAttaque=None
+        #    if len(pnette.listeCibleAttaquer)>0: 
+         #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
+         #       pnette.attaquer()       
+        
+    def retirerVaiseauMort(self):
+        for vseau in self.vaisseauxinterstellaires:
+            if vseau.vie<1:
+                self.vaisseauxinterstellaires.remove(vseau)    
+        
+        
+        
         
 #  DEBUT IA
 class IA(Joueur):

@@ -128,7 +128,7 @@ class Controleur():
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
-        pass
+        
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
@@ -148,8 +148,15 @@ class Controleur():
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
+    def affichervehiculecharassaut(self,joueur,systemeid,planeteid,x,y, idvehicule):
+        self.vue.affichervehiculecharassaut(joueur,systemeid,planeteid,x,y, idvehicule)
+        
+    #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
+        #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur, nomBatiment):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur, nomBatiment)
+
         
     def voirplanete(self,idsysteme,idplanete):
         pass

@@ -55,6 +55,26 @@ class vehiculeTank(Vehicule):
     def attaque(self):
         pass
     
+class vehiculeCharAssaut(Vehicule):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
+        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
+        self.qtProjectile = 0
+        self.vitesseAttaque = 0
+        self.vie = 0
+        self.vitesseDeplacement=2
+        self.puissance = 0
+        
+    def avancer(self):
+        rep = None
+        x=self.cible.x
+        y=self.cible.y
+        print(x,y)
+        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
+        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
+            rep=self.cible
+            self.base=self.cible
+            self.cible=None
+        return rep
         
 class vehiculeCommerce(Vehicule):
     def __init__(self, parent, nom, planete, idSuivant):
