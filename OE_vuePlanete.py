@@ -216,7 +216,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(None, None, t.x,t.y,"ville"))               
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, t.x,t.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
                 
