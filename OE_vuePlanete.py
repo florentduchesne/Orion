@@ -13,7 +13,7 @@ class VuePlanete(Perspective):
         self.systeme=syste
         self.maselection=None
         self.macommande=None
-        
+        print("Planete")
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
         self.largeur=int(self.modele.diametre*self.KM2pixel)
         self.hauteur=self.largeur
@@ -218,8 +218,7 @@ class VuePlanete(Perspective):
                 scrollBarY = i.y
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, t.x,t.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
-                miniy = (i.y *200) / self.hauteur
-                
+                miniy = (i.y *200) / self.hauteur  
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
             else:
                #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
@@ -341,8 +340,8 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
-        
         self.canevas.delete("vehiculetank")
+        self.minimap.delete("vehiculetank")
         #self.canevas.delete("selecteur")
         self.afficherselection()
         #e=self.UA2pixel
@@ -378,7 +377,9 @@ class VuePlanete(Perspective):
                     pass
                 #im=self.parent.modes["planetes"][j.planeteid].images["vehiculetank"]
                 #self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )   
-                
+                minix = (x *200) / self.largeur
+                miniy = (y *200) / self.hauteur
+                self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3", tags=("vehiculetank")) 
                 '''
                 self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
                                          tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
@@ -460,9 +461,6 @@ class VuePlanete(Perspective):
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
                     #self.changerTagTuile(t[3],t[2],'1')
                     self.macommande=None
                     self.maselection=None

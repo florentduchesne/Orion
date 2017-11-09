@@ -308,7 +308,10 @@ class Vue():
         self.listelobby.delete(0,END)
         for i in lj:
             self.listelobby.insert(END,i)
-
+    
+    def initialiserVuePlanete(self):
+        pass
+    
     def afficherinitpartie(self,mod):
         self.nom=self.parent.monnom
         self.modele=mod
@@ -333,6 +336,18 @@ class Vue():
         self.changecadre(self.cadrejeu,1)
         self.changemode(self.modes["galaxie"])
         #self.changemode(self.modes["planetes"])
+        
+        for j in mod.joueurs: #pour chaque joueurs
+            planeteDuJoueur = mod.joueurs[j].maplanete #planete du joueur
+            systeme = planeteDuJoueur.parent #Systeme de la planete du joueur.
+            self.voirsysteme(systeme) #création de la vue systeme
+            if planeteDuJoueur.id in self.modes["planetes"].keys():
+                s=self.modes["planetes"][planeteDuJoueur.id]
+            else:
+                s=VuePlanete(self,systeme.id,planeteDuJoueur.id)
+                self.modes["planetes"][planeteDuJoueur.id]=s
+                s.initplanete(systeme.id,planeteDuJoueur.id)
+        
         planeteInit = mod.joueurs[self.nom].maplanete
         systeme = planeteInit.parent
         self.voirsysteme(systeme)
@@ -357,7 +372,7 @@ class Vue():
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculetank"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) )   
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) )  
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
         for i in self.modes["planetes"].keys():
