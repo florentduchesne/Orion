@@ -34,7 +34,7 @@ class Vaisseau():
     def initialisation(self):
         if self.niveau>1 :
             for ame in range(self.niveau):
-                self.augmentation
+                ame.augmentation
         
     def creerVaisseauRestriction(self):
         if (self.joueur.ressource.humain - self.besoinhumain) > 0:
@@ -58,7 +58,7 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
-           # print(self.cible.x,self.x,self.cible.y,self.y)
+            # print(self.cible.x,self.x,self.cible.y,self.y)
 
             x=self.cible.x
             y=self.cible.y
@@ -119,11 +119,14 @@ class Vaisseau():
     
 class VaisseauAttaque(Vaisseau):
     def __init__(self, Degats, portee):
-        self.dommage = Degats
+        self.attaque = Degats
         self.range = portee
         self.cibleAttaque=None 
         self.enAttaque=False
         self.listeCibleAttaquer=[]
+        self.augmentationDomamage = 2
+        self.augmentationVie = 2
+        self.augmentationPortee = 1
             
         
     def attaquer(self):       
@@ -144,12 +147,12 @@ class VaisseauAttaque(Vaisseau):
     def augmentation(self) :
         self.niveau += 1
         if self.niveau%2:
-            self.dommage += 2      
+            self.dommage += self.augmentationDomamage     
         else :
-            self.vie +=2
+            self.augmentationVie
       
         if self.niveau%5 == 0:
-            self.portee+=1
+            self.portee+=self.augmentationPortee
             
             
 class VaisseauCommercial(Vaisseau):
@@ -157,6 +160,7 @@ class VaisseauCommercial(Vaisseau):
         self.ressource = Ressource()
         self.maxRessource = max
         self.vitesse = 0.001*5
+        self.AugmentationRessource = 5
         
     def RemplirVaisseau(self, ressource, quantite):
         pass
@@ -167,12 +171,12 @@ class VaisseauCommercial(Vaisseau):
     def augmentation (self):
         self.niveau += 1
         if self.niveau%2:
-            self.maxRessources += 5
+            self.maxRessources += self.AugmentationRessource
       
 
 class VaisseauNova(Vaisseau):
     def __init__(self):
-        self.nova = none
+        self.nova = 0
         self.vitesse = 0.01*5
     
     def RecolterNova(self):
@@ -186,6 +190,8 @@ class VaisseauColonisation(Vaisseau):
         self.aliments = 0
         self.vie += self.vie+ 50
         self.vitesse = 0.003*5
+        self.augmentationAliments = 1
+        self.augmentationPersonne = 1
         
     def AjouterPersonne (self, nombre):
         if self.nbPersonne+nombre < self.maxPersonne:
@@ -201,14 +207,14 @@ class VaisseauColonisation(Vaisseau):
     def augmentation(self):
         self.niveau += 1
         if self.niveau%2:
-            self.maxAliments +=1
+            self.maxAliments +=self.augmentationAliments
         else :
-            self.maxPersonnes +=1
+            self.maxPersonnes +=self.augmentationPersonne
         
         
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):
-        self.dommage = 100
+        self.attaque = 100
         self.vie = 50
         self.vitesse = 0.003*5
         self.portee = portee
@@ -234,6 +240,10 @@ class VaisseauMere(VaisseauAttaque):
         self.attaque = 15
         self.vie = self.vie * 2
         self.vitesse = 0.01*5
+        self.augmentationCargo = 1
+        self.augmentationPortee = 1
+        self.augmentationVie = 1
+        self.augmentationAttaque = 1
     
     def RemplirVaisseau(self):
         pass
@@ -241,13 +251,13 @@ class VaisseauMere(VaisseauAttaque):
     def augmentation(self) :
         self.niveau += 1
         if self.niveau%2 :
-            self.vie +=1
-            self.attaque+=1
+            self.vie +=self.augmentationVie
+            self.attaque+=self.augmentationAttaque
         else :
-            self.maxVaisseau +=1
+            self.maxVaisseau += self.augmentationCargo
             
         if self.niveau%5 == 0:
-            self.portee+=1
+            self.portee+=self.augmentationPortee
             
 
 class VaisseauChaseur(VaisseauAttaque):
@@ -274,15 +284,19 @@ class VaisseauTank(VaisseauAttaque):
         self.vie = self.vie + 50
         self.vitesse = 0.003*5
         self.portee = self.portee + 5
+        self.augmentationPortee = 1
+        self.augmentationVie = 2
+        self.augmentationAttaque = 1
+        
     
     def augmentation(self) :
         self.niveau += 1
         if self.niveau%2:
-            self.dommage += 2
+            self.attaque += self.augmentationAttaque
         if self.niveau%5 == 0:
-            self.portee+=1
+            self.portee+=self.augmentationPortee
             
-        self.vie += 2
+        self.vie += self.augmentationVie
 
       
 
