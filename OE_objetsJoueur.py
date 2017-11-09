@@ -281,8 +281,8 @@ class Joueur():
                 i.orbiter()
         
         self.detecterCible()
-        #self.choisirCible()
-       # self.retirerVaiseauMort()
+        self.choisirCible()
+        self.retirerVaiseauMort()
         
     def detecterCible(self):
         for jKey in self.parent.joueurscles:
@@ -290,14 +290,47 @@ class Joueur():
                 pass
             else:
                 j=self.parent.joueurs.get(jKey)
-                for vaisseau in self.vaisseauxinterplanetaires:
+                for vaisseau in self.vaisseauxinterstellaires:
                     vaisseau.listeCibleAttaquer.clear()
-                    for vaisseauEnnemi in j.vaisseaux:
-                        if vaisseau.systemePresent.id == vaisseauEnnemi.systemePresent.id:
-                            distance = hlp.calcDistance(vaisseau.position[0],vaisseau.position[1],vaisseauEnnemi.position[0],vaisseauEnnemi.position[1])
+                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                        if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
+                            distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                            if distance < vaisseau.range:
+                                vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                               # print("vaisseau detecter")
                             
                     
+    def choisirCible(self):    
+        for vseau in self.vaisseauxinterstellaires:
+            vseau.cibleAttaque=None
+            if len(vseau.listeCibleAttaquer)>0:
+                vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
+                vseau.attaquer()   
+            else:
+                pass      
+               
+#            elif vseau.cible != None:
+ #               if vseau.cible.proprietaire == "espace":
+#                    pass
+#                else:
+#                    vseau.attaquerPlanette()
+#            elif  vseau.planetteCible!=None:
+#                vseau.cibleAttaque=vseau.planetteCible
+#                vseau.attaquer()  
                 
+        #for pnette in self.planetescontrolees:
+        #    pnette.cibleAttaque=None
+        #    if len(pnette.listeCibleAttaquer)>0: 
+         #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
+         #       pnette.attaquer()       
+        
+    def retirerVaiseauMort(self):
+        for vseau in self.vaisseauxinterstellaires:
+            if vseau.vie<1:
+                self.vaisseauxinterstellaires.remove(vseau)    
+        
+        
+        
         
 #  DEBUT IA
 class IA(Joueur):

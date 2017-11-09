@@ -155,6 +155,7 @@ class VueSysteme(Perspective):
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         self.canevas.delete("selecteur")
+        self.canevas.delete("projectile")
         self.afficherselection()
         e=self.UA2pixel
         for i in mod.joueurscles:
@@ -174,7 +175,14 @@ class VueSysteme(Perspective):
                                                  tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
                         self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
                                                  tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                        
+                        if j.projectile!=None:
+                            for pro in j.projectile:
+                                x=pro.x*e
+                                y=pro.y*e
+                                taille = pro.taille
+                                couleur = pro.couleur
+                                self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
+                                self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
             for j in i.stationspatiaux:
                 if j.systemeid==self.systeme.id:
                     jx=(j.x*e)

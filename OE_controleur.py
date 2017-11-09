@@ -128,7 +128,7 @@ class Controleur():
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
-        pass
+        
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
