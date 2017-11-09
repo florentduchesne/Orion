@@ -374,13 +374,13 @@ class Vue():
                 im=self.modes["planetes"][i].images["vehiculetank"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) )  
 
-    def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur):
+    def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 print("creation bouclier")
                 self.modes["planetes"][i].canevas.create_oval(x-250,y-250,x+250,y+250,outline= couleur, width = 5)
                 im = self.modes["planetes"][i].images["Bouclier"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im)
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,nomBatiment))
 
 
     def fermerfenetre(self):
