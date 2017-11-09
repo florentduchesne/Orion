@@ -103,6 +103,7 @@ class Modele():
                 for planete in systeme.planetes:#boucle a travers les planetes
                     for infra in planete.infrastructures:#boucle a travers les batiments
                         if(isinstance(infra, BatimentRessources)):
+                            #if(planete.ressourceACollecter.estPlusGrandOuEgal(infra.productionRessources)):
                             planete.ressourceACollecter.soustraireRessources(infra.productionRessources)#diminue les ressources disponibles sur la planete
                             planete.ressource.additionnerRessources(infra.productionRessources)#augmente les ressources de la ville
         else:
@@ -110,7 +111,7 @@ class Modele():
             
     def miseAJourLabelsRessources(self):
         if self.compteurLabel == 0:
-            self.compteurLabel = 40
+            self.compteurLabel = 20
             self.parent.vue.miseAJourLabelsRessources()
         else:
             self.compteurLabel -= 1

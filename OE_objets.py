@@ -88,6 +88,8 @@ class Etoile():
     def __init__(self,parent,x,y,idSuivant):
         self.parent=parent
         self.id=idSuivant
+        self.x=x
+        self.y=y
         self.type=random.choice(["rouge","rouge","rouge",
                                  "jaune","jaune",
                                  "bleu"])
@@ -137,7 +139,6 @@ class Systeme():
         planeteProprio.setProprietairePlanete(proprio.id, couleur)
                         #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
         planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid())]
-        
         proprio.maplanete=planeteProprio
         
         #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)

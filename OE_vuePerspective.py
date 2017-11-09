@@ -21,6 +21,7 @@ class Perspective(Frame):
         self.cadreetat.pack()
         
         self.cadrevoyage=Frame(self.cadreetat,width=1400,height=600,bg="grey20")
+        
         #self.cadrevoyage.pack()
         
         self.scrollX=Scrollbar(self.cadrevue,orient=HORIZONTAL)

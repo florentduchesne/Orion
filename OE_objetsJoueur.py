@@ -36,7 +36,8 @@ class Joueur():
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale,
                       "ciblerEspace":self.ciblerEspace,
-                      "voyageGalax":self.voyageGalax}
+                      "voyageGalax":self.voyageGalax,
+                      "voyageSystem":self.voyageSystem}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -83,7 +84,6 @@ class Joueur():
                 print(infra.nomBatiment)
                 infra.ameliorer(self, planete)
                 return
-        
     
     def getPlanete(self, planeteID, systemeID):
         for systeme in self.systemesvisites:
@@ -218,14 +218,27 @@ class Joueur():
         idpropri,idVais=ids
         for i in self.vaisseauxinterstellaires:
             if i.id == idVais:
-                for j in self.systemesvisites:
+                for j in self.parent.systemes:
                     if j.id==i.idSysteme:
                         #i.x= j.x
                        # i.y=j.y
-                        i.x= 25
-                        i.y=25
+                        i.x= j.x-1
+                        i.y=j.y-1
+                        i.dansGalaxie=True
                         self.objetgalaxie.append(i)
-                           
+
+    def voyageSystem(self,ids): 
+        idVais,idpropri,idSystem=ids
+        for i in self.vaisseauxinterstellaires:
+            if i.id == idVais:
+                for j in self.parent.systemes:
+                    if j.id==idSystem:
+                        i.idSysteme=j.id
+                        i.dansGalaxie=False
+                        i.x=25-2
+                        i.y=25-2
+                        self.objetgalaxie.remove(i)
+                               
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
         idorigine, x, y, idplanete, idvehicule = ids

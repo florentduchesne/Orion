@@ -13,6 +13,7 @@ class VueGalaxie(Perspective):
         Perspective.__init__(self,parent)
         self.modele=self.parent.modele
         self.maselection=None
+        self.commande = None
         self.AL2pixel=100
         print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
@@ -28,6 +29,9 @@ class VueGalaxie(Perspective):
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
         
+        
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans systeme",bg="darkgray",command =self.voyageSystem)
+        self.btnVoyage.pack()
     
     
     def voirsysteme(self,systeme=None):
@@ -175,22 +179,40 @@ class VueGalaxie(Perspective):
                         self.canevas.create_oval((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                  outline=joueur.couleur,
                                                  tags=("select","selecteur"))
+            elif self.maselection[1]=="vaisseauinterstellaire":
+                for i in joueur.vaisseauxinterstellaires:
+                    if i.id == self.maselection[2]:
+                        x=i.x
+                        y=i.y
+                        t=10
+                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                                      outline=joueur.couleur,
+                                                      tags=("select","selecteur"))
       
     def cliquervue(self,evt):
         self.changecadreetat(None)
         t=self.canevas.gettags("current")
         if t and t[0]!="current":    
-            if t[1]=="systeme":
-                print("IN SYSTEME",t)
-               # if self.parent.nom in t:
-                print("IN systeme  PAS SELECTION")
+            if t[1]=="vaisseauinterstellaire":
+                print("IN VAISSEAUINTERSTELLAIRE",t)
                 self.maselection=[self.parent.nom,t[1],t[2]]
-                self.montresystemeselection()
-                #else:    
-                 #   print("IN systeme + RIEN")
-                  #  self.maselection=None
-                   # self.lbselectecible.pack_forget()
-                    #self.canevas.delete("selecteur")
+                self.montrevaisseauxselection()
+            
+            elif t[1]=="systeme":
+                print("IN SYSTEME",t)
+                if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
+                    print("IN systeme + select VAISSEAUINTERSTELLAIRE")
+                    if self.commande=="voyageSystem":
+                        print("voyage systeme")
+                        self.parent.parent.voyageSystem(self.maselection[2],self.maselection[0],t[2])
+                        self.maselection=None
+                        self.lbselectecible.pack_forget()
+                        self.canevas.delete("selecteur")
+                else:
+                    print("IN systeme  PAS SELECTION")
+                    self.maselection=[self.parent.nom,t[1],t[2]]
+                    self.montresystemeselection()
+
             else:
                 print("Objet inconnu")
         else:
@@ -218,3 +240,11 @@ class VueGalaxie(Perspective):
         
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
+        
+        
+    def montrevaisseauxselection(self):
+        self.changecadreetat(self.cadrevoyage)
+    
+    def voyageSystem(self):
+        self.commande="voyageSystem"
+       # self.parent.parent.voyageSystem(self.maselection[0],self.maselection[2])
