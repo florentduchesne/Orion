@@ -225,9 +225,9 @@ class CentraleElectrique(BatimentRessources):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Centrale_Nucleaire", "Eolienne", "PanneauSolaire"])
     
 ################BATIMENTS INFRASTRUCTURES################
-class Ville(BatimentInfrastructure):
+class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
     def __init__(self, parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu", nomBatiment = "ville"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, listeNiveaux=["Ville2", "Ville3"])
         self.proprietaire=proprio
         self.taille=20
         

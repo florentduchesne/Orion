@@ -200,8 +200,6 @@ class Joueur():
     def ciblerEspace(self,ids):
         idori,idsyteme,xy=ids
         
-        
-        
         #xy =Coord(xyEsp)
         for i in self.vaisseauxinterstellaires:
             if i.id== idori:
@@ -209,9 +207,8 @@ class Joueur():
                 
                 xy =Coord((xy[0],xy[1]))
                 print("cible espace")
-                i.ciblerdestination(xy)
-                                
-                                #i.ciblerdestination(Coord(xy))
+                i.ciblerdestination(xy)  
+                #i.ciblerdestination(Coord(xy))
                 return
 
     def voyageGalax(self,ids):

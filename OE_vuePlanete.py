@@ -216,6 +216,8 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
+                print("proprio ville")
+                print(i.proprietaire)
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, t.x,t.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur
@@ -279,9 +281,9 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/Ville1.png")
         self.images["ville"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville2.png")
-        self.images["ville2"] = ImageTk.PhotoImage(im)
+        self.images["Ville2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville3.png")
-        self.images["ville3"] = ImageTk.PhotoImage(im)
+        self.images["Ville3"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Batiments/Banque.png")
         self.images["Banque"] = ImageTk.PhotoImage(im)
@@ -491,7 +493,7 @@ class VuePlanete(Perspective):
         self.changecadreetat(self.cadreetatmsg)
     
     def afficherartefacts(self,joueurs):
-        pass #print("ARTEFACTS de ",self.nom)
+        pass
     
     def cliquerminimap(self,evt):
         x=evt.x
