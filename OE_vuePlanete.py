@@ -368,9 +368,13 @@ class VuePlanete(Perspective):
                 x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                 x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                 x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                
+                minix = (x *200) / self.largeur 
+                miniy = (y *200) / self.largeur 
                     
                 if isinstance(j, vehiculeTank):
                     self.canevas.delete("vehiculetank")
+                    self.minimap.delete("vehiculetank")
                     #ajouter if pour changer l'image selon l'angle de la destination...
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
@@ -388,11 +392,15 @@ class VuePlanete(Perspective):
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
                         self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                         
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
+                    
                 elif isinstance(j, vehiculeCharAssaut):
                     self.canevas.delete("vehiculecharassaut")
-                    
+                    self.minimap.delete("vehiculecharassaut")
                     im=self.parent.modes["planetes"][j.planeteid].images["vehiculecharassaut"]
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculecharassaut",j.id) ) 
+                    
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculecharassaut"))
                     pass            
 
          
@@ -478,6 +486,13 @@ class VuePlanete(Perspective):
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
+                    #self.changerTagTuile(t[3],t[2],'1')
+                    self.macommande=None
+                    self.maselection=None
+                elif self.macommande == "vehiculecharassaut"  and t[5]=='0':
+                    x=self.canevas.canvasx(evt.x)
+                    y=self.canevas.canvasy(evt.y)
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculecharassaut")
                     #self.changerTagTuile(t[3],t[2],'1')
                     self.macommande=None
                     self.maselection=None
