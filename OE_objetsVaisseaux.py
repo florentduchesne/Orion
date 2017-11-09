@@ -90,7 +90,7 @@ class Vaisseau():
             
 class VaisseauAttaque(Vaisseau):
     def __init__(self, Degats, portee):
-        self.dommage = Degats
+        self.attaque = Degats
         self.range = portee
         self.cibleAttaque=None 
         self.enAttaque=False
@@ -185,7 +185,7 @@ class VaisseauColonisation(Vaisseau):
         
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):
-        self.dommage = 100
+        self.attaque = 100
         self.vie = 50
         self.vitesse = 0.003*5
         self.portee = portee
