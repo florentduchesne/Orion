@@ -14,7 +14,7 @@ class VuePlanete(Perspective):
         self.systeme=syste
         self.maselection=None
         self.macommande=None
-        
+        print("Planete")
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
         self.largeur=int(self.modele.diametre*self.KM2pixel)
         self.hauteur=self.largeur
@@ -224,8 +224,7 @@ class VuePlanete(Perspective):
                 scrollBarY = i.y
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, t.x,t.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
-                miniy = (i.y *200) / self.hauteur
-                
+                miniy = (i.y *200) / self.hauteur  
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
             else:
                #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
@@ -265,7 +264,7 @@ class VuePlanete(Perspective):
         im = Image.open("./images/Batiments/Usine_Vehicule.png")
         self.images["Usine_Vehicule"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Usine_Vaisseau.png")
-        self.images["Usine_Vaisseau"] = ImageTk.PhotoImage(im)
+        self.images["Usine_Vaisseau1"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Usine_Vaisseau2.png")
         self.images["Usine_Vaisseau2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Usine_Drone.png")
@@ -339,6 +338,8 @@ class VuePlanete(Perspective):
         self.images["Mur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/canon1.png").resize((100,100))
         self.images["Canon"] = ImageTk.PhotoImage(im)
+        self.images["Canon_Ion"] = ImageTk.PhotoImage(im)
+        self.images["Canon_Acid"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/bouclier.png")
         self.images["Bouclier"] = ImageTk.PhotoImage(im)
     
@@ -350,8 +351,7 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
-        
-        
+
         #self.canevas.delete("selecteur")
         self.afficherselection()
         #e=self.UA2pixel
@@ -394,6 +394,7 @@ class VuePlanete(Perspective):
                     im=self.parent.modes["planetes"][j.planeteid].images["vehiculecharassaut"]
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculecharassaut",j.id) ) 
                     pass            
+
          
          
     def changerproprietaire(self,prop,couleur,systeme): 
@@ -477,9 +478,6 @@ class VuePlanete(Perspective):
                     x=self.canevas.canvasx(evt.x)
                     y=self.canevas.canvasy(evt.y)
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                    minix = (x *200) / self.largeur
-                    miniy = (y *200) / self.hauteur
-                    self.minimap.create_rectangle(minix-2,miniy-2,minix+2,miniy+2,fill="SpringGreen3")
                     #self.changerTagTuile(t[3],t[2],'1')
                     self.macommande=None
                     self.maselection=None

@@ -113,7 +113,7 @@ class Joueur():
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
                                 j.infrastructures.append(batiment)
-                                self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur)
+                                self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur,nomBatiment)
                             return
                         
                         ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###

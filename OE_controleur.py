@@ -151,8 +151,12 @@ class Controleur():
     def affichervehiculecharassaut(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculecharassaut(joueur,systemeid,planeteid,x,y, idvehicule)
         
-    def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
-        self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+    #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
+        #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+
+    def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur, nomBatiment):
+        self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur, nomBatiment)
+
         
     def voirplanete(self,idsysteme,idplanete):
         pass

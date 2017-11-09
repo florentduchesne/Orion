@@ -22,8 +22,7 @@ class Modele():
         self.compteurLabel = 20
         self.constructeurBatimentHelper = ConstructeurBatimentHelper()
         
-    def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter
-        
+    def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter  
         for i in range(self.nbsystemes):
             x=random.randrange(self.diametre*10)/10
             y=random.randrange(self.diametre*10)/10
@@ -58,13 +57,16 @@ class Modele():
             
             systemeOriginine.setProprietairePlanete(self.joueurs[i],  couleurProp)
             #self.parent.changerTagsVue(i,couleurProp)
-
+        
+            
+        
         for i in range(nbias): # IA
             nomia="IA_"+str(i)
             self.joueurscles.append(nomia)
             ia=IA(self,nomia,planes.pop(0),couleurs.pop(0))
             self.joueurs[nomia]=ia  #IA
             self.ias.append(ia)  #IA
+     
             
     def creervaisseau(self,idsysteme,idplanete):
         ids=idsysteme,idplanete
