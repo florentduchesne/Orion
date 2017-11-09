@@ -136,7 +136,6 @@ class Systeme():
         planeteProprio.setProprietairePlanete(proprio.id, couleur)
                         #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
         planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid())]
-        
         proprio.maplanete=planeteProprio
         
         #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)
