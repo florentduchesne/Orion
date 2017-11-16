@@ -55,7 +55,7 @@ class vehiculeTank(Vehicule):
     def attaque(self):
         pass
     
-class vehiculeCharAssaut(Vehicule):
+class vehiculehelicoptere(Vehicule):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
         Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
         self.qtProjectile = 0
