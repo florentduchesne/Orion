@@ -46,8 +46,6 @@ class Modele():
                   "dodgerblue","yellow2","maroon1","chartreuse3",
                   "firebrick1","MediumOrchid2","DeepPink2","blue"]    # IA ajout de 3 couleurs
         
-        
-        
         for i in self.joueurscles:
             #parent,nom,systemeorigine,couleur
             systemeOriginine = planes.pop(0)
@@ -58,8 +56,6 @@ class Modele():
             systemeOriginine.setProprietairePlanete(self.joueurs[i],  couleurProp)
             #self.parent.changerTagsVue(i,couleurProp)
         
-            
-        
         for i in range(nbias): # IA
             nomia="IA_"+str(i)
             self.joueurscles.append(nomia)
@@ -68,9 +64,10 @@ class Modele():
             self.ias.append(ia)  #IA
      
             
-    def creervaisseau(self,idsysteme,idplanete):
-        ids=idsysteme,idplanete
+    def creervaisseau(self,idsysteme,idplanete,typeVaisseau):
+        ids=idsysteme,idplanete,typeVaisseau
         self.parent.actions.append([self.parent.monnom,"creervaisseau",ids])
+       
         
     def creerstationspatiale(self,systeme,planete):
         ids =systeme,planete

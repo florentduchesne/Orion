@@ -1,15 +1,19 @@
 # -*- coding: utf-8 -*-
 
+from OE_objetsRessource import Ressource
 from helper import Helper as hlp
 import math
 
 class Vehicule():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
+    
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant,nomVehicule):
         self.parent = parent
         self.id = idSuivant
         self.planeteid = planeteid
         self.systemeid=systemeid
-        self.proprietaire = nom
+        self.nomVehicule = nomVehicule
+        self.proprietaire = parent.nom
+        self.niveau = parent.niveau
         self.taille = 0 #a noter dans les sous-classes de vehicule
         self.angletrajet=0
         self.angleinverse=0
@@ -27,58 +31,59 @@ class Vehicule():
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
         pass
     
+    def avancer(self):
+        rep = None
+        x=self.cible.x
+        y=self.cible.y
+        print(x,y)
+        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
+        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
+            rep=self.cible
+            self.base=self.cible
+            self.cible=None
+        return rep  
+    
+    def verificationRessources(self):
+        
+            infoCout = dictionnaireCoutVehicule[self.nom]
+            coutressource = infoCout[0]
+            
+            if (self.parent.ressource.estPlusGrandOuEgal(coutressource)):
+                return True
+            else:
+                return False
+ 
+    
     def rechargeBatterie(self):
         pass 
     
     
 class vehiculeTank(Vehicule):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
-        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomVehicule):
+        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomVehicule)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
         self.vitesseDeplacement=2
         self.puissance = 0
-        
-    def avancer(self):
-        rep = None
-        x=self.cible.x
-        y=self.cible.y
-        print(x,y)
-        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
-        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
-            rep=self.cible
-            self.base=self.cible
-            self.cible=None
-        return rep
         
     def attaque(self):
         pass
     
 class vehiculehelicoptere(Vehicule):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant):
-        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomVehicule):
+        Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomVehicule)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
         self.vitesseDeplacement=2
         self.puissance = 0
         
-    def avancer(self):
-        rep = None
-        x=self.cible.x
-        y=self.cible.y
-        print(x,y)
-        self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
-        if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
-            rep=self.cible
-            self.base=self.cible
-            self.cible=None
-        return rep
+    
         
 class vehiculeCommerce(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant)
+    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
+        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
         self.vie = 0
         self.vitesseDeplacement=0
         
@@ -87,8 +92,8 @@ class vehiculeCommerce(Vehicule):
     
     
 class vehiculeAvion(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant)
+    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
+        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
         self.vie = 0
@@ -97,6 +102,16 @@ class vehiculeAvion(Vehicule):
         
     def attaque(self):
         pass
+    
+    
+dictionnaireCoutVehicule={
+"vehiculetank":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"vehiculetank2":[Ressource(bois=50, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
+"vehiculetank3":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=20, allocationHumain=20), 3],
+"vehiculehelicoptere":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"vehiculehelicoptere2":[Ressource(bois=50, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
+"vehiculehelicoptere3":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=20, allocationHumain=20), 3]
+    }
     
     
     
