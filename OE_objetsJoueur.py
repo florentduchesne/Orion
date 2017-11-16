@@ -173,9 +173,7 @@ class Joueur():
                         if self.niveau > 0:
                             nomtank = 'vehiculetank'+str(self.niveau)
                         else:
-                            nomtank = 'vehiculetank'
-                            
-                                       
+                            nomtank = 'vehiculetank'    
                         tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomtank)
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
