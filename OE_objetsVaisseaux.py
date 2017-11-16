@@ -29,6 +29,7 @@ class Vaisseau():
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
+        self.tempsRecharge=0
         #self.initialisation
         
     def initialisation(self):
@@ -99,11 +100,18 @@ class Vaisseau():
             self.enAttaque=True
             #protile = Projectile(self,self.cibleAttaque)
             
-            for projec in self.projectile:
-                projec.avancer()
+            #or projec in self.projectile:
+               # projec.avancer()
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
             
-            self.projectile.append(Projectile(self,self.cibleAttaque))
-            
+                
+         
             #self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
             #print(self.cibleAttaque.vie)
         else: 

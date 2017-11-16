@@ -40,6 +40,7 @@ class Joueur():
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
                       "voyageSystem":self.voyageSystem}
+                      #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -278,6 +279,11 @@ class Joueur():
                         if rep not in self.systemesvisites:
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+            for protil in i.projectile:
+                if protil.cible == None:
+                    i.projectile.remove(protil)
+                else:
+                    protil.avancer() 
        
         for i in self.vehiculeplanetaire:
             if i.cible:
@@ -292,6 +298,9 @@ class Joueur():
         
         for i in self.stationspatiaux:
                 i.orbiter()
+                
+                
+    
         
         self.detecterCible()
         self.choisirCible()
