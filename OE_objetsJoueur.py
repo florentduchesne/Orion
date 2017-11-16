@@ -4,8 +4,7 @@ import math
 from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
-from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculeAvion,\
-    vehiculeCharAssaut
+from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculehelicoptere, vehiculeAvion
 from OE_coord import *
 
 
@@ -33,7 +32,7 @@ class Joueur():
                       "visitersysteme":self.visitersysteme,
                       "creerbatiment":self.creerBatiment,
                       "creervehiculetank":self.creervehiculetank,
-                      "creervehiculecharassaut":self.creervehiculecharassaut,
+                      "creervehiculehelicoptere":self.creervehiculehelicoptere,
                       "creervehiculecommerce":self.creervehiculecommerce,
                       "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale,
@@ -105,8 +104,8 @@ class Joueur():
                         if(nomBatiment == "vehiculetank"):
                             self.creervehiculetank(listeparams)
                             return
-                        if (nomBatiment == "vehiculecharassaut"):
-                            self.creervehiculecharassaut(listeparams)
+                        if (nomBatiment == "vehiculehelicoptere"):
+                            self.creervehiculehelicoptere(listeparams)
                             return
                         if(nomBatiment == "Bouclier"):
                             aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
@@ -164,16 +163,16 @@ class Joueur():
                         self.vehiculeplanetaire.append(tank)
                         self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
 
-    def creervehiculecharassaut(self, listeparams):
+    def creervehiculehelicoptere(self, listeparams):
         nom,systemeid,planeteid,x,y, nomBatiment=listeparams
         for i in self.systemesvisites:
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        charassaut=vehiculeCharAssaut(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
-                        j.vehiculeplanetaire.append(charassaut)
-                        self.vehiculeplanetaire.append(charassaut)
-                        self.parent.parent.affichervehiculecharassaut(nom,systemeid,planeteid,x,y, charassaut.id)
+                        heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        j.vehiculeplanetaire.append(heli)
+                        self.vehiculeplanetaire.append(heli)
+                        self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
