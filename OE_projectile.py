@@ -24,8 +24,6 @@ class Projectile():
    
         if self.cible!=None:
             
-            #print(self.cible.x,self.x,self.cible.y,self.y)
-            #print("munition")
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
