@@ -191,6 +191,15 @@ class VueSysteme(Perspective):
                                 couleur = pro.couleur
                                 self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
                                 self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
+                   
+                        for pro in j.projectile:
+                            x=pro.x*e
+                            y=pro.y*e
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
+                            #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
+
             for j in i.stationspatiaux:
                 if j.systemeid==self.systeme.id:
                     jx=(j.x*e)

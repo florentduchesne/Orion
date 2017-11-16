@@ -6,7 +6,7 @@ class Projectile():
         self.parent =parent
         self.cible=cible
         self.type=None
-        self.vitesse= 5
+        self.vitesse= 0.05
         self.degat=1+self.parent.attaque
         self.taille=5
         self.x=self.parent.x
@@ -17,6 +17,7 @@ class Projectile():
         self.form="circle"
         self.angleinverse=0
         self.angletrajet=0
+        self.temps=0
         
     def avancer(self):
         rep=None
@@ -24,24 +25,32 @@ class Projectile():
         if self.cible!=None:
             
             #print(self.cible.x,self.x,self.cible.y,self.y)
-            print("munition")
+            #print("munition")
             x=self.cible.x
             y=self.cible.y
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
             if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
             #if self.x ==x and self.y == y:
                 print("cible toucher")
                 rep= None
-                self.parent.cibleAttaque.vie = self.parent.cibleAttaque.vie - self.degat 
-
-                self.base=self.cible
+                self.cible.vie = self.cible.vie - self.degat 
+                print(self.cible.vie)
+                #self.parent.projectile.remove(self)
+                #self.base=self.cible
                 self.cible=None
+            else:
+                self.ciblerdestination()  
                 
+            if self.temps%4==0:
+                self.couleur="red"
+            else:
+                self.couleur="blue"
+            self.temps+=1
             return rep
         
-    def ciblerdestination(self,p):
-        self.cible=p
-        self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
+    def ciblerdestination(self):
+        
+        self.angletrajet=hlp.calcAngle(self.x,self.y,self.cible.x,self.cible.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
-        dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
+        dist=hlp.calcDistance(self.x,self.y,self.cible.x,self.cible.y)
         

@@ -11,7 +11,7 @@ from OE_vuePlanete import VuePlanete
 class Vue():
     def __init__(self,parent,ip,nom,largeur=800,hauteur=600):
         self.root=Tk()
-        self.root.title(os.path.basename(sys.argv[0]))
+        self.root.title("Apocalypse Orion")
         self.root.protocol("WM_DELETE_WINDOW", self.fermerfenetre)
         self.dictionnaireLabelsJoueur = OrderedDict()
         self.dictionnaireLabelsPlanete = OrderedDict()
@@ -193,44 +193,61 @@ class Vue():
              
     def creercadresplash(self,ip,nom):
         self.cadresplash=Frame(self.root)
-        self.canevasplash=Canvas(self.cadresplash,width=640,height=480,bg="red")
+        self.imageBackG = ImageTk.PhotoImage(file = "images/IntroGalaxy.jpg")
+        self.imageBackG2 = ImageTk.PhotoImage(file = "images/IntroGalaxy2.jpg")
+        self.imageTitre = ImageTk.PhotoImage(file = "images/Titre.png")
+        self.canevasplash=Canvas(self.cadresplash,width=640,height=480,bg="black")
+        self.canevasplash.create_image(0, 0, image = self.imageBackG, anchor = NW)
+        self.ItemimageTitre = self.canevasplash.create_image(80, 60, image = self.imageTitre, anchor = NW)
+        
         self.canevasplash.pack()
-        self.nomsplash=Entry(bg="pink")
+        self.nomsplash=Entry(bg="#18c0ff")
         self.nomsplash.insert(0, nom)
-        self.ipsplash=Entry(bg="pink")
+        self.ipsplash=Entry(bg="#18c0ff")
         self.ipsplash.insert(0, ip)
-        labip=Label(text=ip,bg="red",borderwidth=0,relief=RIDGE)
-        btncreerpartie=Button(text="Creer partie",bg="pink",command=self.creerpartie)
-        btnconnecterpartie=Button(text="Connecter partie",bg="pink",command=self.connecterpartie)
-        self.canevasplash.create_window(200,200,window=self.nomsplash,width=100,height=30)
-        self.canevasplash.create_window(200,250,window=self.ipsplash,width=100,height=30)
-        self.canevasplash.create_window(200,300,window=labip,width=100,height=30)
-        self.canevasplash.create_window(200,350,window=btncreerpartie,width=100,height=30)
-        self.canevasplash.create_window(200,400,window=btnconnecterpartie,width=100,height=30) 
+        labip=Label(text=ip,bg="#50a2c1",borderwidth=0,relief=RIDGE)
+        btncreerpartie=Button(text="Creer partie",bg="#0092ca",command=self.creerpartie)
+        btnconnecterpartie=Button(text="Connecter partie",bg="#0092ca",command=self.connecterpartie)
+        self.canevasplash.create_window(500,200,window=self.nomsplash,width=100,height=30)
+        self.canevasplash.create_window(500,250,window=self.ipsplash,width=100,height=30)
+        self.canevasplash.create_window(500,300,window=labip,width=100,height=30)
+        self.canevasplash.create_window(500,350,window=btncreerpartie,width=100,height=30)
+        self.canevasplash.create_window(500,400,window=btnconnecterpartie,width=100,height=30) 
         
     def creercadrelobby(self):
         self.cadrelobby=Frame(self.root)
-        self.canevaslobby=Canvas(self.cadrelobby,width=640,height=480,bg="lightblue")
+        self.canevaslobby=Canvas(self.cadrelobby,width=640,height=480,bg="black")
+        self.canevaslobby.create_image(0, 0, image = self.imageBackG2, anchor = NW)
         self.canevaslobby.pack()
-        self.listelobby=Listbox(bg="red",borderwidth=0,relief=FLAT)
-        self.diametre=Entry(bg="pink")
+        self.listelobby=Listbox(bg="#84d4f1",borderwidth=0,relief=FLAT)
+        self.diametre=Entry(bg="#18c0ff")
         self.diametre.insert(0, 50)
-        self.densitestellaire=Entry(bg="pink")
+        self.densitestellaire=Entry(bg="#18c0ff")
         self.densitestellaire.insert(0, 25)
-        self.qteIA=Entry(bg="pink")
+        self.qteIA=Entry(bg="#18c0ff")
         self.qteIA.insert(0, 0)
-        self.btnlancerpartie=Button(text="Lancer partie",bg="pink",command=self.lancerpartie,state=DISABLED)
-        self.canevaslobby.create_window(440,240,window=self.listelobby,width=200,height=400)
-        self.canevaslobby.create_window(250,200,window=self.diametre,width=100,height=30)
-        self.canevaslobby.create_text(90,200,text="Diametre en annee lumiere")
+        self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)
+        self.canevaslobby.create_window(480,240,window=self.listelobby,width=200,height=300)
         
-        self.canevaslobby.create_window(250,250,window=self.densitestellaire,width=100,height=30)
-        self.canevaslobby.create_text(90,250,text="Nb systeme/AL cube")
+        labDiametre=Label(text="Diametre en annee lumiere:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
+        self.canevaslobby.create_window(120,105,window=labDiametre,width=150,height=30)
+        self.canevaslobby.create_window(260,105,window=self.diametre,width=100,height=30)
+        #self.canevaslobby.create_text(90,105,text="Diametre en annee lumiere")
         
-        self.canevaslobby.create_window(250,300,window=self.qteIA,width=100,height=30)
-        self.canevaslobby.create_text(90,300,text="Nb d'IA")
         
-        self.canevaslobby.create_window(250,450,window=self.btnlancerpartie,width=100,height=30)
+        labNBsys=Label(text="Nb systeme/AL cube:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
+        self.canevaslobby.create_window(120,175,window=labNBsys,width=150,height=30)
+        self.canevaslobby.create_window(260,175,window=self.densitestellaire,width=100,height=30)
+        #self.canevaslobby.create_text(90,175,text="Nb systeme/AL cube")
+        
+        
+        labnbIA=Label(text="Nb d'IA:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
+        self.canevaslobby.create_window(120,245,window=labnbIA,width=150,height=30)
+        self.canevaslobby.create_window(260,245,window=self.qteIA,width=100,height=30)
+        #self.canevaslobby.create_text(90,245,text="Nb d'IA")
+        
+        
+        self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
 
     def voirgalaxie(self):
         # A FAIRE comme pour voirsysteme et voirplanete, tester si on a deja la vuegalaxie
@@ -361,24 +378,30 @@ class Vue():
             self.modes["planetes"][planeid]=s
             s.initplanete(sysid,planeid)
         self.changemode(s)
-      
-    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom):
+        
+    def effacerBatiment(self,planeteid,nom,batimentid):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images[nom]
-                self.modes["planetes"][i].afficherBatiment(x, y, im, (joueur, planeteid,x ,y ,nom))
+                self.modes["planetes"][i].effacerBatiment(batimentid)
+      
+    def afficherBatiment(self,nomjoueur,systemeid,planeteid,x,y,nom,batimentid):
+        for i in self.modes["planetes"].keys():
+            if i == planeteid:
+                im=self.modes["planetes"][i].images[nom]
+                self.modes["planetes"][i].afficherBatiment(x, y, im, (nomjoueur, planeteid,x ,y ,nom, batimentid))
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y,idvehicule):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
-                im=self.modes["planetes"][i].images["vehiculetank"]
+                im=self.modes["planetes"][i].images["vehiculetankhaut"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculetank",idvehicule) ) 
     
-    def affichervehiculecharassaut(self,joueur,systemeid,planeteid,x,y,idvehicule):
+    def affichervehiculehelicoptere(self,joueur,systemeid,planeteid,x,y,idvehicule):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
-                im=self.modes["planetes"][i].images["vehiculecharassaut"]
-                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculecharassaut",idvehicule) ) 
+                im=self.modes["planetes"][i].images["vehiculehelicopterebas"]
+                self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculehelicoptere",idvehicule) ) 
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():
