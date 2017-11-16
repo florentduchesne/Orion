@@ -16,6 +16,7 @@ class Joueur():
         self.nom=nom
         self.systemeorigine=systemeorigine
         self.couleur=couleur
+        self.niveau = 1
         self.maplanete=None
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
@@ -158,7 +159,13 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        if self.niveau > 0:
+                            nomtank = 'vehiculetank'+str(self.niveau)
+                        else:
+                            nomtank = 'vehiculetank'
+                            
+                                       
+                        tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomtank)
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
                         self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
@@ -169,7 +176,11 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        if self.niveau > 0:
+                            nomheli = 'vehiculehelicoptere'+str(self.niveau)
+                        else:
+                            nomheli = 'vehiculehelicoptere'
+                        heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomheli)
                         j.vehiculeplanetaire.append(heli)
                         self.vehiculeplanetaire.append(heli)
                         self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
