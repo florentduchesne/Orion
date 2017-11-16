@@ -202,7 +202,7 @@ class Joueur():
                                 print("cible trouver")
                                 i.ciblerdestination(p)
                         for v in self.vaisseauxinterstellaires:
-                            if v.id == iddesti:
+                            if v.id == iddesti and idori != iddesti:
                                 print("cible vaisseaU")
                                 i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
