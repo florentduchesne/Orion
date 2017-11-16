@@ -44,14 +44,15 @@ class Vehicule():
         return rep  
     
     def verificationRessources(self):
-        if(len(self.listeNiveaux) > 0):
-            infoCout = dictionnaireCoutVehicule[self.nom]
-            pass
-        else:
-            print("PLUS D'AMÉLIORATIONS DISPONIBLES")
-            return False
         
-        pass  
+            infoCout = dictionnaireCoutVehicule[self.nom]
+            coutressource = infoCout[0]
+            
+            if (self.parent.ressource.estPlusGrandOuEgal(coutressource)):
+                return True
+            else:
+                return False
+ 
     
     def rechargeBatterie(self):
         pass 
