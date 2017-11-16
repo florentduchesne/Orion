@@ -26,6 +26,10 @@ class Joueur():
         self.objetgalaxie=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
         self.niveauVaisseau = 1
+        self.vaisseauAttaque = 5
+        self.vaisseauPortee = 3
+        self.vaisseauCargoPersonne = 5
+        self.vaisseauCargoAliments = 5
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -142,15 +146,21 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,ids):
-        idsystem,idplanete=ids#,typeVaisseau=ids
+        idsystem,idplanete,typeVaisseau =ids#,typeVaisseau=ids
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
                     #print("vais creer")
                     if idplanete==p.id:
-                       # print("vais creer")
-                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,)#self.niveauVaisseau)
-                        self.vaisseauxinterstellaires.append(v)
+                        # print("vais creer")
+                        if typeVaisseau == "chasseur" :
+                            v=VaisseauChaseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                            
+                        if typeVaisseau == "colonisateur":
+                            v=VaisseauColonisation(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauCargoPersonne, self.vaisseauCargoAliments,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                      
                         return 1            
 
     def creervehiculetank(self, listeparams):
@@ -234,7 +244,7 @@ class Joueur():
                 for j in self.parent.systemes:
                     if j.id==i.idSysteme:
                         #i.x= j.x
-                       # i.y=j.y
+                        # i.y=j.y
                         i.x= j.x-1
                         i.y=j.y-1
                         i.dansGalaxie=True
