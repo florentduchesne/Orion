@@ -46,8 +46,6 @@ class Modele():
                   "dodgerblue","yellow2","maroon1","chartreuse3",
                   "firebrick1","MediumOrchid2","DeepPink2","blue"]    # IA ajout de 3 couleurs
         
-        
-        
         for i in self.joueurscles:
             #parent,nom,systemeorigine,couleur
             systemeOriginine = planes.pop(0)
@@ -57,8 +55,6 @@ class Modele():
             
             systemeOriginine.setProprietairePlanete(self.joueurs[i],  couleurProp)
             #self.parent.changerTagsVue(i,couleurProp)
-        
-            
         
         for i in range(nbias): # IA
             nomia="IA_"+str(i)

@@ -38,7 +38,8 @@ class Joueur():
                       "creerstationspatiale":self.creerstationspatiale,
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
-                      "voyageSystem":self.voyageSystem}
+                      "voyageSystem":self.voyageSystem,
+                      "recolterBatiment":self.recolterRessources}
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -250,6 +251,22 @@ class Joueur():
                         i.x=25-2
                         i.y=25-2
                         self.objetgalaxie.remove(i)
+                        
+    def recolterRessources(self, id):
+        idSysteme, idPlanete = id
+        print("id systeme " + idSysteme)
+        print("id planete " + idPlanete)
+        for i in self.systemesvisites:
+            print("i.id " + i.id)
+            if i.id==idSysteme:
+                for p in i.planetes:
+                    print("p.id " + p.id)
+                    if idPlanete==p.id:
+                        self.ressources.additionnerRessources(p.ressource)
+                        print("ressources collectées")
+                        p.ressource = Ressource()
+                        return
+        
                                
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
