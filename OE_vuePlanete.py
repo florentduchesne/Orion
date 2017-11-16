@@ -460,66 +460,51 @@ class VuePlanete(Perspective):
             self.jeMontreLeMenuDAmelioration = False
             self.montresystemeselection()
             print("montre menu a droite")
-            self.macommande=None
-            self.maselection=None
+            #self.macommande=None
+            #self.maselection=None     
+            
         
         print("print t : ")
         print(t)
         print('event : ' + str(evt.x) + ' - ' + str(evt.y))
         
+        
+        if t[0]==self.parent.nom:
+            self.montreAmeliorationBatiments()
+            self.macommande=None
+            self.jeMontreLeMenuDAmelioration = True
+            print("clic sur un batiment existant")
+        
+        
         if self.maselection ==None and t[4] != 'tuile':
             self.maselection = t
             pass
         elif self.maselection != None and t[4] == 'tuile':
-            if self.maselection[4] == 'vehiculetank':                 
+            if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
                 xdeplacement = self.canevas.canvasx(evt.x)
                 ydeplacement = self.canevas.canvasx(evt.y)
                 self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
                 self.maselection = None
-                
-            elif self.maselection[4] == 'vehiculehelicoptere':                 
-                xdeplacement = self.canevas.canvasx(evt.x)
-                ydeplacement = self.canevas.canvasx(evt.y)
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
-                self.maselection = None
-                
-        else:
-            self.maselection = None
         
-        if t and t[0]!="current":
-            if t[0]==self.parent.nom:##SI ON CLIQUE SUR UN BATIMENT, ON MONTRE LE MENU D'AMELIORATION
-                self.montreAmeliorationBatiments()
+        elif self.maselection == None and t[4]=="tuile":
+            print(t)
+            print("clic sur une tuile vide")
+            if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
+                x=self.canevas.canvasx(evt.x)
+                y=self.canevas.canvasy(evt.y)
+                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                 self.macommande=None
-                self.jeMontreLeMenuDAmelioration = True
-                print("clic sur un batiment existant")
-                pass
-            elif t[1]=="systeme":
-                pass
-            elif self.maselection == None and t[4]=="tuile":
-                print(t)
-                print("clic sur une tuile vide")
-                if self.macommande == "vehiculetank"  and t[5]=='0':
-                    x=self.canevas.canvasx(evt.x)
-                    y=self.canevas.canvasy(evt.y)
-                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculetank")
-                    #self.changerTagTuile(t[3],t[2],'1')
-                    self.macommande=None
-                    self.maselection=None
-                elif self.macommande == "vehiculehelicoptere"  and t[5]=='0':
-                    x=self.canevas.canvasx(evt.x)
-                    y=self.canevas.canvasy(evt.y)
-                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, "vehiculehelicoptere")
-                    #self.changerTagTuile(t[3],t[2],'1')
-                    self.macommande=None
-                    self.maselection=None
-
-                elif self.macommande != None and t[5]=='0':
-                    x=int(t[3])
-                    y=int(t[2])
-                    print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
-                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                    self.macommande = None
-                        
+                self.maselection=None
+            
+            elif self.macommande != None and t[5]=='0':
+                x=int(t[3])
+                y=int(t[2])
+                print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
+                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                self.macommande = None
+            
+        
+                  
                     
     def changerTagTuile(self,posy, posx, char):  
         itemX = self.canevas.find_withtag("current")
