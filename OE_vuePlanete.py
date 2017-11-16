@@ -414,10 +414,8 @@ class VuePlanete(Perspective):
                                                     tags=("select","selecteur"))
                         '''
         
-    def cliquervue(self,evt):
+    def cliquerGauche(self,evt):
         t=self.canevas.gettags("current")
-        
-        
         ##REMET LE MENU A DROITE PAR DEFAUT APRES AVOIR AMELIORE UN BATIMENT##
         if(self.jeMontreLeMenuDAmelioration):
             self.jeMontreLeMenuDAmelioration = False

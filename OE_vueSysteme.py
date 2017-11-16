@@ -13,6 +13,7 @@ class VueSysteme(Perspective):
         self.planetes={}
         self.systeme=None
         self.maselection=None
+        self.mesSelections=[]
         
         self.UA2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomiques       
         print("Diametre: ", self.modele.diametre)
@@ -185,10 +186,11 @@ class VueSysteme(Perspective):
         pass
                
     def afficherselection(self):
+        e=self.UA2pixel
+        joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
             #print(self.maselection)
-            e=self.UA2pixel
-            joueur=self.modele.joueurs[self.parent.nom]
+            
             if self.maselection[1]=="planete":
                 for i in self.systeme.planetes:
                     if i.id == self.maselection[2]:
@@ -198,9 +200,10 @@ class VueSysteme(Perspective):
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
                                                 outline=joueur.couleur,
                                                 tags=("select","selecteur"))
-            if self.maselection[1]=="vaisseauinterstellaire":
+        if len(self.mesSelections) !=0:
+            for v in self.mesSelections:
                 for i in joueur.vaisseauxinterstellaires:
-                    if i.id == self.maselection[2]:
+                    if i.id == v[2]:
                         x=i.x
                         y=i.y
                         t=10
@@ -276,7 +279,53 @@ class VueSysteme(Perspective):
            
             self.parent.parent.ciblerEspace(self.maselection[2],self.systeme.id,xy)
 
-           
+    def cliquerGauche(self,evt):
+        self.maselection = None
+        self.mesSelections.clear()
+        
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
+        if len(t) != 0:
+            if t[1] == "planete":
+                self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
+                self.montreplaneteselection()
+            elif t[1] == "vaisseauinterstellaire":
+                print(t)
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
+          
+    def cliquerDroite(self, evt):
+        t=self.canevas.gettags("current")
+        
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        xy=(x/100,y/100) 
+        xy2=evt.x,evt.y       
+        if len(self.mesSelections) != 0:
+            for v in self.mesSelections:
+                if len(t) != 0:
+                    if t[1] == "planete":
+                        planete=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]
+                        self.parent.parent.ciblerdestination(v[2],planete[2],self.systeme.id,xy)
+                    elif t[1] == "vaisseauinterstellaire":
+                        vaisseau=[self.parent.nom,t[1],t[2],xy2]
+                        print(vaisseau)
+                        print(v)
+                        self.parent.parent.ciblerdestination(v[2],vaisseau[2],self.systeme.id,xy)
+                else:
+                    self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
+                
+        
+    def cliquerCentre(self, evt):
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        if len(t) != 0:
+            if t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
+                    
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
             

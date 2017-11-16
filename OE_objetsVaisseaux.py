@@ -54,7 +54,6 @@ class Vaisseau():
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
             # print(self.cible.x,self.x,self.cible.y,self.y)
-
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
@@ -65,7 +64,17 @@ class Vaisseau():
                 self.base=self.cible
                 self.cible=None
             return rep
+        elif self.cible and isinstance(self.cible, Vaisseau):
+            x=self.cible.x
+            y=self.cible.y
+            self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
             
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
+                rep=self.cible
+                self.base=self.cible
+                #self.cible=None
+            return rep
         elif self.cible!=None:
             print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
