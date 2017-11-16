@@ -136,6 +136,11 @@ class Controleur():
     def atterrirdestination(self,joueur,systeme,planete):
         self.actions.append([self.monnom,"atterrirplanete",[self.monnom,systeme,planete]])
         
+    ######################RECOLTER RESSOURCES PLANETE######################
+    def recolterRessources(self, idSysteme, idPlanete):
+        self.actions.append([self.monnom, "recolterBatiment", [idSysteme, idPlanete]])
+        print("controleur recolter ressources")
+        
     ######################CREATION BATIMENT######################
     def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
         self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
@@ -151,9 +156,9 @@ class Controleur():
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
-
     def affichervehiculehelicoptere(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculehelicoptere(joueur,systemeid,planeteid,x,y, idvehicule)
+
         
     #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)

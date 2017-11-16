@@ -16,6 +16,7 @@ class Joueur():
         self.nom=nom
         self.systemeorigine=systemeorigine
         self.couleur=couleur
+        self.niveau = 1
         self.maplanete=None
         self.systemesvisites=[systemeorigine]
         self.vaisseauxinterstellaires=[]
@@ -42,6 +43,8 @@ class Joueur():
                       "creerstationspatiale":self.creerstationspatiale,
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
+                      "voyageSystem":self.voyageSystem,
+                      "recolterBatiment":self.recolterRessources,
                       "voyageSystem":self.voyageSystem}
                       #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
@@ -169,7 +172,11 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        if self.niveau > 0:
+                            nomtank = 'vehiculetank'+str(self.niveau)
+                        else:
+                            nomtank = 'vehiculetank'    
+                        tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomtank)
                         j.vehiculeplanetaire.append(tank)
                         self.vehiculeplanetaire.append(tank)
                         self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
@@ -180,7 +187,11 @@ class Joueur():
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid())
+                        if self.niveau > 0:
+                            nomheli = 'vehiculehelicoptere'+str(self.niveau)
+                        else:
+                            nomheli = 'vehiculehelicoptere'
+                        heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomheli)
                         j.vehiculeplanetaire.append(heli)
                         self.vehiculeplanetaire.append(heli)
                         self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
@@ -264,6 +275,22 @@ class Joueur():
                         i.x=25-2
                         i.y=25-2
                         self.objetgalaxie.remove(i)
+                        
+    def recolterRessources(self, id):
+        idSysteme, idPlanete = id
+        print("id systeme " + idSysteme)
+        print("id planete " + idPlanete)
+        for i in self.systemesvisites:
+            print("i.id " + i.id)
+            if i.id==idSysteme:
+                for p in i.planetes:
+                    print("p.id " + p.id)
+                    if idPlanete==p.id:
+                        self.ressources.additionnerRessources(p.ressource)
+                        print("ressources collectées")
+                        p.ressource = Ressource()
+                        return
+        
                                
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')

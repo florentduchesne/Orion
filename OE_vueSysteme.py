@@ -31,6 +31,8 @@ class VueSysteme(Perspective):
         ##############Base##############
         self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
+        self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources)
+        self.btnRecolterRessources.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
         self.btnvuesysteme.pack(side=BOTTOM)
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
@@ -154,6 +156,13 @@ class VueSysteme(Perspective):
             self.parent.parent.creerstationspatiale(self.maselection[5],self.maselection[2])
             self.maselection=None
             self.canevas.delete("selecteur")
+        
+    def recolterRessources(self):
+        if self.maselection and self.maselection[1] == "planete":
+            print(self.maselection)
+                                        #i.proprietaire,"planete",planete.id,"inconnu", systeme.id,x,y
+            self.parent.parent.recolterRessources(self.maselection[5], self.maselection[2])
+            pass
     
     def chargeimages(self):
         im = Image.open("./images/chasseur.png")
@@ -252,6 +261,10 @@ class VueSysteme(Perspective):
                     print("IN systeme + select VAISSEAUINTERSTELLAIRE")
                     print(xy)
                     self.parent.parent.ciblerdestination(self.maselection[2],t[2],self.systeme.id,xy)
+                
+                #ce elif est ajouté par Florent pour essayer de coloniser des planetes...
+                elif(self.maselection and self.maselection[1]=="vaisseaucolonisateur"):
+                    pass
                 else:     
                     self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
                     print(t)
