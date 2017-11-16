@@ -68,9 +68,10 @@ class Modele():
             self.ias.append(ia)  #IA
      
             
-    def creervaisseau(self,idsysteme,idplanete):
-        ids=idsysteme,idplanete
+    def creervaisseau(self,idsysteme,idplanete,typeVaisseau):
+        ids=idsysteme,idplanete,typeVaisseau
         self.parent.actions.append([self.parent.monnom,"creervaisseau",ids])
+       
         
     def creerstationspatiale(self,systeme,planete):
         ids =systeme,planete

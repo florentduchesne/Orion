@@ -26,6 +26,10 @@ class Joueur():
         self.objetgalaxie=[]
         self.ressources = Ressource(bois = 46, bronze = 53)
         self.niveauVaisseau = 1
+        self.vaisseauAttaque = 5
+        self.vaisseauPortee = 3
+        self.vaisseauCargoPersonne = 5
+        self.vaisseauCargoAliments = 5
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -40,6 +44,7 @@ class Joueur():
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
                       "voyageSystem":self.voyageSystem}
+                      #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -121,7 +126,7 @@ class Joueur():
                         if(aAssezDeRessources):
                             batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
                             j.infrastructures.append(batiment)
-                            self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
+                            self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
                         else:
                             print("construction du batiment impossible")
 
@@ -142,15 +147,21 @@ class Joueur():
                 self.systemesvisites.append(i)
                 
     def creervaisseau(self,ids):
-        idsystem,idplanete=ids#,typeVaisseau=ids
+        idsystem,idplanete,typeVaisseau =ids#,typeVaisseau=ids
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
                     #print("vais creer")
                     if idplanete==p.id:
-                       # print("vais creer")
-                        v=Vaisseau(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,)#self.niveauVaisseau)
-                        self.vaisseauxinterstellaires.append(v)
+                        # print("vais creer")
+                        if typeVaisseau == "chasseur" :
+                            v=VaisseauChaseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                            
+                        if typeVaisseau == "colonisateur":
+                            v=VaisseauColonisation(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauCargoPersonne, self.vaisseauCargoAliments,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                      
                         return 1            
 
     def creervehiculetank(self, listeparams):
@@ -211,7 +222,10 @@ class Joueur():
                                 #i.cible=j
                                 print("cible trouver")
                                 i.ciblerdestination(p)
-                                
+                        for v in self.vaisseauxinterstellaires:
+                            if v.id == iddesti:
+                                print("cible vaisseaU")
+                                i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
                                 return
                 for j in self.systemesvisites:
@@ -244,7 +258,7 @@ class Joueur():
                 for j in self.parent.systemes:
                     if j.id==i.idSysteme:
                         #i.x= j.x
-                       # i.y=j.y
+                        # i.y=j.y
                         i.x= j.x-1
                         i.y=j.y-1
                         i.dansGalaxie=True
@@ -286,8 +300,14 @@ class Joueur():
                 if rep:
                     if rep.proprietaire=="inconnu":
                         if rep not in self.systemesvisites:
+                            print("Proprio")
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
+            for protil in i.projectile:
+                if protil.cible == None:
+                    i.projectile.remove(protil)
+                else:
+                    protil.avancer() 
        
         for i in self.vehiculeplanetaire:
             if i.cible:
@@ -302,6 +322,9 @@ class Joueur():
         
         for i in self.stationspatiaux:
                 i.orbiter()
+                
+                
+    
         
         self.detecterCible()
         self.choisirCible()
