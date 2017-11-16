@@ -151,15 +151,9 @@ class Controleur():
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
-<<<<<<< HEAD
-    
-        
-    def affichervehiculecharassaut(self,joueur,systemeid,planeteid,x,y, idvehicule):
-        self.vue.affichervehiculecharassaut(joueur,systemeid,planeteid,x,y, idvehicule)
-=======
+
     def affichervehiculehelicoptere(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculehelicoptere(joueur,systemeid,planeteid,x,y, idvehicule)
->>>>>>> fbd011b6c379ac9fd507928fe803c472086c43cc
         
     #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
         #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
