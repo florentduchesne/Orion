@@ -23,11 +23,12 @@ class BatimentRessources():
             nouveauNom = self.listeNiveaux[0]
             planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
             if(planeteAAssezDeRessources):
+                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                 self.nomBatiment = nouveauNom
                 self.listeNiveaux.remove(self.nomBatiment)
                 print("assez de ressources pour l'amelioration")
                 self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment)
+                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -49,11 +50,12 @@ class BatimentManufacture():
             nouveauNom = self.listeNiveaux[0]
             planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
             if(planeteAAssezDeRessources):
+                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                 self.nomBatiment = nouveauNom
                 self.listeNiveaux.remove(self.nomBatiment)
                 print("assez de ressources pour l'amelioration")
                 self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment)
+                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -76,11 +78,12 @@ class BatimentInfrastructure():
             nouveauNom = self.listeNiveaux[0]
             planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
             if(planeteAAssezDeRessources):
+                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                 self.nomBatiment = nouveauNom
                 self.listeNiveaux.remove(self.nomBatiment)
                 print("assez de ressources pour l'amelioration")
-                self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment)
+                #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
+                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -104,10 +107,11 @@ class BatimentDefense():
             nouveauNom = self.listeNiveaux[0]
             planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
             if(planeteAAssezDeRessources):
+                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                 self.nomBatiment = nouveauNom
                 self.listeNiveaux.remove(self.nomBatiment)
                 print("assez de ressources pour l'amelioration")
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment)
+                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
      
@@ -225,9 +229,9 @@ class CentraleElectrique(BatimentRessources):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Centrale_Nucleaire", "Eolienne", "PanneauSolaire"])
     
 ################BATIMENTS INFRASTRUCTURES################
-class Ville(BatimentInfrastructure):
+class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
     def __init__(self, parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu", nomBatiment = "ville"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment)
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, listeNiveaux=["Ville2", "Ville3"])
         self.proprietaire=proprio
         self.taille=20
         

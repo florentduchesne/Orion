@@ -128,7 +128,7 @@ class Controleur():
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
-        pass
+        
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
@@ -142,14 +142,25 @@ class Controleur():
         print("Controleur Creation Batiment")
         
     ######################AFFICHAGE BATIMENT#####################
-    def afficherBatiment(self, joueur, systemeid, planeteid, x, y, nomBatiment):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, nomBatiment)
+    def effacerBatiment(self, planeteid, nomBatiment, batimentid):
+        self.vue.effacerBatiment(planeteid, nomBatiment, batimentid)
+    
+    def afficherBatiment(self, nomjoueur, systemeid, planeteid, x, y, nomBatiment, batimentid):
+        self.vue.afficherBatiment(nomjoueur,systemeid,planeteid,x,y, nomBatiment, batimentid)
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
+
+    def affichervehiculehelicoptere(self,joueur,systemeid,planeteid,x,y, idvehicule):
+        self.vue.affichervehiculehelicoptere(joueur,systemeid,planeteid,x,y, idvehicule)
+        
+    #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
+        #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur, nomBatiment):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur, nomBatiment)
+
         
     def voirplanete(self,idsysteme,idplanete):
         pass

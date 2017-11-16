@@ -24,6 +24,12 @@ class Vaisseau():
         self.niveau =1 # niveau
         self.idSysteme =idSysteme
         self.dansGalaxie = False
+        self.range = 3 #temporaire
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 1
+        self.projectile=[]
+        self.tempsRecharge=0
         #self.initialisation
         
     def initialisation(self):
@@ -96,10 +102,41 @@ class Vaisseau():
     
     def augmentation(self) :
         self.niveau += 1
+    
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            #print(self.cibleAttaque.vie)
+            self.enAttaque=True
+            #protile = Projectile(self,self.cibleAttaque)
             
+            #or projec in self.projectile:
+               # projec.avancer()
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
+                
+         
+            #self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
+            #print(self.cibleAttaque.vie)
+        else: 
+            #print("retirer cible")
+            self.enAttaque=False         
+            #self.cibleAttaque.proprietaire="inconnu"
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+           #self.planetteCible=None 
+    
+    
+    
 class VaisseauAttaque(Vaisseau):
     def __init__(self, Degats, portee):
-        self.dommage = Degats
+        self.attaque = Degats
         self.range = portee
         self.cibleAttaque=None 
         self.enAttaque=False
@@ -122,7 +159,7 @@ class VaisseauAttaque(Vaisseau):
             self.listeCibleAttaquer.remove(self.cibleAttaque)
 
             self.cibleAttaque=None  
-            self.planetteCible=None 
+           #self.planetteCible=None 
     
     def augmentation(self) :
         self.niveau += 1
@@ -194,7 +231,7 @@ class VaisseauColonisation(Vaisseau):
         
 class VaisseauSuicide(Vaisseau):
     def __init__(self, portee):
-        self.dommage = 100
+        self.attaque = 100
         self.vie = 50
         self.vitesse = 0.003*5
         self.portee = portee
