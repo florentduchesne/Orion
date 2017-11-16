@@ -4,6 +4,7 @@ from PIL import Image,ImageDraw, ImageTk
 import math
 from helper import Helper as hlp
 from OE_vuePerspective import *
+from OE_objetsVaisseaux import VaisseauChaseur, VaisseauColonisation
 
 
 class VueSysteme(Perspective):
@@ -13,6 +14,7 @@ class VueSysteme(Perspective):
         self.planetes={}
         self.systeme=None
         self.maselection=None
+        self.mesSelections=[]
         
         self.UA2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomiques       
         print("Diametre: ", self.modele.diametre)
@@ -36,13 +38,13 @@ class VueSysteme(Perspective):
         self.btnvuesysteme.pack(side=BOTTOM)
         
         ##############Vaisseaux##############
-        self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = self.creervaisseau)#("chasseur"))
+        self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = lambda : self.creervaisseau("chasseur"))
         self.btnChasseur.pack(side=TOP)
         self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce",command = self.creervaisseau2("commerce"))
         self.btnCommerce.pack(side=TOP)
         self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde",command = self.creervaisseau2("bombarde"))
         self.btnBombarde.pack(side=TOP)
-        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = self.creervaisseau2("chasseur"))
+        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = lambda : self.creervaisseau("colonisateur"))
         self.btnColonisation.pack(side=TOP)
         self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau2("tank"))
         self.btnTank.pack(side=TOP)
@@ -85,6 +87,7 @@ class VueSysteme(Perspective):
         self.affichermodelestatique(i)
     
     def affichermodelestatique(self,i):
+        self.chargeimages()
         xl=self.largeur/2
         yl=self.hauteur/2
         n=i.etoile.taille*self.UA2pixel/2
@@ -137,14 +140,14 @@ class VueSysteme(Perspective):
     def afficherdecor(self):
         pass
                 
-    def creervaisseau(self,):#typeVaisseau):
+    def creervaisseau(self,typeVaisseau):#typeVaisseau):
         if self.maselection:
-            self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2])#,typeVaisseau)#5 = id sys 3 = id planete
+            self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2],typeVaisseau)#5 = id sys 3 = id planete
             self.maselection=None
             self.canevas.delete("selecteur")
      
     def creervaisseau2(self,typeVaisseau):
-        pass       
+        print ("2")
     
     def creerstation(self):
         if self.maselection:
@@ -159,6 +162,12 @@ class VueSysteme(Perspective):
                                         #i.proprietaire,"planete",planete.id,"inconnu", systeme.id,x,y
             self.parent.parent.recolterRessources(self.maselection[5], self.maselection[2])
             pass
+    
+    def chargeimages(self):
+        im = Image.open("./images/chasseur.png")
+        self.images["chasseur"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/colonisateur.png")
+        self.images["colonisateur"] = ImageTk.PhotoImage(im)   
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
@@ -177,12 +186,13 @@ class VueSysteme(Perspective):
                         x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                         x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                        self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                                 tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
-                        self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                                 tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
-                        self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                                 tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                        if isinstance(j,VaisseauChaseur):
+                            im=self.parent.modes["systemes"][j.idSysteme].images["chasseur"]
+                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
+                        if isinstance(j,VaisseauColonisation) :
+                            im=self.parent.modes["systemes"][j.idSysteme].images["colonisateur"]
+                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                            
                         if j.projectile!=None:
                             for pro in j.projectile:
                                 x=pro.x*e
@@ -191,6 +201,15 @@ class VueSysteme(Perspective):
                                 couleur = pro.couleur
                                 self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
                                 self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
+                   
+                        for pro in j.projectile:
+                            x=pro.x*e
+                            y=pro.y*e
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
+                            #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
+
             for j in i.stationspatiaux:
                 if j.systemeid==self.systeme.id:
                     jx=(j.x*e)
@@ -201,10 +220,11 @@ class VueSysteme(Perspective):
         pass
                
     def afficherselection(self):
+        e=self.UA2pixel
+        joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
             #print(self.maselection)
-            e=self.UA2pixel
-            joueur=self.modele.joueurs[self.parent.nom]
+            
             if self.maselection[1]=="planete":
                 for i in self.systeme.planetes:
                     if i.id == self.maselection[2]:
@@ -214,9 +234,10 @@ class VueSysteme(Perspective):
                         self.canevas.create_oval(x-t,y-t,x+t,y+t,dash=(2,2),
                                                 outline=joueur.couleur,
                                                 tags=("select","selecteur"))
-            if self.maselection[1]=="vaisseauinterstellaire":
+        if len(self.mesSelections) !=0:
+            for v in self.mesSelections:
                 for i in joueur.vaisseauxinterstellaires:
-                    if i.id == self.maselection[2]:
+                    if i.id == v[2]:
                         x=i.x
                         y=i.y
                         t=10
@@ -296,7 +317,53 @@ class VueSysteme(Perspective):
            
             self.parent.parent.ciblerEspace(self.maselection[2],self.systeme.id,xy)
 
-           
+    def cliquerGauche(self,evt):
+        self.maselection = None
+        self.mesSelections.clear()
+        
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
+        if len(t) != 0:
+            if t[1] == "planete":
+                self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
+                self.montreplaneteselection()
+            elif t[1] == "vaisseauinterstellaire":
+                print(t)
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
+          
+    def cliquerDroite(self, evt):
+        t=self.canevas.gettags("current")
+        
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        xy=(x/100,y/100) 
+        xy2=evt.x,evt.y       
+        if len(self.mesSelections) != 0:
+            for v in self.mesSelections:
+                if len(t) != 0:
+                    if t[1] == "planete":
+                        planete=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]
+                        self.parent.parent.ciblerdestination(v[2],planete[2],self.systeme.id,xy)
+                    elif t[1] == "vaisseauinterstellaire":
+                        vaisseau=[self.parent.nom,t[1],t[2],xy2]
+                        print(vaisseau)
+                        print(v)
+                        self.parent.parent.ciblerdestination(v[2],vaisseau[2],self.systeme.id,xy)
+                else:
+                    self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
+                
+        
+    def cliquerCentre(self, evt):
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        if len(t) != 0:
+            if t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
+                    
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
             

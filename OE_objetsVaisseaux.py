@@ -7,7 +7,7 @@ from numpy.distutils.fcompiler import none
 
 class Vaisseau():
     #self, parent, nom, systemeid, planeteid, x, y, idsuivant
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y):#,niveau):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau):#,niveau):
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
@@ -29,6 +29,8 @@ class Vaisseau():
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
+        self.typeVaisseau = typeVaisseau
+        self.tempsRecharge=0
         #self.initialisation
         
     def initialisation(self):
@@ -59,7 +61,6 @@ class Vaisseau():
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
             # print(self.cible.x,self.x,self.cible.y,self.y)
-
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
@@ -70,7 +71,17 @@ class Vaisseau():
                 self.base=self.cible
                 self.cible=None
             return rep
+        elif self.cible and isinstance(self.cible, Vaisseau):
+            x=self.cible.x
+            y=self.cible.y
+            self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
             
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
+                rep=self.cible
+                self.base=self.cible
+                #self.cible=None
+            return rep
         elif self.cible!=None:
             print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
@@ -93,32 +104,10 @@ class Vaisseau():
     def augmentation(self) :
         self.niveau += 1
     
-    def attaquer(self):       
-        if self.cibleAttaque.vie>0:
-            #print(self.cibleAttaque.vie)
-            self.enAttaque=True
-            #protile = Projectile(self,self.cibleAttaque)
-            
-            for projec in self.projectile:
-                projec.avancer()
-            
-            self.projectile.append(Projectile(self,self.cibleAttaque))
-            
-            #self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
-            #print(self.cibleAttaque.vie)
-        else: 
-            #print("retirer cible")
-            self.enAttaque=False         
-            #self.cibleAttaque.proprietaire="inconnu"
-            self.listeCibleAttaquer.remove(self.cibleAttaque)
-            
-            self.cibleAttaque=None  
-           #self.planetteCible=None 
-    
-    
     
 class VaisseauAttaque(Vaisseau):
-    def __init__(self, Degats, portee):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats,portee,typeVaisseau):
+        Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.attaque = Degats
         self.range = portee
         self.cibleAttaque=None 
@@ -129,20 +118,34 @@ class VaisseauAttaque(Vaisseau):
         self.augmentationPortee = 1
             
         
-    def attaquer(self):       
-        if self.cibleAttaque.vie>0:
-            #print(self.cibleAttaque.vie)
-            self.enAttaque=True
-            protile = Projectile(self,self.cibleAttaque)
-            self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
-        else: 
-            #print("retirer cible")
-            self.enAttaque=False         
-            #self.cibleAttaque.proprietaire="inconnu"
-            self.listeCibleAttaquer.remove(self.cibleAttaque)
-
-            self.cibleAttaque=None  
-           #self.planetteCible=None 
+        def attaquer(self):       
+            if self.cibleAttaque.vie>0:
+                #print(self.cibleAttaque.vie)
+                self.enAttaque=True
+                #protile = Projectile(self,self.cibleAttaque)
+                
+                #or projec in self.projectile:
+                   # projec.avancer()
+                if self.tempsRecharge==0:
+                    p=Projectile(self,self.cibleAttaque)
+                    self.projectile.append(p)
+                    p.ciblerdestination()
+                    self.tempsRecharge=10
+                else:
+                    self.tempsRecharge=self.tempsRecharge-1
+                
+                    
+             
+                #self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
+                #print(self.cibleAttaque.vie)
+            else: 
+                #print("retirer cible")
+                self.enAttaque=False         
+                #self.cibleAttaque.proprietaire="inconnu"
+                self.listeCibleAttaquer.remove(self.cibleAttaque)
+                
+                self.cibleAttaque=None  
+                #self.planetteCible=None 
     
     def augmentation(self) :
         self.niveau += 1
@@ -158,7 +161,7 @@ class VaisseauAttaque(Vaisseau):
 class VaisseauCommercial(Vaisseau):
     def __init__(self, max):
         self.ressource = Ressource()
-        self.maxRessource = max
+        self.maxRessource =max
         self.vitesse = 0.001*5
         self.AugmentationRessource = 5
         
@@ -178,12 +181,13 @@ class VaisseauNova(Vaisseau):
     def __init__(self):
         self.nova = 0
         self.vitesse = 0.01*5
-    
+     
     def RecolterNova(self):
         self.nova += 1
         
 class VaisseauColonisation(Vaisseau):
-    def __init__(self,maxPersonne, maxAliments):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,maxPersonne, maxAliments,typeVaisseau):
+        Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.maxPersonnes = maxPersonne
         self.nbPersonne = 0
         self.maxAliments = maxAliments
@@ -261,26 +265,27 @@ class VaisseauMere(VaisseauAttaque):
             
 
 class VaisseauChaseur(VaisseauAttaque):
-    def __init__(self):
-        self.attaque = 20
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
+        VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
+        self.attaque =  self.attaque+20
         self.vitesse = 0.001*5
 
     
 class VaisseauBombarde(VaisseauAttaque):
     def __init__(self):
-        self.attaque = 30
+        self.attaque =  self.attaque+30
         self.vitesse = 0.005*5
         self.portee = self.portee + 5
 
 class VaisseauLaser(VaisseauAttaque):
     def __init__(self):
-        self.attaque = 45
+        self.attaque = self.attaque+45
         self.vitesse = 0.01*5
         self.portee = self.portee + 10
     
 class VaisseauTank(VaisseauAttaque):
     def __init__(self):
-        self.attaque = 15
+        self.attaque =  self.attaque+15
         self.vie = self.vie + 50
         self.vitesse = 0.003*5
         self.portee = self.portee + 5
