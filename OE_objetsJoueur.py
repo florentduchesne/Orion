@@ -211,7 +211,10 @@ class Joueur():
                                 #i.cible=j
                                 print("cible trouver")
                                 i.ciblerdestination(p)
-                                
+                        for v in self.vaisseauxinterstellaires:
+                            if v.id == iddesti:
+                                print("cible vaisseaU")
+                                i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
                                 return
                 for j in self.systemesvisites:
@@ -286,6 +289,7 @@ class Joueur():
                 if rep:
                     if rep.proprietaire=="inconnu":
                         if rep not in self.systemesvisites:
+                            print("Proprio")
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
             for protil in i.projectile:

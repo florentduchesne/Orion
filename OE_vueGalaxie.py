@@ -189,7 +189,7 @@ class VueGalaxie(Perspective):
                                                       outline=joueur.couleur,
                                                       tags=("select","selecteur"))
       
-    def cliquervue(self,evt):
+    def cliquerGauche(self,evt):
         self.changecadreetat(None)
         t=self.canevas.gettags("current")
         if t and t[0]!="current":    
