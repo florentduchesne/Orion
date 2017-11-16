@@ -121,7 +121,7 @@ class Joueur():
                         if(aAssezDeRessources):
                             batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
                             j.infrastructures.append(batiment)
-                            self.parent.parent.afficherBatiment(nom,systemeid,planeteid,x,y, nomBatiment)
+                            self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
                         else:
                             print("construction du batiment impossible")
 

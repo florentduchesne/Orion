@@ -49,7 +49,7 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000)
+        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000, nourriture=1000, eau=1000)
         self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)#################TEMPORAIRE, A MODIFIER#################
         self.tuiles = self.generationMap()
         self.x = x
@@ -72,12 +72,12 @@ class Planete():
             y+=100
             x=0
         return tuiles
-       
+    """
     def initplanete(self):
         if self.proprietaire != "inconnu":
             print(self.proprietaire)
             print("initplanete dans planete")
-            self.infrastructures=[Ville(self)]
+            self.infrastructures=[Ville(self)]"""
 
     def setProprietairePlanete(self, proprio, couleur):
         print('changement de proprio : ', proprio, '   pour la planete id# ', self.id)
@@ -141,6 +141,9 @@ class Systeme():
                         #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
         print("proprio nom : ")
         print(proprio.nom)
+        print(self.id)
+        print(planeteProprio.id)
+        print(self.parent.createurId.prochainid())
         planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid(), proprio = proprio.nom)]
         proprio.maplanete=planeteProprio
         
