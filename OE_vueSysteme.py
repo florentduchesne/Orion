@@ -347,6 +347,8 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y       
         if len(self.mesSelections) != 0:
             for v in self.mesSelections:
+                xy = (xy[0]+0.005,xy[1]+0.005)
+                print(xy)
                 if len(t) != 0:
                     if t[1] == "planete":
                         planete=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]

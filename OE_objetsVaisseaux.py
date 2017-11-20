@@ -11,7 +11,7 @@ class Vaisseau():
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
-        self.taille=16
+        self.taille=32
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
