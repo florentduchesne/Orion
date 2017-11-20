@@ -107,8 +107,8 @@ class Controleur():
         self.vue.root.destroy()
         
     # FONCTIONS DE COUP DU JOUEUR A ENVOYER AU SERVEUR
-    def creervaisseau(self,systeme,planete):#,typeVaisseau):
-        self.modele.creervaisseau(systeme,planete)#,typeVaisseau)
+    def creervaisseau(self,systeme,planete,typeVaisseau):#,typeVaisseau):
+        self.modele.creervaisseau(systeme,planete,typeVaisseau)#,typeVaisseau)
         #self.actions.append([self.monnom,"creervaisseau",""])
         
     def creerstationspatiale(self,systeme,planete):
@@ -128,7 +128,7 @@ class Controleur():
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
-        pass
+        
         
     def visitersysteme(self,systeme_id):
         self.actions.append([self.monnom,"visitersysteme",[systeme_id]])
@@ -136,20 +136,36 @@ class Controleur():
     def atterrirdestination(self,joueur,systeme,planete):
         self.actions.append([self.monnom,"atterrirplanete",[self.monnom,systeme,planete]])
         
+    ######################RECOLTER RESSOURCES PLANETE######################
+    def recolterRessources(self, idSysteme, idPlanete):
+        self.actions.append([self.monnom, "recolterBatiment", [idSysteme, idPlanete]])
+        print("controleur recolter ressources")
+        
     ######################CREATION BATIMENT######################
     def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
         self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
         print("Controleur Creation Batiment")
         
     ######################AFFICHAGE BATIMENT#####################
-    def afficherBatiment(self, joueur, systemeid, planeteid, x, y, nomBatiment):
-        self.vue.afficherBatiment(joueur,systemeid,planeteid,x,y, nomBatiment)
+    def effacerBatiment(self, planeteid, nomBatiment, batimentid):
+        self.vue.effacerBatiment(planeteid, nomBatiment, batimentid)
+    
+    def afficherBatiment(self, nomjoueur, systemeid, planeteid, x, y, nomBatiment, batimentid):
+        self.vue.afficherBatiment(nomjoueur,systemeid,planeteid,x,y, nomBatiment, batimentid)
         
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y, idvehicule):
         self.vue.affichervehiculetank(joueur,systemeid,planeteid,x,y, idvehicule)
         
+    def affichervehiculehelicoptere(self,joueur,systemeid,planeteid,x,y, idvehicule):
+        self.vue.affichervehiculehelicoptere(joueur,systemeid,planeteid,x,y, idvehicule)
+
+        
+    #def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur):
+        #self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur)
+
     def afficherbouclier(self,joueur,systemeid,planeteid,x,y,couleur, nomBatiment):
         self.vue.afficherbouclier(joueur,systemeid,planeteid,x,y,couleur, nomBatiment)
+
         
     def voirplanete(self,idsysteme,idplanete):
         pass

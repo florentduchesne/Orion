@@ -49,8 +49,8 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000)
-        self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)
+        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000, nourriture=1000, eau=1000)
+        self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)#################TEMPORAIRE, A MODIFIER#################
         self.tuiles = self.generationMap()
         self.x = x
         self.y =y
@@ -72,11 +72,12 @@ class Planete():
             y+=100
             x=0
         return tuiles
-       
+    """
     def initplanete(self):
         if self.proprietaire != "inconnu":
-            self.infrastructures=[Ville(self)]
-
+            print(self.proprietaire)
+            print("initplanete dans planete")
+            self.infrastructures=[Ville(self)]"""
 
     def setProprietairePlanete(self, proprio, couleur):
         print('changement de proprio : ', proprio, '   pour la planete id# ', self.id)
@@ -127,7 +128,7 @@ class Systeme():
 
                 #print(x,y)
                 planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
-                planete.initplanete()
+                #planete.initplanete()
                 self.planetes.append(planete)#ici
                 
                 
@@ -138,7 +139,12 @@ class Systeme():
         planeteProprio = self.planetes[numPlaneteProprio]
         planeteProprio.setProprietairePlanete(proprio.id, couleur)
                         #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
-        planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid())]
+        print("proprio nom : ")
+        print(proprio.nom)
+        print(self.id)
+        print(planeteProprio.id)
+        print(self.parent.createurId.prochainid())
+        planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid(), proprio = proprio.nom)]
         proprio.maplanete=planeteProprio
         
         #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)
