@@ -59,11 +59,15 @@ class Vaisseau():
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
             
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:#si le vaisseau est arrivé
                 rep=self.cible
                 self.base=self.cible
+                print("vaisseau arrivé sur la planete")
+                if(isinstance(self, VaisseauColonisation)):
+                    print("ceci est un vaisseau colonisateur")
+                    self.cible.coloniser(self.proprietaire)
                 self.cible=None
-            return rep
+            return rep#on retourne la cible
         elif self.cible and isinstance(self.cible, Vaisseau):
             x=self.cible.x
             y=self.cible.y

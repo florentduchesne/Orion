@@ -24,7 +24,7 @@ class Joueur():
         self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.objetgalaxie=[]
-        self.ressources = Ressource(bois = 46, bronze = 53)
+        self.ressources = Ressource()
         self.niveauVaisseau = 1
         self.vaisseauAttaque = 5
         self.vaisseauPortee = 3
@@ -311,11 +311,12 @@ class Joueur():
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
             if i.cible:
-                #print("avancer")
+                print("avancer")
                 rep=i.avancer()
                 if rep:
                     if rep.proprietaire=="inconnu":
                         if rep not in self.systemesvisites:
+                            ##placer le bouton coloniser...
                             print("Proprio")
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)

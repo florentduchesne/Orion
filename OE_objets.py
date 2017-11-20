@@ -84,6 +84,11 @@ class Planete():
         self.couleur=couleur
         print('print proprio : ', proprio)
         self.proprietaire=proprio
+    
+    def coloniser(self, nomJoueur):
+        print("dans méthode coloniser. Proprio : " + nomJoueur)
+        modele = self.parent.parent#référence vers le modele
+        objJoueur = modele.joueurs[nomJoueur]
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
