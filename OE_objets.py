@@ -89,6 +89,10 @@ class Planete():
         print("dans méthode coloniser. Proprio : " + nomJoueur)
         modele = self.parent.parent#référence vers le modele
         objJoueur = modele.joueurs[nomJoueur]
+        for i in self.infrastructures:
+            if isinstance(i, Ville):
+                
+        
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):

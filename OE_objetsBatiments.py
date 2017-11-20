@@ -210,7 +210,7 @@ class Canon(BatimentDefense):#self,parent,nom,systeme,idSuivant,idSysteme,x,y, n
 ################BATIMENTS RESSOURCES################
 class Puit(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "puit", proprio = "patate"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Puit2", "Puit3"])
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Puit2"])
 
 class Ferme(BatimentRessources):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ferme", proprio = "patate"):
