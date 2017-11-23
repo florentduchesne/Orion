@@ -174,7 +174,6 @@ class VueSysteme(Perspective):
             pass
     
     def chargeimages(self):
-<<<<<<< HEAD
         for x in range(0,361):
             im = Image.open("./images/colonisateur.png")
             
@@ -184,17 +183,12 @@ class VueSysteme(Perspective):
             im = Image.open("./images/chasseur.png")
             self.images[("chasseur"+str(x))] = ImageTk.PhotoImage(im.rotate(-x)) 
             
-=======
-        im = Image.open("./images/chasseur.png")
-        self.images["chasseur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/colonisateur.png")
-        self.images["colonisateur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/vaisseauTank.png")
+
+
         self.images["tank"] = ImageTk.PhotoImage(im)  
         im = Image.open("./images/vaisseauMere.png")
         self.images["mere"] = ImageTk.PhotoImage(im)    
 
->>>>>>> b8cc8d6a15f17d164bd840bfd9fd0a7c22f828a7
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         self.canevas.delete("selecteur")
