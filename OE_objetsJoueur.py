@@ -310,14 +310,15 @@ class Joueur():
         print("id systeme " + idSysteme)
         print("id planete " + idPlanete)
         for i in self.systemesvisites:
-            print("i.id " + i.id)
             if i.id==idSysteme:
                 for p in i.planetes:
-                    print("p.id " + p.id)
                     if idPlanete==p.id:
-                        self.ressources.additionnerRessources(p.dicRessourceParJoueur[self.nom])
-                        print("ressources collectées")
-                        p.ressource = Ressource()
+                        if self.nom in p.dicRessourceParJoueur:
+                            self.ressources.additionnerRessources(p.dicRessourceParJoueur[self.nom])
+                            print("ressources collectées")
+                            p.dicRessourceParJoueur[self.nom] = Ressource()
+                        else:
+                            print("Pas Votre planet, stop... please...")
                         return
         
                                
