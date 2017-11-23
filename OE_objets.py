@@ -56,6 +56,12 @@ class Planete():
         self.tuiles = self.generationMap()
         self.x = x
         self.y = y
+        self.dictRess = {}
+        
+        for joueur in self.parent.parent.joueurs:
+            self.dictRess.update(joueur.nom, Ressource())
+        
+        
     
     def generationMap(self): 
         tuiles = []
