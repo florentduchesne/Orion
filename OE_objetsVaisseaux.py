@@ -30,15 +30,6 @@ class Vaisseau():
         if self.niveau>1 :
             for ame in range(self.niveau):
                 ame.augmentation
-        
-    def creerVaisseauRestriction(self):
-        if (self.joueur.ressource.humain - self.besoinhumain) > 0:
-            if (self.joueur.ressource.bronze - self.besoinbronze) > 0 :
-                if (self.joueur.ressource.uranium - self.uranium) > 0:
-                    self.joueur.ressource.humain - self.besoinhumain
-                    self.joueur.ressource.bronze - self.besoinbronze
-                    self.joueur.ressource.uranium - self.uranium
-        
 
     def avancer(self):
         rep=None
@@ -65,7 +56,8 @@ class Vaisseau():
                 print("vaisseau arrivé sur la planete")
                 if(isinstance(self, VaisseauColonisation)):
                     print("ceci est un vaisseau colonisateur")
-                    self.cible.coloniser(self.proprietaire)
+                    if self.cible.coloniser(self.proprietaire):
+                        return "colonisation"
                 self.cible=None
             return rep#on retourne la cible
         elif self.cible and isinstance(self.cible, Vaisseau):
