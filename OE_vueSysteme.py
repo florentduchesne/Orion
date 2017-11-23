@@ -327,6 +327,14 @@ class VueSysteme(Perspective):
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
+    def RemplirVaisseau(self):
+        pass
+    
+    def ViderVaisseau(self):
+        pass
+    
+    def pasVoyager(self):
+        self.changecadreetat(None)
             
     def montreplaneteselection(self):
         self.changecadreetat(self.cadreetataction)

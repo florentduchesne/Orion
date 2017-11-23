@@ -25,6 +25,7 @@ class Vaisseau():
         self.idSysteme =idSysteme
         self.dansGalaxie = False
         self.range = 3 #temporaire
+        self.dansVaisseauMere = False
 
     def initialisation(self):
         if self.niveau>1 :
@@ -72,7 +73,7 @@ class Vaisseau():
                 #self.cible=None
             return rep
         elif self.cible!=None:
-           # print(self.cible.x,self.x,self.cible.y,self.y)
+            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
@@ -235,6 +236,7 @@ class VaisseauMere(VaisseauAttaque):
         self.augmentationPortee = 1
         self.augmentationVie = 1
         self.augmentationAttaque = 1
+        self.vaisseau = []
     
     def RemplirVaisseau(self):
         pass
