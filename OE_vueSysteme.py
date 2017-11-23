@@ -205,7 +205,7 @@ class VueSysteme(Perspective):
                                     couleur = pro.couleur
                                     self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
                                     self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
-                       
+                                    
                             for pro in j.projectile:
                                 x=pro.x*e
                                 y=pro.y*e
