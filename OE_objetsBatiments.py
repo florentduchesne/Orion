@@ -70,6 +70,7 @@ class BatimentInfrastructure():
         self.planeteid=planeteid
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
+        self.proprietaire = proprio
         
     def ameliorer(self, joueur, planete):
         print("AMELIORER DANS OBJ INFRASTRUCTURE")
@@ -231,9 +232,8 @@ class CentraleElectrique(BatimentRessources):
     
 ################BATIMENTS INFRASTRUCTURES################
 class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
-    def __init__(self, parent, nom, systemeid, planeteid, idSuivant, x, y, proprio="inconnu"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", listeNiveaux=["Ville2", "Ville3"])
-        self.proprietaire=proprio
+    def __init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment = "Ville", proprio="inconnu"):
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
         self.taille=20
         
 class Hopital(BatimentInfrastructure):

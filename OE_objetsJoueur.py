@@ -62,7 +62,8 @@ class Joueur():
                                          "Mur":Mur,
                                          "Tour":Tour,
                                          "Canon":Canon,
-                                         "Bouclier":Bouclier
+                                         "Bouclier":Bouclier,
+                                         "Ville":Ville
                                          }
       
     def creerstationspatiale(self,listeparams):
@@ -104,33 +105,43 @@ class Joueur():
 
     def creerBatiment(self, listeparams):
         nom, systemeid, planeteid, x, y, nomBatiment =listeparams
+        villeTrouvee = False
         for i in self.systemesvisites:
             if i.id==systemeid:
                 for j in i.planetes:
                     if j.id==planeteid:
-                        ###ON FAIT LES CAS SPECIAUX###
-                        if(nomBatiment == "vehiculetank"):
-                            self.creervehiculetank(listeparams)
-                            return
-                        if (nomBatiment == "vehiculehelicoptere"):
-                            self.creervehiculehelicoptere(listeparams)
-                            return
-                        if(nomBatiment == "Bouclier"):
+                        for infra in j.infrastructures:#on vérifie si le joueur possede une Ville sur la planete (ou s'il est en train de coloniser)
+                            print("nom joueur : " + str(nom))
+                            print("proprio : " + infra.proprietaire)
+                            if isinstance(infra, Ville):
+                                print("nom joueur : " + str(nom))
+                                print("proprio : " + infra.proprietaire)
+                                if infra.proprietaire == nom:
+                                    villeTrouvee = True
+                        if villeTrouvee or nomBatiment == "Ville":
+                            ###ON FAIT LES CAS SPECIAUX###
+                            if(nomBatiment == "vehiculetank"):
+                                self.creervehiculetank(listeparams)
+                                return
+                            if (nomBatiment == "vehiculehelicoptere"):
+                                self.creervehiculehelicoptere(listeparams)
+                                return
+                            if(nomBatiment == "Bouclier"):
+                                aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
+                                if(aAssezDeRessources):
+                                    batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                                    j.infrastructures.append(batiment)
+                                    self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur,nomBatiment)
+                                return
+                            
+                            ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
                             aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
                             if(aAssezDeRessources):
-                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
                                 j.infrastructures.append(batiment)
-                                self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur,nomBatiment)
-                            return
-                        
-                        ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                        aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
-                        if(aAssezDeRessources):
-                            batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
-                            j.infrastructures.append(batiment)
-                            self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
-                        else:
-                            print("construction du batiment impossible")
+                                self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
+                            else:
+                                print("construction du batiment impossible")
 
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
@@ -318,12 +329,17 @@ class Joueur():
                 print("avancer")
                 rep=i.avancer()
                 if rep:
-                    if rep.proprietaire=="inconnu":
-                        if rep not in self.systemesvisites:
-                            ##placer le bouton coloniser...
-                            print("Proprio")
-                            self.systemesvisites.append(rep)
-                            self.parent.changerproprietaire(self.nom,self.couleur,rep)
+                    if rep == "colonisation":
+                        #si le vaisseau a colonisé, on le détruit
+                        self.vaisseauxinterstellaires.remove(i)
+                        continue
+                    else:
+                        if rep.proprietaire=="inconnu":
+                            if rep not in self.systemesvisites:
+                                ##placer le bouton coloniser...
+                                print("Proprio")
+                                self.systemesvisites.append(rep)
+                                self.parent.changerproprietaire(self.nom,self.couleur,rep)
             if isinstance(i, VaisseauAttaque):
                 for protil in i.projectile:
                     if protil.cible == None:
