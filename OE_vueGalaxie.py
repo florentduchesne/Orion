@@ -34,7 +34,7 @@ class VueGalaxie(Perspective):
         self.lbselectecible.pack()
         
         
-        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans systeme",bg="darkgray",command =self.voyageSystem)
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans systeme", bg=self.couleurBouton,command =self.voyageSystem)
         self.btnVoyage.pack()
     
     
