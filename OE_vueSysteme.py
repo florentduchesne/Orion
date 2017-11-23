@@ -9,7 +9,6 @@ from OE_objetsVaisseaux import VaisseauChasseur, VaisseauColonisation, VaisseauA
 
 
 
-
 class VueSysteme(Perspective):
     def __init__(self,parent):
         Perspective.__init__(self,parent)
@@ -17,6 +16,13 @@ class VueSysteme(Perspective):
         self.planetes={}
         self.systeme=None
         self.maselection=None
+        self.couleurBG1 = "#222831"
+        self.couleurBG2 = "#393E46"
+        self.couleurBouton = "#0092ca"
+        self.couleurBoutonDesactive = "#50a2c1"
+        
+        self.btnvuegalaxie.configure(bg=self.couleurBouton, command=self.voirgalaxie, state=NORMAL)
+        
         self.mesSelections=[]
         self.initX = 0
         self.initY = 0
@@ -28,57 +34,57 @@ class VueSysteme(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         
         self.labid.bind("<Button>",self.identifierplanetemere)
-        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.AfficherChoixVaisseau)
+        self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.AfficherChoixVaisseau, bg=self.couleurBouton)
         self.btncreervaisseau.pack()
         
         ##############Base##############
-        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
+        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation, bg=self.couleurBouton)
         self.btncreerstation.pack()
-        self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources)
+
+        self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources, bg=self.couleurBouton)
         self.btnRecolterRessources.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
-        self.btnvuesysteme.pack(side=BOTTOM)
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
-        self.btnvuesysteme.pack(side=BOTTOM)
+
         
         ##############Vaisseaux##############
-        self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = lambda : self.creervaisseau("chasseur"))
+        self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur", bg=self.couleurBouton,command = lambda : self.creervaisseau("chasseur"))
         self.btnChasseur.pack(side=TOP)
-        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce",command = self.creervaisseau2("commerce"))
+        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce", bg=self.couleurBouton,command = self.creervaisseau2("commerce"))
         self.btnCommerce.pack(side=TOP)
-        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde",command = self.creervaisseau2("bombarde"))
+        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde", bg=self.couleurBouton,command = self.creervaisseau2("bombarde"))
         self.btnBombarde.pack(side=TOP)
-        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = lambda : self.creervaisseau("colonisateur"))
+        self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation", bg=self.couleurBouton,command = lambda : self.creervaisseau("colonisateur"))
         self.btnColonisation.pack(side=TOP)
-        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau2("tank"))
+        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank", bg=self.couleurBouton,command = lambda : self.creervaisseau("tank"))
         self.btnTank.pack(side=TOP)
-        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = self.creervaisseau2("mere"))
+        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere", bg=self.couleurBouton,command = lambda : self.creervaisseau("mere"))
         self.btnMere.pack(side=TOP)
-        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser",command = self.creervaisseau2("laser"))
+        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser", bg=self.couleurBouton,command = self.creervaisseau2("laser"))
         self.btnLaser.pack(side=TOP)
-        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova",command = self.creervaisseau2("nova"))
+        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova", bg=self.couleurBouton,command = self.creervaisseau2("nova"))
         self.btnNova.pack(side=TOP)
-        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide",command = self.creervaisseau2("suicide"))
+        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide", bg=self.couleurBouton,command = self.creervaisseau2("suicide"))
         self.btnSuicide.pack(side=TOP)
-        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique",command = self.creervaisseau2("biologique"))
+        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique", bg=self.couleurBouton,command = self.creervaisseau2("biologique"))
         self.btnBiologique.pack(side=TOP)
-        self.btnRetour=Button(self.cadreVaisseau,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreVaisseau,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
         
         #voyage
-        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie",bg="darkgray",command =self.voyageGalax)
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie", bg=self.couleurBouton,command =self.voyageGalax)
         self.btnVoyage.pack()
         
         self.changecadreetat(self.cadreetataction)
         
     def voirplanete(self):
         self.parent.voirplanete(self.maselection)
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
 
     def voirgalaxie(self):
         self.parent.voirgalaxie()
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
     
     def AfficherChoixVaisseau(self):
         self.changecadreetat(self.cadreVaisseau)
@@ -168,6 +174,7 @@ class VueSysteme(Perspective):
             pass
     
     def chargeimages(self):
+<<<<<<< HEAD
         for x in range(0,361):
             im = Image.open("./images/colonisateur.png")
             
@@ -177,6 +184,17 @@ class VueSysteme(Perspective):
             im = Image.open("./images/chasseur.png")
             self.images[("chasseur"+str(x))] = ImageTk.PhotoImage(im.rotate(-x)) 
             
+=======
+        im = Image.open("./images/chasseur.png")
+        self.images["chasseur"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/colonisateur.png")
+        self.images["colonisateur"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/vaisseauTank.png")
+        self.images["tank"] = ImageTk.PhotoImage(im)  
+        im = Image.open("./images/vaisseauMere.png")
+        self.images["mere"] = ImageTk.PhotoImage(im)    
+
+>>>>>>> b8cc8d6a15f17d164bd840bfd9fd0a7c22f828a7
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         self.canevas.delete("selecteur")
@@ -191,9 +209,6 @@ class VueSysteme(Perspective):
                     if j.dansGalaxie==False:
                         jx=j.x*e
                         jy=j.y*e
-                        x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                        x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                        x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
    
                         angle = int(math.degrees(j.angleinverse))
@@ -208,6 +223,7 @@ class VueSysteme(Perspective):
                             tag =("colonisateur"+str(angle))
                             im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+
                         
                         if (isinstance(j, VaisseauChasseur)):
                             jx=j.x*e
@@ -319,16 +335,22 @@ class VueSysteme(Perspective):
         self.initY = y
         xy2=evt.x,evt.y
         t=self.canevas.gettags("current")
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
+        
         #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
         if len(t) != 0:
             if t[1] == "planete":
                 self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
                 self.montreplaneteselection()
+                self.btnvueplanete.configure(bg=self.couleurBouton, command=self.voirplanete, state=NORMAL)
             elif t[1] == "stationspatiale":
                 self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]
-            elif t[1] == "vaisseauinterstellaire":
+            elif t[6] == "mere":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
                 self.montrevaisseauxselection()
+            elif t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
+                self.pasVoyager() 
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
@@ -358,12 +380,16 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y
         t=self.canevas.gettags("current")
         if len(t) != 0:
-            if t[1] == "vaisseauinterstellaire":
+            if t[6] == "mere":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
                 self.montrevaisseauxselection()
+            elif t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
+                self.pasVoyager() 
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
+        
     def RemplirVaisseau(self):
         pass
     
@@ -396,8 +422,7 @@ class VueSysteme(Perspective):
         
     def voyageGalax(self):
         for v in self.mesSelections:
-            
             self.parent.parent.voyageGalax(v[0],v[2])
-            self.maselection=None
-            self.lbselectecible.pack_forget()
-            self.canevas.delete("selecteur")
+        self.maselection=None
+        self.lbselectecible.pack_forget()
+        self.canevas.delete("selecteur")
