@@ -43,7 +43,6 @@ class VueSysteme(Perspective):
 
         self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources, bg=self.couleurBouton)
         self.btnRecolterRessources.pack()
-
         
         ##############Vaisseaux##############
         self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur", bg=self.couleurBouton,command = lambda : self.creervaisseau("chasseur"))
@@ -314,7 +313,7 @@ class VueSysteme(Perspective):
                     vaisseauY = v.y*100                   
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",v.id))
-        
+    
         
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")   
@@ -329,6 +328,7 @@ class VueSysteme(Perspective):
         self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
         
         #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
+        print(t)
         if len(t) != 0:
             if t[1] == "planete":
                 self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
@@ -336,6 +336,9 @@ class VueSysteme(Perspective):
                 self.btnvueplanete.configure(bg=self.couleurBouton, command=self.voirplanete, state=NORMAL)
             elif t[1] == "stationspatiale":
                 self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]
+            elif t[1] == "vaisseauinterstellaire":
+                self.cadrevoyage.pack()
+                self.mesSelections.append((self.parent.nom,t[1],t[2]))
             elif t[6] == "mere":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
                 self.montrevaisseauxselection()
@@ -412,8 +415,14 @@ class VueSysteme(Perspective):
         
         
     def voyageGalax(self):
-        for v in self.mesSelections:
-            self.parent.parent.voyageGalax(v[0],v[2])
+        joueur=self.modele.joueurs[self.parent.nom]
+        for v in self.mesSelections:        
+            self.parent.parent.voyageGalax(v[0],v[2])        
+            for jv in joueur.vaisseauxinterstellaires:
+                if jv.id == v[2]:
+                    jv.dansGalaxie = True
+                    jv.cible=None             
         self.maselection=None
+        self.mesSelections.clear()
         self.lbselectecible.pack_forget()
         self.canevas.delete("selecteur")

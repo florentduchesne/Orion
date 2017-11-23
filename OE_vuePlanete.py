@@ -406,7 +406,7 @@ class VuePlanete(Perspective):
                 minix = (x *200) / self.largeur 
                 miniy = (y *200) / self.largeur 
                     
-                if isinstance(j, vehiculeTank):
+                if isinstance(j, vehiculeTank):                  
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
                     elif j.angledegre >= 45 and j.angledegre <= 135:#haut
@@ -419,7 +419,8 @@ class VuePlanete(Perspective):
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
+                    
                 elif isinstance(j, vehiculehelicoptere):
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]

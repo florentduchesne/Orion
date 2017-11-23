@@ -13,6 +13,7 @@ class VueGalaxie(Perspective):
         Perspective.__init__(self,parent)
         self.modele=self.parent.modele
         self.maselection=None
+        self.mesSelections=[]
         self.commande = None
         
         self.couleurBG1 = "#222831"
@@ -192,7 +193,7 @@ class VueGalaxie(Perspective):
                                                       outline=joueur.couleur,
                                                       tags=("select","selecteur"))
       
-    def cliquerGauche(self,evt):
+    def cliquer(self,evt):
         self.changecadreetat(None)
         t=self.canevas.gettags("current")
         self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED)
@@ -208,9 +209,7 @@ class VueGalaxie(Perspective):
                 if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
                     print("IN systeme + select VAISSEAUINTERSTELLAIRE")
                     if self.commande=="voyageSystem":
-                        print("voyage systeme")
-                        self.parent.parent.voyageSystem(self.maselection[2],self.maselection[0],t[2])
-                        self.maselection=None
+                        election=None
                         self.lbselectecible.pack_forget()
                         self.canevas.delete("selecteur")
                 else:
@@ -225,8 +224,78 @@ class VueGalaxie(Perspective):
             self.maselection=None
             self.lbselectecible.pack_forget()
             self.canevas.delete("selecteur")
+    
+    def cliquerGauche(self,evt):
+        self.canevas.delete("selectionner")  
+        self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED) 
+        self.maselection = None
+        self.mesSelections.clear()        
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        self.initX = x
+        self.initY = y
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        #liste de tuples 1: le type de la selection(systeme, vaisseau), 2: le id de la selection
+        if len(t) != 0:
+            if t[0] != "current":
+                if t[1] == "systeme":
+                    self.btnvuesysteme.configure(bg=self.couleurBouton, command=self.voirsysteme, state=NORMAL)
+                    self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]
+                    print(self.maselection)
+                    self.montresystemeselection()
+                elif t[1] == "vaisseauinterstellaire":
+                    self.mesSelections.append((self.parent.nom,t[1],t[2]))
+                    self.montrevaisseauxselection()
+                    print(self.mesSelections)
             
+    def cliquerDroite(self, evt):
+        t=self.canevas.gettags("current")
+        self.canevas.delete("selectionner")  
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        xy=(x/100,y/100) 
+        xy2=evt.x,evt.y       
+        if len(self.mesSelections) != 0:
+            for v in self.mesSelections:
+                print(v)
+                xy = (xy[0],xy[1])
+                if len(t) != 0:
+                    if t[0] != "current": 
+                        if t[1] == "systeme":
+                            systeme=[self.parent.nom,t[1],t[2],t[3],t[4]]
+                            self.parent.parent.ciblerdestination(v[2],systeme[2],None,xy)
+                        elif t[1] == "vaisseauinterstellaire":
+                            vaisseau=[self.parent.nom,t[1],t[2],xy2]
+                            print(vaisseau)
+                            print(v)
+                            self.parent.parent.ciblerdestination(v[2],vaisseau[2],None,xy)
+                else:
+                    self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
             
+    def cliquerCentre(self, evt):
+        joueur=self.modele.joueurs[self.parent.nom]
+        xy2=evt.x,evt.y
+        t=self.canevas.gettags("current")
+        if len(t) != 0:
+            if t[0] != "current":
+                if t[1] == "systeme":
+                    self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]  
+                    if len(self.mesSelections) != 0:            
+                        if self.commande=="voyageSystem":                            
+                            for v in self.mesSelections:      
+                                for jv in joueur.vaisseauxinterstellaires:
+                                    if jv.id == v[2]:
+                                        print("Clique Centre Vaisseau")
+                                        print("Selection" + str(self.maselection))
+                                        print("MesSelections" + str(v))
+                                        jv.dansGalaxie = False
+                                        jv.cible =None
+                                        self.parent.parent.voyageSystem(self.maselection[2],v[2])
+                                        self.lbselectecible.pack_forget()
+                                        self.canevas.delete("selecteur")
+                
+    
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)
         
