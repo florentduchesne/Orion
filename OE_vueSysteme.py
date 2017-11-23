@@ -309,9 +309,12 @@ class VueSysteme(Perspective):
                 self.btnvueplanete.configure(bg=self.couleurBouton, command=self.voirplanete, state=NORMAL)
             elif t[1] == "stationspatiale":
                 self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]
-            elif t[1] == "vaisseauinterstellaire":
+            elif t[6] == "mere":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
                 self.montrevaisseauxselection()
+            elif t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
+                self.pasVoyager() 
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
@@ -347,6 +350,9 @@ class VueSysteme(Perspective):
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
+    
+    def pasVoyager(self):
+        self.changecadreetat(None)
             
     def montreplaneteselection(self):
         self.changecadreetat(self.cadreetataction)
@@ -371,8 +377,7 @@ class VueSysteme(Perspective):
         
     def voyageGalax(self):
         for v in self.mesSelections:
-            
-         self.parent.parent.voyageGalax(v[0],v[2])
+            self.parent.parent.voyageGalax(v[0],v[2])
         self.maselection=None
         self.lbselectecible.pack_forget()
         self.canevas.delete("selecteur")
