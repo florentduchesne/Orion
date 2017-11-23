@@ -106,6 +106,13 @@ class VuePlanete(Perspective):
         self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
         
+        ##############CADRE AMELIORATION VÉHICULE##############
+        '''
+        self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.pack()
+        self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.pack()
+        '''
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
         
@@ -459,6 +466,7 @@ class VuePlanete(Perspective):
         
         
         if t[0]==self.parent.nom:
+            print('t[0] : {}'.format(t[0]))
             self.montreAmeliorationBatiments()
             self.macommande=None
             self.jeMontreLeMenuDAmelioration = True
@@ -504,6 +512,9 @@ class VuePlanete(Perspective):
         
     def montreAmeliorationBatiments(self):
         self.changecadreetat(self.cadreAmeliorationBatiments)
+        
+    def montreAmeliorationVehicule(self):
+        self.changecadreetat(self.cadreAmeliorationVehicule)
         
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadreetatmsg)
