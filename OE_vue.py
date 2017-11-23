@@ -7,6 +7,7 @@ from helper import Helper as hlp
 from OE_vueGalaxie import VueGalaxie
 from OE_vueSysteme import VueSysteme
 from OE_vuePlanete import VuePlanete
+from OE_objetsRessource import *
 
 class Vue():
     def __init__(self,parent,ip,nom,largeur=800,hauteur=600):
@@ -143,12 +144,15 @@ class Vue():
                 for planete in systeme.planetes:
                     if(planete.id == self.modecourant.planeteid):
                         for j in self.dictionnaireLabelsPlanete: 
-                            if j == "humain":
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
-                            elif j == "electricite":
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                            if self.parent.monnom in planete.dicRessourceParJoueur:
+                                if j == "humain":
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                elif j == "electricite":
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                else:
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                             else:
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                planete.dicRessourceParJoueur[self.parent.monnom] = Ressource()
                         return
         
     def chargerImagesRes(self):

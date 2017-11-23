@@ -106,7 +106,8 @@ class Modele():
                             planete.ressourceACollecter.soustraireRessources(infra.productionRessources)#diminue les ressources disponibles sur la planete
                             planete.dicRessourceParJoueur[infra.proprietaire].additionnerRessources(infra.productionRessources)#augmente les ressources de la ville
                         if isinstance(infra, Banque):
-                            planete.ressource
+                            self.joueurs[infra.proprietaire].ressources.additionnerRessources(planete.dicRessourceParJoueur[infra.proprietaire])
+                            planete.dicRessourceParJoueur[infra.proprietaire] = Ressource()
                             
         else:
             self.compteur -= 1
