@@ -37,7 +37,7 @@ class Controleur():
 
     def creerpartie(self):
         if self.egoserveur==0:
-            pid = Popen(["D:\\eclipse\Python\\Python.exe", "./OE_serveur.py"],shell=1).pid # on lance l'application serveur
+            pid = Popen(["C:\\Python34\\Python.exe", "./OE_serveur.py"],shell=1).pid # on lance l'application serveur
             self.egoserveur=1 # on note que c'est soi qui, ayant demarre le serveur, aura le privilege de lancer la simulation
 
     ## ----------- FONCTION POUR CELUI QUI A CREE LA PARTIE SEULEMENT
@@ -123,8 +123,8 @@ class Controleur():
     def voyageGalax(self,idpropri,idvais):
         self.actions.append([self.monnom,"voyageGalax",[idpropri,idvais]])
         
-    def voyageSystem(self,idSystem,idpropri,idvais):
-        self.actions.append([self.monnom,"voyageSystem",[idSystem,idpropri,idvais]])
+    def voyageSystem(self,idSystem,idvais):
+        self.actions.append([self.monnom,"voyageSystem",[idSystem,idvais]])
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])

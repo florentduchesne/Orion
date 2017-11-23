@@ -191,7 +191,7 @@ class VuePlanete(Perspective):
         
     ##############AMELIORER BATIMENT##############
     def ameliorerBatiment(self):
-        print("ON AMELIORE UN BATIMENT")
+        print("ON AMELIORE UN BATIMENT")        
         self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
@@ -201,7 +201,8 @@ class VuePlanete(Perspective):
     
     ##############AMELIORER BATIMENT##############
     def ameliorerVehicule(self):
-        
+        print("ON AMELIORE UN Vehicule")        
+        self.modele.joueurs[self.maselection[0]].ameliorerVehicule(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
         pass
@@ -247,10 +248,6 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                print("proprio ville")
-                print(i.proprietaire)
-                print("ville x : ")
-                print(i.x)
                 self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
@@ -412,7 +409,7 @@ class VuePlanete(Perspective):
                 minix = (x *200) / self.largeur 
                 miniy = (y *200) / self.largeur 
                     
-                if isinstance(j, vehiculeTank):
+                if isinstance(j, vehiculeTank):                  
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
                     elif j.angledegre >= 45 and j.angledegre <= 135:#haut
@@ -422,10 +419,11 @@ class VuePlanete(Perspective):
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
                         
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
+                    
                 elif isinstance(j, vehiculehelicoptere):
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]
@@ -436,7 +434,7 @@ class VuePlanete(Perspective):
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopterebas"]
                     
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
                                
@@ -467,45 +465,43 @@ class VuePlanete(Perspective):
         
     def cliquerGauche(self,evt):
         t=self.canevas.gettags("current")
+        if t[0] != 'current':
+            if t[4] == 'tuile':
+                self.montresystemeselection()
+            elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
+                self.montreAmeliorationVehicule()
+            else:
+                self.montreAmeliorationBatiments()
 
-        if t[4] == 'tuile':
-            self.montresystemeselection()
-        elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
-            self.montreAmeliorationVehicule()
-        else:
-            self.montreAmeliorationBatiments()
-
-        #pour mettre ma selection du clique si ce n'est pas une tuile
-        if self.maselection == None or t[4] != 'tuile':
-            self.maselection = t
-            print('maselection : {}'.format(self.maselection))
-            
-        #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
-        if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
-            x=self.canevas.canvasx(evt.x)
-            y=self.canevas.canvasy(evt.y)
-            self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-            self.macommande=None
-            self.maselection=None
-        elif self.macommande != None and t[5]=='0':
-                x=int(t[3])
-                y=int(t[2])
-                print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
-                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                self.macommande = None
-                self.maselection=None
-        elif self.macommande == None:
-            #clique sur un objet sur la map
-            if self.maselection == None and t[4] != 'tuile':
-                pass
+            #pour mettre ma selection du clique si ce n'est pas une tuile
+            if self.maselection == None or t[4] != 'tuile':
+                self.maselection = t
                 
-            #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
-            elif self.maselection != None and t[4] == 'tuile':
-                if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
-                    xdeplacement = self.canevas.canvasx(evt.x)
-                    ydeplacement = self.canevas.canvasx(evt.y)
-                    self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
-                    self.maselection = None
+            #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
+            if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
+                x=self.canevas.canvasx(evt.x)
+                y=self.canevas.canvasy(evt.y)
+                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                self.macommande=None
+                self.maselection=None
+            elif self.macommande != None and t[5]=='0':
+                    x=int(t[3])
+                    y=int(t[2])
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                    self.macommande = None
+                    self.maselection=None
+            elif self.macommande == None:
+                #clique sur un objet sur la map
+                if self.maselection == None and t[4] != 'tuile':
+                    pass
+                    
+                #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
+                elif self.maselection != None and t[4] == 'tuile':
+                    if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
+                        xdeplacement = self.canevas.canvasx(evt.x)
+                        ydeplacement = self.canevas.canvasx(evt.y)
+                        self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
+                        self.maselection = None
             
         
                   
@@ -545,14 +541,11 @@ class VuePlanete(Perspective):
         
     def effacerBatiment(self, id):
         print("effacer batiment")
-        print(id)
         self.canevas.delete(id)
     
     def afficherBatiment(self, x, y, im, t):
         minix = (x *200) / self.largeur
         miniy = (y *200) / self.hauteur
-        print("t afficher batiment")
-        print(t)
         self.canevas.create_image(x,y, image=im, tags = t)
         self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
         

@@ -164,9 +164,7 @@ class Perspective(Frame):
         
     def remplirChatBoxChangementVue(self):
         if self.modele != None:
-            print("ICIIIIIIIIIIIII")
             if self.modele.joueurs[self.parent.nom] != None:
-                print("ICIII345345345IIIII")
                 for message in self.modele.joueurs[self.parent.nom].listMessageChat:
                     self.listeChat.insert(0, message)
          

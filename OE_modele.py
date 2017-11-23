@@ -1,7 +1,7 @@
 from OE_objetsJoueur import *
 from OE_objets import *
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
-
+from math import degrees
 
 class Modele():
     def __init__(self,parent,joueurs,dd):
@@ -108,7 +108,7 @@ class Modele():
                         if isinstance(infra, Banque):
                             self.joueurs[infra.proprietaire].ressources.additionnerRessources(planete.dicRessourceParJoueur[infra.proprietaire])
                             planete.dicRessourceParJoueur[infra.proprietaire] = Ressource()
-                            
+
                             
         else:
             self.compteur -= 1

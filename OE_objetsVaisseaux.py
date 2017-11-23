@@ -25,6 +25,7 @@ class Vaisseau():
         self.idSysteme =idSysteme
         self.dansGalaxie = False
         self.range = 3 #temporaire
+        self.dansVaisseauMere = False
 
     def initialisation(self):
         if self.niveau>1 :
@@ -36,7 +37,7 @@ class Vaisseau():
         if self.cible and isinstance(self.cible, Systeme): #Deplacement dans la galaxie
             x=self.cible.x
             y=self.cible.y
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
+            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
@@ -64,15 +65,17 @@ class Vaisseau():
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
-            
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if self.dansGalaxie == False:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            else:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
                 #self.cible=None
             return rep
         elif self.cible!=None:
-           # print(self.cible.x,self.x,self.cible.y,self.y)
+            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
@@ -235,6 +238,7 @@ class VaisseauMere(VaisseauAttaque):
         self.augmentationPortee = 1
         self.augmentationVie = 1
         self.augmentationAttaque = 1
+        self.vaisseau = []
     
     def RemplirVaisseau(self):
         pass
@@ -251,7 +255,7 @@ class VaisseauMere(VaisseauAttaque):
             self.portee+=self.augmentationPortee
             
 
-class VaisseauChaseur(VaisseauAttaque):
+class VaisseauChasseur(VaisseauAttaque):
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
         VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.attaque =  self.attaque+20
