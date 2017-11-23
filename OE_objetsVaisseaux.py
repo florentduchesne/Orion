@@ -257,7 +257,7 @@ class VaisseauMere(VaisseauAttaque):
             self.portee+=self.augmentationPortee
             
 
-class VaisseauChaseur(VaisseauAttaque):
+class VaisseauChasseur(VaisseauAttaque):
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
         VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.attaque =  self.attaque+20
