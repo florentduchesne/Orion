@@ -224,6 +224,16 @@ class Joueur():
                             self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
                         else:
                             print('pas assez de ressources pour le vehicule')
+                            
+    def ameliorerVehicule(self, maSelection, planete, systeme):
+        print("AMELIORATION VEHICULE DANS OBJ JOUEUR")
+        print(maSelection)
+        #print(planete.infrastructures)
+        planete = self.getPlanete(planete, systeme)
+        for vehicule in planete.vehiculeplanetaire:
+            if vehicule.id == maSelection[5]:
+                print('FAIRE AMELIORATION DU VEHICULE')
+                vehicule.ameliorer()
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
