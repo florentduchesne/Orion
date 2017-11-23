@@ -6,6 +6,7 @@ from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
 from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculehelicoptere, vehiculeAvion
 from OE_coord import *
+from DictionnaireCoutsVaisseaux import *
 
 
 class Joueur():
@@ -165,25 +166,41 @@ class Joueur():
         for i in self.systemesvisites:
             if i.id==idsystem:
                 for p in i.planetes:
-                    #print("vais creer")
-                    if idplanete==p.id:
-                        # print("vais creer")
-                        if typeVaisseau == "chasseur" :
-                            v=VaisseauChasseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
-                            self.vaisseauxinterstellaires.append(v)
+                    villeTrouvee = False
+                    for infra in p.infrastructures:
+                        ######################IMPORTANT!!!!!##################
+                        #décommenter le if ci-dessous, et réindenter le if qui suit pour la sortie du jeu
+                        if isinstance(infra, UsineVaisseau):
+                            if infra.proprietaire == self.nom:
+                                villeTrouvee = True
+                                break
+                    if villeTrouvee:
+                        if idplanete==p.id:
                             
-                        elif typeVaisseau == "colonisateur":
-                            v=VaisseauColonisation(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauCargoPersonne, self.vaisseauCargoAliments,type)#self.niveauVaisseau)
-                            self.vaisseauxinterstellaires.append(v)
-                        
-                        elif typeVaisseau == "tank" :
-                            v=VaisseauTank(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
-                            self.vaisseauxinterstellaires.append(v)
-                        elif typeVaisseau == "mere" :
-                            v=VaisseauMere(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type,self.maxVaisseauMere)#self.niveauVaisseau)
-                            self.vaisseauxinterstellaires.append(v)
-                      
-                        return 1            
+                            #a placer plus tard dans un constructeur helper
+                            ressourcesTotales = Ressource()
+                            ressourcesTotales.additionnerRessources(self.ressources)
+                            ressourcesTotales.additionnerRessources(p.dicRessourceParJoueur[self.nom])
+                            coutVaisseau = dictionnaireCoutsVaisseaux[VaisseauAttaque][0]
+                            if(ressourcesTotales.estPlusGrandOuEgal(coutVaisseau)):
+                                self.ressources.soustraireRessourcesJoueurETPlanet(p.dicRessourceParJoueur[self.nom], coutVaisseau)
+                            
+                                if typeVaisseau == "chasseur" :
+                                    v=VaisseauChasseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                                    self.vaisseauxinterstellaires.append(v)
+                                    
+                                elif typeVaisseau == "colonisateur":
+                                    v=VaisseauColonisation(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauCargoPersonne, self.vaisseauCargoAliments,type)#self.niveauVaisseau)
+                                    self.vaisseauxinterstellaires.append(v)
+                                
+                                elif typeVaisseau == "tank" :
+                                    v=VaisseauTank(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                                    self.vaisseauxinterstellaires.append(v)
+                                elif typeVaisseau == "mere" :
+                                    v=VaisseauMere(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type,self.maxVaisseauMere)#self.niveauVaisseau)
+                                    self.vaisseauxinterstellaires.append(v)
+                              
+                                return 1            
 
     def creervehiculetank(self, listeparams):
         nom,systemeid,planeteid,x,y, nomBatiment=listeparams
