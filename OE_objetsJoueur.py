@@ -30,6 +30,7 @@ class Joueur():
         self.vaisseauPortee = 3
         self.vaisseauCargoPersonne = 5
         self.vaisseauCargoAliments = 5
+        self.maxVaisseauMere = 3
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -171,8 +172,15 @@ class Joueur():
                             v=VaisseauChaseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
                             self.vaisseauxinterstellaires.append(v)
                             
-                        if typeVaisseau == "colonisateur":
+                        elif typeVaisseau == "colonisateur":
                             v=VaisseauColonisation(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauCargoPersonne, self.vaisseauCargoAliments,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                        
+                        elif typeVaisseau == "tank" :
+                            v=VaisseauTank(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                            self.vaisseauxinterstellaires.append(v)
+                        elif typeVaisseau == "mere" :
+                            v=VaisseauMere(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type,self.maxVaisseauMere)#self.niveauVaisseau)
                             self.vaisseauxinterstellaires.append(v)
                       
                         return 1            
