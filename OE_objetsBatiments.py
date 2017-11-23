@@ -22,7 +22,7 @@ class BatimentRessources():
         print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
-            planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.ressource, joueur.ressources, nouveauNom)
+            planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
             if(planeteAAssezDeRessources):
                 joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                 self.nomBatiment = nouveauNom

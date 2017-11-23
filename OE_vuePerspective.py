@@ -74,6 +74,7 @@ class Perspective(Frame):
         self.cadreDefense=Frame(self.cadreetat, width=200, height=200,bg =self.couleurBG2)
         
         self.cadreAmeliorationBatiments=Frame(self.cadreetat, width=200, height=200, bg=self.couleurBG2)##CADRE QUI NOUS PERMET D'AMELIORER LES BATIMENTS
+        self.cadreAmeliorationVehicule=Frame(self.cadreetat, width=200, height=200, bg=self.couleurBG2)##CADRE QUI NOUS PERMET D'AMELIORER LES VÉHICULES
         
         self.cadreetatmsg=Frame(self.cadreetat,width=200,height=200,bg=self.couleurBG2)
         

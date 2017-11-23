@@ -21,7 +21,7 @@ class Vaisseau():
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau =1 # niveau
+        self.niveau = 1 # niveau
         self.idSysteme =idSysteme
         self.dansGalaxie = False
         self.range = 3 #temporaire
