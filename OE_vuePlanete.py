@@ -232,7 +232,9 @@ class VuePlanete(Perspective):
                 scrollBarY = i.y
                 print("proprio ville")
                 print(i.proprietaire)
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, t.x,t.y,"ville", i.id))               
+                print("ville x : ")
+                print(i.x)
+                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
@@ -459,10 +461,8 @@ class VuePlanete(Perspective):
                                                     tags=("select","selecteur"))
         '''
         
-    def cliquervue(self,evt):
+    def cliquerGauche(self,evt):
         t=self.canevas.gettags("current")
-        
-        
         ##REMET LE MENU A DROITE PAR DEFAUT APRES AVOIR AMELIORE UN BATIMENT##
         if(self.jeMontreLeMenuDAmelioration):
             self.jeMontreLeMenuDAmelioration = False
@@ -543,10 +543,17 @@ class VuePlanete(Perspective):
         
         self.canevas.xview(MOVETO, (x*xn/self.largeur)-eex)
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
+        
+    def effacerBatiment(self, id):
+        print("effacer batiment")
+        print(id)
+        self.canevas.delete(id)
     
     def afficherBatiment(self, x, y, im, t):
         minix = (x *200) / self.largeur
         miniy = (y *200) / self.hauteur
+        print("t afficher batiment")
+        print(t)
         self.canevas.create_image(x,y, image=im, tags = t)
         self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
         

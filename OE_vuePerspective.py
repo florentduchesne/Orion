@@ -35,8 +35,10 @@ class Perspective(Frame):
                              xscrollcommand=self.scrollX.set,
                              yscrollcommand=self.scrollY.set)
         
-        self.canevas.bind("<Button>",self.cliquervue)
-        self.canevas.bind("<Button-3>",self.cliquervue2)
+        self.canevas.bind("<Button>",self.cliquerGauche)
+        self.canevas.bind("<Button-3>",self.cliquerDroite)
+        self.canevas.bind("<Button-2>",self.cliquerCentre)
+        self.canevas.bind("<B1-Motion>",self.maintenirGauche)
         self.scrollX.config(command=self.canevas.xview)
         self.scrollY.config(command=self.canevas.yview)
         self.canevas.grid(column=0,row=0,sticky=N+E+W+S)
@@ -87,7 +89,19 @@ class Perspective(Frame):
     def cliquervue2(self,evt):
         pass
     
+    def cliquerGauche(self,evt):
+        pass
+    
+    def cliquerDroite(self,evt):
+        pass
+    
     def cliquerminimap(self,evt):
+        pass
+    
+    def cliquerCentre(self,evt):
+        pass
+    
+    def maintenirGauche(self,evt):
         pass
     
     def changecadreetat(self,cadre):
