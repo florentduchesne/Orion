@@ -189,6 +189,8 @@ class VuePlanete(Perspective):
     ##############AMELIORER BATIMENT##############
     def ameliorerBatiment(self):
         print("ON AMELIORE UN BATIMENT")
+        print(self.maselection[0])
+        
         self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
@@ -198,7 +200,10 @@ class VuePlanete(Perspective):
     
     ##############AMELIORER BATIMENT##############
     def ameliorerVehicule(self):
+        print("ON AMELIORE UN Vehicule")
+        print(self.maselection)
         
+        self.modele.joueurs[self.maselection[0]].ameliorerVehicule(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
         pass
@@ -416,7 +421,7 @@ class VuePlanete(Perspective):
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
                         
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
@@ -430,7 +435,7 @@ class VuePlanete(Perspective):
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopterebas"]
                     
-                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
                                
@@ -465,6 +470,7 @@ class VuePlanete(Perspective):
         if t[4] == 'tuile':
             self.montresystemeselection()
         elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
+            print('maselection avant : {}'.format(self.maselection))
             self.montreAmeliorationVehicule()
         else:
             self.montreAmeliorationBatiments()
