@@ -45,10 +45,11 @@ class Vehicule():
     
     def verificationRessources(self):
         
-            infoCout = dictionnaireCoutVehicule[self.nom]
+            infoCout = dictionnaireCoutVehicule[self.nomVehicule]
             coutressource = infoCout[0]
             
-            if (self.parent.ressource.estPlusGrandOuEgal(coutressource)):
+            if (self.parent.ressources.estPlusGrandOuEgal(coutressource)):
+                #diminuer les ressources au joueur
                 return True
             else:
                 return False
@@ -105,10 +106,10 @@ class vehiculeAvion(Vehicule):
     
     
 dictionnaireCoutVehicule={
-"vehiculetank":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"vehiculetank1":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "vehiculetank2":[Ressource(bois=50, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "vehiculetank3":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=20, allocationHumain=20), 3],
-"vehiculehelicoptere":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
+"vehiculehelicoptere1":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "vehiculehelicoptere2":[Ressource(bois=50, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],
 "vehiculehelicoptere3":[Ressource(bois=100, bronze=100), Ressource(allocationElectricite=20, allocationHumain=20), 3]
     }
