@@ -4,8 +4,7 @@ from PIL import Image,ImageDraw, ImageTk
 import math
 from helper import Helper as hlp
 from OE_vuePerspective import *
-from OE_objetsVaisseaux import VaisseauChaseur, VaisseauColonisation,\
-    VaisseauAttaque
+from OE_objetsVaisseaux import VaisseauChaseur, VaisseauColonisation, VaisseauAttaque, VaisseauTank, VaisseauMere
 
 
 class VueSysteme(Perspective):
@@ -48,9 +47,9 @@ class VueSysteme(Perspective):
         self.btnBombarde.pack(side=TOP)
         self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation",command = lambda : self.creervaisseau("colonisateur"))
         self.btnColonisation.pack(side=TOP)
-        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = self.creervaisseau2("tank"))
+        self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank",command = lambda : self.creervaisseau("tank"))
         self.btnTank.pack(side=TOP)
-        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = self.creervaisseau2("mere"))
+        self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere",command = lambda : self.creervaisseau("mere"))
         self.btnMere.pack(side=TOP)
         self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser",command = self.creervaisseau2("laser"))
         self.btnLaser.pack(side=TOP)
@@ -169,7 +168,11 @@ class VueSysteme(Perspective):
         im = Image.open("./images/chasseur.png")
         self.images["chasseur"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/colonisateur.png")
-        self.images["colonisateur"] = ImageTk.PhotoImage(im)   
+        self.images["colonisateur"] = ImageTk.PhotoImage(im)
+        im = Image.open("./images/vaisseauTank.png")
+        self.images["tank"] = ImageTk.PhotoImage(im)  
+        im = Image.open("./images/vaisseauMere.png")
+        self.images["mere"] = ImageTk.PhotoImage(im)    
 
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
@@ -192,9 +195,16 @@ class VueSysteme(Perspective):
                         if isinstance(j,VaisseauChaseur):
                             im=self.parent.modes["systemes"][j.idSysteme].images["chasseur"]
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
-                        if isinstance(j,VaisseauColonisation) :
+                        elif isinstance(j,VaisseauColonisation) :
                             im=self.parent.modes["systemes"][j.idSysteme].images["colonisateur"]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") ) 
+                        elif isinstance(j, VaisseauTank) :
+                            im=self.parent.modes["systemes"][j.idSysteme].images["tank"]
+                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                        elif isinstance(j, VaisseauMere) :
+                            im=self.parent.modes["systemes"][j.idSysteme].images["mere"]
+                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
+                               
                         
                         if isinstance(j, VaisseauAttaque) :
                             if j.projectile!=None:

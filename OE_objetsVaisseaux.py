@@ -228,7 +228,8 @@ class VaisseauBiologique(Vaisseau):
         pass
         
 class VaisseauMere(VaisseauAttaque):
-    def __init__(self, maxVaisseau):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau,maxVaisseau):
+        VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.maxVaisseau = maxVaisseau
         self.systemePresent = self.base
         self.attaque = 15
@@ -258,7 +259,7 @@ class VaisseauChaseur(VaisseauAttaque):
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
         VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.attaque =  self.attaque+20
-        self.vitesse = 0.001*5
+        self.vitesse = 0.005*5
 
     
 class VaisseauBombarde(VaisseauAttaque):
@@ -274,15 +275,15 @@ class VaisseauLaser(VaisseauAttaque):
         self.portee = self.portee + 10
     
 class VaisseauTank(VaisseauAttaque):
-    def __init__(self):
+    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
+        VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.attaque =  self.attaque+15
         self.vie = self.vie + 50
         self.vitesse = 0.003*5
-        self.portee = self.portee + 5
+        self.portee = portee + 5
         self.augmentationPortee = 1
         self.augmentationVie = 2
         self.augmentationAttaque = 1
-        
     
     def augmentation(self) :
         self.niveau += 1
