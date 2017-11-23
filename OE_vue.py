@@ -144,11 +144,11 @@ class Vue():
                     if(planete.id == self.modecourant.planeteid):
                         for j in self.dictionnaireLabelsPlanete: 
                             if j == "humain":
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.ressource.dictRess["allocation humain"])+" / "+str(planete.ressource.dictRess[j]))
+                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                             elif j == "electricite":
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.ressource.dictRess["allocation electricite"])+" / "+str(planete.ressource.dictRess[j]))
+                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                             else:
-                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.ressource.dictRess[j]))
+                                self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                         return
         
     def chargerImagesRes(self):
