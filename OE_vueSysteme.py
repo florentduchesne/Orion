@@ -6,6 +6,7 @@ from helper import Helper as hlp
 from OE_vuePerspective import *
 from OE_objetsVaisseaux import VaisseauChaseur, VaisseauColonisation,\
     VaisseauAttaque
+from math import degrees
 
 
 class VueSysteme(Perspective):
@@ -166,11 +167,16 @@ class VueSysteme(Perspective):
             pass
     
     def chargeimages(self):
-        im = Image.open("./images/chasseur.png")
-        self.images["chasseur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/colonisateur.png")
-        self.images["colonisateur"] = ImageTk.PhotoImage(im)   
 
+        for x in range(0,361):
+            im = Image.open("./images/colonisateur.png")
+            
+            tag = ("colonisateur"+str(x))
+            self.images[tag] = ImageTk.PhotoImage(im.rotate(-x)) 
+        for x in range(0,361):
+            im = Image.open("./images/chasseur.png")
+            self.images[("chasseur"+str(x))] = ImageTk.PhotoImage(im.rotate(-x)) 
+            
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         self.canevas.delete("selecteur")
@@ -189,22 +195,49 @@ class VueSysteme(Perspective):
                         x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                         x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                        sens = 0
+                        
+                        angle = int(math.degrees(j.angleinverse))
+
+                        
                         if isinstance(j,VaisseauChaseur):
-                            im=self.parent.modes["systemes"][j.idSysteme].images["chasseur"]
+                            tag =("chasseur"+str(angle))
+                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
                         if isinstance(j,VaisseauColonisation) :
-                            im=self.parent.modes["systemes"][j.idSysteme].images["colonisateur"]
+                            tag =("colonisateur"+str(angle))
+                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
                         
-                        if isinstance(j, VaisseauAttaque) :
-                            if j.projectile!=None:
-                                for pro in j.projectile:
-                                    x=pro.x*e
-                                    y=pro.y*e
-                                    taille = pro.taille
-                                    couleur = pro.couleur
-                                    self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
-                                    self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
+                        if (isinstance(j, VaisseauChaseur)):
+                            jx=j.x*e
+                            jy=j.y*e
+                            x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                            x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                            x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                            x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                            
+                      
+                            self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
+                                                     tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
+                            self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
+                                                     tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
+                            self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
+                                                     tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                            
+                     
+
+                            
+                        
+                        #if isinstance(j, VaisseauAttaque) :
+                         #   if j.projectile!=None:
+                          #      for pro in j.projectile:
+                           #         x=pro.x*e
+                            #        y=pro.y*e
+                             #       taille = pro.taille
+                              #      couleur = pro.couleur
+                               #     self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
+                                #    self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
                        
                             for pro in j.projectile:
                                 x=pro.x*e
