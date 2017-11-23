@@ -195,9 +195,6 @@ class VueSysteme(Perspective):
                     if j.dansGalaxie==False:
                         jx=j.x*e
                         jy=j.y*e
-                        x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                        x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                        x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
                         if isinstance(j,VaisseauChaseur):
                             im=self.parent.modes["systemes"][j.idSysteme].images["chasseur"]
@@ -344,9 +341,12 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y
         t=self.canevas.gettags("current")
         if len(t) != 0:
-            if t[1] == "vaisseauinterstellaire":
+            if t[6] == "mere":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
                 self.montrevaisseauxselection()
+            elif t[1] == "vaisseauinterstellaire":
+                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
+                self.pasVoyager() 
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
