@@ -51,16 +51,11 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000, nourriture=1000, eau=1000)
         self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)#################TEMPORAIRE, A MODIFIER#################
         self.tuiles = self.generationMap()
         self.x = x
         self.y = y
-        self.dictRess = {}
-        
-        for joueur in self.parent.parent.joueurs:
-            self.dictRess.update(joueur.nom, Ressource())
-        
+        self.dicRessourceParJoueur = {}
         
     
     def generationMap(self): 
@@ -106,6 +101,7 @@ class Planete():
             return False
         coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
         self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
+        self.dicRessourceParJoueur[nomJoueur] = Ressource()
         return True
        
 class Etoile():
@@ -168,6 +164,7 @@ class Systeme():
         print(planeteProprio.id)
         print(self.parent.createurId.prochainid())
         planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, 800, 800, self.parent.createurId.prochainid(), proprio = proprio.nom)]
+        planeteProprio.dicRessourceParJoueur[proprio.nom] = Ressource()
         proprio.maplanete=planeteProprio
         
         #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)

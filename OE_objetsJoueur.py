@@ -24,7 +24,7 @@ class Joueur():
         self.stationspatiaux=[]
         self.vehiculeplanetaire=[]
         self.objetgalaxie=[]
-        self.ressources = Ressource()
+        self.ressources = Ressource(bois= 1500, bronze = 1500, metasic=500, eau=500, nourriture=500, titanium=500)
         self.niveauVaisseau = 1
         self.vaisseauAttaque = 5
         self.vaisseauPortee = 3
@@ -128,17 +128,17 @@ class Joueur():
                                 self.creervehiculehelicoptere(listeparams)
                                 return
                             if(nomBatiment == "Bouclier"):
-                                aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
+                                aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
                                 if(aAssezDeRessources):
-                                    batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment)
+                                    batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, proprio = nom)
                                     j.infrastructures.append(batiment)
                                     self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur,nomBatiment)
                                 return
                             
                             ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.ressource, self.ressources, nomBatiment)
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
                             if(aAssezDeRessources):
-                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, nom)
+                                batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, proprio = nom)
                                 j.infrastructures.append(batiment)
                                 self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
                             else:
@@ -315,7 +315,7 @@ class Joueur():
                 for p in i.planetes:
                     print("p.id " + p.id)
                     if idPlanete==p.id:
-                        self.ressources.additionnerRessources(p.ressource)
+                        self.ressources.additionnerRessources(p.dicRessourceParJoueur[self.nom])
                         print("ressources collectées")
                         p.ressource = Ressource()
                         return
