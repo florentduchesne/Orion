@@ -109,9 +109,6 @@ class VuePlanete(Perspective):
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
         
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
-        self.btnvuesysteme.pack(side=BOTTOM)
-        
         self.jeMontreLeMenuDAmelioration = False
         
         self.changecadreetat(self.cadreetataction)

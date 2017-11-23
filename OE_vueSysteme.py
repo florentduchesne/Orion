@@ -42,10 +42,6 @@ class VueSysteme(Perspective):
 
         self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources)
         self.btnRecolterRessources.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
-        self.btnvuesysteme.pack(side=BOTTOM)
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
-        self.btnvuesysteme.pack(side=BOTTOM)
 
         
         ##############Vaisseaux##############
