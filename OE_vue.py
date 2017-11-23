@@ -50,11 +50,13 @@ class Vue():
     
     def creercadreJeu(self):
         self.cadrejeu=Frame(self.root,bg="blue")
+        self.couleurJoueur = "#16c0ff"
+        self.couleurPlanet = "#0c9cd2"
         
-        self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg="LightSteelBlue4")
+        self.cadreRessourcesJoueur = Frame(self.cadrejeu,height=40,bg=self.couleurJoueur)
         self.cadreRessourcesJoueur.pack(fill=X)
         
-        self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg="SkyBlue4")
+        self.cadreRessourcesPlanete = Frame(self.cadrejeu,height=40,bg=self.couleurPlanet)
         self.cadreRessourcesPlanete.pack(fill=X)
         
         self.envoyerRessourcesVersCadreJoueur()
@@ -64,28 +66,28 @@ class Vue():
         
         self.chargerImagesRes()
         i = 0
-        couleur = "LightSteelBlue4"
+        
         cadre = self.cadreRessourcesJoueur
         
-        self.titreJoueur = (Label(cadre,image=self.images["joueur"],bg=couleur), Label(cadre,text="Joueur: ",bg=couleur))
+        self.titreJoueur = (Label(cadre,image=self.images["joueur"],bg=self.couleurJoueur), Label(cadre,text="Joueur: ",bg=self.couleurJoueur))
         self.titreJoueur[0].grid(row=0,column=i)
         i = 1
         self.titreJoueur[1].grid(row=0,column=i)
         
-        self.dictionnaireLabelsJoueur["humain"] = (Label(cadre,image=self.images["humain"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["electricite"] = (Label(cadre,image=self.images["electricite"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["moral"] = (Label(cadre,image=self.images["moral"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["eau"] = (Label(cadre,image=self.images["eau"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["bois"] = (Label(cadre,image=self.images["bois"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["bronze"] = (Label(cadre,image=self.images["bronze"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["charbon"] = (Label(cadre,image=self.images["charbon"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["uranium"] = (Label(cadre,image=self.images["uranium"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["titanium"] = (Label(cadre,image=self.images["titanium"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["metasic"] = (Label(cadre,image=self.images["metasic"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        #self.dictionnaireLabelsJoueur["sante"] = (Label(cadre,image=self.images["sante"],bg=couleur), Label(cadre,text="0",bg=couleur))   
-        #self.dictionnaireLabelsJoueur["argent"] = (Label(cadre,image=self.images["argent"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsJoueur["point_science"] = (Label(cadre,image=self.images["point_science"],bg=couleur), Label(cadre,text="0",bg=couleur))
+        self.dictionnaireLabelsJoueur["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        #self.dictionnaireLabelsJoueur["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))   
+        #self.dictionnaireLabelsJoueur["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
+        self.dictionnaireLabelsJoueur["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         
         i = 2
         
@@ -97,27 +99,26 @@ class Vue():
         
     def envoyerRessourcesVersCadrePlanete(self):
         i = 0
-        couleur = "SkyBlue4"
         cadre = self.cadreRessourcesPlanete
-        self.titrePlanete = (Label(cadre,image=self.images["planet"],bg=couleur), Label(cadre,text="Planète: ",bg=couleur))
+        self.titrePlanete = (Label(cadre,image=self.images["planet"],bg=self.couleurPlanet), Label(cadre,text="Planète: ",bg=self.couleurPlanet))
         self.titrePlanete[0].grid(row=0,column=i)
         i = 1
         self.titrePlanete[1].grid(row=0,column=i)
         
-        self.dictionnaireLabelsPlanete["humain"] = (Label(cadre,image=self.images["humain"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["electricite"] = (Label(cadre,image=self.images["electricite"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["moral"] = (Label(cadre,image=self.images["moral"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["eau"] = (Label(cadre,image=self.images["eau"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["bois"] = (Label(cadre,image=self.images["bois"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["bronze"] = (Label(cadre,image=self.images["bronze"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["charbon"] = (Label(cadre,image=self.images["charbon"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["uranium"] = (Label(cadre,image=self.images["uranium"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["titanium"] = (Label(cadre,image=self.images["titanium"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["metasic"] = (Label(cadre,image=self.images["metasic"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        #self.dictionnaireLabelsPlanete["sante"] = (Label(cadre,image=self.images["sante"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        #self.dictionnaireLabelsPlanete["argent"] = (Label(cadre,image=self.images["argent"],bg=couleur), Label(cadre,text="0",bg=couleur))
-        self.dictionnaireLabelsPlanete["point_science"] = (Label(cadre,image=self.images["point_science"],bg=couleur), Label(cadre,text="0",bg=couleur))
+        self.dictionnaireLabelsPlanete["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        #self.dictionnaireLabelsPlanete["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        #self.dictionnaireLabelsPlanete["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
+        self.dictionnaireLabelsPlanete["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         
         
         i = 2
@@ -232,20 +233,14 @@ class Vue():
         labDiametre=Label(text="Diametre en annee lumiere:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
         self.canevaslobby.create_window(120,105,window=labDiametre,width=150,height=30)
         self.canevaslobby.create_window(260,105,window=self.diametre,width=100,height=30)
-        #self.canevaslobby.create_text(90,105,text="Diametre en annee lumiere")
-        
         
         labNBsys=Label(text="Nb systeme/AL cube:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
         self.canevaslobby.create_window(120,175,window=labNBsys,width=150,height=30)
         self.canevaslobby.create_window(260,175,window=self.densitestellaire,width=100,height=30)
-        #self.canevaslobby.create_text(90,175,text="Nb systeme/AL cube")
-        
         
         labnbIA=Label(text="Nb d'IA:",bg="#50a2c1",borderwidth=0,relief=RIDGE)
         self.canevaslobby.create_window(120,245,window=labnbIA,width=150,height=30)
         self.canevaslobby.create_window(260,245,window=self.qteIA,width=100,height=30)
-        #self.canevaslobby.create_text(90,245,text="Nb d'IA")
-        
         
         self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
 

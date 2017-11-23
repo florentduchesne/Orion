@@ -186,15 +186,17 @@ class Joueur():
                         if self.niveau > 0:
                             nomtank = 'vehiculetank'+str(self.niveau)
                         else:
-                            nomtank = 'vehiculetank'    
+                            nomtank = 'vehiculetank'   
                         tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomtank)
                         #verification du cout pour le vehicule
                         if tank.verificationRessources():
+                            print('assez de ressource')
                             j.vehiculeplanetaire.append(tank)
                             self.vehiculeplanetaire.append(tank)
                             self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
                         else:
                             print('pas assez de ressources pour le vehicule')
+                        
 
     def creervehiculehelicoptere(self, listeparams):
         nom,systemeid,planeteid,x,y, nomBatiment=listeparams
@@ -207,9 +209,13 @@ class Joueur():
                         else:
                             nomheli = 'vehiculehelicoptere'
                         heli=vehiculehelicoptere(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomheli)
-                        j.vehiculeplanetaire.append(heli)
-                        self.vehiculeplanetaire.append(heli)
-                        self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
+                        if heli.verificationRessources():
+                            print('assez de ressource')
+                            j.vehiculeplanetaire.append(heli)
+                            self.vehiculeplanetaire.append(heli)
+                            self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
+                        else:
+                            print('pas assez de ressources pour le vehicule')
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
