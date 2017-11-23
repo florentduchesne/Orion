@@ -459,43 +459,43 @@ class VuePlanete(Perspective):
         
     def cliquerGauche(self,evt):
         t=self.canevas.gettags("current")
+        if t[0] != 'current':
+            if t[4] == 'tuile':
+                self.montresystemeselection()
+            elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
+                self.montreAmeliorationVehicule()
+            else:
+                self.montreAmeliorationBatiments()
 
-        if t[4] == 'tuile':
-            self.montresystemeselection()
-        elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
-            self.montreAmeliorationVehicule()
-        else:
-            self.montreAmeliorationBatiments()
-
-        #pour mettre ma selection du clique si ce n'est pas une tuile
-        if self.maselection == None or t[4] != 'tuile':
-            self.maselection = t
-            
-        #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
-        if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
-            x=self.canevas.canvasx(evt.x)
-            y=self.canevas.canvasy(evt.y)
-            self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-            self.macommande=None
-            self.maselection=None
-        elif self.macommande != None and t[5]=='0':
-                x=int(t[3])
-                y=int(t[2])
-                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                self.macommande = None
-                self.maselection=None
-        elif self.macommande == None:
-            #clique sur un objet sur la map
-            if self.maselection == None and t[4] != 'tuile':
-                pass
+            #pour mettre ma selection du clique si ce n'est pas une tuile
+            if self.maselection == None or t[4] != 'tuile':
+                self.maselection = t
                 
-            #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
-            elif self.maselection != None and t[4] == 'tuile':
-                if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
-                    xdeplacement = self.canevas.canvasx(evt.x)
-                    ydeplacement = self.canevas.canvasx(evt.y)
-                    self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
-                    self.maselection = None
+            #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
+            if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
+                x=self.canevas.canvasx(evt.x)
+                y=self.canevas.canvasy(evt.y)
+                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                self.macommande=None
+                self.maselection=None
+            elif self.macommande != None and t[5]=='0':
+                    x=int(t[3])
+                    y=int(t[2])
+                    self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+                    self.macommande = None
+                    self.maselection=None
+            elif self.macommande == None:
+                #clique sur un objet sur la map
+                if self.maselection == None and t[4] != 'tuile':
+                    pass
+                    
+                #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
+                elif self.maselection != None and t[4] == 'tuile':
+                    if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
+                        xdeplacement = self.canevas.canvasx(evt.x)
+                        ydeplacement = self.canevas.canvasx(evt.y)
+                        self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
+                        self.maselection = None
             
         
                   
