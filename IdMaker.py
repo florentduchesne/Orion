@@ -4,3 +4,4 @@ class Id():
         Id.id+=1
         str_id="id_"+str(Id.id)
         return str_id 
+    prochainid = staticmethod(prochainid)
