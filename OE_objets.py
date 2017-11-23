@@ -6,6 +6,7 @@ from OE_objetsRessource import Ressource
 from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsDeco import *
+from IdMaker import *
 
 class Pulsar():
     def __init__(self,parent,x,y,idSuivant):
@@ -34,6 +35,7 @@ class Pulsar():
             self.taille=self.mintaille+(self.moment*self.pas)
                 
 class Planete():
+    coordonneesPossiblesVilles = ((8, 8), (42, 42), (8, 42), (42, 8), (25, 8), (25, 42), (8, 25), (8, 42), (25, 25))#coordonnées possibles pour la création d'une ville, variable statique
     def __init__(self,parent,type,dist,taille,angle,idSuivant,x,y):
         self.parent=parent
         self.id=idSuivant #ici
@@ -49,11 +51,12 @@ class Planete():
         self.taille=taille
         self.angle=angle
         self.couleur="red"
-        self.ressource=Ressource(bronze = 1000, bois = 1000, charbon=5000, titanium=10000, nourriture=1000, eau=1000)
         self.ressourceACollecter=Ressource(bronze = 2000, titanium = 2000, uranium = 2000)#################TEMPORAIRE, A MODIFIER#################
         self.tuiles = self.generationMap()
         self.x = x
-        self.y =y
+        self.y = y
+        self.dicRessourceParJoueur = {}
+        
     
     def generationMap(self): 
         tuiles = []
@@ -84,6 +87,22 @@ class Planete():
         self.couleur=couleur
         print('print proprio : ', proprio)
         self.proprietaire=proprio
+    
+    def coloniser(self, nomJoueur):
+        nbVilles = 0
+        for i in self.infrastructures:#on compte les villes deja presentes sur la planete et on vérifie si le joueur n'a pas déjà une ville
+            if isinstance(i, Ville):
+                nbVilles += 1
+                if(i.proprietaire == nomJoueur):
+                    print("vous avez deja une ville sur cette planete!")
+                    return False
+        if(nbVilles == len(self.coordonneesPossiblesVilles)):#verifie si le nombre de villes maximal est deja atteint
+            print("nombre de villes maximal deja atteint")
+            return False
+        coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
+        self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
+        self.dicRessourceParJoueur[nomJoueur] = Ressource()
+        return True
        
 class Etoile():
     def __init__(self,parent,x,y,idSuivant):
@@ -144,7 +163,8 @@ class Systeme():
         print(self.id)
         print(planeteProprio.id)
         print(self.parent.createurId.prochainid())
-        planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid(), proprio = proprio.nom)]
+        planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, 800, 800, self.parent.createurId.prochainid(), proprio = proprio.nom)]
+        planeteProprio.dicRessourceParJoueur[proprio.nom] = Ressource()
         proprio.maplanete=planeteProprio
         
         #self.parent.parent.changerTagsVue(self, planeteProprio, proprio, couleur)

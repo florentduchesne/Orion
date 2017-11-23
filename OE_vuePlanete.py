@@ -14,6 +14,12 @@ class VuePlanete(Perspective):
         self.systeme=syste
         self.maselection=None
         self.macommande=None
+        
+        self.couleurBG1 = "#222831"
+        self.couleurBG2 = "#393E46"
+        self.couleurBouton = "#0092ca"
+        self.couleurBoutonDesactive = "#50a2c1"
+        
         print("Planete")
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
         self.largeur=int(self.modele.diametre*self.KM2pixel)
@@ -22,87 +28,93 @@ class VuePlanete(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         self.canevas.config(bg="green")
         
+        self.btnvuesysteme.configure(bg=self.couleurBouton, command=self.voirsysteme, state=NORMAL)
+        
         ##############MenuPrincipale##############
-        self.btnBatiment=Button(self.cadreetataction,text="Creer un Batiment ressource",command=self.AfficherBatiment)
+        self.btnBatiment=Button(self.cadreetataction,text="Creer un Batiment ressource",command=self.AfficherBatiment, bg=self.couleurBouton)
         self.btnBatiment.pack(side=TOP)
-        self.btnInfrastructure=Button(self.cadreetataction,text="Creer une Infrastructure",command=self.AfficherInfrastructure)
+        self.btnInfrastructure=Button(self.cadreetataction,text="Creer une Infrastructure",command=self.AfficherInfrastructure, bg=self.couleurBouton)
         self.btnInfrastructure.pack(side=TOP)
-        self.btnManufacture=Button(self.cadreetataction,text="Creer une Manufacture",command=self.AfficherManufacture)
+        self.btnManufacture=Button(self.cadreetataction,text="Creer une Manufacture",command=self.AfficherManufacture, bg=self.couleurBouton)
         self.btnManufacture.pack(side=TOP)
-        self.btnDefense=Button(self.cadreetataction,text="Creer une Defense",command=self.AfficherDefense)
+        self.btnDefense=Button(self.cadreetataction,text="Creer une Defense",command=self.AfficherDefense, bg=self.couleurBouton)
         self.btnDefense.pack(side=TOP)
-        self.btnVehicule=Button(self.cadreetataction,text="Creer un Vehicule",command=self.AfficherVehicule)
+        self.btnVehicule=Button(self.cadreetataction,text="Creer un Vehicule",command=self.AfficherVehicule, bg=self.couleurBouton)
         self.btnVehicule.pack(side=TOP)
         
         ##############BATIMENTS RESSOURCES##############
-        self.btncreerMine=Button(self.cadreBatiment,text="Mine",command=self.creerMine)
+        self.btncreerMine=Button(self.cadreBatiment,text="Mine",command=self.creerMine, bg=self.couleurBouton)
         self.btncreerMine.pack(side=TOP)
-        self.btncreerCampBucherons=Button(self.cadreBatiment,text="Camp de bûcherons",command=self.creerCampBucherons)
+        self.btncreerCampBucherons=Button(self.cadreBatiment,text="Camp de bûcherons",command=self.creerCampBucherons, bg=self.couleurBouton)
         self.btncreerCampBucherons.pack(side=TOP)
-        self.btncreerPuit=Button(self.cadreBatiment,text="Puit",command=self.creerpuit)
+        self.btncreerPuit=Button(self.cadreBatiment,text="Puit",command=self.creerpuit, bg=self.couleurBouton)
         self.btncreerPuit.pack(side=TOP)
-        self.btncreerFerme=Button(self.cadreBatiment,text="Ferme",command=self.creerFerme)
+        self.btncreerFerme=Button(self.cadreBatiment,text="Ferme",command=self.creerFerme, bg=self.couleurBouton)
         self.btncreerFerme.pack(side=TOP)
-        self.btnRetour=Button(self.cadreBatiment,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreBatiment,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
         
         ##############BATIMENTS INFRASTRUCTURES##############
-        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole)
+        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole, bg=self.couleurBouton)
         self.btncreerEcole.pack(side=TOP)
-        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital)
+        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital, bg=self.couleurBouton)
         self.btncreerHopital.pack(side=TOP)
-        self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque)
+        self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque, bg=self.couleurBouton)
         self.btncreerBanque.pack(side=TOP)
-        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire)
+        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire, bg=self.couleurBouton)
         self.btncreerLaboratoire.pack(side=TOP)
-        self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
         ##############BATIMENTS MANUFACTURES##############
-        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique)
+        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique, bg=self.couleurBouton)
         self.btncreerCentraleElectrique.pack(side=TOP)
-        self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules)
+        self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules, bg=self.couleurBouton)
         self.btncreerUsineVehicules.pack(side=TOP)
-        self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux)
+        self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux, bg=self.couleurBouton)
         self.btncreerUsineVaisseaux.pack(side=TOP)
-        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones)
+        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones, bg=self.couleurBouton)
         self.btncreerUsineDrones.pack(side=TOP)
-        self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
        
         
         ##############BATIMENTS DEFENSES##############
-        self.btncreermur=Button(self.cadreDefense,text="Creer Mur",command=self.creermur)
+        self.btncreermur=Button(self.cadreDefense,text="Creer Mur",command=self.creermur, bg=self.couleurBouton)
         self.btncreermur.pack(side=TOP)
-        self.btncreercanon=Button(self.cadreDefense,text="Creer Canon",command=self.creercanon)
+        self.btncreercanon=Button(self.cadreDefense,text="Creer Canon",command=self.creercanon, bg=self.couleurBouton)
         self.btncreercanon.pack(side=TOP)
-        self.btncreertour=Button(self.cadreDefense,text="Creer Tour",command=self.creertour)
+        self.btncreertour=Button(self.cadreDefense,text="Creer Tour",command=self.creertour, bg=self.couleurBouton)
         self.btncreertour.pack(side=TOP)
-        self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier)
+        self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier, bg=self.couleurBouton)
         self.btncreerbouclier.pack(side=TOP)
-        self.btnRetour=Button(self.cadreDefense,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreDefense,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         ##############Vehicule##############
-        self.btncreertank=Button(self.cadreVehicule,text="Creer Tank",command=self.creervehiculetank)
+        self.btncreertank=Button(self.cadreVehicule,text="Creer Tank",command=self.creervehiculetank, bg=self.couleurBouton)
         self.btncreertank.pack(side=TOP)
-        self.btncreertank=Button(self.cadreVehicule,text="Creer Hélicoptère",command=self.creervehiculehelicoptere)
+        self.btncreertank=Button(self.cadreVehicule,text="Creer Hélicoptère",command=self.creervehiculehelicoptere, bg=self.couleurBouton)
         self.btncreertank.pack(side=TOP)
-        self.btnRetour=Button(self.cadreVehicule,text="Retour",command=self.Retour)
+        self.btnRetour=Button(self.cadreVehicule,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
         
         ##############CADRE AMELIORATION BATIMENT##############
-        self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment)
+        self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment, bg=self.couleurBouton)
         self.btnAmeliorerBatiment.pack()
-        self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment)
+        self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
+        
+        ##############CADRE AMELIORATION VÉHICULE##############
+        
+        self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.pack()
+        self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.pack()
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
-        
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir Systeme",command=self.voirsysteme)
-        self.btnvuesysteme.pack(side=BOTTOM)
         
         self.jeMontreLeMenuDAmelioration = False
         
@@ -182,6 +194,16 @@ class VuePlanete(Perspective):
         self.maselection = None
         
     def detruireBatiment(self):
+        pass
+    
+    ##############AMELIORER BATIMENT##############
+    def ameliorerVehicule(self):
+        
+        self.montresystemeselection()
+        self.maselection = None
+        pass
+    
+    def detruireVehicule(self):
         pass
     
     def voirsysteme(self):
@@ -361,14 +383,16 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
-
+        self.canevas.delete("vehiculetank")
+        self.minimap.delete("vehiculetank")
+        self.canevas.delete("vehiculehelicoptere")
+        self.minimap.delete("vehiculehelicoptere")
         #self.canevas.delete("selecteur")
         self.afficherselection()
         #e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vehiculeplanetaire:
-                
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -383,51 +407,33 @@ class VuePlanete(Perspective):
                 miniy = (y *200) / self.largeur 
                     
                 if isinstance(j, vehiculeTank):
-                    self.canevas.delete("vehiculetank")
-                    self.minimap.delete("vehiculetank")
-                    
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )  
-                        
                     elif j.angledegre >= 45 and j.angledegre <= 135:#haut
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankhaut"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
-                        
                     elif j.angledegre >= 135 and j.angledegre <= 225:#droit
-                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankdroit"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
-                        
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankdroit"]                     
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankbas"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
+                        
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
-                    
                 elif isinstance(j, vehiculehelicoptere):
-                    self.canevas.delete("vehiculehelicoptere")
-                    self.minimap.delete("vehiculehelicoptere")
-                    
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) )  
-                        
                     elif j.angledegre >= 45 and j.angledegre <= 135:#haut
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopterehaut"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
-                        
                     elif j.angledegre >= 135 and j.angledegre <= 225:#droit
-                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteredroit"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) )  
-                        
+                        im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteredroit"]   
                     else :#bas
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopterebas"]
-                        self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     
+                    self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
-                    pass            
+                               
 
          
          
@@ -455,53 +461,45 @@ class VuePlanete(Perspective):
         
     def cliquerGauche(self,evt):
         t=self.canevas.gettags("current")
-        ##REMET LE MENU A DROITE PAR DEFAUT APRES AVOIR AMELIORE UN BATIMENT##
-        if(self.jeMontreLeMenuDAmelioration):
-            self.jeMontreLeMenuDAmelioration = False
+
+        if t[4] == 'tuile':
             self.montresystemeselection()
-            print("montre menu a droite")
-            #self.macommande=None
-            #self.maselection=None     
-            
-        
-        print("print t : ")
-        print(t)
-        print('event : ' + str(evt.x) + ' - ' + str(evt.y))
-        
-        
-        if t[0]==self.parent.nom:
+        elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
+            self.montreAmeliorationVehicule()
+        else:
             self.montreAmeliorationBatiments()
-            self.macommande=None
-            self.jeMontreLeMenuDAmelioration = True
-            print("clic sur un batiment existant")
-        
-        
-        if self.maselection ==None and t[4] != 'tuile':
+
+        #pour mettre ma selection du clique si ce n'est pas une tuile
+        if self.maselection == None or t[4] != 'tuile':
             self.maselection = t
-            pass
-        elif self.maselection != None and t[4] == 'tuile':
-            if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
-                xdeplacement = self.canevas.canvasx(evt.x)
-                ydeplacement = self.canevas.canvasx(evt.y)
-                self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
-                self.maselection = None
-        
-        elif self.maselection == None and t[4]=="tuile":
-            print(t)
-            print("clic sur une tuile vide")
-            if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
-                x=self.canevas.canvasx(evt.x)
-                y=self.canevas.canvasy(evt.y)
-                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                self.macommande=None
-                self.maselection=None
+            print('maselection : {}'.format(self.maselection))
             
-            elif self.macommande != None and t[5]=='0':
+        #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
+        if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
+            x=self.canevas.canvasx(evt.x)
+            y=self.canevas.canvasy(evt.y)
+            self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
+            self.macommande=None
+            self.maselection=None
+        elif self.macommande != None and t[5]=='0':
                 x=int(t[3])
                 y=int(t[2])
                 print('position de la mine x = {0}, y = {1}'.format(t[0],t[1]))
                 self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                 self.macommande = None
+                self.maselection=None
+        elif self.macommande == None:
+            #clique sur un objet sur la map
+            if self.maselection == None and t[4] != 'tuile':
+                pass
+                
+            #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
+            elif self.maselection != None and t[4] == 'tuile':
+                if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
+                    xdeplacement = self.canevas.canvasx(evt.x)
+                    ydeplacement = self.canevas.canvasx(evt.y)
+                    self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
+                    self.maselection = None
             
         
                   
@@ -515,6 +513,9 @@ class VuePlanete(Perspective):
         
     def montreAmeliorationBatiments(self):
         self.changecadreetat(self.cadreAmeliorationBatiments)
+        
+    def montreAmeliorationVehicule(self):
+        self.changecadreetat(self.cadreAmeliorationVehicule)
         
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadreetatmsg)

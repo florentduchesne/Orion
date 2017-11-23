@@ -50,6 +50,7 @@ class Vehicule():
             
             if (self.parent.ressources.estPlusGrandOuEgal(coutressource)):
                 #diminuer les ressources au joueur
+                self.parent.ressources.soustraireRessources(coutressource)   
                 return True
             else:
                 return False

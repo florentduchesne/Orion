@@ -24,7 +24,6 @@ class Vaisseau():
         self.niveau =1 # niveau
         self.idSysteme =idSysteme
         self.dansGalaxie = False
-        self.range = 3 #temporaire
 
     def initialisation(self):
         if self.niveau>1 :

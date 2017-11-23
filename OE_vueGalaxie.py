@@ -14,6 +14,13 @@ class VueGalaxie(Perspective):
         self.modele=self.parent.modele
         self.maselection=None
         self.commande = None
+        
+        self.couleurBG1 = "#222831"
+        self.couleurBG2 = "#393E46"
+        self.couleurBouton = "#0092ca"
+        self.couleurBoutonDesactive = "#50a2c1"
+        
+        
         self.AL2pixel=100
         print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
@@ -21,14 +28,13 @@ class VueGalaxie(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         #############################
   
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir systeme",command=self.voirsysteme)
-        self.btnvuesysteme.pack(side=BOTTOM)
+        self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED)
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
         
         
-        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans systeme",bg="darkgray",command =self.voyageSystem)
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans systeme", bg=self.couleurBouton,command =self.voyageSystem)
         self.btnVoyage.pack()
     
     
@@ -43,6 +49,7 @@ class VueGalaxie(Perspective):
                         print(s.planetes)
                         break
                 
+                self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED)
                 self.parent.parent.visitersysteme(sid)
                 self.parent.voirsysteme(s) #normalement devrait pas planter
         else:                
@@ -188,6 +195,7 @@ class VueGalaxie(Perspective):
     def cliquerGauche(self,evt):
         self.changecadreetat(None)
         t=self.canevas.gettags("current")
+        self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED)
         if t and t[0]!="current":    
             if t[1]=="vaisseauinterstellaire":
                 print("IN VAISSEAUINTERSTELLAIRE",t)
@@ -195,6 +203,7 @@ class VueGalaxie(Perspective):
                 self.montrevaisseauxselection()
             
             elif t[1]=="systeme":
+                self.btnvuesysteme.configure(bg=self.couleurBouton, command=self.voirsysteme, state=NORMAL)
                 print("IN SYSTEME",t)
                 if self.maselection and self.maselection[1]=="vaisseauinterstellaire":
                     print("IN systeme + select VAISSEAUINTERSTELLAIRE")
