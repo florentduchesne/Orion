@@ -4,8 +4,7 @@ from PIL import Image,ImageDraw, ImageTk
 import math
 from helper import Helper as hlp
 from OE_vuePerspective import *
-from OE_objetsVaisseaux import VaisseauChaseur, VaisseauColonisation,\
-    VaisseauAttaque
+from OE_objetsVaisseaux import VaisseauChasseur, VaisseauColonisation,VaisseauAttaque
 
 
 class VueSysteme(Perspective):
@@ -34,10 +33,6 @@ class VueSysteme(Perspective):
         self.btncreerstation.pack()
         self.btnRecolterRessources=Button(self.cadreetataction, text="Récolter les ressources", command=self.recolterRessources)
         self.btnRecolterRessources.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
-        self.btnvuesysteme.pack(side=BOTTOM)
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
-        self.btnvuesysteme.pack(side=BOTTOM)
         
         ##############Vaisseaux##############
         self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = lambda : self.creervaisseau("chasseur"))
@@ -189,7 +184,7 @@ class VueSysteme(Perspective):
                         x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                         x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                        if isinstance(j,VaisseauChaseur):
+                        if isinstance(j,VaisseauChasseur):
                             im=self.parent.modes["systemes"][j.idSysteme].images["chasseur"]
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
                         if isinstance(j,VaisseauColonisation) :
@@ -205,7 +200,7 @@ class VueSysteme(Perspective):
                                     couleur = pro.couleur
                                     self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
                                     self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
-                       
+                                    
                             for pro in j.projectile:
                                 x=pro.x*e
                                 y=pro.y*e
@@ -248,7 +243,7 @@ class VueSysteme(Perspective):
                     if i.id == v[2]:
                         x=i.x
                         y=i.y
-                        t=10
+                        t=25
                         self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                     outline=joueur.couleur,
                                                     tags=("select","selecteur"))
@@ -328,6 +323,14 @@ class VueSysteme(Perspective):
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
+    def RemplirVaisseau(self):
+        pass
+    
+    def ViderVaisseau(self):
+        pass
+    
+    def pasVoyager(self):
+        self.changecadreetat(None)
             
     def montreplaneteselection(self):
         self.changecadreetat(self.cadreetataction)
