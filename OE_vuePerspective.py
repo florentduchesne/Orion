@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from tkinter import *
 from PIL import Image,ImageDraw, ImageTk
+import tkinter.ttk as ttk
 
 class Perspective(Frame):
     def __init__(self,parent):
@@ -84,6 +85,26 @@ class Perspective(Frame):
         self.minimap.bind("<Button>",self.cliquerminimap)
         self.minimap.pack()
         
+        #Chat
+        self.cadreChatEntete=Frame(self.cadreinfo,width=200,height=30,bg="DodgerBlue4")
+        self.cadreChat=Frame(self.cadreinfo,width=200,height=200,bg="DodgerBlue4")
+        self.labelChat=Label(self.cadreChatEntete,bg="SkyBlue1", text="Destinataire: ")
+        self.comboboxListeChat=ttk.Combobox(self.cadreChatEntete)
+
+        
+        self.listeChat=Listbox(self.cadreChat, height=15, bg="SkyBlue1")
+        self.listeChat.config(width=300)
+        self.listeChat.yview()
+        self.entryChat = Entry(self.cadreChat, width=30)
+        self.entryChat.bind("<Return>", self.envoyeMessage)
+        
+        self.cadreChat.pack(side=BOTTOM)
+        self.cadreChatEntete.pack(side=BOTTOM)
+        self.labelChat.pack(side=LEFT)
+        self.comboboxListeChat.pack(side=LEFT)
+        self.listeChat.pack()
+        self.entryChat.pack()
+        
     def cliquervue(self,evt):
         pass
     
@@ -112,6 +133,40 @@ class Perspective(Frame):
         if cadre:
             self.cadreetatactif=cadre
             self.cadreetatactif.pack()
- 
+            
+    def nouveauMessageChat(self, txt):
+        if self.parent.nom == txt[0]:
+            self.listeChat.insert(0, "*"+txt[1])
+            self.modele.joueurs[self.parent.nom].listMessageChat.append("*"+txt[1])
+        elif txt[0] == "Tous":
+            self.listeChat.insert(0, txt[1])
+            self.modele.joueurs[self.parent.nom].listMessageChat.append(txt[1])
+            print(self.modele.joueurs[self.parent.nom].listMessageChat)
         
+    def envoyeMessage(self, evt):
+        txt=self.entryChat.get()
+        aQui=self.comboboxListeChat.get()
+        if txt:
+            if aQui != "Tous":
+                self.listeChat.insert(0, "To "+aQui+": "+txt)
+                self.modele.joueurs[self.parent.nom].listMessageChat.append("To "+aQui+": "+txt)
+            self.entryChat.delete(0, END)
+            self.parent.parent.nouveauMessageChat([aQui,txt])
+ 
+    def chatEcrireLesNomsDesJoueurs(self):
+        h=0
+        listeJoueur=["Tous"]
+        for i in self.modele.joueurscles:
+            h+=1
+            listeJoueur.append(i)
+        self.comboboxListeChat['values'] = listeJoueur
+        self.comboboxListeChat.current(0)
+        
+    def remplirChatBoxChangementVue(self):
+        if self.modele != None:
+            print("ICIIIIIIIIIIIII")
+            if self.modele.joueurs[self.parent.nom] != None:
+                print("ICIII345345345IIIII")
+                for message in self.modele.joueurs[self.parent.nom].listMessageChat:
+                    self.listeChat.insert(0, message)
          

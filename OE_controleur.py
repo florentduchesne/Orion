@@ -37,7 +37,7 @@ class Controleur():
 
     def creerpartie(self):
         if self.egoserveur==0:
-            pid = Popen(["C:\\Python34\\Python.exe", "./OE_serveur.py"],shell=1).pid # on lance l'application serveur
+            pid = Popen(["D:\\eclipse\Python\\Python.exe", "./OE_serveur.py"],shell=1).pid # on lance l'application serveur
             self.egoserveur=1 # on note que c'est soi qui, ayant demarre le serveur, aura le privilege de lancer la simulation
 
     ## ----------- FONCTION POUR CELUI QUI A CREE LA PARTIE SEULEMENT
@@ -175,6 +175,9 @@ class Controleur():
         
     def changerValeurTuile(self,t):
         self.modele.changerValeurTuile(t)
+        
+    def nouveauMessageChat(self, txt):
+        self.actions.append([self.monnom,"nouveauMessageChat",[txt[0],self.monnom+": "+txt[1]]])
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)
