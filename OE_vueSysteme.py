@@ -339,9 +339,10 @@ class VueSysteme(Perspective):
             elif t[1] == "vaisseauinterstellaire":
                 self.cadrevoyage.pack()
                 self.mesSelections.append((self.parent.nom,t[1],t[2]))
-            elif t[6] == "mere":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
-                self.montrevaisseauxselection()
+            elif len(t) >= 6:
+                if t[6] == "mere":
+                    self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
+                    self.montrevaisseauxselection()
             elif t[1] == "vaisseauinterstellaire":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
                 self.pasVoyager() 
