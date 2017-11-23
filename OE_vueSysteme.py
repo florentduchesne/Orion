@@ -181,9 +181,6 @@ class VueSysteme(Perspective):
         for x in range(0,361):
             im = Image.open("./images/chasseur.png")
             self.images[("chasseur"+str(x))] = ImageTk.PhotoImage(im.rotate(-x)) 
-            
-
-
         self.images["tank"] = ImageTk.PhotoImage(im)  
         im = Image.open("./images/vaisseauMere.png")
         self.images["mere"] = ImageTk.PhotoImage(im)    
