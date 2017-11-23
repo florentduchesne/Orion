@@ -241,6 +241,16 @@ class Joueur():
                             self.parent.parent.affichervehiculehelicoptere(nom,systemeid,planeteid,x,y, heli.id)
                         else:
                             print('pas assez de ressources pour le vehicule')
+                            
+    def ameliorerVehicule(self, maSelection, planete, systeme):
+        print("AMELIORATION VEHICULE DANS OBJ JOUEUR")
+        print(maSelection)
+        #print(planete.infrastructures)
+        planete = self.getPlanete(planete, systeme)
+        for vehicule in planete.vehiculeplanetaire:
+            if vehicule.id == maSelection[5]:
+                print('FAIRE AMELIORATION DU VEHICULE')
+                vehicule.ameliorer()
 
     def creervehiculecommerce(self, id):
         for i in self.systemesvisites:
@@ -262,7 +272,17 @@ class Joueur():
         for i in self.vaisseauxinterstellaires:
             if i.id== idori:
                 for j in self.parent.systemes:
-                    if j.id== idsyteme:
+                    if j.id == iddesti and idsyteme == None:
+                        i.ciblerdestination(j)
+                        return 
+                for v in self.vaisseauxinterstellaires:
+                    if v.id == iddesti and idori != iddesti and idsyteme == None:
+                        print("cible vaisseaU")
+                        i.ciblerdestination(v)       
+                        #i.ciblerdestination(Coord(xy))
+                        return          
+                for j in self.parent.systemes:
+                    if j.id == idsyteme:
                         for p in j.planetes:
                             if p.id== iddesti:
                                 #i.cible=j
@@ -273,7 +293,7 @@ class Joueur():
                                 print("cible vaisseaU")
                                 i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
-                                return
+                                return          
                 for j in self.systemesvisites:
                     if j.id== idsyteme:
                         for p in j.planetes:
@@ -311,7 +331,8 @@ class Joueur():
                         self.objetgalaxie.append(i)
 
     def voyageSystem(self,ids): 
-        idVais,idpropri,idSystem=ids
+        print("Dans Sys")
+        idSystem, idVais=ids
         for i in self.vaisseauxinterstellaires:
             if i.id == idVais:
                 for j in self.parent.systemes:
