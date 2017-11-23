@@ -169,7 +169,7 @@ class Joueur():
                     if idplanete==p.id:
                         # print("vais creer")
                         if typeVaisseau == "chasseur" :
-                            v=VaisseauChaseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
+                            v=VaisseauChasseur(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type)#self.niveauVaisseau)
                             self.vaisseauxinterstellaires.append(v)
                             
                         elif typeVaisseau == "colonisateur":
