@@ -21,16 +21,24 @@ class Vaisseau():
         self.vitesse=random.choice([0.001,0.003,0.005,0.01])*5 #0.5
         self.cible=None
         self.vie = 100 
-        self.niveau = 1 # niveau
+        self.niveau =1 # niveau
         self.idSysteme =idSysteme
         self.dansGalaxie = False
-        self.range = 3 #temporaire
         self.dansVaisseauMere = False
 
     def initialisation(self):
         if self.niveau>1 :
             for ame in range(self.niveau):
                 ame.augmentation
+        
+    def creerVaisseauRestriction(self):
+        if (self.joueur.ressource.humain - self.besoinhumain) > 0:
+            if (self.joueur.ressource.bronze - self.besoinbronze) > 0 :
+                if (self.joueur.ressource.uranium - self.uranium) > 0:
+                    self.joueur.ressource.humain - self.besoinhumain
+                    self.joueur.ressource.bronze - self.besoinbronze
+                    self.joueur.ressource.uranium - self.uranium
+        
 
     def avancer(self):
         rep=None
@@ -51,16 +59,11 @@ class Vaisseau():
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
             
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
-            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:#si le vaisseau est arrivé
+            if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
-                print("vaisseau arrivé sur la planete")
-                if(isinstance(self, VaisseauColonisation)):
-                    print("ceci est un vaisseau colonisateur")
-                    if self.cible.coloniser(self.proprietaire):
-                        return "colonisation"
                 self.cible=None
-            return rep#on retourne la cible
+            return rep
         elif self.cible and isinstance(self.cible, Vaisseau):
             x=self.cible.x
             y=self.cible.y
@@ -227,8 +230,7 @@ class VaisseauBiologique(Vaisseau):
         pass
         
 class VaisseauMere(VaisseauAttaque):
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau,maxVaisseau):
-        VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
+    def __init__(self, maxVaisseau):
         self.maxVaisseau = maxVaisseau
         self.systemePresent = self.base
         self.attaque = 15
@@ -259,7 +261,7 @@ class VaisseauChasseur(VaisseauAttaque):
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
         VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
         self.attaque =  self.attaque+20
-        self.vitesse = 0.005*5
+        self.vitesse = 0.001*5
 
     
 class VaisseauBombarde(VaisseauAttaque):
@@ -275,15 +277,15 @@ class VaisseauLaser(VaisseauAttaque):
         self.portee = self.portee + 10
     
 class VaisseauTank(VaisseauAttaque):
-    def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau):
-        VaisseauAttaque.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats, portee,typeVaisseau)
+    def __init__(self):
         self.attaque =  self.attaque+15
         self.vie = self.vie + 50
         self.vitesse = 0.003*5
-        self.portee = portee + 5
+        self.portee = self.portee + 5
         self.augmentationPortee = 1
         self.augmentationVie = 2
         self.augmentationAttaque = 1
+        
     
     def augmentation(self) :
         self.niveau += 1

@@ -43,7 +43,7 @@ class VueGalaxie(Perspective):
         if systeme==None:
             if self.maselection and self.maselection[0]==self.parent.nom and self.maselection[1]=="systeme":
                 sid=self.maselection[2]
-               # for i in self.modele.joueurs[self.parent.nom].systemesvisites:
+                # for i in self.modele.joueurs[self.parent.nom].systemesvisites:
                 for i in self.modele.systemes:
                     if i.id==sid:
                         s=i
@@ -64,8 +64,9 @@ class VueGalaxie(Perspective):
             self.parent.voirsysteme(s) #normalement devrait pas planter
             
     def chargeimages(self):
-        im = Image.open("./images/chasseur.png")
-        self.images["chasseur"] = ImageTk.PhotoImage(im)
+       # im = Image.open("./images/chasseurhautgauche.png")
+        #self.images["chasseur"] = ImageTk.PhotoImage(im)
+        pass
         
     def afficherdecor(self):
         self.creerimagefond()
