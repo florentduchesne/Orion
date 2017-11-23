@@ -13,6 +13,12 @@ class VueSysteme(Perspective):
         self.planetes={}
         self.systeme=None
         self.maselection=None
+        self.couleurBG1 = "#222831"
+        self.couleurBG2 = "#393E46"
+        self.couleurBouton = "#0092ca"
+        self.couleurBoutonDesactive = "#50a2c1"
+        
+        self.btnvuegalaxie.configure(bg=self.couleurBouton, command=self.voirgalaxie, state=NORMAL)
         
         self.UA2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomiques       
         print("Diametre: ", self.modele.diametre)
@@ -28,10 +34,8 @@ class VueSysteme(Perspective):
         ##############Base##############
         self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir planete",command=self.voirplanete)
-        self.btnvuesysteme.pack(side=BOTTOM)
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir galaxie",command=self.voirgalaxie)
-        self.btnvuesysteme.pack(side=BOTTOM)
+        
+        
         
         ##############Vaisseaux##############
         self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur",command = self.creervaisseau)#("chasseur"))
@@ -68,9 +72,11 @@ class VueSysteme(Perspective):
         
     def voirplanete(self):
         self.parent.voirplanete(self.maselection)
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
 
     def voirgalaxie(self):
         self.parent.voirgalaxie()
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
     
     def AfficherChoixVaisseau(self):
         self.changecadreetat(self.cadreVaisseau)
@@ -222,6 +228,7 @@ class VueSysteme(Perspective):
         xy=evt.x/e,evt.y/e
         xy2=evt.x,evt.y
         t=self.canevas.gettags("current")
+        self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
         if t and t[0]!="current":
             
             if t[1] == "planete"  :
@@ -234,6 +241,7 @@ class VueSysteme(Perspective):
                     self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
                     print(t)
                     self.montreplaneteselection()
+                    self.btnvueplanete.configure(bg=self.couleurBouton, command=self.voirplanete, state=NORMAL)
                 
             elif t[1]=="vaisseauinterstellaire":
                 print("IN VAISSEAUINTERSTELLAIRE",t)

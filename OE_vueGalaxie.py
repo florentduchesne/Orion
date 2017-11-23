@@ -14,6 +14,13 @@ class VueGalaxie(Perspective):
         self.modele=self.parent.modele
         self.maselection=None
         self.commande = None
+        
+        self.couleurBG1 = "#222831"
+        self.couleurBG2 = "#393E46"
+        self.couleurBouton = "#0092ca"
+        self.couleurBoutonDesactive = "#50a2c1"
+        
+        
         self.AL2pixel=100
         print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
@@ -23,8 +30,7 @@ class VueGalaxie(Perspective):
   
         self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         self.btncreerstation.pack()
-        self.btnvuesysteme=Button(self.cadreetataction,text="Voir systeme",command=self.voirsysteme)
-        self.btnvuesysteme.pack(side=BOTTOM)
+        
         
         self.lbselectecible=Label(self.cadreetatmsg,text="Choisir cible",bg="darkgrey")
         self.lbselectecible.pack()
