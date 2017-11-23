@@ -15,6 +15,7 @@ class BatimentRessources():
         self.nomBatiment = nomBatiment
         self.productionRessources = production
         self.listeNiveaux = listeNiveaux
+        self.proprietaire = proprio
         
     def ameliorer(self, joueur, planete):
         print("AMELIORER DANS OBJ BATIMENT")
@@ -43,6 +44,7 @@ class BatimentManufacture():
         self.planeteid=planeteid
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
+        self.proprietaire = proprio
         
     def ameliorer(self, joueur, planete):
         print("AMELIORER DANS OBJ BATIMENT")
@@ -99,7 +101,7 @@ class BatimentDefense():
         self.systemeid=idSysteme
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
-        self.proprio = proprio
+        self.proprietaire = proprio
         
     def ameliorer(self, joueur, planete):
         print("AMELIORER DANS OBJ BATIMENT")
