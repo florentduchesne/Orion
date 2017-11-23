@@ -361,14 +361,16 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
-
+        self.canevas.delete("vehiculetank")
+        self.minimap.delete("vehiculetank")
+        self.canevas.delete("vehiculehelicoptere")
+        self.minimap.delete("vehiculehelicoptere")
         #self.canevas.delete("selecteur")
         self.afficherselection()
         #e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.vehiculeplanetaire:
-                
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -382,10 +384,7 @@ class VuePlanete(Perspective):
                 minix = (x *200) / self.largeur 
                 miniy = (y *200) / self.largeur 
                     
-                if isinstance(j, vehiculeTank):
-                    self.canevas.delete("vehiculetank")
-                    self.minimap.delete("vehiculetank")
-                    
+                if isinstance(j, vehiculeTank):                  
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculetankgauche"]
                         self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculetank",j.id) )  
@@ -405,10 +404,7 @@ class VuePlanete(Perspective):
                     #mini-map   
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))
                     
-                elif isinstance(j, vehiculehelicoptere):
-                    self.canevas.delete("vehiculehelicoptere")
-                    self.minimap.delete("vehiculehelicoptere")
-                    
+                elif isinstance(j, vehiculehelicoptere):                   
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]
                         self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) )  

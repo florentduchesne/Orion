@@ -68,8 +68,10 @@ class Vaisseau():
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
-            
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if self.dansGalaxie == False:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            else:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
                 rep=self.cible
                 self.base=self.cible
