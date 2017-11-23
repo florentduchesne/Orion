@@ -242,7 +242,7 @@ class VueSysteme(Perspective):
                     if i.id == v[2]:
                         x=i.x
                         y=i.y
-                        t=10
+                        t=25
                         self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                     outline=joueur.couleur,
                                                     tags=("select","selecteur"))
