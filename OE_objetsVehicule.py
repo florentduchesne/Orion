@@ -35,7 +35,6 @@ class Vehicule():
         rep = None
         x=self.cible.x
         y=self.cible.y
-        print(x,y)
         self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesseDeplacement,self.x,self.y)
         if hlp.calcDistance(self.x,self.y,x,y) <=self.vitesseDeplacement:
             rep=self.cible
@@ -44,10 +43,8 @@ class Vehicule():
         return rep  
     
     def verificationRessources(self):
-        
             infoCout = dictionnaireCoutVehicule[self.nomVehicule]
             coutressource = infoCout[0]
-            
             if (self.parent.ressources.estPlusGrandOuEgal(coutressource)):
                 #diminuer les ressources au joueur
                 self.parent.ressources.soustraireRessources(coutressource)   
@@ -55,6 +52,9 @@ class Vehicule():
             else:
                 return False
  
+    def ameliorer(self):
+        print('a implanter')
+        pass
     
     def rechargeBatterie(self):
         pass 
