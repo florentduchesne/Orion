@@ -4,7 +4,8 @@ from PIL import Image,ImageDraw, ImageTk
 import random
 from helper import Helper as hlp
 from OE_vuePerspective import Perspective
-from OE_objetsVaisseaux import Vaisseau
+from OE_objetsVaisseaux import VaisseauMere
+import math
 
 
 
@@ -64,9 +65,9 @@ class VueGalaxie(Perspective):
             self.parent.voirsysteme(s) #normalement devrait pas planter
             
     def chargeimages(self):
-       # im = Image.open("./images/chasseurhautgauche.png")
-        #self.images["chasseur"] = ImageTk.PhotoImage(im)
-        pass
+        for x in range(0,361):
+            im = Image.open("./images/vaisseauMereGalaxie.png")
+            self.images[("mere"+str(x))] = ImageTk.PhotoImage(im.rotate(-x))    
         
     def afficherdecor(self):
         self.creerimagefond()
@@ -142,20 +143,19 @@ class VueGalaxie(Perspective):
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             for j in i.objetgalaxie:
-                
-                if (isinstance(j, Vaisseau)):
+                if isinstance(j, VaisseauMere):
                     jx=j.x*e
                     jy=j.y*e
                     x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
                     x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
                     x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
                     x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                    self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
-                    self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
-                    self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                             tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
+                    angle = int(math.degrees(j.angleinverse))
+
+                    
+                    tag =("mere"+str(angle))
+                    im=self.parent.modes["galaxie"].images[tag]
+                    self.parent.modes["galaxie"].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
         
     def changerproprietaire(self,prop,couleur,systeme):
         #lp=self.canevas.find_withtag(systeme.id) 

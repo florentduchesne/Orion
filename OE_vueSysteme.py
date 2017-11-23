@@ -202,13 +202,13 @@ class VueSysteme(Perspective):
                         angle = int(math.degrees(j.angleinverse))
 
                                         
-                        if (isinstance(j, VaisseauChasseur)):
-                            jx=j.x*e
-                            jy=j.y*e
-                            x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                            x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                            x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
-                            x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                     #   if (isinstance(j, VaisseauChasseur)):
+                    #        jx=j.x*e
+                   #         jy=j.y*e
+                  #          x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
+                            #x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
+                           # x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
+                          #  x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
                             
                       
                             #self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
