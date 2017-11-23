@@ -15,7 +15,8 @@ class VueGalaxie(Perspective):
         self.maselection=None
         self.mesSelections=[]
         self.commande = None
-        
+        self.initX = 0
+        self.initY = 0
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
         self.couleurBouton = "#0092ca"
@@ -224,6 +225,27 @@ class VueGalaxie(Perspective):
             self.maselection=None
             self.lbselectecible.pack_forget()
             self.canevas.delete("selecteur")
+            
+    def maintenirGauche(self, evt):
+        joueur=self.modele.joueurs[self.parent.nom]
+        self.mesSelections.clear() 
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)                 
+        self.canevas.delete("selectionner")       
+        self.canevas.create_rectangle(self.initX,self.initY,x,y,dash=(2,2),outline=joueur.couleur,tags=("selectionner"))
+        pluspetitx = hlp.valeurminimal(self.initX,x)
+        plusgrandx = hlp.valeurmaximal(self.initX,x)
+        pluspetity = hlp.valeurminimal(self.initY,y)
+        plusgrandy = hlp.valeurmaximal(self.initY,y)
+        for vj in joueur.vaisseauxinterstellaires:
+                if(vj.dansGalaxie):
+                    print("JE suis a linterieur")
+                    vaisseauX = vj.x*100
+                    vaisseauY = vj.y*100
+                    if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
+                        self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",vj.id))
+        
+        print(self.mesSelections)
     
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")  
@@ -272,6 +294,8 @@ class VueGalaxie(Perspective):
                             self.parent.parent.ciblerdestination(v[2],vaisseau[2],None,xy)
                 else:
                     self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
+        
+        
             
     def cliquerCentre(self, evt):
         joueur=self.modele.joueurs[self.parent.nom]
