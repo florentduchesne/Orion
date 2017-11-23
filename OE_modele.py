@@ -1,7 +1,7 @@
 from OE_objetsJoueur import *
 from OE_objets import *
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
-
+from math import degrees
 
 class Modele():
     def __init__(self,parent,joueurs,dd):
