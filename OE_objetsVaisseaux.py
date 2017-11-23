@@ -11,7 +11,7 @@ class Vaisseau():
         self.parent=parent
         self.id=idSuivant
         self.proprietaire=nom
-        self.taille=16
+        self.taille=32
         self.base=systeme
         self.angletrajet=0
         self.angleinverse=0
@@ -25,14 +25,7 @@ class Vaisseau():
         self.idSysteme =idSysteme
         self.dansGalaxie = False
         self.range = 3 #temporaire
-        self.listeCibleAttaquer=[]
-        self.cibleAttaque= None
-        self.attaque = 1
-        self.projectile=[]
-        self.typeVaisseau = typeVaisseau
-        self.tempsRecharge=0
-        #self.initialisation
-        
+
     def initialisation(self):
         if self.niveau>1 :
             for ame in range(self.niveau):
@@ -83,7 +76,7 @@ class Vaisseau():
                 #self.cible=None
             return rep
         elif self.cible!=None:
-            print(self.cible.x,self.x,self.cible.y,self.y)
+           # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
@@ -103,7 +96,7 @@ class Vaisseau():
     
     def augmentation(self) :
         self.niveau += 1
-    
+
     
 class VaisseauAttaque(Vaisseau):
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,Degats,portee,typeVaisseau):
@@ -116,36 +109,33 @@ class VaisseauAttaque(Vaisseau):
         self.augmentationDomamage = 2
         self.augmentationVie = 2
         self.augmentationPortee = 1
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 1
+        self.projectile=[]
+        self.tempsRecharge=0
             
         
-        def attaquer(self):       
-            if self.cibleAttaque.vie>0:
-                #print(self.cibleAttaque.vie)
-                self.enAttaque=True
-                #protile = Projectile(self,self.cibleAttaque)
-                
-                #or projec in self.projectile:
-                   # projec.avancer()
-                if self.tempsRecharge==0:
-                    p=Projectile(self,self.cibleAttaque)
-                    self.projectile.append(p)
-                    p.ciblerdestination()
-                    self.tempsRecharge=10
-                else:
-                    self.tempsRecharge=self.tempsRecharge-1
-                
-                    
-             
-                #self.cibleAttaque.vie = self.cibleAttaque.vie - protile.degat 
-                #print(self.cibleAttaque.vie)
-            else: 
-                #print("retirer cible")
-                self.enAttaque=False         
-                #self.cibleAttaque.proprietaire="inconnu"
-                self.listeCibleAttaquer.remove(self.cibleAttaque)
-                
-                self.cibleAttaque=None  
-                #self.planetteCible=None 
+
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
+
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+
     
     def augmentation(self) :
         self.niveau += 1

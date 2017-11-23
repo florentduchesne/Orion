@@ -122,6 +122,7 @@ class StationSpatiale():
         self.id=idSuivant
         self.x=x
         self.y=y
+        self.proprietaire = proprio
         self.systemeid=idSysteme
         self.base=systeme
         self.angle=0

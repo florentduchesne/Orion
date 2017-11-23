@@ -43,6 +43,8 @@ class Joueur():
                       "creerstationspatiale":self.creerstationspatiale,
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
+                      "voyageSystem":self.voyageSystem,
+                      "recolterBatiment":self.recolterRessources,
                       "voyageSystem":self.voyageSystem}
                       #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
@@ -225,7 +227,7 @@ class Joueur():
                                 print("cible trouver")
                                 i.ciblerdestination(p)
                         for v in self.vaisseauxinterstellaires:
-                            if v.id == iddesti:
+                            if v.id == iddesti and idori != iddesti:
                                 print("cible vaisseaU")
                                 i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
@@ -277,6 +279,22 @@ class Joueur():
                         i.x=25-2
                         i.y=25-2
                         self.objetgalaxie.remove(i)
+                        
+    def recolterRessources(self, id):
+        idSysteme, idPlanete = id
+        print("id systeme " + idSysteme)
+        print("id planete " + idPlanete)
+        for i in self.systemesvisites:
+            print("i.id " + i.id)
+            if i.id==idSysteme:
+                for p in i.planetes:
+                    print("p.id " + p.id)
+                    if idPlanete==p.id:
+                        self.ressources.additionnerRessources(p.ressource)
+                        print("ressources collectées")
+                        p.ressource = Ressource()
+                        return
+        
                                
     def ciblerdestinationvehicule(self, ids):
         print('une étape du déplacement de plus!!!')
@@ -305,11 +323,12 @@ class Joueur():
                             print("Proprio")
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
-            for protil in i.projectile:
-                if protil.cible == None:
-                    i.projectile.remove(protil)
-                else:
-                    protil.avancer() 
+            if isinstance(i, VaisseauAttaque):
+                for protil in i.projectile:
+                    if protil.cible == None:
+                        i.projectile.remove(protil)
+                    else:
+                        protil.avancer() 
        
         for i in self.vehiculeplanetaire:
             if i.cible:
@@ -339,23 +358,25 @@ class Joueur():
             else:
                 j=self.parent.joueurs.get(jKey)
                 for vaisseau in self.vaisseauxinterstellaires:
-                    vaisseau.listeCibleAttaquer.clear()
-                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
-                        if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
-                            distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                            if distance < vaisseau.range:
-                                vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-                               # print("vaisseau detecter")
+                    if isinstance(vaisseau, VaisseauAttaque):
+                        vaisseau.listeCibleAttaquer.clear()
+                        for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                            if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
+                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                if distance < vaisseau.range:
+                                    vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                                   # print("vaisseau detecter")
                             
                     
     def choisirCible(self):    
         for vseau in self.vaisseauxinterstellaires:
-            vseau.cibleAttaque=None
-            if len(vseau.listeCibleAttaquer)>0:
-                vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
-                vseau.attaquer()   
-            else:
-                pass      
+            if isinstance(vseau, VaisseauAttaque):
+                vseau.cibleAttaque=None
+                if len(vseau.listeCibleAttaquer)>0:
+                    vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
+                    vseau.attaquer()   
+                else:
+                    pass      
                
 #            elif vseau.cible != None:
  #               if vseau.cible.proprietaire == "espace":

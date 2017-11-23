@@ -21,8 +21,6 @@ class VueGalaxie(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         #############################
   
-        self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
-        self.btncreerstation.pack()
         self.btnvuesysteme=Button(self.cadreetataction,text="Voir systeme",command=self.voirsysteme)
         self.btnvuesysteme.pack(side=BOTTOM)
         
@@ -119,9 +117,6 @@ class VueGalaxie(Perspective):
         eey=int(ii)/self.hauteur/2
         self.canevas.yview(MOVETO, yy-eey)
 
-    
-    def creerstation(self):
-        print("Creer station EN CONSTRUCTION")
         
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
@@ -220,6 +215,7 @@ class VueGalaxie(Perspective):
             self.maselection=None
             self.lbselectecible.pack_forget()
             self.canevas.delete("selecteur")
+            
             
     def montresystemeselection(self):
         self.changecadreetat(self.cadreetataction)

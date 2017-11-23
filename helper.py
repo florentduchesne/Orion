@@ -21,3 +21,17 @@ class Helper(object):
          distance=math.sqrt(dx+dy)
          return distance
     calcDistance = staticmethod(calcDistance)
+    
+    def valeurminimal(valeur1, valeur2):
+        if valeur1 < valeur2:
+            return valeur1
+        else:
+            return valeur2
+    valeurminimal = staticmethod(valeurminimal)
+        
+    def valeurmaximal(valeur1, valeur2):
+        if valeur1 > valeur2:
+            return valeur1
+        else:
+            return valeur2
+    valeurmaximal = staticmethod(valeurmaximal)
