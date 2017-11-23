@@ -177,9 +177,13 @@ class Joueur():
                         else:
                             nomtank = 'vehiculetank'    
                         tank=vehiculeTank(self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomtank)
-                        j.vehiculeplanetaire.append(tank)
-                        self.vehiculeplanetaire.append(tank)
-                        self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
+                        #verification du cout pour le vehicule
+                        if tank.verificationRessources():
+                            j.vehiculeplanetaire.append(tank)
+                            self.vehiculeplanetaire.append(tank)
+                            self.parent.parent.affichervehiculetank(nom,systemeid,planeteid,x,y, tank.id)
+                        else:
+                            print('pas assez de ressources pour le vehicule')
 
     def creervehiculehelicoptere(self, listeparams):
         nom,systemeid,planeteid,x,y, nomBatiment=listeparams
@@ -223,7 +227,7 @@ class Joueur():
                                 print("cible trouver")
                                 i.ciblerdestination(p)
                         for v in self.vaisseauxinterstellaires:
-                            if v.id == iddesti:
+                            if v.id == iddesti and idori != iddesti:
                                 print("cible vaisseaU")
                                 i.ciblerdestination(v)       
                                 #i.ciblerdestination(Coord(xy))
