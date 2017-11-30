@@ -307,7 +307,8 @@ class Joueur():
                             i.dansGalaxie=True
                             self.objetgalaxie.append(i)
                 else:
-                    print("Ce vaisseau ne peut voyager dans la galaxie")
+                    self.parent.parent.nouveauMessageSystemChat("Ce vaisseau ne peut voyager", "dans la galaxie!")
+                    
 
     def voyageSystem(self,ids): 
         idSystem, idVais=ids
