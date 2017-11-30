@@ -351,5 +351,5 @@ class VueGalaxie(Perspective):
     
     def voyageSystem(self):
         self.commande="voyageSystem"
-       # self.parent.parent.voyageSystem(self.maselection[0],self.maselection[2])
+        #self.parent.parent.voyageSystem(self.maselection[0],self.maselection[2])
        

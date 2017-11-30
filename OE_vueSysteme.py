@@ -425,8 +425,9 @@ class VueSysteme(Perspective):
             self.parent.parent.voyageGalax(v[0],v[2])        
             for jv in joueur.vaisseauxinterstellaires:
                 if jv.id == v[2]:
-                    jv.dansGalaxie = True
-                    jv.cible=None             
+                    if isinstance(jv, VaisseauMere):
+                        jv.dansGalaxie = True
+                        jv.cible=None             
         self.maselection=None
         self.mesSelections.clear()
         self.lbselectecible.pack_forget()

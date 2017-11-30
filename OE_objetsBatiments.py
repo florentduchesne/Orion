@@ -62,14 +62,15 @@ class BatimentManufacture():
         print("AMELIORER DANS OBJ BATIMENT")
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
-            planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
-            if(planeteAAssezDeRessources):
-                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
-                self.nomBatiment = nouveauNom
-                self.listeNiveaux.remove(self.nomBatiment)
-                print("assez de ressources pour l'amelioration")
-                self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+            if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+                planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
+                if(planeteAAssezDeRessources):
+                    joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
+                    self.nomBatiment = nouveauNom
+                    self.listeNiveaux.remove(self.nomBatiment)
+                    print("assez de ressources pour l'amelioration")
+                    self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
+                    joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -92,14 +93,15 @@ class BatimentInfrastructure():
         print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
-            planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
-            if(planeteAAssezDeRessources):
-                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
-                self.nomBatiment = nouveauNom
-                self.listeNiveaux.remove(self.nomBatiment)
-                print("assez de ressources pour l'amelioration")
-                #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+            if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+                planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
+                if(planeteAAssezDeRessources):
+                    joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
+                    self.nomBatiment = nouveauNom
+                    self.listeNiveaux.remove(self.nomBatiment)
+                    print("assez de ressources pour l'amelioration")
+                    #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
+                    joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -122,13 +124,14 @@ class BatimentDefense():
         print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
-            planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
-            if(planeteAAssezDeRessources):
-                joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
-                self.nomBatiment = nouveauNom
-                self.listeNiveaux.remove(self.nomBatiment)
-                print("assez de ressources pour l'amelioration")
-                joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+            if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+                planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
+                if(planeteAAssezDeRessources):
+                    joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
+                    self.nomBatiment = nouveauNom
+                    self.listeNiveaux.remove(self.nomBatiment)
+                    print("assez de ressources pour l'amelioration")
+                    joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
      
