@@ -35,7 +35,7 @@ class Pulsar():
             self.taille=self.mintaille+(self.moment*self.pas)
                 
 class Planete():
-    coordonneesPossiblesVilles = ((8, 8), (42, 42), (8, 42), (42, 8), (25, 8), (25, 42), (8, 25), (8, 42), (25, 25))#coordonnées possibles pour la création d'une ville, variable statique
+    coordonneesPossiblesVilles = ((8, 8), (42, 42), (8, 42), (42, 8), (25, 8), (25, 42), (8, 25), (8, 42), (25, 25))#coordonnées possibles pour la création des futures villes, variable statique
     def __init__(self,parent,type,dist,taille,angle,idSuivant,x,y):
         self.parent=parent
         self.id=idSuivant #ici
