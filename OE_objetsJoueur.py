@@ -438,19 +438,12 @@ class Joueur():
                         vaisseau.listeCibleAttaquer.clear()
                         for vaisseauEnnemi in j.vaisseauxinterstellaires:
                             if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
-                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                                if distance < vaisseau.range:
-                                    vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-                                    #print("vaisseau detecter")
-                
-                #for station in self.stationspatiaux:
-                  #  station.listeCibleAttaquer.clear()
-                 #   for vaisseauEnnemi in j.vaisseauxinterstellaires:
-                  #      if station.systemeid == vaisseauEnnemi.idSysteme:
-                    #        distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                  ##          if distance < vaisseau.range:
-                      #          vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-                                #print("vaisseau detecter")
+                                if not vaisseau.dansVaisseauMere and not vaisseauEnnemi.dansVaisseauMere :
+                                    distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                    if distance < vaisseau.range:
+                                        vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                                        # print("vaisseau detecter")
+
                             
                     
     def choisirCible(self):    
@@ -475,8 +468,8 @@ class Joueur():
         #for pnette in self.planetescontrolees:
         #    pnette.cibleAttaque=None
         #    if len(pnette.listeCibleAttaquer)>0: 
-         #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
-         #       pnette.attaquer()       
+        #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
+        #       pnette.attaquer()       
         
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:
