@@ -241,7 +241,7 @@ class Vue():
         self.diametre.insert(0, 50)        
         
         self.densitestellaire=Entry(bg="#18c0ff")
-        self.densitestellaire.insert(0, 25)
+        self.densitestellaire.insert(0, 50)
         
         self.qteIA=Entry(bg="#18c0ff")
         self.qteIA.insert(0, 0)
@@ -264,9 +264,9 @@ class Vue():
         self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
         
         #RENDRE LES TEXTBOX NON ACCESSIBLE POUR CHANGER LEUR VALEURS
-        #self.diametre.config(state=DISABLED)
-        #self.densitestellaire.config(state=DISABLED)
-        #self.qteIA.config(state=DISABLED)
+        self.diametre.config(state=DISABLED)
+        self.densitestellaire.config(state=DISABLED)
+        self.qteIA.config(state=DISABLED)
 
     def voirgalaxie(self):
         # A FAIRE comme pour voirsysteme et voirplanete, tester si on a deja la vuegalaxie
