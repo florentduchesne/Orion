@@ -46,10 +46,11 @@ class Joueur():
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
                       "voyageSystem":self.voyageSystem,
+                      "viderVaisseau": self.viderVaisseau,
                       "recolterBatiment":self.recolterRessources,
                       "voyageSystem":self.voyageSystem,
                       "nouveauMessageChat":self.nouveauMessageChat}
-                      #"vaisseauAttaque":self.attaque
+                    #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
@@ -304,6 +305,17 @@ class Joueur():
                         i.x=25-2
                         i.y=25-2
                         self.objetgalaxie.remove(i)
+    
+    def viderVaisseau (self,ids):
+        idpropri,idVais=ids
+        for i in self.vaisseauxinterstellaires:
+            if i.id == idVais:
+                if isinstance(i, VaisseauMere):
+                    print("coudonc")
+                    i.SortirVaisseau()
+                    print ("pourtant je passe")
+                else :
+                    print("Seulement un vaisseau Mere peut être vider")
                         
     def recolterRessources(self, id):
         idSysteme, idPlanete = id
