@@ -496,10 +496,7 @@ class VuePlanete(Perspective):
                         ydeplacement = self.canevas.canvasx(evt.y)
                         self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
                         self.maselection = None
-            
-        
-                  
-                    
+                           
     def changerTagTuile(self,posy, posx, char):  
         itemX = self.canevas.find_withtag("current")
         self.canevas.itemconfig(itemX[0],  tags=(None, None, posy,posx,"tuile",char))             
