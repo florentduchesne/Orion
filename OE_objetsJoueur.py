@@ -346,6 +346,8 @@ class Joueur():
                 pass
             pass
         pass
+    
+ 
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
