@@ -26,7 +26,7 @@ class VueGalaxie(Perspective):
         self.couleurBoutonDesactive = "#50a2c1"
         
         
-        self.AL2pixel=100
+        self.AL2pixel=self.modele.diametre*2
         self.largeur=int(self.modele.diametre*self.AL2pixel)
         self.hauteur=self.largeur
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
@@ -210,8 +210,8 @@ class VueGalaxie(Perspective):
         plusgrandy = hlp.valeurmaximal(self.initY,y)
         for vj in joueur.vaisseauxinterstellaires:
                 if(vj.dansGalaxie):
-                    vaisseauX = vj.x*100
-                    vaisseauY = vj.y*100
+                    vaisseauX = vj.x*self.AL2pixel
+                    vaisseauY = vj.y*self.AL2pixel
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",vj.id))
 
@@ -245,7 +245,7 @@ class VueGalaxie(Perspective):
         self.canevas.delete("selectionner")  
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)
-        xy=(x/100,y/100) 
+        xy=(x/self.AL2pixel,y/self.AL2pixel) 
         xy2=evt.x,evt.y       
         if len(self.mesSelections) != 0:
             for v in self.mesSelections:

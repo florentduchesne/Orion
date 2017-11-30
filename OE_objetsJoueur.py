@@ -359,7 +359,7 @@ class Joueur():
                                 ##placer le bouton coloniser...
                                 self.systemesvisites.append(rep)
                                 self.parent.changerproprietaire(self.nom,self.couleur,rep)
-            if isinstance(i, VaisseauAttaque):
+            if isinstance(i, VaisseauAttaque) or isinstance(i, StationSpatiale):
                 for protil in i.projectile:
                     if protil.cible == None:
                         i.projectile.remove(protil)
@@ -379,7 +379,11 @@ class Joueur():
         
         for i in self.stationspatiaux:
                 i.orbiter()
-                
+                for protil in i.projectile:
+                    if protil.cible == None:
+                        i.projectile.remove(protil)
+                    else:
+                        protil.avancer() 
                 
     
         
@@ -402,7 +406,33 @@ class Joueur():
                                     distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
                                     if distance < vaisseau.range:
                                         vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-
+                                        #print("vaisseau detecter")
+                        
+                        vaisseau.listeCibleAttaquerStation.clear()                        
+                        for stationEnnemi in j.stationspatiaux:
+                            if vaisseau.idSysteme== stationEnnemi.systemeid:
+                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,stationEnnemi.x,stationEnnemi.y)
+                                if distance < vaisseau.range:
+                                    vaisseau.listeCibleAttaquer.append(stationEnnemi)
+                
+                for station in self.stationspatiaux:
+                    station.listeCibleAttaquer.clear()
+                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                        if station.systemeid == vaisseauEnnemi.idSysteme:
+                            if not vaisseauEnnemi.dansVaisseauMere :
+                                distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                if distance < station.range:
+                                    station.listeCibleAttaquer.append(vaisseauEnnemi)
+                                    #print("vaisseau detecter")
+                
+                for tank in self.vehiculeplanetaire:
+                    tank.listeCibleAttaquer.clear()
+                    for tankEnnemi in j.vehiculeplanetaire:
+                        if tank.planeteid == tankEnnemi.planeteid:
+                            distance = hlp.calcDistance(tank.x,tank.y,tankEnnemi.x,tankEnnemi.y)
+                            if distance < tank.range:
+                                tank.listeCibleAttaquer.append(tankEnnemi)
+                                
                             
                     
     def choisirCible(self):    
@@ -411,12 +441,15 @@ class Joueur():
                 vseau.cibleAttaque=None
                 if len(vseau.listeCibleAttaquer)>0:
                     vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
-                    vseau.attaquer()   
+                    vseau.attaquer()  
+                elif len(vseau.listeCibleAttaquerStation)>0:
+                    vseau.cibleAttaque = vseau.listeCibleAttaquerStation[0]
+                    vseau.attaquer()  
                 else:
                     pass      
                
 #            elif vseau.cible != None:
- #               if vseau.cible.proprietaire == "espace":
+#               if vseau.cible.proprietaire == "espace":
 #                    pass
 #                else:
 #                    vseau.attaquerPlanette()
@@ -424,16 +457,34 @@ class Joueur():
 #                vseau.cibleAttaque=vseau.planetteCible
 #                vseau.attaquer()  
                 
-        #for pnette in self.planetescontrolees:
-        #    pnette.cibleAttaque=None
-        #    if len(pnette.listeCibleAttaquer)>0: 
-        #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
-        #       pnette.attaquer()       
+
+        for station in self.stationspatiaux:       
+            station.cibleAttaque=None
+            #print(station.listeCibleAttaquer)
+            if len(station.listeCibleAttaquer)>0:
+                station.cibleAttaque = station.listeCibleAttaquer[0]
+                station.attaquer()   
+            else:
+                pass  
+            
         
+        for tank in self.vehiculeplanetaire:
+            tank.cibleAttaque=None
+            if len(tank.listeCibleAttaquer)>0:
+                tank.cibleAttaque = tank.listeCibleAttaquer[0]
+                tank.attaquer()   
+            else:
+                pass  
+            
+
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:
             if vseau.vie<1:
                 self.vaisseauxinterstellaires.remove(vseau)
+                
+        for station in self.stationspatiaux:
+            if station.vie<1:
+                self.stationspatiaux.remove(station)        
                 
     def nouveauMessageChat(self,txt):
         self.nouveauMessageChatTxt = txt
