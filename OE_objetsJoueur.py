@@ -324,14 +324,17 @@ class Joueur():
         idpropri,idVais=ids
         for i in self.vaisseauxinterstellaires:
             if i.id == idVais:
-                for j in self.parent.systemes:
-                    if j.id==i.idSysteme:
-                        #i.x= j.x
-                        # i.y=j.y
-                        i.x= j.x-1
-                        i.y=j.y-1
-                        i.dansGalaxie=True
-                        self.objetgalaxie.append(i)
+                if isinstance(i, VaisseauMere):
+                    for j in self.parent.systemes:
+                        if j.id==i.idSysteme:
+                            #i.x= j.x
+                            # i.y=j.y
+                            i.x= j.x-1
+                            i.y=j.y-1
+                            i.dansGalaxie=True
+                            self.objetgalaxie.append(i)
+                else:
+                    print("Ce vaisseau ne peut voyager dans la galaxie")
 
     def voyageSystem(self,ids): 
         print("Dans Sys")
@@ -438,7 +441,16 @@ class Joueur():
                                 distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
                                 if distance < vaisseau.range:
                                     vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-                                   # print("vaisseau detecter")
+                                    #print("vaisseau detecter")
+                
+                #for station in self.stationspatiaux:
+                  #  station.listeCibleAttaquer.clear()
+                 #   for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                  #      if station.systemeid == vaisseauEnnemi.idSysteme:
+                    #        distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                  ##          if distance < vaisseau.range:
+                      #          vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                                #print("vaisseau detecter")
                             
                     
     def choisirCible(self):    

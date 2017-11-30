@@ -134,6 +134,10 @@ class StationSpatiale():
         self.planetey = self.y
         self.orbite = planete.taille + 0.3
         self.couleurJoueur = couleurJoueur
+        
+        
+        #variable pour attaque
+        
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
