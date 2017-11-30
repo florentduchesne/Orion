@@ -197,6 +197,17 @@ class Vue():
         
              
     def creercadresplash(self,ip,nom):
+        self.nwin = Toplevel()
+        self.nwin.title("Intro")
+        self.cadreIntro=Frame(self.nwin,bg="blue")
+
+        self.photoIntro = ImageTk.PhotoImage(file = 'images/intro.jpg')
+        self.canevasIntro=Canvas(self.cadreIntro,width=1400,height=787,bg="black")
+        self.canevasIntro.create_image(0, 0, image = self.photoIntro, anchor = NW)
+        
+        self.lbl2 = Label(self.nwin, image = self.photoIntro)
+        self.lbl2.pack()
+        
         self.cadresplash=Frame(self.root)
         self.imageBackG = ImageTk.PhotoImage(file = "images/IntroGalaxy.jpg")
         self.imageBackG2 = ImageTk.PhotoImage(file = "images/IntroGalaxy2.jpg")
