@@ -4,7 +4,7 @@ import math
 from OE_objetsVaisseaux import *
 from OE_objetsBatiments import *
 from OE_objetsRessource import Ressource
-from OE_objetsVehicule import vehiculeTank, vehiculeCommerce, vehiculehelicoptere, vehiculeAvion
+from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
 from OE_coord import *
 from DictionnaireCoutsVaisseaux import *
 
@@ -42,8 +42,6 @@ class Joueur():
                       "creerbatiment":self.creerBatiment,
                       "creervehiculetank":self.creervehiculetank,
                       "creervehiculehelicoptere":self.creervehiculehelicoptere,
-                      "creervehiculecommerce":self.creervehiculecommerce,
-                      "creervehiculeavion":self.creervehiculeavion,
                       "creerstationspatiale":self.creerstationspatiale,
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
@@ -230,22 +228,7 @@ class Joueur():
         planete = self.getPlanete(planete, systeme)
         for vehicule in planete.vehiculeplanetaire:
             if vehicule.id == maSelection[5]:
-                vehicule.ameliorer()
-
-    def creervehiculecommerce(self, id):
-        for i in self.systemesvisites:
-            if i.id == id:
-                vt = vehiculeCommerce(self, self.nom, i, self.parent.createurId.prochainid())
-                self.vehiculeplanetaire.append(vt)
-                return 1
-    
-    def creervehiculeavion(self, id):
-        for i in self.systemesvisites:
-            if i.id == id:
-                vt = vehiculeAvion(self, self.nom, i, self.parent.createurId.prochainid())
-                self.vehiculeplanetaire.append(vt)
-                return 1
-        
+                vehicule.ameliorer()        
         
     def ciblerdestination(self,ids):
         idori,iddesti,idsyteme,xy=ids
@@ -346,6 +329,8 @@ class Joueur():
                 pass
             pass
         pass
+    
+ 
         
     def prochaineaction(self): # NOTE : cette fonction sera au coeur de votre developpement
         for i in self.vaisseauxinterstellaires:
