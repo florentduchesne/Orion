@@ -399,7 +399,7 @@ class Joueur():
                                 print("Proprio")
                                 self.systemesvisites.append(rep)
                                 self.parent.changerproprietaire(self.nom,self.couleur,rep)
-            if isinstance(i, VaisseauAttaque):
+            if isinstance(i, VaisseauAttaque) or isinstance(i, StationSpatiale):
                 for protil in i.projectile:
                     if protil.cible == None:
                         i.projectile.remove(protil)
@@ -419,7 +419,11 @@ class Joueur():
         
         for i in self.stationspatiaux:
                 i.orbiter()
-                
+                for protil in i.projectile:
+                    if protil.cible == None:
+                        i.projectile.remove(protil)
+                    else:
+                        protil.avancer() 
                 
     
         
@@ -443,13 +447,13 @@ class Joueur():
                                     vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
                                     #print("vaisseau detecter")
                 
-                #for station in self.stationspatiaux:
-                  #  station.listeCibleAttaquer.clear()
-                 #   for vaisseauEnnemi in j.vaisseauxinterstellaires:
-                  #      if station.systemeid == vaisseauEnnemi.idSysteme:
-                    #        distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                  ##          if distance < vaisseau.range:
-                      #          vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                for station in self.stationspatiaux:
+                    station.listeCibleAttaquer.clear()
+                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                        if station.systemeid == vaisseauEnnemi.idSysteme:
+                            distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                            if distance < station.range:
+                                station.listeCibleAttaquer.append(vaisseauEnnemi)
                                 #print("vaisseau detecter")
                             
                     
@@ -464,7 +468,7 @@ class Joueur():
                     pass      
                
 #            elif vseau.cible != None:
- #               if vseau.cible.proprietaire == "espace":
+#               if vseau.cible.proprietaire == "espace":
 #                    pass
 #                else:
 #                    vseau.attaquerPlanette()
@@ -472,12 +476,15 @@ class Joueur():
 #                vseau.cibleAttaque=vseau.planetteCible
 #                vseau.attaquer()  
                 
-        #for pnette in self.planetescontrolees:
-        #    pnette.cibleAttaque=None
-        #    if len(pnette.listeCibleAttaquer)>0: 
-         #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
-         #       pnette.attaquer()       
-        
+        for station in self.stationspatiaux:       
+            station.cibleAttaque=None
+            #print(station.listeCibleAttaquer)
+            if len(station.listeCibleAttaquer)>0:
+                station.cibleAttaque = station.listeCibleAttaquer[0]
+                station.attaquer()   
+            else:
+                pass  
+            
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:
             if vseau.vie<1:

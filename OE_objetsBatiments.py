@@ -2,6 +2,7 @@ from OE_objetsRessource import *
 import math
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
 from DictionnaireCoutAllocationAgeBatiments import *
+from OE_projectile import *
 
 #super-classe des mines, camps de bucherons, etc.
 class BatimentRessources():
@@ -137,7 +138,12 @@ class StationSpatiale():
         
         
         #variable pour attaque
-        
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 2
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=10
         #======================================================
         """RESSOURCE"""
         self.besoinhumain=50
@@ -161,7 +167,26 @@ class StationSpatiale():
         if self.nom.ressource - coutTitanium > 0:
             pass
 
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            
+            if self.tempsRecharge==0:
+                
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=15
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
 
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+            
 class Mur(BatimentDefense):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment = "mur", proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant, nomBatiment, listeNiveaux=[], proprio = proprio)

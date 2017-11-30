@@ -6,6 +6,7 @@ from helper import Helper as hlp
 from OE_vuePerspective import *
 from math import degrees
 from OE_objetsVaisseaux import VaisseauChasseur, VaisseauColonisation, VaisseauAttaque, VaisseauTank, VaisseauMere
+from OE_objetsBatiments import StationSpatiale
 
 
 
@@ -243,7 +244,7 @@ class VueSysteme(Perspective):
                             self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
 
                         
-                        if isinstance(j, VaisseauAttaque) :
+                        if isinstance(j, VaisseauAttaque):
                             if j.projectile!=None:
                                 for pro in j.projectile:
                                     x=pro.x*e
@@ -266,7 +267,16 @@ class VueSysteme(Perspective):
                     jx=(j.x*e)
                     jy=(j.y*e)
                     self.canevas.create_oval((jx-j.taille),(jy-j.taille),(jx+j.taille),(jy+j.taille),fill=j.couleurJoueur, tags=(j.proprietaire,"stationspatiale",j.id,j.x,j.y), outline= "white", width = 1)
-                    
+                                            
+                    if j.projectile!=None:
+                        for pro in j.projectile:
+                            x=pro.x*e
+                            y=pro.y*e
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
+                            
+                            
     def changerproprietaire(self):
         pass
                
