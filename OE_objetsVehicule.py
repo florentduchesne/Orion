@@ -54,7 +54,18 @@ class Vehicule():
                 return False
  
     def ameliorer(self):
-        print("a implanter (Florent n'aime pas se faire dire de coder les ID et il mange une pomme)")
+        nomVehiculeAmeliorer = self.nomVehicule[:-1]
+        infoCout = dictionnaireCoutVehicule[nomVehiculeAmeliorer]
+        coutressource = infoCout[0]
+        
+        if (self.parent.ressources.estPlusGrandOuEgal(coutressource)):
+            #diminuer les ressources au joueur
+            self.parent.ressources.soustraireRessources(coutressource)   
+            return True
+        else:
+            return False
+        
+        self.nomVehicule = nomVehiculeAmeliorer
         pass
     
     def rechargeBatterie(self):
@@ -105,30 +116,6 @@ class vehiculehelicoptere(Vehicule):
         self.vie = 0
         self.vitesseDeplacement=2
         self.puissance = 0
-        
-    
-        
-class vehiculeCommerce(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
-        self.vie = 0
-        self.vitesseDeplacement=0
-        
-    def remplirChargement(self):
-        pass
-    
-    
-class vehiculeAvion(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
-        self.qtProjectile = 0
-        self.vitesseAttaque = 0
-        self.vie = 0
-        self.vitesseDeplacement=0
-        self.puissance = 0
-        
-    def attaque(self):
-        pass
     
     
 dictionnaireCoutVehicule={

@@ -134,8 +134,10 @@ class Systeme():
            
             for i in range(nbplanetes):
                 type=random.choice(["roc","gaz","glace"])
-                distsol=random.randrange(100)/10 #distance en unite astronomique 150000000km
-                taille=random.randrange(5,30)/100 # en masse solaire
+                distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
+                taille=random.randrange(50)/100 # en masse solaire
+                #distsol=random.randrange(100)/10 #distance en unite astronomique 150000000km
+                #taille=random.randrange(5,30)/100 # en masse solaire
                 angle=random.randrange(360)
                 
                 x,y=hlp.getAngledPoint(math.radians(angle),distsol,0,0)
