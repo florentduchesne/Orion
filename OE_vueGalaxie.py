@@ -27,7 +27,6 @@ class VueGalaxie(Perspective):
         
         
         self.AL2pixel=100
-        print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.AL2pixel)
         self.hauteur=self.largeur
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
@@ -51,7 +50,6 @@ class VueGalaxie(Perspective):
                 for i in self.modele.systemes:
                     if i.id==sid:
                         s=i
-                        print(s.planetes)
                         break
                 
                 self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED)

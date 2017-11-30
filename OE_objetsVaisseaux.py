@@ -45,7 +45,6 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
@@ -54,9 +53,7 @@ class Vaisseau():
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:#si le vaisseau est arrivé
                 rep=self.cible
                 self.base=self.cible
-                print("vaisseau arrivé sur la planete")
                 if(isinstance(self, VaisseauColonisation)):
-                    print("ceci est un vaisseau colonisateur")
                     if self.cible.coloniser(self.proprietaire):
                         return "colonisation"
                 self.cible=None
@@ -70,12 +67,13 @@ class Vaisseau():
             else:
                 self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
-                rep=self.cible
-                self.base=self.cible
-                #self.cible=None
+                if isinstance(self.cible, VaisseauMere):
+                        self.cible.RemplirVaisseau(self)
+                        rep=self.cible
+                        self.base=self.cible
+                        self.cible=None
             return rep
         elif self.cible!=None:
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
@@ -91,7 +89,6 @@ class Vaisseau():
         self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
-        #print("Distance",dist," en ", int(dist/self.vitesse))
     
     def augmentation(self) :
         self.niveau += 1
@@ -102,13 +99,12 @@ class VaisseauAttaque(Vaisseau):
         Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.attaque = Degats
         self.range = portee
-        self.cibleAttaque=None 
         self.enAttaque=False
-        self.listeCibleAttaquer=[]
         self.augmentationDomamage = 2
         self.augmentationVie = 2
         self.augmentationPortee = 1
         self.listeCibleAttaquer=[]
+        self.listeCibleAttaquerStation=[]
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
@@ -128,7 +124,6 @@ class VaisseauAttaque(Vaisseau):
             else:
                 self.tempsRecharge=self.tempsRecharge-1
             
-
         else: 
             self.enAttaque=False         
             self.listeCibleAttaquer.remove(self.cibleAttaque)
@@ -240,8 +235,16 @@ class VaisseauMere(VaisseauAttaque):
         self.augmentationAttaque = 1
         self.vaisseau = []
     
-    def RemplirVaisseau(self):
-        pass
+    def RemplirVaisseau(self, vaisseauaAjouter):
+        self.vaisseauaAjouter = vaisseauaAjouter
+        if not isinstance(self.vaisseauaAjouter, VaisseauMere):
+            if self.maxVaisseau > len(self.vaisseau) :
+                self.vaisseau.append(self.vaisseauaAjouter)
+                self.vaisseauaAjouter.dansVaisseauMere = True
+            else : 
+                print ("Vaisseau Mere Plein")
+        else :
+            ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
     
     def augmentation(self) :
         self.niveau += 1

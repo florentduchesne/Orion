@@ -1,5 +1,7 @@
 from helper import Helper as hlp
 import math
+from OE_objetsVaisseaux import Vaisseau
+from OE_objetsBatiments import StationSpatiale
 
 class Projectile():
     def __init__(self,parent,cible):
@@ -29,10 +31,8 @@ class Projectile():
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
             if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
             #if self.x ==x and self.y == y:
-                print("cible toucher")
                 rep= None
                 self.cible.vie = self.cible.vie - self.degat 
-                print(self.cible.vie)
                 #self.parent.projectile.remove(self)
                 #self.base=self.cible
                 self.cible=None
@@ -42,7 +42,12 @@ class Projectile():
             if self.temps%4==0:
                 self.couleur="red"
             else:
-                self.couleur="blue"
+                if isinstance(self.parent,Vaisseau):
+                    self.couleur="blue"
+                elif isinstance(self.parent,StationSpatiale):
+                    self.couleur="pink"
+                else:
+                    self.couleur="DodgerBlue4"
             self.temps+=1
             return rep
         

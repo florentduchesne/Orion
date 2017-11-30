@@ -29,7 +29,6 @@ class VueSysteme(Perspective):
         self.initX = 0
         self.initY = 0
         self.UA2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomiques       
-        print("Diametre: ", self.modele.diametre)
         self.largeur=int(self.modele.diametre*self.UA2pixel)
         self.hauteur=self.largeur
         
@@ -158,19 +157,17 @@ class VueSysteme(Perspective):
             self.canevas.delete("selecteur")
      
     def creervaisseau2(self,typeVaisseau):
-        print ("2")
+        pass
     
     def creerstation(self):
         if self.maselection:
-            print(self.systeme.id)  
             self.parent.parent.creerstationspatiale(self.maselection[5],self.maselection[2])
             self.maselection=None
             self.canevas.delete("selecteur")
         
     def recolterRessources(self):
         if self.maselection and self.maselection[1] == "planete":
-            print(self.maselection)
-                                        #i.proprietaire,"planete",planete.id,"inconnu", systeme.id,x,y
+            #i.proprietaire,"planete",planete.id,"inconnu", systeme.id,x,y
             self.parent.parent.recolterRessources(self.maselection[5], self.maselection[2])
             pass
     
@@ -224,20 +221,24 @@ class VueSysteme(Perspective):
                             #                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
                             
                         if isinstance(j,VaisseauChasseur):
-                            tag =("chasseur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
+                            if not j.dansVaisseauMere:
+                                tag =("chasseur"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
 
                         elif isinstance(j,VaisseauColonisation) :
-                            tag =("colonisateur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                            if not j.dansVaisseauMere:
+                                tag =("colonisateur"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
 
         
                         elif isinstance(j, VaisseauTank) :
-                            tag =("tank"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                            if not j.dansVaisseauMere:
+                                tag =("tank"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                        
                         elif isinstance(j, VaisseauMere) :
                             tag =("mere"+str(angle))
                             im=self.parent.modes["systemes"][j.idSysteme].images[tag]
@@ -284,7 +285,6 @@ class VueSysteme(Perspective):
         e=self.UA2pixel
         joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
-            #print(self.maselection)
             
             if self.maselection[1]=="planete":
                 for i in self.systeme.planetes:
@@ -296,7 +296,6 @@ class VueSysteme(Perspective):
                                                 outline=joueur.couleur,
                                                 tags=("select","selecteur"))
             elif self.maselection[1]=="stationspatiale":
-                print("Selectionner StaionSpatiale!!!!")
                 print("Station ID: " + str(self.maselection[2]))
                 
         if len(self.mesSelections) !=0:
