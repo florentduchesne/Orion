@@ -1,7 +1,7 @@
 from helper import Helper as hlp
 import math
-from OE_objetsVaisseaux import Vaisseau
-from OE_objetsBatiments import StationSpatiale
+from OE_objetsVaisseaux import *
+from OE_objetsBatiments import *
 
 class Projectile():
     def __init__(self,parent,cible):
