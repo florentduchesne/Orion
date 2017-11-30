@@ -29,10 +29,8 @@ class Projectile():
             self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse,self.x,self.y)
             if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
             #if self.x ==x and self.y == y:
-                print("cible toucher")
                 rep= None
                 self.cible.vie = self.cible.vie - self.degat 
-                print(self.cible.vie)
                 #self.parent.projectile.remove(self)
                 #self.base=self.cible
                 self.cible=None

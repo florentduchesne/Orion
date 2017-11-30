@@ -45,7 +45,6 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
@@ -54,7 +53,6 @@ class Vaisseau():
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:#si le vaisseau est arrivé
                 rep=self.cible
                 self.base=self.cible
-                print("vaisseau arrivé sur la planete")
                 if(isinstance(self, VaisseauColonisation)):
                     if not self.dansVaisseauMere :  
                         print("ceci est un vaisseau colonisateur")
@@ -78,10 +76,12 @@ class Vaisseau():
                         self.cible=None
             return rep
         elif self.cible!=None:
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if self.dansGalaxie == False:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            else:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
             #if self.x ==x and self.y == y:
                 rep= None
@@ -94,7 +94,6 @@ class Vaisseau():
         self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
-        #print("Distance",dist," en ", int(dist/self.vitesse))
     
     def augmentation(self) :
         self.niveau += 1

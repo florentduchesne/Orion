@@ -197,6 +197,17 @@ class Vue():
         
              
     def creercadresplash(self,ip,nom):
+        self.nwin = Toplevel()
+        self.nwin.title("Intro")
+        self.cadreIntro=Frame(self.nwin,bg="blue")
+
+        self.photoIntro = ImageTk.PhotoImage(file = 'images/intro.jpg')
+        self.canevasIntro=Canvas(self.cadreIntro,width=1400,height=787,bg="black")
+        self.canevasIntro.create_image(0, 0, image = self.photoIntro, anchor = NW)
+        
+        self.lbl2 = Label(self.nwin, image = self.photoIntro)
+        self.lbl2.pack()
+        
         self.cadresplash=Frame(self.root)
         self.imageBackG = ImageTk.PhotoImage(file = "images/IntroGalaxy.jpg")
         self.imageBackG2 = ImageTk.PhotoImage(file = "images/IntroGalaxy2.jpg")
@@ -225,12 +236,16 @@ class Vue():
         self.canevaslobby.create_image(0, 0, image = self.imageBackG2, anchor = NW)
         self.canevaslobby.pack()
         self.listelobby=Listbox(bg="#84d4f1",borderwidth=0,relief=FLAT)
+        
         self.diametre=Entry(bg="#18c0ff")
-        self.diametre.insert(0, 50)
+        self.diametre.insert(0, 50)        
+        
         self.densitestellaire=Entry(bg="#18c0ff")
         self.densitestellaire.insert(0, 25)
+        
         self.qteIA=Entry(bg="#18c0ff")
         self.qteIA.insert(0, 0)
+        
         self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)
         self.canevaslobby.create_window(480,240,window=self.listelobby,width=200,height=300)
         
@@ -247,6 +262,11 @@ class Vue():
         self.canevaslobby.create_window(260,245,window=self.qteIA,width=100,height=30)
         
         self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
+        
+        #RENDRE LES TEXTBOX NON ACCESSIBLE POUR CHANGER LEUR VALEURS
+        #self.diametre.config(state=DISABLED)
+        #self.densitestellaire.config(state=DISABLED)
+        #self.qteIA.config(state=DISABLED)
 
     def voirgalaxie(self):
         # A FAIRE comme pour voirsysteme et voirplanete, tester si on a deja la vuegalaxie
@@ -286,7 +306,7 @@ class Vue():
                 s.remplirChatBoxChangementVue()
             self.changemode(s)
         else:
-            print("aucune planete selectionnee pour atterrissage")
+            self.modecourant.nouveauMessageSystemChat("Aucune planete selectionnée", "pour l'atterrissage")
      
         
         
@@ -312,7 +332,7 @@ class Vue():
             
     def lancerpartie(self):
        
-        diametre=self.diametre.get()
+        diametre= self.diametre.get()
         densitestellaire=self.densitestellaire.get()
         qteIA=self.qteIA.get()  # IA
         if diametre :
@@ -410,7 +430,6 @@ class Vue():
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
-                print("creation bouclier")
                 self.modes["planetes"][i].canevas.create_oval(x-250,y-250,x+250,y+250,outline= couleur, width = 5)
                 im = self.modes["planetes"][i].images["Bouclier"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,nomBatiment))
