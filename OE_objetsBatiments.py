@@ -2,6 +2,7 @@ from OE_objetsRessource import *
 import math
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
 from DictionnaireCoutAllocationAgeBatiments import *
+from OE_projectile import *
 
 def verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
     for infra in planete.infrastructures:
@@ -25,7 +26,7 @@ class BatimentRessources():
         self.productionRessources = production
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -54,7 +55,7 @@ class BatimentManufacture():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -83,7 +84,7 @@ class BatimentInfrastructure():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -102,7 +103,7 @@ class BatimentInfrastructure():
         
 #super-classe des defenses
 class BatimentDefense():
-    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, pv, listeNiveaux = [], proprio = "patate"):
+    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, vie, listeNiveaux = [], proprio = "patate"):
         self.parent = parent
         self.id=idSuivant
         self.x=x
@@ -112,7 +113,7 @@ class BatimentDefense():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = pv
+        self.vie = vie
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -144,8 +145,24 @@ class StationSpatiale():
         self.planetey = self.y
         self.orbite = planete.taille + 0.3
         self.couleurJoueur = couleurJoueur
+        
+        
+        """variable pour attaque"""
+        
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 2
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=5
+        #======================================================
+        """RESSOURCE"""
+        self.besoinhumain=50
+        self.besoinelectricite= 100
+        self.titanium=1000
+
         """STRUCTURE"""
-        self.vie=15000
+        self.vie=300
         self.dommage=50
         self.protection=100
         #======================================================
@@ -162,7 +179,26 @@ class StationSpatiale():
         if self.nom.ressource - coutTitanium > 0:
             pass
 
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            
+            if self.tempsRecharge==0:
+                
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=15
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
 
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+            
 class Mur(BatimentDefense):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment = "mur", proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant, nomBatiment, 1000, listeNiveaux=[], proprio = proprio)

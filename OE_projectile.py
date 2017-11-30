@@ -1,5 +1,7 @@
 from helper import Helper as hlp
 import math
+from OE_objetsVaisseaux import *
+from OE_objetsBatiments import *
 
 class Projectile():
     def __init__(self,parent,cible):
@@ -40,7 +42,12 @@ class Projectile():
             if self.temps%4==0:
                 self.couleur="red"
             else:
-                self.couleur="blue"
+                if isinstance(self.parent,Vaisseau):
+                    self.couleur="blue"
+                elif isinstance(self.parent,StationSpatiale):
+                    self.couleur="pink"
+                else:
+                    self.couleur="DodgerBlue4"
             self.temps+=1
             return rep
         

@@ -102,13 +102,12 @@ class VaisseauAttaque(Vaisseau):
         Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.attaque = Degats
         self.range = portee
-        self.cibleAttaque=None 
         self.enAttaque=False
-        self.listeCibleAttaquer=[]
         self.augmentationDomamage = 2
         self.augmentationVie = 2
         self.augmentationPortee = 1
         self.listeCibleAttaquer=[]
+        self.listeCibleAttaquerStation=[]
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
@@ -128,7 +127,6 @@ class VaisseauAttaque(Vaisseau):
             else:
                 self.tempsRecharge=self.tempsRecharge-1
             
-
         else: 
             self.enAttaque=False         
             self.listeCibleAttaquer.remove(self.cibleAttaque)
