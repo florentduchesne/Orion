@@ -349,6 +349,7 @@ class VueSysteme(Perspective):
             elif t[1] == "vaisseauinterstellaire":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
                 self.pasVoyager() 
+        print(self.maselection)
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
