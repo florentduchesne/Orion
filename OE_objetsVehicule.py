@@ -53,7 +53,7 @@ class Vehicule():
                 return False
  
     def ameliorer(self):
-        print('a implanter')
+        print("a implanter (Florent n'aime pas se faire dire de coder les ID et il mange une pomme)")
         pass
     
     def rechargeBatterie(self):
