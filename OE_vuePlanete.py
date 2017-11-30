@@ -13,6 +13,9 @@ class VuePlanete(Perspective):
         self.planete=plane
         self.systeme=syste
         self.maselection=None
+        self.mesSelections = []
+        self.initX = 0
+        self.initY = 0
         self.macommande=None
         self.chatEcrireLesNomsDesJoueurs()
         
@@ -462,49 +465,75 @@ class VuePlanete(Perspective):
                                                     outline=joueur.couleur,
                                                     tags=("select","selecteur"))
         '''
-        
-    def cliquerGauche(self,evt):
+            
+    def cliquerGauche(self, evt):
+        self.canevas.delete("selectionner") 
         t=self.canevas.gettags("current")
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)
+        self.maselection = None
+        self.initX = x
+        self.initY = y
         if t[0] != 'current':
+            
             if t[4] == 'tuile':
                 self.montresystemeselection()
             elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
+                self.mesSelections.clear()
                 self.montreAmeliorationVehicule()
+                self.mesSelections.append(t)               
             else:
                 self.montreAmeliorationBatiments()
-
-            #pour mettre ma selection du clique si ce n'est pas une tuile
-            if self.maselection == None or t[4] != 'tuile':
                 self.maselection = t
-                
-            #création des batiments et des véhicules avec self.macommande (réglé quand on pese sur le boutton...)
-            if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere")  and t[5]=='0':
-                x=self.canevas.canvasx(evt.x)
-                y=self.canevas.canvasy(evt.y)
-                self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
-                self.macommande=None
-                self.maselection=None
-            elif self.macommande != None and t[5]=='0':
-                    x=int(t[3])
-                    y=int(t[2])
+
+            if self.macommande != None and t[5]=='0':
+                    print("Creer vrai batiment")
+                    if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere"):
+                        x=self.canevas.canvasx(evt.x)
+                        y=self.canevas.canvasy(evt.y)
+                    else:
+                        x=int(t[3])
+                        y=int(t[2])
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                    self.maselection=None
-            elif self.macommande == None:
-                #clique sur un objet sur la map
-                if self.maselection == None and t[4] != 'tuile':
-                    pass
-                    
-                #a deja clique sur un objet sur la mappe et clique sur une tuile ensuite (déplacement)
-                elif self.maselection != None and t[4] == 'tuile':
-                    if self.maselection[4] == 'vehiculetank' or self.maselection[4] == 'vehiculehelicoptere':                 
-                        xdeplacement = self.canevas.canvasx(evt.x)
-                        ydeplacement = self.canevas.canvasx(evt.y)
-                        self.parent.parent.ciblerdestinationvehicule(self.maselection[0], xdeplacement,ydeplacement, t[1], self.maselection[5])
-                        self.maselection = None
-            
+                    self.maselection=None                  
+
+        print(self.mesSelections)
+        print(self.parent.nom)
         
-                  
+    def cliquerDroite(self, evt):
+        self.canevas.delete("selectionner") 
+        t=self.canevas.gettags("current")
+        print("Select ", t)
+        if len(self.mesSelections) != 0:
+            if t[4] == "vehiculetank" or t[4] == "vehiculehelicoptere":
+                xdeplacement = float(t[2])
+                ydeplacement = float(t[3])
+            else:
+                xdeplacement = self.canevas.canvasx(evt.x)
+                ydeplacement = self.canevas.canvasy(evt.y)            
+            for vehicule in self.mesSelections:
+                self.parent.parent.ciblerdestinationvehicule(vehicule[0], xdeplacement,ydeplacement, t[5], vehicule[5])
+                print("v id des p-t? ",t[5])
+        
+    
+    def maintenirGauche(self, evt):
+        joueur=self.modele.joueurs[self.parent.nom]
+        self.mesSelections.clear() 
+        x=self.canevas.canvasx(evt.x)
+        y=self.canevas.canvasy(evt.y)                 
+        self.canevas.delete("selectionner")       
+        self.canevas.create_rectangle(self.initX,self.initY,x,y,dash=(2,2),outline=joueur.couleur,tags=("selectionner"))
+        pluspetitx = hlp.valeurminimal(self.initX,x)
+        plusgrandx = hlp.valeurmaximal(self.initX,x)
+        pluspetity = hlp.valeurminimal(self.initY,y)
+        plusgrandy = hlp.valeurmaximal(self.initY,y)
+        for vj in joueur.vehiculeplanetaire:
+                if(vj.planeteid == self.planeteid):
+                    vehiculeX = vj.x
+                    vehiculeY = vj.y
+                    if vehiculeX >= pluspetitx and vehiculeX <= plusgrandx and vehiculeY >= pluspetity and vehiculeY <= plusgrandy:                    
+                        self.mesSelections.append((self.parent.nom,self.planeteid,vehiculeX,vehiculeY,"vehiculetank",vj.id,"current"))   
                     
     def changerTagTuile(self,posy, posx, char):  
         itemX = self.canevas.find_withtag("current")

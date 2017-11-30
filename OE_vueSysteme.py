@@ -368,8 +368,6 @@ class VueSysteme(Perspective):
                         self.parent.parent.ciblerdestination(v[2],planete[2],self.systeme.id,xy)
                     elif t[1] == "vaisseauinterstellaire":
                         vaisseau=[self.parent.nom,t[1],t[2],xy2]
-                        print(vaisseau)
-                        print(v)
                         self.parent.parent.ciblerdestination(v[2],vaisseau[2],self.systeme.id,xy)
                 else:
                     self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
@@ -377,6 +375,7 @@ class VueSysteme(Perspective):
         
     def cliquerCentre(self, evt):
         xy2=evt.x,evt.y
+        self.canevas.delete("selectionner") 
         t=self.canevas.gettags("current")
         if len(t) != 0:
             if t[6] == "mere":
