@@ -223,20 +223,24 @@ class VueSysteme(Perspective):
                             #                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
                             
                         if isinstance(j,VaisseauChasseur):
-                            tag =("chasseur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
+                            if not j.dansVaisseauMere:
+                                tag =("chasseur"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
 
                         elif isinstance(j,VaisseauColonisation) :
-                            tag =("colonisateur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                            if not j.dansVaisseauMere:
+                                tag =("colonisateur"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
 
         
                         elif isinstance(j, VaisseauTank) :
-                            tag =("tank"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                            if not j.dansVaisseauMere:
+                                tag =("tank"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                        
                         elif isinstance(j, VaisseauMere) :
                             tag =("mere"+str(angle))
                             im=self.parent.modes["systemes"][j.idSysteme].images[tag]

@@ -435,10 +435,11 @@ class Joueur():
                         vaisseau.listeCibleAttaquer.clear()
                         for vaisseauEnnemi in j.vaisseauxinterstellaires:
                             if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
-                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                                if distance < vaisseau.range:
-                                    vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-                                   # print("vaisseau detecter")
+                                if not vaisseau.dansVaisseauMere and not vaisseauEnnemi.dansVaisseauMere :
+                                    distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                    if distance < vaisseau.range:
+                                        vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                                       # print("vaisseau detecter")
                             
                     
     def choisirCible(self):    
