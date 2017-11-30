@@ -81,6 +81,7 @@ class Joueur():
                         self.stationspatiaux.append(station)                   
                         return 1            
                     
+
     def ameliorerBatiment(self, maSelection, planete, systeme):
         planete = self.getPlanete(planete, systeme)
         for infra in planete.infrastructures:
@@ -89,7 +90,7 @@ class Joueur():
                 return
     
     def getPlanete(self, planeteID, systemeID):
-        for systeme in self.systemesvisites:
+        for systeme in self.parent.systemes:
             if systeme.id == systemeID:
                 for planete in systeme.planetes:
                     if planete.id == planeteID:
@@ -296,14 +297,17 @@ class Joueur():
         idpropri,idVais=ids
         for i in self.vaisseauxinterstellaires:
             if i.id == idVais:
-                for j in self.parent.systemes:
-                    if j.id==i.idSysteme:
-                        #i.x= j.x
-                        # i.y=j.y
-                        i.x= j.x-1
-                        i.y=j.y-1
-                        i.dansGalaxie=True
-                        self.objetgalaxie.append(i)
+                if isinstance(i, VaisseauMere):
+                    for j in self.parent.systemes:
+                        if j.id==i.idSysteme:
+                            #i.x= j.x
+                            # i.y=j.y
+                            i.x= j.x-1
+                            i.y=j.y-1
+                            i.dansGalaxie=True
+                            self.objetgalaxie.append(i)
+                else:
+                    print("Ce vaisseau ne peut voyager dans la galaxie")
 
     def voyageSystem(self,ids): 
         idSystem, idVais=ids
@@ -396,9 +400,11 @@ class Joueur():
                         vaisseau.listeCibleAttaquer.clear()
                         for vaisseauEnnemi in j.vaisseauxinterstellaires:
                             if vaisseau.idSysteme == vaisseauEnnemi.idSysteme:
-                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
-                                if distance < vaisseau.range:
-                                    vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+                                if not vaisseau.dansVaisseauMere and not vaisseauEnnemi.dansVaisseauMere :
+                                    distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                    if distance < vaisseau.range:
+                                        vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
+
                             
                     
     def choisirCible(self):    
@@ -423,8 +429,8 @@ class Joueur():
         #for pnette in self.planetescontrolees:
         #    pnette.cibleAttaque=None
         #    if len(pnette.listeCibleAttaquer)>0: 
-         #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
-         #       pnette.attaquer()       
+        #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
+        #       pnette.attaquer()       
         
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:

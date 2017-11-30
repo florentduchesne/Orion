@@ -67,9 +67,11 @@ class Vaisseau():
             else:
                 self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:
-                rep=self.cible
-                self.base=self.cible
-                #self.cible=None
+                if isinstance(self.cible, VaisseauMere):
+                        self.cible.RemplirVaisseau(self)
+                        rep=self.cible
+                        self.base=self.cible
+                        self.cible=None
             return rep
         elif self.cible!=None:
             x=self.cible.x
@@ -235,8 +237,16 @@ class VaisseauMere(VaisseauAttaque):
         self.augmentationAttaque = 1
         self.vaisseau = []
     
-    def RemplirVaisseau(self):
-        pass
+    def RemplirVaisseau(self, vaisseauaAjouter):
+        self.vaisseauaAjouter = vaisseauaAjouter
+        if not isinstance(self.vaisseauaAjouter, VaisseauMere):
+            if self.maxVaisseau > len(self.vaisseau) :
+                self.vaisseau.append(self.vaisseauaAjouter)
+                self.vaisseauaAjouter.dansVaisseauMere = True
+            else : 
+                print ("Vaisseau Mere Plein")
+        else :
+            ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
     
     def augmentation(self) :
         self.niveau += 1
