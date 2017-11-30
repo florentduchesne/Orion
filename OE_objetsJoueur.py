@@ -32,6 +32,8 @@ class Joueur():
         self.vaisseauCargoPersonne = 5
         self.vaisseauCargoAliments = 5
         self.maxVaisseauMere = 3
+        self.nouveauMessageChatTxt = None
+        self.listMessageChat = []
         self.actions={"creervaisseau":self.creervaisseau,
                       "ciblerdestination":self.ciblerdestination,
                       "ciblerdestinationvehicule":self.ciblerdestinationvehicule,
@@ -47,7 +49,8 @@ class Joueur():
                       "voyageGalax":self.voyageGalax,
                       "voyageSystem":self.voyageSystem,
                       "recolterBatiment":self.recolterRessources,
-                      "voyageSystem":self.voyageSystem}
+                      "voyageSystem":self.voyageSystem,
+                      "nouveauMessageChat":self.nouveauMessageChat}
                       #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
@@ -466,7 +469,11 @@ class Joueur():
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:
             if vseau.vie<1:
-                self.vaisseauxinterstellaires.remove(vseau)    
+                self.vaisseauxinterstellaires.remove(vseau)
+                
+    def nouveauMessageChat(self,txt):
+        self.nouveauMessageChatTxt = txt
+        #self.parent.parent.Vue.nouveauMessageChat(txt)
         
         
         

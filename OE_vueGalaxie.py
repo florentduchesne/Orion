@@ -16,6 +16,8 @@ class VueGalaxie(Perspective):
         self.maselection=None
         self.mesSelections=[]
         self.commande = None
+        self.chatEcrireLesNomsDesJoueurs()
+
         self.initX = 0
         self.initY = 0
         self.couleurBG1 = "#222831"
@@ -143,6 +145,9 @@ class VueGalaxie(Perspective):
             
         for i in mod.joueurscles:
             i=mod.joueurs[i]
+            if i.nouveauMessageChatTxt != None:
+                self.nouveauMessageChat(i.nouveauMessageChatTxt)
+                i.nouveauMessageChatTxt = None
             for j in i.objetgalaxie:
                 if isinstance(j, VaisseauMere):
                     jx=j.x*e
@@ -347,3 +352,4 @@ class VueGalaxie(Perspective):
     def voyageSystem(self):
         self.commande="voyageSystem"
        # self.parent.parent.voyageSystem(self.maselection[0],self.maselection[2])
+       

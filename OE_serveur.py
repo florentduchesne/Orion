@@ -15,13 +15,15 @@ s.close()
 
 daemon = Pyro4.core.Daemon(host=monip,port=9999) 
 
+
 class Client(object):
     def __init__(self,nom):
         self.nom=nom
         self.cadreCourant=0
         self.cadreEnAttenteMax=0
         self.actionsEnAttentes={}
-        
+
+       
 class ModeleService(object):
     def __init__(self,parent,rdseed):
         self.parent=parent
@@ -128,7 +130,8 @@ class ModeleService(object):
         else:
             rep= [0,message,list(self.clients.keys())]
         return rep
-                
+
+             
 class ControleurServeur(object):
     def __init__(self):
         rand=random.randrange(1000)+1000

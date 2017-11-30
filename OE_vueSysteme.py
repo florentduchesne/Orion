@@ -20,6 +20,7 @@ class VueSysteme(Perspective):
         self.couleurBG2 = "#393E46"
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
+        self.chatEcrireLesNomsDesJoueurs()
         
         self.btnvuegalaxie.configure(bg=self.couleurBouton, command=self.voirgalaxie, state=NORMAL)
         
@@ -192,6 +193,9 @@ class VueSysteme(Perspective):
         e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
+            if i.nouveauMessageChatTxt != None:
+                self.nouveauMessageChat(i.nouveauMessageChatTxt)
+                i.nouveauMessageChatTxt = None
             for j in i.vaisseauxinterstellaires:
                 if j.idSysteme==self.systeme.id:
                     if j.dansGalaxie==False:

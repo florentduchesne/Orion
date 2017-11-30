@@ -175,6 +175,9 @@ class Controleur():
         
     def changerValeurTuile(self,t):
         self.modele.changerValeurTuile(t)
+        
+    def nouveauMessageChat(self, txt):
+        self.actions.append([self.monnom,"nouveauMessageChat",[txt[0],self.monnom+": "+txt[1]]])
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)

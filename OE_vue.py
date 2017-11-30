@@ -253,16 +253,19 @@ class Vue():
         #         sinon si on la cree en centrant la vue sur le systeme d'ou on vient
         s=self.modes["galaxie"]
         self.changemode(s) 
+        s.remplirChatBoxChangementVue()
        
     def voirsysteme(self,systeme=None):
         if systeme:
             sid=systeme.id
             if sid in self.modes["systemes"].keys():
                 s=self.modes["systemes"][sid]
+                s.remplirChatBoxChangementVue()
             else:
                 s=VueSysteme(self)
                 self.modes["systemes"][sid]=s
                 s.initsysteme(systeme)
+                s.remplirChatBoxChangementVue()
             self.changemode(s)
         
     def voirplanete(self,maselection=None):
@@ -274,11 +277,13 @@ class Vue():
             if planeid in self.modes["planetes"].keys():
                 s=self.modes["planetes"][planeid]
                 self.cadreRessourcesPlanete.pack(fill=X)
+                s.remplirChatBoxChangementVue()
             else:
                 s=VuePlanete(self,sysid,planeid)
                 self.modes["planetes"][planeid]=s
                 s.initplanete(sysid,planeid)
                 self.cadreRessourcesPlanete.pack(fill=X)
+                s.remplirChatBoxChangementVue()
             self.changemode(s)
         else:
             print("aucune planete selectionnee pour atterrissage")

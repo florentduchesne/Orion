@@ -14,11 +14,14 @@ class VuePlanete(Perspective):
         self.systeme=syste
         self.maselection=None
         self.macommande=None
+        self.chatEcrireLesNomsDesJoueurs()
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
+        
+        
         
         print("Planete")
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
@@ -389,6 +392,9 @@ class VuePlanete(Perspective):
         #e=self.UA2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
+            if i.nouveauMessageChatTxt != None:
+                self.nouveauMessageChat(i.nouveauMessageChatTxt)
+                i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
@@ -546,4 +552,4 @@ class VuePlanete(Perspective):
         self.canevas.create_image(x,y, image=im)
         self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
         pass
-    
+
