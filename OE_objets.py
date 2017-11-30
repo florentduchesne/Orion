@@ -78,14 +78,11 @@ class Planete():
     """
     def initplanete(self):
         if self.proprietaire != "inconnu":
-            print(self.proprietaire)
-            print("initplanete dans planete")
             self.infrastructures=[Ville(self)]"""
 
     def setProprietairePlanete(self, proprio, couleur):
         print('changement de proprio : ', proprio, '   pour la planete id# ', self.id)
         self.couleur=couleur
-        print('print proprio : ', proprio)
         self.proprietaire=proprio
     
     def coloniser(self, nomJoueur):
@@ -94,14 +91,15 @@ class Planete():
             if isinstance(i, Ville):
                 nbVilles += 1
                 if(i.proprietaire == nomJoueur):
-                    print("vous avez deja une ville sur cette planete!")
+                    self.parent.parent.parent.nouveauMessageSystemChat("Vous avez déjà une ville!")
                     return False
         if(nbVilles == len(self.coordonneesPossiblesVilles)):#verifie si le nombre de villes maximal est deja atteint
-            print("nombre de villes maximal deja atteint")
+            self.parent.parent.parent.nouveauMessageSystemChat("Vous avez atteint le maximum","de ville!")
             return False
         coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
         self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
         self.dicRessourceParJoueur[nomJoueur] = Ressource()
+        self.parent.parent.parent.nouveauMessageSystemChat("Planète colonisée!")
         return True
        
 class Etoile():
@@ -136,8 +134,8 @@ class Systeme():
            
             for i in range(nbplanetes):
                 type=random.choice(["roc","gaz","glace"])
-                distsol=random.randrange(250)/10 #distance en unite astronomique 150000000km
-                taille=random.randrange(50)/100 # en masse solaire
+                distsol=random.randrange(100)/10 #distance en unite astronomique 150000000km
+                taille=random.randrange(5,30)/100 # en masse solaire
                 angle=random.randrange(360)
                 
                 x,y=hlp.getAngledPoint(math.radians(angle),distsol,0,0)
@@ -145,7 +143,6 @@ class Systeme():
 
                 y = self.diametre/2 +y
 
-                #print(x,y)
                 planete = Planete(self,type,distsol,taille,angle,self.parent.createurId.prochainid(), x,y)
                 #planete.initplanete()
                 self.planetes.append(planete)#ici
@@ -153,16 +150,10 @@ class Systeme():
                 
     def setProprietairePlanete(self, proprio, couleur):
         #self.proprietaire=proprio
-        print('systeme = ', self.id, ' le nombre de planete dans le systeme : ', len(self.planetes))
         numPlaneteProprio = random.randrange(0,len(self.planetes))
         planeteProprio = self.planetes[numPlaneteProprio]
         planeteProprio.setProprietairePlanete(proprio.id, couleur)
                         #parent, nom, systemeid, planeteid, idSuivant, x = 2500, y = 2500, proprio="inconnu"
-        print("proprio nom : ")
-        print(proprio.nom)
-        print(self.id)
-        print(planeteProprio.id)
-        print(self.parent.createurId.prochainid())
         planeteProprio.infrastructures=[Ville(self, proprio.nom, self.id, planeteProprio.id, 800, 800, self.parent.createurId.prochainid(), proprio = proprio.nom)]
         planeteProprio.dicRessourceParJoueur[proprio.nom] = Ressource()
         proprio.maplanete=planeteProprio

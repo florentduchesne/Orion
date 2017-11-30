@@ -25,8 +25,6 @@ class VuePlanete(Perspective):
         self.couleurBoutonDesactive = "#50a2c1"
         
         
-        
-        print("Planete")
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
         self.largeur=int(self.modele.diametre*self.KM2pixel)
         self.hauteur=self.largeur
@@ -190,12 +188,10 @@ class VuePlanete(Perspective):
     ##############AUTRES##############
     def creerstation(self):
         self.macommande="station"
-        print("Creer station EN CONSTRUCTION")
         
     ##############AMELIORER BATIMENT##############
-    def ameliorerBatiment(self):
-        print("ON AMELIORE UN BATIMENT")        
-        self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+    def ameliorerBatiment(self):      
+        self.modele.joueurs[self.parent.parent.monnom].ameliorerBatiment(self.maselection, self.planete, self.systeme, self.parent.parent.monnom)
         self.montresystemeselection()
         self.maselection = None
         
@@ -203,8 +199,7 @@ class VuePlanete(Perspective):
         pass
     
     ##############AMELIORER BATIMENT##############
-    def ameliorerVehicule(self):
-        print("ON AMELIORE UN Vehicule")        
+    def ameliorerVehicule(self): 
         self.modele.joueurs[self.maselection[0]].ameliorerVehicule(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
@@ -569,7 +564,6 @@ class VuePlanete(Perspective):
         self.canevas.yview(MOVETO, (y*yn/self.hauteur)-eey)
         
     def effacerBatiment(self, id):
-        print("effacer batiment")
         self.canevas.delete(id)
     
     def afficherBatiment(self, x, y, im, t):

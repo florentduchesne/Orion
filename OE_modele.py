@@ -9,7 +9,6 @@ class Modele():
         self.createurId=self.parent.createurId
         self.diametre,self.densitestellaire,qteIA=dd
         self.nbsystemes=int(self.diametre**2/self.densitestellaire)
-        print(self.nbsystemes)
         self.ias=[]    # IA 
         self.joueurs={}
         self.joueurscles=joueurs
@@ -20,7 +19,7 @@ class Modele():
         self.creersystemes(int(qteIA))  # nombre d'ias a ajouter
         self.compteur = 20
         self.compteurLabel = 20
-        self.constructeurBatimentHelper = ConstructeurBatimentHelper()
+        self.constructeurBatimentHelper = ConstructeurBatimentHelper(self)
         
     def creersystemes(self,nbias):  # IA ajout du parametre du nombre d'ias a ajouter  
         for i in range(self.nbsystemes):
