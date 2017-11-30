@@ -41,6 +41,7 @@ class BatimentRessources():
                     print("assez de ressources pour l'amelioration")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.pv *= 2
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -71,22 +72,24 @@ class BatimentManufacture():
                     print("assez de ressources pour l'amelioration")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.pv *= 2
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
 #super-classe des hopitaux, des hotels de ville, des laboratoires, etc.
 class BatimentInfrastructure():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, listeNiveaux = [], proprio = "patate"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, productionRessources, listeNiveaux = [], proprio = "patate"):
         self.parent=parent
         self.id=idSuivant
         self.x=x
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        self.productionRessources = productionRessources
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.pv = 150
         
     def ameliorer(self, joueur, planete):
         print("AMELIORER DANS OBJ INFRASTRUCTURE")
@@ -102,6 +105,7 @@ class BatimentInfrastructure():
                     print("assez de ressources pour l'amelioration")
                     #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.pv *= 2
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
         
@@ -132,6 +136,7 @@ class BatimentDefense():
                     self.listeNiveaux.remove(self.nomBatiment)
                     print("assez de ressources pour l'amelioration")
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.pv *= 2
         else:
             print("PLUS D'AMÉLIORATIONS DISPONIBLES")
      
@@ -175,8 +180,6 @@ class Mur(BatimentDefense):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant, nomBatiment, 1000, listeNiveaux=[], proprio = proprio)
         print("Objet Mur Creer")
         #======================================================
-        """RESSOURCE"""
-        self.bois=300
         """STRUCTURE"""
         self.protection=100 
         #======================================================
@@ -246,24 +249,26 @@ class CentraleElectrique(BatimentRessources):
 ################BATIMENTS INFRASTRUCTURES################
 class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
     def __init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment = "Ville", proprio="inconnu"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
+        print("ressource")
+        print(dictionnaireProductionRessources[nomBatiment].dictRess["humain"])
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", dictionnaireProductionRessources[nomBatiment], listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
         self.taille=20
         
 class Hopital(BatimentInfrastructure):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "hopital", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment,dictionnaireProductionRessources[nomBatiment], proprio = proprio)
         
 class Laboratoire(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire",  proprio = "patate"):
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 class Ecole(BatimentInfrastructure):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ecole", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 class Banque(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "banque", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Banque", proprio = "patate"):
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 ################BATIMENTS MANUFACTURES################
 class UsineVehicule(BatimentManufacture):

@@ -70,6 +70,13 @@ class Joueur():
                                          "Bouclier":Bouclier,
                                          "Ville":Ville
                                          }
+        self.listeClassesVaisseaux = {"chasseur":VaisseauChasseur,
+                                      "colonisateur":VaisseauColonisation,
+                                      "tank":VaisseauTank,
+                                      "mere":VaisseauMere
+                                      
+                                      
+            }
       
     def creerstationspatiale(self,listeparams):
         idsystem,idplanete=listeparams
@@ -184,7 +191,7 @@ class Joueur():
                             ressourcesTotales = Ressource()
                             ressourcesTotales.additionnerRessources(self.ressources)
                             ressourcesTotales.additionnerRessources(p.dicRessourceParJoueur[self.nom])
-                            coutVaisseau = dictionnaireCoutsVaisseaux[VaisseauAttaque][0]
+                            coutVaisseau = dictionnaireCoutsVaisseaux[self.listeClassesVaisseaux[typeVaisseau]][0]
                             if(ressourcesTotales.estPlusGrandOuEgal(coutVaisseau)):
                                 self.ressources.soustraireRessourcesJoueurETPlanet(p.dicRessourceParJoueur[self.nom], coutVaisseau)
                             
