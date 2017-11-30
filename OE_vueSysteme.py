@@ -48,24 +48,13 @@ class VueSysteme(Perspective):
         ##############Vaisseaux##############
         self.btnChasseur=Button(self.cadreVaisseau,text="Vaisseau Chasseur", bg=self.couleurBouton,command = lambda : self.creervaisseau("chasseur"))
         self.btnChasseur.pack(side=TOP)
-        self.btnCommerce=Button(self.cadreVaisseau,text="Vaisseau Commerce", bg=self.couleurBouton,command = self.creervaisseau2("commerce"))
-        self.btnCommerce.pack(side=TOP)
-        self.btnBombarde=Button(self.cadreVaisseau,text="Vaisseau Bombarde", bg=self.couleurBouton,command = self.creervaisseau2("bombarde"))
-        self.btnBombarde.pack(side=TOP)
         self.btnColonisation=Button(self.cadreVaisseau,text="Vaisseau Colonisation", bg=self.couleurBouton,command = lambda : self.creervaisseau("colonisateur"))
         self.btnColonisation.pack(side=TOP)
         self.btnTank=Button(self.cadreVaisseau,text="Vaisseau Tank", bg=self.couleurBouton,command = lambda : self.creervaisseau("tank"))
         self.btnTank.pack(side=TOP)
         self.btnMere=Button(self.cadreVaisseau,text="Vaisseau Mere", bg=self.couleurBouton,command = lambda : self.creervaisseau("mere"))
         self.btnMere.pack(side=TOP)
-        self.btnLaser=Button(self.cadreVaisseau,text="Vaisseau Laser", bg=self.couleurBouton,command = self.creervaisseau2("laser"))
-        self.btnLaser.pack(side=TOP)
-        self.btnNova=Button(self.cadreVaisseau,text="Vaisseau Nova", bg=self.couleurBouton,command = self.creervaisseau2("nova"))
-        self.btnNova.pack(side=TOP)
-        self.btnSuicide=Button(self.cadreVaisseau,text="Vaisseau Suicide", bg=self.couleurBouton,command = self.creervaisseau2("suicide"))
-        self.btnSuicide.pack(side=TOP)
-        self.btnBiologique=Button(self.cadreVaisseau,text="Vaisseau Biologique", bg=self.couleurBouton,command = self.creervaisseau2("biologique"))
-        self.btnBiologique.pack(side=TOP)
+    
         self.btnRetour=Button(self.cadreVaisseau,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
@@ -73,8 +62,11 @@ class VueSysteme(Perspective):
         self.lbselectecible.pack()
         
         #voyage
-        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie", bg=self.couleurBouton,command =self.voyageGalax)
+        self.btnVoyage=Button(self.cadrevoyage,text ="Voyage dans galaxie", bg=self.couleurBouton,command = self.voyageGalax)
         self.btnVoyage.pack()
+        
+        self.btnViderVaisseau=Button(self.cadrevoyage,text ="Vider le vaisseauMere", bg=self.couleurBouton,command =self.viderVaisseau)
+        self.btnViderVaisseau.pack(side=BOTTOM)
         
         self.changecadreetat(self.cadreetataction)
         
@@ -436,3 +428,7 @@ class VueSysteme(Perspective):
         self.mesSelections.clear()
         self.lbselectecible.pack_forget()
         self.canevas.delete("selecteur")
+    
+    def viderVaisseau (self):
+        for v in self.mesSelections: 
+            self.parent.parent.viderVaisseau(v[0],v[2])
