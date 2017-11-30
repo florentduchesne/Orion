@@ -147,7 +147,16 @@ class Perspective(Frame):
         elif txt[0] == "Tous":
             self.listeChat.insert(0, txt[1])
             self.modele.joueurs[self.parent.nom].listMessageChat.append(txt[1])
-            print(self.modele.joueurs[self.parent.nom].listMessageChat)
+            
+    def messageSystemChat(self, txt):
+        if txt[2] != None:
+            self.listeChat.insert(0, txt[2])
+            self.modele.joueurs[self.parent.nom].listMessageChat.append(txt[2])
+        self.listeChat.insert(0, "System: "+txt[1])
+        self.modele.joueurs[self.parent.nom].listMessageChat.append("System: "+txt[1])
+        
+            
+        
         
     def envoyeMessage(self, evt):
         txt=self.entryChat.get()
