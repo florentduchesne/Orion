@@ -244,9 +244,14 @@ class VaisseauMere(VaisseauAttaque):
     
     def RemplirVaisseau(self, vaisseauaAjouter):
         self.vaisseauaAjouter = vaisseauaAjouter
-        if self.maxVaisseau < len(self.vaisseau) :
-            self.vaisseau.append(self.vaisseauaAjouter)
-            self.vaisseauaAjouter.dansVaisseauMere = True
+        if not isinstance(self.vaisseauaAjouter, VaisseauMere):
+            if self.maxVaisseau > len(self.vaisseau) :
+                self.vaisseau.append(self.vaisseauaAjouter)
+                self.vaisseauaAjouter.dansVaisseauMere = True
+            else : 
+                print ("Vaisseau Mere Plein")
+        else :
+            ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
     
     def augmentation(self) :
         self.niveau += 1
