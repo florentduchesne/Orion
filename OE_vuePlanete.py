@@ -191,8 +191,11 @@ class VuePlanete(Perspective):
         
     ##############AMELIORER BATIMENT##############
     def ameliorerBatiment(self):
-        print("ON AMELIORE UN BATIMENT")        
-        self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        print("ON AMELIORE UN BATIMENT")
+        print("ma selection : " + str(self.maselection))    
+        print("mon nom : " + str(self.parent.parent.monnom))
+        print("planete : " + self.planete)
+        self.modele.joueurs[self.parent.parent.monnom].ameliorerBatiment(self.maselection, self.planete, self.systeme, self.parent.parent.monnom)
         self.montresystemeselection()
         self.maselection = None
         

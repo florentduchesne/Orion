@@ -85,7 +85,7 @@ class Joueur():
                         print("angle: " + str(p.angle))                        
                         return 1            
                     
-    def ameliorerBatiment(self, maSelection, planete, systeme):
+    def ameliorerBatiment(self, maSelection, planete, systeme, nomJoueur):
         print("AMELIORATION BATIMENT DANS OBJ JOUEUR")
         print(maSelection)
         #print(planete.infrastructures)
@@ -101,7 +101,7 @@ class Joueur():
                 return
     
     def getPlanete(self, planeteID, systemeID):
-        for systeme in self.systemesvisites:
+        for systeme in self.parent.systemes:
             if systeme.id == systemeID:
                 for planete in systeme.planetes:
                     if planete.id == planeteID:
