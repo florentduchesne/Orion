@@ -99,8 +99,6 @@ class Planete():
         coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
         self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
         self.dicRessourceParJoueur[nomJoueur] = Ressource()
-        
-        #self.visiteurs
         self.parent.parent.parent.nouveauMessageSystemChat("Planète colonisée!")
         return True
        
@@ -136,7 +134,7 @@ class Systeme():
            
             for i in range(nbplanetes):
                 type=random.choice(["roc","gaz","glace"])
-                distsol=random.randrange(100)/10 #distance en unite astronomique 150000000km
+                distsol=random.randrange(200)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(5,30)/100 # en masse solaire
                 angle=random.randrange(360)
                 

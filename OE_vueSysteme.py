@@ -193,7 +193,7 @@ class VueSysteme(Perspective):
                             jx=j.x*e
                             jy=j.y*e
                             x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-       
+                            #print(x,y)
                             angle = int(math.degrees(j.angleinverse))
     
                                             
@@ -313,7 +313,7 @@ class VueSysteme(Perspective):
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",v.id))
     
-        
+        print(x,y)
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")   
         self.maselection = None

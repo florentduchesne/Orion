@@ -264,8 +264,8 @@ class Vue():
         self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
         
         #RENDRE LES TEXTBOX NON ACCESSIBLE POUR CHANGER LEUR VALEURS
-        self.diametre.config(state=DISABLED)
-        self.densitestellaire.config(state=DISABLED)
+        self.diametre.config(state=NORMAL)
+        self.densitestellaire.config(state=NORMAL)
         self.qteIA.config(state=DISABLED)
 
     def voirgalaxie(self):

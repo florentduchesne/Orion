@@ -193,7 +193,7 @@ class Joueur():
                                 elif typeVaisseau == "mere" :
                                     v=VaisseauMere(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type,self.maxVaisseauMere)#self.niveauVaisseau)
                                     self.vaisseauxinterstellaires.append(v)
-                              
+                                #print(v.x,v.y)
                                 return 1            
 
     def creervehiculetank(self, listeparams):
