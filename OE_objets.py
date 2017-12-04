@@ -99,6 +99,8 @@ class Planete():
         coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
         self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
         self.dicRessourceParJoueur[nomJoueur] = Ressource()
+        
+        #self.visiteurs
         self.parent.parent.parent.nouveauMessageSystemChat("Planète colonisée!")
         return True
        

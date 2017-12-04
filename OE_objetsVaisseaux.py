@@ -57,6 +57,7 @@ class Vaisseau():
                     if not self.dansVaisseauMere :  
                         print("ceci est un vaisseau colonisateur")
                         if self.cible.coloniser(self.proprietaire):
+                            #self.parent.systemesvisites.append(Systeme)
                             return "colonisation"
                 self.cible=None
             return rep#on retourne la cible
@@ -122,7 +123,7 @@ class VaisseauAttaque(Vaisseau):
             self.enAttaque=True
 
             if self.tempsRecharge==0:
-                p=Projectile(self,self.cibleAttaque)
+                p=Projectile(self,self.cibleAttaque,0.05)
                 self.projectile.append(p)
                 p.ciblerdestination()
                 self.tempsRecharge=10
