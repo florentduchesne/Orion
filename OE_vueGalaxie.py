@@ -173,20 +173,20 @@ class VueGalaxie(Perspective):
         self.canevas.itemconfig(lp[0],tags=t)
                
     def afficherselection(self):
+        e=self.AL2pixel
+        joueur=self.modele.joueurs[self.parent.nom]
         self.canevas.delete("selecteur")
         if self.maselection!=None:
-            joueur=self.modele.joueurs[self.parent.nom]
+            joueur=self.modele.joueurs[self.parent.nom]         
             
-            e=self.AL2pixel
             if self.maselection[1]=="systeme":
-                for i in joueur.systemesvisites:
-                    if i.id == self.maselection[2]:
-                        x=i.x
-                        y=i.y
-                        t=10
-                        self.canevas.create_oval((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
-                                                 outline=joueur.couleur,
-                                                 tags=("select","selecteur"))
+                x=float(self.maselection[3])
+                y=float(self.maselection[4])
+                t=12
+                self.canevas.create_oval((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                         outline=joueur.couleur,
+                                         tags=("select","selecteur"))
+                
             elif self.maselection[1]=="vaisseauinterstellaire":
                 for i in joueur.vaisseauxinterstellaires:
                     if i.id == self.maselection[2]:
@@ -195,7 +195,20 @@ class VueGalaxie(Perspective):
                         t=10
                         self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
                                                       outline=joueur.couleur,
-                                                      tags=("select","selecteur"))
+                                                      tags=("select","selecteur"))                        
+        if len(self.mesSelections)!=0:
+            for v in self.mesSelections:                    
+                for i in joueur.vaisseauxinterstellaires:
+                    print(v)
+                    print(i.id)
+                    if i.id == v[2]:
+                        x=i.x
+                        y=i.y
+                        t=25
+                        if(x != None and y != None) :
+                            self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
+                                                        outline=joueur.couleur,
+                                                        tags=("select","selecteur"))
             
     def maintenirGauche(self, evt):
         joueur=self.modele.joueurs[self.parent.nom]
@@ -217,6 +230,7 @@ class VueGalaxie(Perspective):
 
     
     def cliquerGauche(self,evt):
+        joueur=self.modele.joueurs[self.parent.nom]
         self.canevas.delete("selectionner")  
         self.btnvuesysteme.configure(bg=self.couleurBoutonDesactive, command=self.voirsysteme, state=DISABLED) 
         self.maselection = None
@@ -233,12 +247,12 @@ class VueGalaxie(Perspective):
                 if t[1] == "systeme":
                     self.btnvuesysteme.configure(bg=self.couleurBouton, command=self.voirsysteme, state=NORMAL)
                     self.maselection=[self.parent.nom,t[1],t[2],t[3],t[4]]
-                    print(self.maselection)
                     self.montresystemeselection()
                 elif t[1] == "vaisseauinterstellaire":
                     self.mesSelections.append((self.parent.nom,t[1],t[2]))
                     self.montrevaisseauxselection()
-                    print(self.mesSelections)
+                    print(self.mesSelections)                    
+                
             
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
