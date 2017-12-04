@@ -2,6 +2,7 @@ from OE_objetsRessource import *
 import math
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
 from DictionnaireCoutAllocationAgeBatiments import *
+from OE_projectile import *
 
 def verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
     for infra in planete.infrastructures:
@@ -25,11 +26,9 @@ class BatimentRessources():
         self.productionRessources = production
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
-        print("AMELIORER DANS OBJ BATIMENT")
-        print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
             if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
@@ -38,12 +37,12 @@ class BatimentRessources():
                     joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                     self.nomBatiment = nouveauNom
                     self.listeNiveaux.remove(self.nomBatiment)
-                    print("assez de ressources pour l'amelioration")
+                    joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
                     self.pv *= 2
         else:
-            print("PLUS D'AMÉLIORATIONS DISPONIBLES")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
 #superclasse des usines a vaisseaux, usines a drones, etc.     
 class BatimentManufacture():
@@ -57,10 +56,9 @@ class BatimentManufacture():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
-        print("AMELIORER DANS OBJ BATIMENT")
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
             if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
@@ -69,12 +67,12 @@ class BatimentManufacture():
                     joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                     self.nomBatiment = nouveauNom
                     self.listeNiveaux.remove(self.nomBatiment)
-                    print("assez de ressources pour l'amelioration")
+                    joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
                     self.pv *= 2
         else:
-            print("PLUS D'AMÉLIORATIONS DISPONIBLES")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
 #super-classe des hopitaux, des hotels de ville, des laboratoires, etc.
 class BatimentInfrastructure():
@@ -89,11 +87,9 @@ class BatimentInfrastructure():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 150
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
-        print("AMELIORER DANS OBJ INFRASTRUCTURE")
-        print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
             if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
@@ -102,16 +98,16 @@ class BatimentInfrastructure():
                     joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                     self.nomBatiment = nouveauNom
                     self.listeNiveaux.remove(self.nomBatiment)
-                    print("assez de ressources pour l'amelioration")
+                    joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
                     self.pv *= 2
         else:
-            print("PLUS D'AMÉLIORATIONS DISPONIBLES")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
 #super-classe des defenses
 class BatimentDefense():
-    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, pv, listeNiveaux = [], proprio = "patate"):
+    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, vie, listeNiveaux = [], proprio = "patate"):
         self.parent = parent
         self.id=idSuivant
         self.x=x
@@ -121,11 +117,9 @@ class BatimentDefense():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = pv
+        self.vie = vie
         
     def ameliorer(self, joueur, planete):
-        print("AMELIORER DANS OBJ BATIMENT")
-        print(self.listeNiveaux)
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
             if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
@@ -134,11 +128,11 @@ class BatimentDefense():
                     joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
                     self.nomBatiment = nouveauNom
                     self.listeNiveaux.remove(self.nomBatiment)
-                    print("assez de ressources pour l'amelioration")
+                    joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
                     self.pv *= 2
         else:
-            print("PLUS D'AMÉLIORATIONS DISPONIBLES")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
      
 class StationSpatiale():
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete, proprio = "patate"):
@@ -156,8 +150,24 @@ class StationSpatiale():
         self.planetey = self.y
         self.orbite = planete.taille + 0.3
         self.couleurJoueur = couleurJoueur
+        
+        
+        """variable pour attaque"""
+        
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 2
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=5
+        #======================================================
+        """RESSOURCE"""
+        self.besoinhumain=50
+        self.besoinelectricite= 100
+        self.titanium=1000
+
         """STRUCTURE"""
-        self.vie=15000
+        self.vie=300
         self.dommage=50
         self.protection=100
         #======================================================
@@ -174,11 +184,29 @@ class StationSpatiale():
         if self.nom.ressource - coutTitanium > 0:
             pass
 
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            
+            if self.tempsRecharge==0:
+                
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=15
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
 
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+            
 class Mur(BatimentDefense):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment = "mur", proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant, nomBatiment, 1000, listeNiveaux=[], proprio = proprio)
-        print("Objet Mur Creer")
         #======================================================
         """STRUCTURE"""
         self.protection=100 

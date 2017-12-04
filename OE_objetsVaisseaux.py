@@ -45,7 +45,6 @@ class Vaisseau():
             return rep
         
         elif self.cible and isinstance(self.cible, Planete): #deplacement dans un système
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
             self.angletrajet = hlp.calcAngle(self.x,self.y,x,y)
@@ -54,11 +53,11 @@ class Vaisseau():
             if hlp.calcDistance(self.x,self.y,x,y)-1 <=self.vitesse:#si le vaisseau est arrivé
                 rep=self.cible
                 self.base=self.cible
-                print("vaisseau arrivé sur la planete")
                 if(isinstance(self, VaisseauColonisation)):
-                    print("ceci est un vaisseau colonisateur")
-                    if self.cible.coloniser(self.proprietaire):
-                        return "colonisation"
+                    if not self.dansVaisseauMere :  
+                        print("ceci est un vaisseau colonisateur")
+                        if self.cible.coloniser(self.proprietaire):
+                            return "colonisation"
                 self.cible=None
             return rep#on retourne la cible
         elif self.cible and isinstance(self.cible, Vaisseau):
@@ -77,10 +76,12 @@ class Vaisseau():
                         self.cible=None
             return rep
         elif self.cible!=None:
-            # print(self.cible.x,self.x,self.cible.y,self.y)
             x=self.cible.x
             y=self.cible.y
-            self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            if self.dansGalaxie == False:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse*10,self.x,self.y)
+            else:
+                self.x,self.y=hlp.getAngledPoint(self.angletrajet,self.vitesse/2.5,self.x,self.y)
             if hlp.calcDistance(int(self.x),int(self.y),int(x),int(y)) <=self.vitesse:
             #if self.x ==x and self.y == y:
                 rep= None
@@ -93,7 +94,6 @@ class Vaisseau():
         self.angletrajet=hlp.calcAngle(self.x,self.y,p.x,p.y)
         self.angleinverse=math.radians(math.degrees(self.angletrajet)+180)
         dist=hlp.calcDistance(self.x,self.y,p.x,p.y)
-        #print("Distance",dist," en ", int(dist/self.vitesse))
     
     def augmentation(self) :
         self.niveau += 1
@@ -104,13 +104,12 @@ class VaisseauAttaque(Vaisseau):
         Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.attaque = Degats
         self.range = portee
-        self.cibleAttaque=None 
         self.enAttaque=False
-        self.listeCibleAttaquer=[]
         self.augmentationDomamage = 2
         self.augmentationVie = 2
         self.augmentationPortee = 1
         self.listeCibleAttaquer=[]
+        self.listeCibleAttaquerStation=[]
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
@@ -130,7 +129,6 @@ class VaisseauAttaque(Vaisseau):
             else:
                 self.tempsRecharge=self.tempsRecharge-1
             
-
         else: 
             self.enAttaque=False         
             self.listeCibleAttaquer.remove(self.cibleAttaque)
@@ -248,10 +246,27 @@ class VaisseauMere(VaisseauAttaque):
             if self.maxVaisseau > len(self.vaisseau) :
                 self.vaisseau.append(self.vaisseauaAjouter)
                 self.vaisseauaAjouter.dansVaisseauMere = True
+                self.vaisseauaAjouter.x = None
+                self.vaisseauaAjouter.y = None
+                
             else : 
                 print ("Vaisseau Mere Plein")
         else :
             ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
+    
+    def SortirVaisseau (self) :
+        print ("allo")
+        if not self.dansGalaxie:
+            print("ici")
+            for v in range (len(self.vaisseau)):
+                print("pas de probleme")
+                self.vaisseau[v].dansVaisseauMere = False
+                self.vaisseau[v].idSysteme = self.idSysteme
+                self.vaisseau[v].x = self.x + v
+                self.vaisseau[v].y = self.y + v
+                self.vaisseau[v] = []
+        else :
+            print("Le vaisseau Mere peut se vider que dans un systeme")
     
     def augmentation(self) :
         self.niveau += 1

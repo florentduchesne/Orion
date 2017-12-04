@@ -3,6 +3,7 @@
 from OE_objetsRessource import Ressource
 from helper import Helper as hlp
 import math
+from OE_projectile import *
 
 class Vehicule():
     
@@ -53,7 +54,18 @@ class Vehicule():
                 return False
  
     def ameliorer(self):
-        print('a implanter')
+        nomVehiculeAmeliorer = self.nomVehicule[:-1]
+        infoCout = dictionnaireCoutVehicule[nomVehiculeAmeliorer]
+        coutressource = infoCout[0]
+        
+        if (self.parent.ressources.estPlusGrandOuEgal(coutressource)):
+            #diminuer les ressources au joueur
+            self.parent.ressources.soustraireRessources(coutressource)   
+            return True
+        else:
+            return False
+        
+        self.nomVehicule = nomVehiculeAmeliorer
         pass
     
     def rechargeBatterie(self):
@@ -65,12 +77,36 @@ class vehiculeTank(Vehicule):
         Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomVehicule)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
-        self.vie = 0
+        self.vie = 50
         self.vitesseDeplacement=2
         self.puissance = 0
         
-    def attaque(self):
-        pass
+        """variable pour attaque"""
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 0.5
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=5
+        
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
+
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
     
 class vehiculehelicoptere(Vehicule):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomVehicule):
@@ -80,30 +116,6 @@ class vehiculehelicoptere(Vehicule):
         self.vie = 0
         self.vitesseDeplacement=2
         self.puissance = 0
-        
-    
-        
-class vehiculeCommerce(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
-        self.vie = 0
-        self.vitesseDeplacement=0
-        
-    def remplirChargement(self):
-        pass
-    
-    
-class vehiculeAvion(Vehicule):
-    def __init__(self, parent, nom, planete, idSuivant,nomVehicule):
-        Vehicule.__init__(self,parent, nom, planete, idSuivant, nomVehicule)
-        self.qtProjectile = 0
-        self.vitesseAttaque = 0
-        self.vie = 0
-        self.vitesseDeplacement=0
-        self.puissance = 0
-        
-    def attaque(self):
-        pass
     
     
 dictionnaireCoutVehicule={

@@ -68,10 +68,8 @@ class Controleur():
         
     def initierpartie(self,rep):  # initalisation locale de la simulation, creation du modele, generation des assets et suppression du layout de lobby
         if rep[1][0][0]=="lancerpartie":
-            #print("REP",rep)
             self.modele=Modele(self,rep[1][0][1],rep[1][0][2]) # on cree le modele
             self.vue.afficherinitpartie(self.modele)
-            #print(self.monnom,"LANCE PROCHAINTOUR")
             self.prochaintour()
         
     def prochaintour(self): # la boucle de jeu principale, qui sera appelle par la fonction bouclejeu du timer
@@ -125,6 +123,9 @@ class Controleur():
         
     def voyageSystem(self,idSystem,idvais):
         self.actions.append([self.monnom,"voyageSystem",[idSystem,idvais]])
+    
+    def viderVaisseau(self,idpropri,idvais):
+        self.actions.append([self.monnom,"viderVaisseau",[idpropri,idvais]])
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])
@@ -139,12 +140,10 @@ class Controleur():
     ######################RECOLTER RESSOURCES PLANETE######################
     def recolterRessources(self, idSysteme, idPlanete):
         self.actions.append([self.monnom, "recolterBatiment", [idSysteme, idPlanete]])
-        print("controleur recolter ressources")
         
     ######################CREATION BATIMENT######################
     def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
         self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
-        print("Controleur Creation Batiment")
         
     ######################AFFICHAGE BATIMENT#####################
     def effacerBatiment(self, planeteid, nomBatiment, batimentid):
@@ -178,6 +177,9 @@ class Controleur():
         
     def nouveauMessageChat(self, txt):
         self.actions.append([self.monnom,"nouveauMessageChat",[txt[0],self.monnom+": "+txt[1]]])
+        
+    def nouveauMessageSystemChat(self, txt, txt2=None):
+        self.vue.modecourant.messageSystemChat(("System",txt,txt2))
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)
