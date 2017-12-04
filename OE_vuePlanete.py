@@ -5,6 +5,8 @@ from helper import Helper as hlp
 from OE_vuePerspective import *
 import OE_objetsBatiments
 from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
+from test.test_iterlen import NoneLengthHint
+from OE_objetsJoueur import Joueur
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -18,6 +20,7 @@ class VuePlanete(Perspective):
         self.initY = 0
         self.macommande=None
         self.chatEcrireLesNomsDesJoueurs()
+        self.UA2pixel=self.parent.modele.diametre*2 # ainsi la terre serait a self.UA2pixel pixels du soleil et Uranus a 19 Unites Astronomiques 
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
@@ -444,30 +447,34 @@ class VuePlanete(Perspective):
         pass
                
     def afficherselection(self):
-        '''
+        self.canevas.delete("select","selecteur") 
+        e=self.UA2pixel
+        joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
-            #e=self.UA2pixel
-            joueur=self.modele.joueurs[self.parent.nom]
-            if self.maselection[4]=="vehiculetank":
+            x = int(self.maselection[2]) - 50
+            y = int(self.maselection[3]) - 50
+            self.canevas.create_rectangle(x,y,x+100,y+100,dash=(2,2),outline=joueur.couleur,tags=("select","selecteur"))
+            
+        if len(self.mesSelections) !=0:
+            for v in self.mesSelections:
                 for i in joueur.vehiculeplanetaire:
-                    if i.id == self.maselection[1]:
+                    if i.id == v[5]:                    
                         x=i.x
                         y=i.y
-                        t=10
-                        self.canevas
-                        
-                        
-                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
-                                                    outline=joueur.couleur,
-                                                    tags=("select","selecteur"))
-        '''
+                        t=25
+                        if(x != None and y != None) :
+                            self.canevas.create_rectangle((x)-t,(y)-t,(x)+t,(y)+t,dash=(2,2),
+                                                        outline=joueur.couleur,
+                                                        tags=("select","selecteur"))
+    
             
     def cliquerGauche(self, evt):
-        self.canevas.delete("selectionner") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)
         self.maselection = None
+        self.mesSelections.clear()
         self.initX = x
         self.initY = y
         if t[0] != 'current':
@@ -498,7 +505,7 @@ class VuePlanete(Perspective):
         print(self.parent.nom)
         
     def cliquerDroite(self, evt):
-        self.canevas.delete("selectionner") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
         print("Select ", t)
         if len(self.mesSelections) != 0:
@@ -518,7 +525,7 @@ class VuePlanete(Perspective):
         self.mesSelections.clear() 
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)                 
-        self.canevas.delete("selectionner")       
+        self.canevas.delete("selectionner","select","selecteur")       
         self.canevas.create_rectangle(self.initX,self.initY,x,y,dash=(2,2),outline=joueur.couleur,tags=("selectionner"))
         pluspetitx = hlp.valeurminimal(self.initX,x)
         plusgrandx = hlp.valeurmaximal(self.initX,x)
