@@ -71,6 +71,24 @@ class Vehicule():
     def rechargeBatterie(self):
         pass 
     
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            print("attaque")
+            #print(self.tempsRecharge)
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque,5)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
+
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            self.cibleAttaque=None  
     
 class vehiculeTank(Vehicule):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomVehicule):
@@ -87,26 +105,10 @@ class vehiculeTank(Vehicule):
         self.attaque = 0.5
         self.projectile=[]
         self.tempsRecharge=0
-        self.range=5
+        self.range=100
         
-    def attaquer(self):       
-        if self.cibleAttaque.vie>0:
-            self.enAttaque=True
 
-            if self.tempsRecharge==0:
-                p=Projectile(self,self.cibleAttaque)
-                self.projectile.append(p)
-                p.ciblerdestination()
-                self.tempsRecharge=10
-            else:
-                self.tempsRecharge=self.tempsRecharge-1
-            
-
-        else: 
-            self.enAttaque=False         
-            self.listeCibleAttaquer.remove(self.cibleAttaque)
-            
-            self.cibleAttaque=None  
+        
     
 class vehiculehelicoptere(Vehicule):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomVehicule):
@@ -117,7 +119,15 @@ class vehiculehelicoptere(Vehicule):
         self.vitesseDeplacement=2
         self.puissance = 0
     
-    
+            
+        """variable pour attaque"""
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 0.5
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=5
+        
 dictionnaireCoutVehicule={
 "vehiculetank1":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
 "vehiculetank2":[Ressource(bois=50, bronze=50), Ressource(allocationElectricite=10, allocationHumain=10), 2],

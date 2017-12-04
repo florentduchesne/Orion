@@ -250,7 +250,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"ville", i.id))               
+                self.canevas.create_image(i.x,i.y,image=self.images["Ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"Ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
@@ -258,8 +258,8 @@ class VuePlanete(Perspective):
                #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
                pass
                 
-        #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
-        #Centre sur la ville principal.
+        #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["Ville"])
+        #Centre sur la Ville principal.
         canl=int(scrollBarX-400)/self.largeur
         canh=int(scrollBarY-400)/self.hauteur
         
@@ -310,7 +310,7 @@ class VuePlanete(Perspective):
         self.images["Panneau_Solaire"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Batiments/Ville1.png")
-        self.images["ville"] = ImageTk.PhotoImage(im)
+        self.images["Ville"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville2.png")
         self.images["Ville2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville3.png")
@@ -389,9 +389,10 @@ class VuePlanete(Perspective):
         self.minimap.delete("vehiculetank")
         self.canevas.delete("vehiculehelicoptere")
         self.minimap.delete("vehiculehelicoptere")
+        self.canevas.delete("projectile")
         #self.canevas.delete("selecteur")
         self.afficherselection()
-        #e=self.UA2pixel
+        e=self.KM2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             if i.nouveauMessageChatTxt != None:
@@ -426,6 +427,15 @@ class VuePlanete(Perspective):
                     #mini-map   
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
                     
+                    if j.projectile!=None:
+                        for pro in j.projectile:
+                            #print("ici")
+                            x=pro.x
+                            y=pro.y
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
+                            
                 elif isinstance(j, vehiculehelicoptere):
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]
@@ -439,7 +449,14 @@ class VuePlanete(Perspective):
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
-                               
+                    
+                    if j.projectile!=None:     
+                        for pro in j.projectile:
+                            x=pro.x*e
+                            y=pro.y*e
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
 
          
          
