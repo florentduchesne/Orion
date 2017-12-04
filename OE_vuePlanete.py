@@ -465,13 +465,11 @@ class VuePlanete(Perspective):
                
     def afficherselection(self):
         self.canevas.delete("select","selecteur") 
-        e=self.UA2pixel
         joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
             x = int(self.maselection[2]) - 50
             y = int(self.maselection[3]) - 50
-            self.canevas.create_rectangle(x,y,x+100,y+100,dash=(2,2),outline=joueur.couleur,tags=("select","selecteur"))
-            
+            self.canevas.create_rectangle(x,y,x+100,y+100,dash=(2,2),outline=joueur.couleur,tags=("select","selecteur"))            
         if len(self.mesSelections) !=0:
             for v in self.mesSelections:
                 for i in joueur.vehiculeplanetaire:
@@ -482,8 +480,7 @@ class VuePlanete(Perspective):
                         if(x != None and y != None) :
                             self.canevas.create_rectangle((x)-t,(y)-t,(x)+t,(y)+t,dash=(2,2),
                                                         outline=joueur.couleur,
-                                                        tags=("select","selecteur"))
-    
+                                                        tags=("select","selecteur"))    
             
     def cliquerGauche(self, evt):
         self.canevas.delete("selectionner","select","selecteur") 
@@ -494,8 +491,7 @@ class VuePlanete(Perspective):
         self.mesSelections.clear()
         self.initX = x
         self.initY = y
-        if t[0] != 'current':
-            
+        if t[0] != 'current':            
             if t[4] == 'tuile':
                 self.montresystemeselection()
             elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
@@ -505,9 +501,8 @@ class VuePlanete(Perspective):
             else:
                 self.montreAmeliorationBatiments()
                 self.maselection = t
-
+                
             if self.macommande != None and t[5]=='0':
-                    print("Creer vrai batiment")
                     if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere"):
                         x=self.canevas.canvasx(evt.x)
                         y=self.canevas.canvasy(evt.y)
@@ -516,15 +511,11 @@ class VuePlanete(Perspective):
                         y=int(t[2])
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                    self.maselection=None                  
-
-        print(self.mesSelections)
-        print(self.parent.nom)
-        
+                    self.maselection=None                              
+     
     def cliquerDroite(self, evt):
         self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
-        print("Select ", t)
         if len(self.mesSelections) != 0:
             if t[4] == "vehiculetank" or t[4] == "vehiculehelicoptere":
                 xdeplacement = float(t[2])
@@ -533,9 +524,7 @@ class VuePlanete(Perspective):
                 xdeplacement = self.canevas.canvasx(evt.x)
                 ydeplacement = self.canevas.canvasy(evt.y)            
             for vehicule in self.mesSelections:
-                self.parent.parent.ciblerdestinationvehicule(vehicule[0], xdeplacement,ydeplacement, t[5], vehicule[5])
-                print("v id des p-t? ",t[5])
-        
+                self.parent.parent.ciblerdestinationvehicule(vehicule[0], xdeplacement,ydeplacement, t[5], vehicule[5])        
     
     def maintenirGauche(self, evt):
         joueur=self.modele.joueurs[self.parent.nom]
