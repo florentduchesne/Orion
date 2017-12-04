@@ -134,9 +134,9 @@ class Vue():
             if self.parent.modele.joueurs[i].nom == self.parent.monnom:
                 for j in self.dictionnaireLabelsJoueur: 
                     if j == "humain":
-                        self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess["allocation humain"])+" / "+str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
+                        self.dictionnaireLabelsJoueur[j][1].config(text = str(int(self.parent.modele.joueurs[i].ressources.dictRess["allocation humain"]))+" / "+str(int(self.parent.modele.joueurs[i].ressources.dictRess[j])))
                     elif j == "electricite":
-                        self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess["allocation electricite"])+" / "+str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
+                        self.dictionnaireLabelsJoueur[j][1].config(text = str(int(self.parent.modele.joueurs[i].ressources.dictRess["allocation electricite"]))+" / "+str(int(self.parent.modele.joueurs[i].ressources.dictRess[j])))
                     else:
                         self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
         if(isinstance(self.modecourant, VuePlanete)):
@@ -146,9 +146,9 @@ class Vue():
                         for j in self.dictionnaireLabelsPlanete: 
                             if self.parent.monnom in planete.dicRessourceParJoueur:
                                 if j == "humain":
-                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"]))+" / "+str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j])))
                                 elif j == "electricite":
-                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"]))+" / "+str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j])))
                                 else:
                                     self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                             else:

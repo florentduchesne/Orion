@@ -40,7 +40,7 @@ class BatimentRessources():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
-                    self.pv *= 2
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
@@ -70,7 +70,7 @@ class BatimentManufacture():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
-                    self.pv *= 2
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
@@ -101,7 +101,7 @@ class BatimentInfrastructure():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
-                    self.pv *= 2
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
@@ -130,7 +130,7 @@ class BatimentDefense():
                     self.listeNiveaux.remove(self.nomBatiment)
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
-                    self.pv *= 2
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
      
