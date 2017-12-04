@@ -335,7 +335,6 @@ class VueSysteme(Perspective):
         self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
         
         #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
-        print(t)
         if len(t) != 0:
             if t[1] == "planete":
                 self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
@@ -353,7 +352,6 @@ class VueSysteme(Perspective):
             elif t[1] == "vaisseauinterstellaire":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
                 self.pasVoyager() 
-        print(self.maselection)
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
@@ -364,7 +362,6 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y       
         if len(self.mesSelections) != 0:
             for v in self.mesSelections:
-                print(v)
                 xy = (xy[0],xy[1])
                 if len(t) != 0:
                     if t[1] == "planete":
@@ -376,18 +373,6 @@ class VueSysteme(Perspective):
                 else:
                     self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
 
-        
-    def cliquerCentre(self, evt):
-        xy2=evt.x,evt.y
-        self.canevas.delete("selectionner") 
-        t=self.canevas.gettags("current")
-        if len(t) != 0:
-            if t[6] == "mere":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
-                self.montrevaisseauxselection()
-            elif t[1] == "vaisseauinterstellaire":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
-                self.pasVoyager() 
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)
