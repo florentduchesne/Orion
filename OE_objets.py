@@ -119,7 +119,7 @@ class Systeme():
         self.id=self.parent.createurId.prochainid()
         self.proprietaire="inconnu"
         self.visiteurs={}
-        self.diametre=50 # UA unite astronomique = 150000000km
+        self.diametre=self.parent.diametre # UA unite astronomique = 150000000km
         self.x=x
         self.y=y
         self.etoile=Etoile(self,x,y,self.parent.createurId.prochainid())

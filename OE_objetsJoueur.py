@@ -311,8 +311,8 @@ class Joueur():
                     if j.id==idSystem:
                         i.idSysteme=j.id
                         i.dansGalaxie=False
-                        i.x=25-2
-                        i.y=25-2
+                        i.x=self.parent.diametre/2-2
+                        i.y=self.parent.diametre/2-2
                         self.objetgalaxie.remove(i)
                         self.visitersysteme(idSystem)
     
