@@ -392,7 +392,7 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
-                print(j)
+                #print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -541,7 +541,8 @@ class VuePlanete(Perspective):
                         y=int(t[2])
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                    self.maselection=None                              
+                    self.maselection=None
+        print("JE PRINT SELF.MASELECTION: ",self.maselection)                     
      
     def cliquerDroite(self, evt):
         self.canevas.delete("selectionner","select","selecteur") 

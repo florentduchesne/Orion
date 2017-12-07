@@ -57,6 +57,7 @@ class Vaisseau():
                     if not self.dansVaisseauMere :  
                         print("ceci est un vaisseau colonisateur")
                         if self.cible.coloniser(self.proprietaire):
+                            print("PROPRIETAIRE DU VAISSEAU COLON: ",self.proprietaire)
                             #self.parent.systemesvisites.append(Systeme)
                             return "colonisation"
                 self.cible=None
