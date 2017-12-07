@@ -348,7 +348,6 @@ class Vue():
         self.changecadre(self.cadrejeu,1)
         self.changemode(self.modes["galaxie"])
         #self.changemode(self.modes["planetes"])
-        
         for j in mod.joueurs: #pour chaque joueurs
             planeteDuJoueur = mod.joueurs[j].maplanete #planete du joueur
             systeme = planeteDuJoueur.parent #Systeme de la planete du joueur.
@@ -359,6 +358,8 @@ class Vue():
                 s=VuePlanete(self,systeme.id,planeteDuJoueur.id)
                 self.modes["planetes"][planeteDuJoueur.id]=s
                 s.initplanete(systeme.id,planeteDuJoueur.id)
+    
+        
         
         planeteInit = mod.joueurs[self.nom].maplanete
         systeme = planeteInit.parent
