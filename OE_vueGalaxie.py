@@ -133,6 +133,7 @@ class VueGalaxie(Perspective):
     def afficherpartie(self,mod):
         self.canevas.delete("artefact")
         self.canevas.delete("pulsar")
+        self.minimap.delete("meremini")
         self.afficherselection()        
         e=self.AL2pixel
         for i in mod.pulsars:
@@ -160,7 +161,7 @@ class VueGalaxie(Perspective):
                     self.parent.modes["galaxie"].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
                     minix = (x *200) / self.largeur 
                     miniy = (y *200) / self.largeur 
-                    self.parent.modes["galaxie"].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("chasseurmini"))
+                    self.parent.modes["galaxie"].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("meremini"))
         
     def changerproprietaire(self,prop,couleur,systeme):
         #lp=self.canevas.find_withtag(systeme.id) 
