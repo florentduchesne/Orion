@@ -18,6 +18,10 @@ dictionnaireCoutAllocationAgeBatiments = {
 "Usine_Vaisseau2":[Ressource(titanium=300), Ressource(allocationElectricite=25, allocationHumain=20), 3],
 "Usine_Drone":[Ressource(titanium=200, metasic=200), Ressource(allocationElectricite=25, allocationHumain=25), 3],
 "Centrale_Charbon":[Ressource(bronze=50, charbon=50), Ressource(allocationHumain=5), 1],
+"Centrale_Nucleaire":[Ressource(titanium=100, uranium=100), Ressource(allocationHumain=15), 2],
+"Grosse_Centrale_Nucleaire":[Ressource(titanium=400, uranium=500), Ressource(allocationHumain=25), 3],
+"Eolienne":[Ressource(titanium=250, bronze=250), Ressource(allocationHumain=5), 2],
+"Panneau_Solaire":[Ressource(titanium=400, metasic=200), Ressource(allocationHumain=10), 3],
 "Ville":[Ressource(), Ressource(), 1],
 "Ville2":[Ressource(bois=200, bronze=200, nourriture=200, eau=200), Ressource(), 2],
 "Ville3":[Ressource(titanium =500, uranium=500, nourriture=1000, eau=1000, bois=1000), Ressource(), 3],
@@ -31,17 +35,22 @@ dictionnaireCoutAllocationAgeBatiments = {
 "Canon":[Ressource(bronze=100), Ressource(allocationElectricite=50, allocationHumain=25), 1],###############temporaire###########
 "Canon_Ion":[Ressource(titanium=300, bronze=100), Ressource(allocationElectricite=50, allocationHumain=25), 3],
 "Canon_Acid":[Ressource(titanium=500), Ressource(allocationElectricite=25, allocationHumain=25), 3],
-"Bouclier":[Ressource(titanium=200, metasic=200), Ressource(allocationElectricite=55, allocationHumain=50), 3]
+"Bouclier":[Ressource(bronze=10), Ressource(allocationElectricite=55, allocationHumain=50), 3]##############temporaire#########
+#"Bouclier":[Ressource(titanium=1000, metasic=500), Ressource(allocationElectricite=55, allocationHumain=50), 3]
 }
 
 dictionnaireProductionRessources = {
     "Mine1":Ressource(bronze=2),
-    "Mine2":Ressource(bronze=4, titanium = 2),
-    "Mine3":Ressource(bronze=6, titanium = 4, metasic = 4),
+    "Mine2":Ressource(bronze=4, titanium = 2, charbon = 1, uranium = 0.5),
+    "Mine3":Ressource(bronze=6, titanium = 4, metasic = 4, charbon = 2,  uranium = 1),
     "Camp_Bucherons1":Ressource(bois=2),
     "Camp_Bucherons2":Ressource(bois=4),
     "Camp_Bucherons3":Ressource(bois=6),
     "Centrale_Charbon":Ressource(electricite=0.5),
+    "Centrale_Nucleaire":Ressource(electricite=1),
+    "Grosse_Centrale_Nucleaire":Ressource(electricite=1.5),
+    "Eolienne":Ressource(electricite=2),
+    "Panneau_Solaire":Ressource(electricite=2.5),
     "Puit1":Ressource(eau=5),
     "Puit2":Ressource(eau=10),
     "Ferme1":Ressource(nourriture=5),
