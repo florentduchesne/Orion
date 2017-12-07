@@ -214,7 +214,7 @@ class Vue():
         self.densitestellaire=Entry(bg="#18c0ff")
         self.densitestellaire.insert(0, 50)
         
-        self.qteIA=Entry(bg="#18c0ff")
+        self.qteIA=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.qteIA.insert(0, 0)
         
         self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)

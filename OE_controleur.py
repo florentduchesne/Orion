@@ -181,6 +181,9 @@ class Controleur():
         
     def nouveauMessageSystemChat(self, txt, txt2=None):
         self.vue.modecourant.messageSystemChat(("System",txt,txt2))
+        
+    def nouveauMessageCoutChat(self, txt):
+        self.vue.modecourant.messageCoutChat((txt))
 
     #def changerTagsVue(self, id_sys, id_planete, joueur, couleur):
         #self.vue.changerTagsPropInitial(id_sys, id_planete, joueur, couleur)
