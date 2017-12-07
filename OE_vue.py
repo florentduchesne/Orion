@@ -214,7 +214,7 @@ class Vue():
         self.densitestellaire=Entry(bg="#18c0ff")
         self.densitestellaire.insert(0, 50)
         
-        self.qteIA=Entry(bg="#18c0ff")
+        self.qteIA=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.qteIA.insert(0, 0)
         
         self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)
@@ -398,7 +398,6 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculehelicopterebas"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculehelicoptere",idvehicule) ) 
-                
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():

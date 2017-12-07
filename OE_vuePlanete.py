@@ -4,11 +4,13 @@ from PIL import Image,ImageDraw, ImageTk
 from helper import Helper as hlp
 from OE_vuePerspective import *
 import OE_objetsBatiments
-from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
+from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere,\
+    dictionnaireCoutVehicule
 from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments, dictionnaireProductionRessources
 from OE_objetsRessource import Ressource
 from test.test_iterlen import NoneLengthHint
 from OE_objetsJoueur import Joueur
+from OE_objetsBatiments import BatimentDefense
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -26,6 +28,7 @@ class VuePlanete(Perspective):
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
+        self.couleurBG3 = "#505b6f"
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
         
@@ -102,6 +105,8 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION BATIMENT##############
         self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment, bg=self.couleurBouton)
         self.btnAmeliorerBatiment.pack()
+        self.btnAjouterHumain=Button(self.cadreAmeliorationBatiments, text="Ajouter humain", command=self.ajouterHumain, bg=self.couleurBouton)
+        self.btnAjouterHumain.pack()
         self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
         self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="")
@@ -141,41 +146,63 @@ class VuePlanete(Perspective):
         self.changecadreetat(self.cadreetataction)
     
     ##############BATIMENTS RESSOURCES##############
+    def messageChatCout(self, letrucquicoute, dictionnaire):
+        ressourceDuBatiment = dictionnaire[letrucquicoute][0]
+        for ress in ressourceDuBatiment.dictRess:
+            if ressourceDuBatiment.dictRess[ress] != 0:
+                self.parent.parent.nouveauMessageCoutChat(ress+": "+str(ressourceDuBatiment.dictRess[ress]))
+        self.parent.parent.nouveauMessageSystemChat("Cout:")
+    
     def creerMine(self):
         self.macommande="Mine1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerCampBucherons(self):
         self.macommande="Camp_Bucherons1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerpuit(self):
         self.macommande="Puit1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerFerme(self):
         self.macommande="Ferme1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerCentraleElectrique(self):
         self.macommande="Centrale_Charbon"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS INFRASTRUCTURES##############
     def creerBanque(self):
         self.macommande="Banque"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
         self.macommande="Usine_Vehicule"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerUsineVaisseaux(self):
         self.macommande="Usine_Vaisseau1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerUsineDrones(self):
         self.macommande="Usine_Drone"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creermur(self):
         self.macommande="Mur"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creercanon(self):
         self.macommande="Canon"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerbouclier(self):
         self.macommande="Bouclier"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
+        self.messageChatCout("vehiculetank1", dictionnaireCoutVehicule)
         self.maselection=None
     def creervehiculehelicoptere(self):
         self.macommande="vehiculehelicoptere"
+        self.messageChatCout("vehiculehelicoptere1", dictionnaireCoutVehicule)
         self.maselection=None
     def creervehiculecommerce(self):
         self.macommande="vehiculecommerce"
@@ -188,12 +215,17 @@ class VuePlanete(Perspective):
     ##############AMELIORER BATIMENT##############
     def ameliorerBatiment(self):
                             #ou self.parent.parent.monnom?
-        self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        print("ma selection 0 : " + self.maselection[0])
+        self.modele.joueurs[self.parent.nom].ameliorerBatiment(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
         
     def detruireBatiment(self):
         pass
+    
+    def ajouterHumain(self):
+        self.modele.joueurs[self.maselection[0]].ajouterHumain(self.maselection, self.planete, self.systeme)
+        
     
     ##############AMELIORER BATIMENT##############
     def ameliorerVehicule(self): 
@@ -393,7 +425,6 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
-                print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -424,7 +455,6 @@ class VuePlanete(Perspective):
                     
                     if j.projectile!=None:
                         for pro in j.projectile:
-                            #print("ici")
                             x=pro.x
                             y=pro.y
                             taille = pro.taille
@@ -454,7 +484,19 @@ class VuePlanete(Perspective):
                             couleur = pro.couleur
                             self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
 
-         
+            for batiment in i.listeBatiment:
+                if isinstance(batiment, BatimentDefense):
+                    if batiment.projectile!=None:     
+                        for pro in batiment.projectile:
+                            x=pro.x
+                            y=pro.y
+                            #print(x)
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
+                            #print("ici")
+                if batiment.vie<1:
+                    self.canevas.delete(batiment.id)
          
     def changerproprietaire(self,prop,couleur,systeme): 
         pass
@@ -479,7 +521,7 @@ class VuePlanete(Perspective):
                                                         tags=("select","selecteur"))    
             
     def cliquerGauche(self, evt):
-        self.canevas.delete("selectionner","select","selecteur", "lblCoutRessources") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)
@@ -499,8 +541,8 @@ class VuePlanete(Perspective):
                 self.montreAmeliorationBatiments()
                 self.lblRessourcesAmelioration.pack_forget()
                 self.lblProductionRessources.pack_forget()
-                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible")
-                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ce bâtiment ne produit aucune ressource")
+                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible", bg=self.couleurBG3, foreground="white")
+                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ne produit aucune ressource", bg=self.couleurBG3, foreground="white")
                 
                 #affiche le label de cout d'amélioration pour le batiment sur lequel on a cliqué
                 nomBatiment = t[4]
@@ -527,9 +569,9 @@ class VuePlanete(Perspective):
                     if ressourcesProduction.dictRess[ress] != 0:
                         chaineListeRessourcesProduction += "\n" + ress + " : " + str(ressourcesProduction.dictRess[ress])
                 if chaineListeRessourcesAmelioration != "":
-                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration)
+                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration, bg=self.couleurBG3, foreground="white")
                 if chaineListeRessourcesProduction != "":
-                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction)
+                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction, bg=self.couleurBG3, foreground="white")
                 self.lblRessourcesAmelioration.pack()
                 self.lblProductionRessources.pack()
                 self.maselection = t
