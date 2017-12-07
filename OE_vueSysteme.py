@@ -194,55 +194,58 @@ class VueSysteme(Perspective):
             for j in i.vaisseauxinterstellaires:
                 if j.idSysteme==self.systeme.id:
                     if j.dansGalaxie==False:
-                        print(j.x)
-                        print(j.y)
-                        jx=j.x*e
-                        jy=j.y*e
-                        x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-   
-                        angle = int(math.degrees(j.angleinverse))
+                        if j.x != None and j.y !=None :
+                            jx=j.x*e
+                            jy=j.y*e
+                            x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
+                            angle = int(math.degrees(j.angleinverse))
 
-                        if isinstance(j,VaisseauChasseur):
-                            tag =("chasseur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
-                            minix = (x *200) / self.largeur 
-                            miniy = (y *200) / self.largeur
-                            self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("chasseurmini"))
-
-                        elif isinstance(j,VaisseauColonisation) :
-                            tag =("colonisateur"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
-                            minix = (x *200) / self.largeur 
-                            miniy = (y *200) / self.largeur
-                            self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("colonisateurmini"))
-        
-                        elif isinstance(j, VaisseauTank) :
-                            tag =("tank"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
-                            minix = (x *200) / self.largeur 
-                            miniy = (y *200) / self.largeur
-                            self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("tankmini"))
+                            if isinstance(j,VaisseauChasseur):
+                                if not j.dansVaisseauMere:
+                                    tag =("chasseur"+str(angle))
+                                    im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                    self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("chasseurmini"))
+    
+                            elif isinstance(j,VaisseauColonisation) :
+                                if not j.dansVaisseauMere:
+                                    tag =("colonisateur"+str(angle))
+                                    im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
+                                    self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("colonisateurmini"))
+    
+            
+                            elif isinstance(j, VaisseauTank) :
+                                if not j.dansVaisseauMere:
+                                    tag =("tank"+str(angle))
+                                    im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                    self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("tankmini"))
                             
-                        elif isinstance(j, VaisseauMere) :
-                            tag =("mere"+str(angle))
-                            im=self.parent.modes["systemes"][j.idSysteme].images[tag]
-                            self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
-                            minix = (x *200) / self.largeur 
-                            miniy = (y *200) / self.largeur
-                            self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("meremini"))
-                        
-                        if isinstance(j, VaisseauAttaque) :
-                            if j.projectile!=None:
-                                for pro in j.projectile:
-                                    x=pro.x*e
-                                    y=pro.y*e
-                                    taille = pro.taille
-                                    couleur = pro.couleur
-                                    self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
-                                    #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
+                            elif isinstance(j, VaisseauMere) :
+                                tag =("mere"+str(angle))
+                                im=self.parent.modes["systemes"][j.idSysteme].images[tag]
+                                self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
+                                minix = (x *200) / self.largeur 
+                                miniy = (y *200) / self.largeur 
+                                self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("meremini"))
+    
+                            
+                            if isinstance(j, VaisseauAttaque):
+                                if j.projectile!=None: 
+                                    for pro in j.projectile:
+                                        x=pro.x*e
+                                        y=pro.y*e
+                                        taille = pro.taille
+                                        couleur = pro.couleur
+                                        self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
+                                        #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
 
             for j in i.stationspatiaux:
                 if j.systemeid==self.systeme.id:
@@ -309,7 +312,7 @@ class VueSysteme(Perspective):
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",v.id))
     
-        
+        print(x,y)
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")   
         self.maselection = None
@@ -323,7 +326,6 @@ class VueSysteme(Perspective):
         self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
         
         #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
-        print(t)
         if len(t) != 0:
             if t[1] == "planete":
                 self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
@@ -341,7 +343,6 @@ class VueSysteme(Perspective):
             elif t[1] == "vaisseauinterstellaire":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
                 self.pasVoyager() 
-        print(self.maselection)
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
@@ -352,7 +353,6 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y       
         if len(self.mesSelections) != 0:
             for v in self.mesSelections:
-                print(v)
                 xy = (xy[0],xy[1])
                 if len(t) != 0:
                     if t[1] == "planete":
@@ -364,18 +364,6 @@ class VueSysteme(Perspective):
                 else:
                     self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
 
-        
-    def cliquerCentre(self, evt):
-        xy2=evt.x,evt.y
-        self.canevas.delete("selectionner") 
-        t=self.canevas.gettags("current")
-        if len(t) != 0:
-            if t[6] == "mere":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
-                self.montrevaisseauxselection()
-            elif t[1] == "vaisseauinterstellaire":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
-                self.pasVoyager() 
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)

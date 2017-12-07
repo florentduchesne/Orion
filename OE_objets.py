@@ -119,7 +119,7 @@ class Systeme():
         self.id=self.parent.createurId.prochainid()
         self.proprietaire="inconnu"
         self.visiteurs={}
-        self.diametre=50 # UA unite astronomique = 150000000km
+        self.diametre=self.parent.diametre # UA unite astronomique = 150000000km
         self.x=x
         self.y=y
         self.etoile=Etoile(self,x,y,self.parent.createurId.prochainid())
@@ -134,7 +134,7 @@ class Systeme():
            
             for i in range(nbplanetes):
                 type=random.choice(["roc","gaz","glace"])
-                distsol=random.randrange(100)/10 #distance en unite astronomique 150000000km
+                distsol=random.randrange(200)/10 #distance en unite astronomique 150000000km
                 taille=random.randrange(5,30)/100 # en masse solaire
                 angle=random.randrange(360)
                 
