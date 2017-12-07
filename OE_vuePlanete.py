@@ -170,6 +170,7 @@ class VuePlanete(Perspective):
         self.macommande="vehiculetank"
         self.maselection=None
     def creervehiculehelicoptere(self):
+        print("bouton")
         self.macommande="vehiculehelicoptere"
         self.maselection=None
     def creervehiculecommerce(self):
