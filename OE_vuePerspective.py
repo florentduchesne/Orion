@@ -156,6 +156,10 @@ class Perspective(Frame):
         self.listeChat.insert(0, "System: "+txt[1])
         self.modele.joueurs[self.parent.nom].listMessageChat.append("System: "+txt[1])
         
+    def messageCoutChat(self, txt):
+        self.listeChat.insert(0, txt)
+        self.modele.joueurs[self.parent.nom].listMessageChat.append(txt)
+        
             
         
         

@@ -7,6 +7,7 @@ from OE_vuePerspective import *
 from math import degrees
 from OE_objetsVaisseaux import VaisseauChasseur, VaisseauColonisation, VaisseauAttaque, VaisseauTank, VaisseauMere
 from OE_objetsBatiments import StationSpatiale
+from DictionnaireCoutsVaisseaux import dictionnaireCoutsVaisseaux
 
 
 
@@ -141,8 +142,28 @@ class VueSysteme(Perspective):
     
     def afficherdecor(self):
         pass
+    
+    def messageChatCout(self, letrucquicoute, dictionnaire):
+        ressourceDuBatiment = dictionnaire[letrucquicoute][0]
+        for ress in ressourceDuBatiment.dictRess:
+            if ressourceDuBatiment.dictRess[ress] != 0:
+                self.parent.parent.nouveauMessageCoutChat(ress+": "+str(ressourceDuBatiment.dictRess[ress]))
+        self.parent.parent.nouveauMessageSystemChat("Cout:")
+        
+    def uniformiserLesNomQuiChangeToujours(self, nom):
+        if nom == "chasseur":
+            return VaisseauChasseur
+        elif nom == "colonisateur":
+            return VaisseauColonisation
+        elif nom == "tank":
+            return VaisseauTank
+        elif nom == "mere":
+            return VaisseauMere
+        return "erreur"
                 
     def creervaisseau(self,typeVaisseau):#typeVaisseau):
+        nomDansLeDic = self.uniformiserLesNomQuiChangeToujours(typeVaisseau)
+        self.messageChatCout(nomDansLeDic, dictionnaireCoutsVaisseaux)
         if self.maselection:
             self.parent.parent.creervaisseau(self.maselection[5],self.maselection[2],typeVaisseau)#5 = id sys 3 = id planete
             self.maselection=None
