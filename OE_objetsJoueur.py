@@ -109,7 +109,11 @@ class Joueur():
 
     def creerBatiment(self, listeparams):
         print("créer batiment")
+        print("mon nom : " + self.nom)
+        
         nom, systemeid, planeteid, x, y, nomBatiment = listeparams
+        
+        print("nom proprio : " + nom)
         villeTrouvee = False
         for i in self.systemesvisites:
             if i.id==systemeid:
