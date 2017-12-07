@@ -65,14 +65,8 @@ class VuePlanete(Perspective):
         
         
         ##############BATIMENTS INFRASTRUCTURES##############
-        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole, bg=self.couleurBouton)
-        self.btncreerEcole.pack(side=TOP)
-        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital, bg=self.couleurBouton)
-        self.btncreerHopital.pack(side=TOP)
         self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque, bg=self.couleurBouton)
         self.btncreerBanque.pack(side=TOP)
-        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire, bg=self.couleurBouton)
-        self.btncreerLaboratoire.pack(side=TOP)
         self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
@@ -157,12 +151,6 @@ class VuePlanete(Perspective):
     def creerCentraleElectrique(self):
         self.macommande="Centrale_Charbon"
     ##############BATIMENTS INFRASTRUCTURES##############
-    def creerHopital(self):
-        self.macommande="Hopital1"
-    def creerEcole(self):
-        self.macommande="Ecole"
-    def creerLaboratoire(self):
-        self.macommande="laboratoire"
     def creerBanque(self):
         self.macommande="Banque"
     ##############BATIMENTS MANUFACTURES##############
@@ -525,13 +513,21 @@ class VuePlanete(Perspective):
                                             break
                                         
                 ressourcesAmelioration = dictionnaireCoutAllocationAgeBatiments[nomProchainNiveau][0]
-                chaineListeRessources = ""
+                ressourcesProduction = dictionnaireProductionRessources[nomBatiment]
+                chaineListeRessourcesAmelioration = ""
+                chaineListeRessourcesProduction = ""
                 for ress in ressourcesAmelioration.dictRess:
                     if ressourcesAmelioration.dictRess[ress] != 0:
-                        chaineListeRessources += " " + ress + " : " + str(ressourcesAmelioration.dictRess[ress]) + "\n"
-                if chaineListeRessources != "":
-                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration\n" + chaineListeRessources)
+                        chaineListeRessourcesAmelioration +=  "\n" + ress + " : " + str(ressourcesAmelioration.dictRess[ress])
+                for ress in ressourcesProduction.dictRess:
+                    if ressourcesProduction.dictRess[ress] != 0:
+                        chaineListeRessourcesProduction += "\n" + ress + " : " + str(ressourcesProduction.dictRess[ress])
+                if chaineListeRessourcesAmelioration != "":
+                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration)
+                if chaineListeRessourcesProduction != "":
+                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction)
                 self.lblRessourcesAmelioration.pack()
+                self.lblProductionRessources.pack()
                 self.maselection = t
                 
             if self.macommande != None and t[5]=='0':
