@@ -102,6 +102,8 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION BATIMENT##############
         self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment, bg=self.couleurBouton)
         self.btnAmeliorerBatiment.pack()
+        self.btnAjouterHumain=Button(self.cadreAmeliorationBatiments, text="Ajouter humain", command=self.ajouterHumain, bg=self.couleurBouton)
+        self.btnAjouterHumain.pack()
         self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
         self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="")
@@ -189,6 +191,10 @@ class VuePlanete(Perspective):
         
     def detruireBatiment(self):
         pass
+    
+    def ajouterHumain(self):
+        self.modele.joueurs[self.maselection[0]].ajouterHumain(self.maselection, self.planete, self.systeme)
+        
     
     ##############AMELIORER BATIMENT##############
     def ameliorerVehicule(self): 
@@ -471,7 +477,7 @@ class VuePlanete(Perspective):
                                                         tags=("select","selecteur"))    
             
     def cliquerGauche(self, evt):
-        self.canevas.delete("selectionner","select","selecteur", "lblCoutRessources") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)

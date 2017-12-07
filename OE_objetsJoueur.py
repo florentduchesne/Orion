@@ -92,6 +92,13 @@ class Joueur():
                 infra.ameliorer(self, planete)
                 return
     
+    def ajouterHumain(self, maSelection, planete, systeme):
+        planete = self.getPlanete(planete, systeme)
+        for infra in planete.infrastructures:
+            if int(maSelection[2]) == int(infra.x) and int(maSelection[3]) == int(infra.y):
+                infra.ajouterHumain(self, planete)
+                return
+            
     def getPlanete(self, planeteID, systemeID):
         for systeme in self.parent.systemes:
             if systeme.id == systemeID:
@@ -101,7 +108,8 @@ class Joueur():
         
 
     def creerBatiment(self, listeparams):
-        nom, systemeid, planeteid, x, y, nomBatiment =listeparams
+        print("créer batiment")
+        nom, systemeid, planeteid, x, y, nomBatiment = listeparams
         villeTrouvee = False
         for i in self.systemesvisites:
             if i.id==systemeid:
