@@ -76,8 +76,6 @@ class Vue():
         self.titreJoueur[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsJoueur["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
@@ -103,8 +101,6 @@ class Vue():
         self.titrePlanete[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsPlanete["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
@@ -153,38 +149,22 @@ class Vue():
         self.images["planet"] = ImageTk.PhotoImage(im) 
         im = Image.open("./images/icone_Ressources/user.png").resize((l,h))
         self.images["joueur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/uranium.png").resize((int(l),int(h)))
-        self.images["uranium"] = ImageTk.PhotoImage(im) 
         im = Image.open("./images/icone_Ressources/titanium.png").resize((l,h))
         self.images["titanium"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/lacrima.png").resize((l,h))
-        #self.images["lacrima"] = ImageTk.PhotoImage(im)"""
-        #im = Image.open("./images/icone_Ressources/sante.png").resize((l,h))
-        #self.images["sante"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/point_Science.png").resize((l,h))
-        self.images["point_science"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/nourriture.png").resize((l,h))
         self.images["nourriture"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/humain.png").resize((l,h))
         self.images["humain"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/electricite.png").resize((l,h))
-        self.images["electricite"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/eau.png").resize((l,h))
         self.images["eau"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bronze.png").resize((l,h))
         self.images["bronze"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/biohazard.png").resize((l,h))
-        #self.images["biohazard"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/charbon.png").resize((l,h))
         self.images["charbon"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/argent.png").resize((l,h))
-        #self.images["argent"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bois.png").resize((l,h))
         self.images["bois"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/metasic.png").resize((l,h))
         self.images["metasic"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/moral.png").resize((l,h))
-        self.images["moral"] = ImageTk.PhotoImage(im)
         
              
     def creercadresplash(self,ip,nom):
@@ -417,6 +397,7 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculehelicopterebas"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculehelicoptere",idvehicule) ) 
+                
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():

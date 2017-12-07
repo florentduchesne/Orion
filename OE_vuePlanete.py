@@ -71,14 +71,10 @@ class VuePlanete(Perspective):
         self.btnRetour.pack(side=BOTTOM)
         
         ##############BATIMENTS MANUFACTURES##############
-        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique, bg=self.couleurBouton)
-        self.btncreerCentraleElectrique.pack(side=TOP)
         self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules, bg=self.couleurBouton)
         self.btncreerUsineVehicules.pack(side=TOP)
         self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux, bg=self.couleurBouton)
         self.btncreerUsineVaisseaux.pack(side=TOP)
-        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones, bg=self.couleurBouton)
-        self.btncreerUsineDrones.pack(side=TOP)
         self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
        
@@ -114,9 +110,14 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION VÉHICULE##############
         
         self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.config(state=DISABLED);
         self.btnAmeliorerVehicule.pack()
         self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.config(state=DISABLED);
         self.btnDetruireVehicule.pack()
+        
+        
+        
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
@@ -392,6 +393,7 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
+                print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
