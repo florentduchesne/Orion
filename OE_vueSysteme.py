@@ -194,6 +194,8 @@ class VueSysteme(Perspective):
             for j in i.vaisseauxinterstellaires:
                 if j.idSysteme==self.systeme.id:
                     if j.dansGalaxie==False:
+                        print(j.x)
+                        print(j.y)
                         jx=j.x*e
                         jy=j.y*e
                         x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
