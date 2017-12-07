@@ -115,7 +115,7 @@ class vehiculehelicoptere(Vehicule):
         Vehicule.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomVehicule)
         self.qtProjectile = 0
         self.vitesseAttaque = 0
-        self.vie = 0
+        self.vie = 50
         self.vitesseDeplacement=2
         self.puissance = 0
     
