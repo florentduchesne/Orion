@@ -110,9 +110,14 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION VÉHICULE##############
         
         self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.config(state=DISABLED);
         self.btnAmeliorerVehicule.pack()
         self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.config(state=DISABLED);
         self.btnDetruireVehicule.pack()
+        
+        
+        
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
@@ -387,6 +392,7 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
+                print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
