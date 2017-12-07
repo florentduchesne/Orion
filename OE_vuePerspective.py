@@ -180,6 +180,7 @@ class Perspective(Frame):
     def remplirChatBoxChangementVue(self):
         if self.modele != None:
             if self.modele.joueurs[self.parent.nom] != None:
+                self.listeChat.delete(0, END)
                 for message in self.modele.joueurs[self.parent.nom].listMessageChat:
                     self.listeChat.insert(0, message)
          
