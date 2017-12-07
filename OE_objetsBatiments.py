@@ -5,8 +5,10 @@ from DictionnaireCoutAllocationAgeBatiments import *
 from OE_projectile import *
 
 def verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+    print("joueur qui améliore: " + joueur.nom)
     for infra in planete.infrastructures:
         if isinstance(infra, Ville):
+            print("infra proprio" + infra.proprietaire)
             if infra.proprietaire == joueur.nom:
                 print("le batiment vous appartient")
                 return True
@@ -31,9 +33,7 @@ class BatimentRessources():
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
-            print("ancienne production : " + str(self.productionRessources.dictRess[ressource]))
             self.productionRessources.dictRess[ressource] *= 1.0 + (float(self.humains) * 0.1)
-            print("nouvelle production : " + str(self.productionRessources.dictRess[ressource]))
         
     def ajouterHumain(self, joueur, planete):
         if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
@@ -45,7 +45,7 @@ class BatimentRessources():
             self.humain += 1
             self.recalculerProduction()
         else:
-            print("aucun humain à ajouter")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
             
         
     def ameliorer(self, joueur, planete):
@@ -81,9 +81,7 @@ class BatimentManufacture():
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
-            print("ancienne production : " + str(ressource))
             ressource *= 1 + (self.humains * 0.1)
-            print("nouvelle production : " + str(ressource))
         
     def ajouterHumain(self, joueur, planete):
         if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
@@ -95,7 +93,7 @@ class BatimentManufacture():
             self.humain += 1
             self.recalculerProduction()
         else:
-            print("aucun humain à ajouter")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -130,21 +128,21 @@ class BatimentInfrastructure():
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
-            print("ancienne production : " + str(ressource))
-            ressource *= 1 + (self.humains * 0.1)
-            print("nouvelle production : " + str(ressource))
+            print("ancienne production : " + str(self.productionRessources.dictRess[ressource]))
+            self.productionRessources.dictRess[ressource] *= 1.0 + (float(self.humains) * 0.1)
+            print("nouvelle production : " + str(self.productionRessources.dictRess[ressource]))
         
     def ajouterHumain(self, joueur, planete):
         if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
             planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
             self.humains += 1
             self.recalculerProduction()
-        elif joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
-            joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+        elif joueur.ressources.dictRess["humain"] >= 1:
+            joueur.ressources.dictRess["humain"] -= 1
             self.humain += 1
             self.recalculerProduction()
         else:
-            print("aucun humain à ajouter")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -179,26 +177,27 @@ class BatimentDefense():
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
-            print("ancienne production : " + str(ressource))
-            ressource *= 1 + (self.humains * 0.1)
-            print("nouvelle production : " + str(ressource))
+            print("ancienne production : " + str(self.productionRessources.dictRess[ressource]))
+            self.productionRessources.dictRess[ressource] *= 1.0 + (float(self.humains) * 0.1)
+            print("nouvelle production : " + str(self.productionRessources.dictRess[ressource]))
         
     def ajouterHumain(self, joueur, planete):
         if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
             planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
             self.humains += 1
             self.recalculerProduction()
-        elif joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
-            joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+        elif joueur.ressources.dictRess["humain"] >= 1:
+            joueur.ressources.dictRess["humain"] -= 1
             self.humain += 1
             self.recalculerProduction()
         else:
-            print("aucun humain à ajouter")
+            joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
         
     def ameliorer(self, joueur, planete):
-        if(len(self.listeNiveaux) > 0):
-            nouveauNom = self.listeNiveaux[0]
-            if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+        if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
+            if(len(self.listeNiveaux) > 0):
+                nouveauNom = self.listeNiveaux[0]
+            
                 planeteAAssezDeRessources = joueur.parent.constructeurBatimentHelper.construireBatiment(planete.dicRessourceParJoueur[joueur.nom], joueur.ressources, nouveauNom)
                 if(planeteAAssezDeRessources):
                     joueur.parent.parent.effacerBatiment(self.planeteid, self.nomBatiment, self.id)
