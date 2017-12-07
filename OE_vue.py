@@ -76,19 +76,13 @@ class Vue():
         self.titreJoueur[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsJoueur["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        #self.dictionnaireLabelsJoueur["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))   
-        #self.dictionnaireLabelsJoueur["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         
         i = 2
         
@@ -107,20 +101,13 @@ class Vue():
         self.titrePlanete[1].grid(row=0,column=i)
         
         self.dictionnaireLabelsPlanete["humain"] = (Label(cadre,image=self.images["humain"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["electricite"] = (Label(cadre,image=self.images["electricite"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["moral"] = (Label(cadre,image=self.images["moral"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["nourriture"] = (Label(cadre,image=self.images["nourriture"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["eau"] = (Label(cadre,image=self.images["eau"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        #self.dictionnaireLabelsPlanete["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        #self.dictionnaireLabelsPlanete["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        
         
         i = 2
         for d in self.dictionnaireLabelsPlanete:
@@ -162,38 +149,22 @@ class Vue():
         self.images["planet"] = ImageTk.PhotoImage(im) 
         im = Image.open("./images/icone_Ressources/user.png").resize((l,h))
         self.images["joueur"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/uranium.png").resize((int(l),int(h)))
-        self.images["uranium"] = ImageTk.PhotoImage(im) 
         im = Image.open("./images/icone_Ressources/titanium.png").resize((l,h))
         self.images["titanium"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/lacrima.png").resize((l,h))
-        #self.images["lacrima"] = ImageTk.PhotoImage(im)"""
-        #im = Image.open("./images/icone_Ressources/sante.png").resize((l,h))
-        #self.images["sante"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/point_Science.png").resize((l,h))
-        self.images["point_science"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/nourriture.png").resize((l,h))
         self.images["nourriture"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/humain.png").resize((l,h))
         self.images["humain"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/electricite.png").resize((l,h))
-        self.images["electricite"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/eau.png").resize((l,h))
         self.images["eau"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bronze.png").resize((l,h))
         self.images["bronze"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/biohazard.png").resize((l,h))
-        #self.images["biohazard"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/charbon.png").resize((l,h))
         self.images["charbon"] = ImageTk.PhotoImage(im)
-        #im = Image.open("./images/icone_Ressources/argent.png").resize((l,h))
-        #self.images["argent"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/bois.png").resize((l,h))
         self.images["bois"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/icone_Ressources/metasic.png").resize((l,h))
         self.images["metasic"] = ImageTk.PhotoImage(im)
-        im = Image.open("./images/icone_Ressources/moral.png").resize((l,h))
-        self.images["moral"] = ImageTk.PhotoImage(im)
         
              
     def creercadresplash(self,ip,nom):
@@ -243,7 +214,7 @@ class Vue():
         self.densitestellaire=Entry(bg="#18c0ff")
         self.densitestellaire.insert(0, 50)
         
-        self.qteIA=Entry(bg="#18c0ff")
+        self.qteIA=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.qteIA.insert(0, 0)
         
         self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)
@@ -409,11 +380,11 @@ class Vue():
                 im=self.modes["planetes"][i].images[nom]
                 self.modes["planetes"][i].effacerBatiment(batimentid)
       
-    def afficherBatiment(self,nomjoueur,systemeid,planeteid,x,y,nom,batimentid):
+    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom,batimentid):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images[nom]
-                self.modes["planetes"][i].afficherBatiment(x, y, im, (nomjoueur, planeteid,x ,y ,nom, batimentid))
+                self.modes["planetes"][i].afficherBatiment(x, y, im, (joueur, planeteid,x ,y ,nom, batimentid))
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y,idvehicule):
         for i in self.modes["planetes"].keys():

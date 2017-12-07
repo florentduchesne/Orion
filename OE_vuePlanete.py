@@ -4,7 +4,8 @@ from PIL import Image,ImageDraw, ImageTk
 from helper import Helper as hlp
 from OE_vuePerspective import *
 import OE_objetsBatiments
-from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
+from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere,\
+    dictionnaireCoutVehicule
 from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments, dictionnaireProductionRessources
 from OE_objetsRessource import Ressource
 from test.test_iterlen import NoneLengthHint
@@ -27,6 +28,7 @@ class VuePlanete(Perspective):
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
+        self.couleurBG3 = "#505b6f"
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
         
@@ -66,26 +68,16 @@ class VuePlanete(Perspective):
         
         
         ##############BATIMENTS INFRASTRUCTURES##############
-        self.btncreerEcole=Button(self.cadreInfrastructure,text="Creer École",command=self.creerEcole, bg=self.couleurBouton)
-        self.btncreerEcole.pack(side=TOP)
-        self.btncreerHopital=Button(self.cadreInfrastructure,text="Creer Hôpital",command=self.creerHopital, bg=self.couleurBouton)
-        self.btncreerHopital.pack(side=TOP)
         self.btncreerBanque=Button(self.cadreInfrastructure,text="Creer Banque",command=self.creerBanque, bg=self.couleurBouton)
         self.btncreerBanque.pack(side=TOP)
-        self.btncreerLaboratoire=Button(self.cadreInfrastructure,text="Creer Laboratoire",command=self.creerLaboratoire, bg=self.couleurBouton)
-        self.btncreerLaboratoire.pack(side=TOP)
         self.btnRetour=Button(self.cadreInfrastructure,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         
         ##############BATIMENTS MANUFACTURES##############
-        self.btncreerCentraleElectrique=Button(self.cadreManufacture,text="Centrale Electrique",command=self.creerCentraleElectrique, bg=self.couleurBouton)
-        self.btncreerCentraleElectrique.pack(side=TOP)
         self.btncreerUsineVehicules=Button(self.cadreManufacture,text="Creer Usine à Véhicules",command=self.creerUsineVehicules, bg=self.couleurBouton)
         self.btncreerUsineVehicules.pack(side=TOP)
         self.btncreerUsineVaisseaux=Button(self.cadreManufacture,text="Creer Usine à Vaisseaux",command=self.creerUsineVaisseaux, bg=self.couleurBouton)
         self.btncreerUsineVaisseaux.pack(side=TOP)
-        self.btncreerUsineDrones=Button(self.cadreManufacture,text="Creer Usine à Drones",command=self.creerUsineDrones, bg=self.couleurBouton)
-        self.btncreerUsineDrones.pack(side=TOP)
         self.btnRetour=Button(self.cadreManufacture,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
        
@@ -113,6 +105,8 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION BATIMENT##############
         self.btnAmeliorerBatiment=Button(self.cadreAmeliorationBatiments, text="Améliorer bâtiment", command=self.ameliorerBatiment, bg=self.couleurBouton)
         self.btnAmeliorerBatiment.pack()
+        self.btnAjouterHumain=Button(self.cadreAmeliorationBatiments, text="Ajouter humain", command=self.ajouterHumain, bg=self.couleurBouton)
+        self.btnAjouterHumain.pack()
         self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
         self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="")
@@ -121,9 +115,14 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION VÉHICULE##############
         
         self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.config(state=DISABLED);
         self.btnAmeliorerVehicule.pack()
         self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.config(state=DISABLED);
         self.btnDetruireVehicule.pack()
+        
+        
+        
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
@@ -147,47 +146,63 @@ class VuePlanete(Perspective):
         self.changecadreetat(self.cadreetataction)
     
     ##############BATIMENTS RESSOURCES##############
+    def messageChatCout(self, letrucquicoute, dictionnaire):
+        ressourceDuBatiment = dictionnaire[letrucquicoute][0]
+        for ress in ressourceDuBatiment.dictRess:
+            if ressourceDuBatiment.dictRess[ress] != 0:
+                self.parent.parent.nouveauMessageCoutChat(ress+": "+str(ressourceDuBatiment.dictRess[ress]))
+        self.parent.parent.nouveauMessageSystemChat("Cout:")
+    
     def creerMine(self):
         self.macommande="Mine1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerCampBucherons(self):
         self.macommande="Camp_Bucherons1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerpuit(self):
         self.macommande="Puit1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerFerme(self):
         self.macommande="Ferme1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerCentraleElectrique(self):
         self.macommande="Centrale_Charbon"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS INFRASTRUCTURES##############
-    def creerHopital(self):
-        self.macommande="Hopital1"
-    def creerEcole(self):
-        self.macommande="Ecole"
-    def creerLaboratoire(self):
-        self.macommande="laboratoire"
     def creerBanque(self):
         self.macommande="Banque"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS MANUFACTURES##############
     def creerUsineVehicules(self):
         self.macommande="Usine_Vehicule"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerUsineVaisseaux(self):
         self.macommande="Usine_Vaisseau1"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerUsineDrones(self):
         self.macommande="Usine_Drone"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############BATIMENTS DEFENSES##############
     def creertour(self):
         self.macommande="Tour"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creermur(self):
         self.macommande="Mur"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creercanon(self):
         self.macommande="Canon"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     def creerbouclier(self):
         self.macommande="Bouclier"
+        self.messageChatCout(self.macommande, dictionnaireCoutAllocationAgeBatiments)
     ##############UNITES AU SOL##############
     def creervehiculetank(self):
         self.macommande="vehiculetank"
+        self.messageChatCout("vehiculetank1", dictionnaireCoutVehicule)
         self.maselection=None
     def creervehiculehelicoptere(self):
         self.macommande="vehiculehelicoptere"
+        self.messageChatCout("vehiculehelicoptere1", dictionnaireCoutVehicule)
         self.maselection=None
     def creervehiculecommerce(self):
         self.macommande="vehiculecommerce"
@@ -206,6 +221,10 @@ class VuePlanete(Perspective):
         
     def detruireBatiment(self):
         pass
+    
+    def ajouterHumain(self):
+        self.modele.joueurs[self.maselection[0]].ajouterHumain(self.maselection, self.planete, self.systeme)
+        
     
     ##############AMELIORER BATIMENT##############
     def ameliorerVehicule(self): 
@@ -258,10 +277,10 @@ class VuePlanete(Perspective):
                 self.canevas.create_image(i.x,i.y,image=self.images["Ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"Ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
-                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
-            else:
-               #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
-               pass
+                for j in self.parent.modele.joueurs:
+                    if j == i.proprietaire:
+                        joueur = self.parent.modele.joueurs[j]
+                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill=joueur.couleur)
                 
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["Ville"])
         #Centre sur la Ville principal.
@@ -390,6 +409,7 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
+        joueur=self.modele.joueurs[self.parent.nom]
         self.canevas.delete("vehiculetank")
         self.minimap.delete("vehiculetank")
         self.canevas.delete("vehiculehelicoptere")
@@ -430,11 +450,10 @@ class VuePlanete(Perspective):
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("vehiculetank"))                  
                     
                     if j.projectile!=None:
                         for pro in j.projectile:
-                            #print("ici")
                             x=pro.x
                             y=pro.y
                             taille = pro.taille
@@ -453,7 +472,8 @@ class VuePlanete(Perspective):
                     
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
+                    
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("vehiculehelicoptere"))
                     
                     if j.projectile!=None:     
                         for pro in j.projectile:
@@ -500,7 +520,7 @@ class VuePlanete(Perspective):
                                                         tags=("select","selecteur"))    
             
     def cliquerGauche(self, evt):
-        self.canevas.delete("selectionner","select","selecteur", "lblCoutRessources") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)
@@ -520,8 +540,8 @@ class VuePlanete(Perspective):
                 self.montreAmeliorationBatiments()
                 self.lblRessourcesAmelioration.pack_forget()
                 self.lblProductionRessources.pack_forget()
-                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible")
-                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ce bâtiment ne produit aucune ressource")
+                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible", bg=self.couleurBG3, foreground="white")
+                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ne produit aucune ressource", bg=self.couleurBG3, foreground="white")
                 
                 #affiche le label de cout d'amélioration pour le batiment sur lequel on a cliqué
                 nomBatiment = t[4]
@@ -538,13 +558,21 @@ class VuePlanete(Perspective):
                                             break
                                         
                 ressourcesAmelioration = dictionnaireCoutAllocationAgeBatiments[nomProchainNiveau][0]
-                chaineListeRessources = ""
+                ressourcesProduction = dictionnaireProductionRessources[nomBatiment]
+                chaineListeRessourcesAmelioration = ""
+                chaineListeRessourcesProduction = ""
                 for ress in ressourcesAmelioration.dictRess:
                     if ressourcesAmelioration.dictRess[ress] != 0:
-                        chaineListeRessources += " " + ress + " : " + str(ressourcesAmelioration.dictRess[ress]) + "\n"
-                if chaineListeRessources != "":
-                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration\n" + chaineListeRessources)
+                        chaineListeRessourcesAmelioration +=  "\n" + ress + " : " + str(ressourcesAmelioration.dictRess[ress])
+                for ress in ressourcesProduction.dictRess:
+                    if ressourcesProduction.dictRess[ress] != 0:
+                        chaineListeRessourcesProduction += "\n" + ress + " : " + str(ressourcesProduction.dictRess[ress])
+                if chaineListeRessourcesAmelioration != "":
+                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration, bg=self.couleurBG3, foreground="white")
+                if chaineListeRessourcesProduction != "":
+                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction, bg=self.couleurBG3, foreground="white")
                 self.lblRessourcesAmelioration.pack()
+                self.lblProductionRessources.pack()
                 self.maselection = t
                 
             if self.macommande != None and t[5]=='0':
@@ -589,6 +617,7 @@ class VuePlanete(Perspective):
                     if vehiculeX >= pluspetitx and vehiculeX <= plusgrandx and vehiculeY >= pluspetity and vehiculeY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,self.planeteid,vehiculeX,vehiculeY,"vehiculetank",vj.id,"current"))   
                     
+
     def changerTagTuile(self,posy, posx, char):  
         itemX = self.canevas.find_withtag("current")
         self.canevas.itemconfig(itemX[0],  tags=(None, None, posy,posx,"tuile",char))             
@@ -628,8 +657,8 @@ class VuePlanete(Perspective):
     def afficherBatiment(self, x, y, im, t):
         minix = (x *200) / self.largeur
         miniy = (y *200) / self.hauteur
-        self.canevas.create_image(x,y, image=im, tags = t)
-        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+        self.canevas.create_image(x,y, image=im, tags =t)
+        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill=t[0].couleur)
         
     def afficherMine(self, x, y, im):
         minix = (x *200) / self.largeur

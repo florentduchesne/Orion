@@ -27,6 +27,26 @@ class BatimentRessources():
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
         self.vie = 100
+        self.humains = 0
+        
+    def recalculerProduction(self):
+        for ressource in self.productionRessources.dictRess:
+            print("ancienne production : " + str(self.productionRessources.dictRess[ressource]))
+            self.productionRessources.dictRess[ressource] *= 1.0 + (float(self.humains) * 0.1)
+            print("nouvelle production : " + str(self.productionRessources.dictRess[ressource]))
+        
+    def ajouterHumain(self, joueur, planete):
+        if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humains += 1
+            self.recalculerProduction()
+        elif joueur.ressources.dictRess["humain"] >= 1:
+            joueur.ressources.dictRess["humain"] -= 1
+            self.humain += 1
+            self.recalculerProduction()
+        else:
+            print("aucun humain à ajouter")
+            
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -41,6 +61,7 @@ class BatimentRessources():
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
                     self.vie *= 2
+                    self.recalculerProduction()
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
@@ -57,6 +78,24 @@ class BatimentManufacture():
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
         self.vie = 100
+        
+    def recalculerProduction(self):
+        for ressource in self.productionRessources.dictRess:
+            print("ancienne production : " + str(ressource))
+            ressource *= 1 + (self.humains * 0.1)
+            print("nouvelle production : " + str(ressource))
+        
+    def ajouterHumain(self, joueur, planete):
+        if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humains += 1
+            self.recalculerProduction()
+        elif joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humain += 1
+            self.recalculerProduction()
+        else:
+            print("aucun humain à ajouter")
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -89,6 +128,24 @@ class BatimentInfrastructure():
         self.proprietaire = proprio
         self.vie = 100
         
+    def recalculerProduction(self):
+        for ressource in self.productionRessources.dictRess:
+            print("ancienne production : " + str(ressource))
+            ressource *= 1 + (self.humains * 0.1)
+            print("nouvelle production : " + str(ressource))
+        
+    def ajouterHumain(self, joueur, planete):
+        if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humains += 1
+            self.recalculerProduction()
+        elif joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humain += 1
+            self.recalculerProduction()
+        else:
+            print("aucun humain à ajouter")
+        
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
@@ -118,6 +175,25 @@ class BatimentDefense():
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
         self.vie = vie
+        self.productionRessources = Ressource()
+        
+    def recalculerProduction(self):
+        for ressource in self.productionRessources.dictRess:
+            print("ancienne production : " + str(ressource))
+            ressource *= 1 + (self.humains * 0.1)
+            print("nouvelle production : " + str(ressource))
+        
+    def ajouterHumain(self, joueur, planete):
+        if planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            planete.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humains += 1
+            self.recalculerProduction()
+        elif joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] >= 1:
+            joueur.dicRessourceParJoueur[joueur.nom].dictRess["humain"] -= 1
+            self.humain += 1
+            self.recalculerProduction()
+        else:
+            print("aucun humain à ajouter")
         
         """variable pour attaque"""
         self.listeCibleAttaquer=[]
@@ -298,8 +374,8 @@ class CampBucherons(BatimentRessources):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Camp_Bucherons2", "Camp_Bucherons3"], proprio = proprio)
 
 class CentraleElectrique(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "centraleElectrique", proprio = "patate"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Centrale_Nucleaire", "Eolienne", "PanneauSolaire"], proprio = proprio)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Centrale_Charbon", proprio = "patate"):
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Centrale_Nucleaire", "Grosse_Centrale_Nucleaire", "Eolienne", "Panneau_Solaire"], proprio = proprio)
     
 ################BATIMENTS INFRASTRUCTURES################
 class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
@@ -308,18 +384,6 @@ class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.
         print(dictionnaireProductionRessources[nomBatiment].dictRess["humain"])
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "Ville", dictionnaireProductionRessources[nomBatiment], listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
         self.taille=20
-        
-class Hopital(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "hopital", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment,dictionnaireProductionRessources[nomBatiment], proprio = proprio)
-        
-class Laboratoire(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire",  proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
-
-class Ecole(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Ecole", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 class Banque(BatimentInfrastructure):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Banque", proprio = "patate"):
