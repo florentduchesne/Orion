@@ -23,8 +23,10 @@ class Perspective(Frame):
         self.cadreinfo.pack(side=LEFT,fill=Y)
         self.cadreinfo.pack_propagate(0)
         
+        
         self.cadreetat=Frame(self.cadreinfo,width=1400,height=600,bg=self.couleurBG1)
         self.cadreetat.pack()
+        
         
         self.cadrevoyage=Frame(self.cadreetat,width=1400,height=600,bg=self.couleurBG2)
         
@@ -32,9 +34,13 @@ class Perspective(Frame):
         
         self.scrollX=Scrollbar(self.cadrevue,orient=HORIZONTAL)
         self.scrollY=Scrollbar(self.cadrevue)
+        
+        
+        
         self.canevas=Canvas(self.cadrevue,width=1400,height=800,bg=self.couleurBG1,
                              xscrollcommand=self.scrollX.set,
                              yscrollcommand=self.scrollY.set)
+       
         
         self.canevas.bind("<Button>",self.cliquerGauche)
         self.canevas.bind("<Button-3>",self.cliquerDroite)
@@ -141,7 +147,16 @@ class Perspective(Frame):
         elif txt[0] == "Tous":
             self.listeChat.insert(0, txt[1])
             self.modele.joueurs[self.parent.nom].listMessageChat.append(txt[1])
-            print(self.modele.joueurs[self.parent.nom].listMessageChat)
+            
+    def messageSystemChat(self, txt):
+        if txt[2] != None:
+            self.listeChat.insert(0, txt[2])
+            self.modele.joueurs[self.parent.nom].listMessageChat.append(txt[2])
+        self.listeChat.insert(0, "System: "+txt[1])
+        self.modele.joueurs[self.parent.nom].listMessageChat.append("System: "+txt[1])
+        
+            
+        
         
     def envoyeMessage(self, evt):
         txt=self.entryChat.get()

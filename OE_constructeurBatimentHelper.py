@@ -3,8 +3,9 @@ from OE_objetsRessource import Ressource
 from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments
 
 class ConstructeurBatimentHelper():
-    def __init__(self):
+    def __init__(self, parent):
         self.dictionnaire = self.creerDictionnaire()
+        self.parent = parent
     
     def creerDictionnaire(self):
         return dictionnaireCoutAllocationAgeBatiments
@@ -17,12 +18,7 @@ class ConstructeurBatimentHelper():
         coutBatiment = self.dictionnaire[nomBatiment][0]
         if(ressourceTotal.estPlusGrandOuEgal(coutBatiment)):
             ressourceJoueur.soustraireRessourcesJoueurETPlanet(ressourcePlanete, coutBatiment)
-            print("assez de ressources")
             return True
         else:
-            print("pas assez de ressources")
-            print("cout : ")
-            print(coutBatiment)
-            print("ressources disponibles :")
-            print(ressourcePlanete)
+            self.parent.parent.nouveauMessageSystemChat("Pas assez de ressource")
             return False
