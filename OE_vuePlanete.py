@@ -215,7 +215,8 @@ class VuePlanete(Perspective):
     ##############AMELIORER BATIMENT##############
     def ameliorerBatiment(self):
                             #ou self.parent.parent.monnom?
-        self.modele.joueurs[self.maselection[0]].ameliorerBatiment(self.maselection, self.planete, self.systeme)
+        print("ma selection 0 : " + self.maselection[0])
+        self.modele.joueurs[self.parent.nom].ameliorerBatiment(self.maselection, self.planete, self.systeme)
         self.montresystemeselection()
         self.maselection = None
         
