@@ -256,16 +256,14 @@ class VaisseauMere(VaisseauAttaque):
             ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
     
     def SortirVaisseau (self) :
-        print ("allo")
         if not self.dansGalaxie:
-            print("ici")
             for v in range (len(self.vaisseau)):
-                print("pas de probleme")
                 self.vaisseau[v].dansVaisseauMere = False
                 self.vaisseau[v].idSysteme = self.idSysteme
                 self.vaisseau[v].x = self.x + v
                 self.vaisseau[v].y = self.y + v
                 self.vaisseau[v] = []
+            self.vaisseau = []
         else :
             print("Le vaisseau Mere peut se vider que dans un systeme")
     
