@@ -78,6 +78,7 @@ class BatimentManufacture():
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
         self.vie = 100
+        self.humains = 0
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
@@ -125,6 +126,7 @@ class BatimentInfrastructure():
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
         self.vie = 100
+        self.humains = 0
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
@@ -174,14 +176,7 @@ class BatimentDefense():
         self.proprietaire = proprio
         self.vie = vie
         self.productionRessources = Ressource()
-        
-        """variable pour attaque"""
-        self.listeCibleAttaquer=[]
-        self.cibleAttaque= None
-        self.attaque = 0.5
-        self.projectile=[]
-        self.tempsRecharge=0
-        self.range=500
+        self.humains = 0
         
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
@@ -201,8 +196,6 @@ class BatimentDefense():
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
         
-
-        
     def ameliorer(self, joueur, planete):
         if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
             if(len(self.listeNiveaux) > 0):
@@ -218,26 +211,7 @@ class BatimentDefense():
                     self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
-    
-    def attaquer(self):       
-        if self.cibleAttaque.vie>0:
-            self.enAttaque=True
-            #print("attaque")
-            #print(self.tempsRecharge)
-            if self.tempsRecharge==0:
-                p=Projectile(self,self.cibleAttaque,5)
-                self.projectile.append(p)
-                p.ciblerdestination()
-                self.tempsRecharge=10
-            else:
-                self.tempsRecharge=self.tempsRecharge-1
-            
-
-        else: 
-            self.enAttaque=False         
-            self.listeCibleAttaquer.remove(self.cibleAttaque)
-            self.cibleAttaque=None  
-            
+     
 class StationSpatiale():
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete, proprio = "patate"):
         #BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
