@@ -58,5 +58,14 @@ dictionnaireProductionRessources = {
     "Ville":Ressource(humain=0.1),
     "Ville2":Ressource(humain=0.2),
     "Ville3":Ressource(humain=0.5),
-    "Banque":Ressource()
+    "Banque":Ressource(),
+    "Usine_Vehicule":Ressource(),
+    "Usine_Vaisseau1":Ressource(),
+    "Usine_Vaisseau2":Ressource(),
+    "Mur":Ressource(),
+    "Tour":Ressource(),
+    "Canon":Ressource(),
+    "Canon_Ion":Ressource(),
+    "Canon_Acid":Ressource(),
+    "Bouclier":Ressource()
 }
