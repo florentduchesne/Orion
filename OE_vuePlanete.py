@@ -26,6 +26,7 @@ class VuePlanete(Perspective):
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
+        self.couleurBG3 = "#505b6f"
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
         
@@ -495,8 +496,8 @@ class VuePlanete(Perspective):
                 self.montreAmeliorationBatiments()
                 self.lblRessourcesAmelioration.pack_forget()
                 self.lblProductionRessources.pack_forget()
-                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible")
-                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ce bâtiment ne produit aucune ressource")
+                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible", bg=self.couleurBG3, foreground="white")
+                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ne produit aucune ressource", bg=self.couleurBG3, foreground="white")
                 
                 #affiche le label de cout d'amélioration pour le batiment sur lequel on a cliqué
                 nomBatiment = t[4]
@@ -523,9 +524,9 @@ class VuePlanete(Perspective):
                     if ressourcesProduction.dictRess[ress] != 0:
                         chaineListeRessourcesProduction += "\n" + ress + " : " + str(ressourcesProduction.dictRess[ress])
                 if chaineListeRessourcesAmelioration != "":
-                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration)
+                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration" + chaineListeRessourcesAmelioration, bg=self.couleurBG3, foreground="white")
                 if chaineListeRessourcesProduction != "":
-                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction)
+                    self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Production ressources" + chaineListeRessourcesProduction, bg=self.couleurBG3, foreground="white")
                 self.lblRessourcesAmelioration.pack()
                 self.lblProductionRessources.pack()
                 self.maselection = t
