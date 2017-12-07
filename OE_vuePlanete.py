@@ -32,6 +32,8 @@ class VuePlanete(Perspective):
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
         
+        self.labid.config(bg=self.modele.joueurs[self.parent.parent.monnom].couleur)
+        
         
         self.KM2pixel=100 # ainsi la terre serait a 100 pixels du soleil et Uranus a 19 Unites Astronomique       
         self.largeur=int(self.modele.diametre*self.KM2pixel)
