@@ -157,6 +157,9 @@ class VueGalaxie(Perspective):
                     tag =("mere"+str(angle))
                     im=self.parent.modes["galaxie"].images[tag]
                     self.parent.modes["galaxie"].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
+                    minix = (x *200) / self.largeur 
+                    miniy = (y *200) / self.largeur 
+                    self.parent.modes["galaxie"].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("chasseurmini"))
         
     def changerproprietaire(self,prop,couleur,systeme):
         #lp=self.canevas.find_withtag(systeme.id) 

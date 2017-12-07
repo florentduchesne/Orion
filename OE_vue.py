@@ -380,11 +380,11 @@ class Vue():
                 im=self.modes["planetes"][i].images[nom]
                 self.modes["planetes"][i].effacerBatiment(batimentid)
       
-    def afficherBatiment(self,nomjoueur,systemeid,planeteid,x,y,nom,batimentid):
+    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom,batimentid):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images[nom]
-                self.modes["planetes"][i].afficherBatiment(x, y, im, (nomjoueur, planeteid,x ,y ,nom, batimentid))
+                self.modes["planetes"][i].afficherBatiment(x, y, im, (joueur, planeteid,x ,y ,nom, batimentid))
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y,idvehicule):
         for i in self.modes["planetes"].keys():
@@ -397,7 +397,6 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculehelicopterebas"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculehelicoptere",idvehicule) ) 
-              
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():

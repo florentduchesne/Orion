@@ -110,9 +110,14 @@ class VuePlanete(Perspective):
         ##############CADRE AMELIORATION VÉHICULE##############
         
         self.btnAmeliorerVehicule=Button(self.cadreAmeliorationVehicule, text="Améliorer véhicule", command=self.ameliorerVehicule, bg=self.couleurBouton)
+        self.btnAmeliorerVehicule.config(state=DISABLED);
         self.btnAmeliorerVehicule.pack()
         self.btnDetruireVehicule=Button(self.cadreAmeliorationVehicule, text="Détruire véhicule", command=self.detruireVehicule, bg=self.couleurBouton)
+        self.btnDetruireVehicule.config(state=DISABLED);
         self.btnDetruireVehicule.pack()
+        
+        
+        
         
         #self.btncreerstation=Button(self.cadreetataction,text="Creer Station",command=self.creerstation)
         #self.btncreerstation.pack()
@@ -242,10 +247,10 @@ class VuePlanete(Perspective):
                 self.canevas.create_image(i.x,i.y,image=self.images["Ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"Ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
-                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
-            else:
-               #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
-               pass
+                for j in self.parent.modele.joueurs:
+                    if j == i.proprietaire:
+                        joueur = self.parent.modele.joueurs[j]
+                self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill=joueur.couleur)
                 
         #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["Ville"])
         #Centre sur la Ville principal.
@@ -374,6 +379,7 @@ class VuePlanete(Perspective):
         pass
 
     def afficherpartie(self,mod):
+        joueur=self.modele.joueurs[self.parent.nom]
         self.canevas.delete("vehiculetank")
         self.minimap.delete("vehiculetank")
         self.canevas.delete("vehiculehelicoptere")
@@ -388,6 +394,7 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
+                print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -414,7 +421,7 @@ class VuePlanete(Perspective):
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculetank",j.id) ) 
                      
                     #mini-map   
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("vehiculetank"))                  
                     
                     if j.projectile!=None:
                         for pro in j.projectile:
@@ -437,7 +444,8 @@ class VuePlanete(Perspective):
                     
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
-                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
+                    
+                    self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = j.parent.couleur, tags=("vehiculehelicoptere"))
                     
                     if j.projectile!=None:     
                         for pro in j.projectile:
@@ -569,6 +577,7 @@ class VuePlanete(Perspective):
                     if vehiculeX >= pluspetitx and vehiculeX <= plusgrandx and vehiculeY >= pluspetity and vehiculeY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,self.planeteid,vehiculeX,vehiculeY,"vehiculetank",vj.id,"current"))   
                     
+
     def changerTagTuile(self,posy, posx, char):  
         itemX = self.canevas.find_withtag("current")
         self.canevas.itemconfig(itemX[0],  tags=(None, None, posy,posx,"tuile",char))             
@@ -608,8 +617,8 @@ class VuePlanete(Perspective):
     def afficherBatiment(self, x, y, im, t):
         minix = (x *200) / self.largeur
         miniy = (y *200) / self.hauteur
-        self.canevas.create_image(x,y, image=im, tags = t)
-        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="white")
+        self.canevas.create_image(x,y, image=im, tags =t)
+        self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill=t[0].couleur)
         
     def afficherMine(self, x, y, im):
         minix = (x *200) / self.largeur
