@@ -119,6 +119,14 @@ class BatimentDefense():
         self.proprietaire = proprio
         self.vie = vie
         
+        """variable pour attaque"""
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 0.5
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=500
+        
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
             nouveauNom = self.listeNiveaux[0]
@@ -133,7 +141,26 @@ class BatimentDefense():
                     self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
-     
+    
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            #print("attaque")
+            #print(self.tempsRecharge)
+            if self.tempsRecharge==0:
+                p=Projectile(self,self.cibleAttaque,5)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=10
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
+
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            self.cibleAttaque=None  
+            
 class StationSpatiale():
     def __init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y, couleurJoueur,planete, proprio = "patate"):
         #BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant)
@@ -291,7 +318,7 @@ class Laboratoire(BatimentInfrastructure):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 class Ecole(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ecole", proprio = "patate"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Ecole", proprio = "patate"):
         BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 class Banque(BatimentInfrastructure):

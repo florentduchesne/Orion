@@ -9,6 +9,7 @@ from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAge
 from OE_objetsRessource import Ressource
 from test.test_iterlen import NoneLengthHint
 from OE_objetsJoueur import Joueur
+from OE_objetsBatiments import BatimentDefense
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -462,7 +463,19 @@ class VuePlanete(Perspective):
                             couleur = pro.couleur
                             self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
 
-         
+            for batiment in i.listeBatiment:
+                if isinstance(batiment, BatimentDefense):
+                    if batiment.projectile!=None:     
+                        for pro in batiment.projectile:
+                            x=pro.x
+                            y=pro.y
+                            #print(x)
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
+                            #print("ici")
+                if batiment.vie<1:
+                    self.canevas.delete(batiment.id)
          
     def changerproprietaire(self,prop,couleur,systeme): 
         pass
