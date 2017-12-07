@@ -7,6 +7,8 @@ import OE_objetsBatiments
 from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
 from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments, dictionnaireProductionRessources
 from OE_objetsRessource import Ressource
+from test.test_iterlen import NoneLengthHint
+from OE_objetsJoueur import Joueur
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -20,6 +22,7 @@ class VuePlanete(Perspective):
         self.initY = 0
         self.macommande=None
         self.chatEcrireLesNomsDesJoueurs()
+        self.UA2pixel=self.parent.modele.diametre*2 # ainsi la terre serait a self.UA2pixel pixels du soleil et Uranus a 19 Unites Astronomiques 
         
         self.couleurBG1 = "#222831"
         self.couleurBG2 = "#393E46"
@@ -111,6 +114,8 @@ class VuePlanete(Perspective):
         self.btnAmeliorerBatiment.pack()
         self.btnDetruireBatiment=Button(self.cadreAmeliorationBatiments, text="Détruire bâtiment", command=self.detruireBatiment, bg=self.couleurBouton)
         self.btnDetruireBatiment.pack()
+        self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="")
+        self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="")
         
         ##############CADRE AMELIORATION VÉHICULE##############
         
@@ -249,7 +254,7 @@ class VuePlanete(Perspective):
             if isinstance(i, OE_objetsBatiments.Ville):
                 scrollBarX = i.x
                 scrollBarY = i.y
-                self.canevas.create_image(i.x,i.y,image=self.images["ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"ville", i.id))               
+                self.canevas.create_image(i.x,i.y,image=self.images["Ville"], tags=(i.proprietaire, i.planeteid, i.x,i.y,"Ville", i.id))               
                 minix = (i.x *200) / self.largeur
                 miniy = (i.y *200) / self.hauteur  
                 self.minimap.create_oval(minix-2,miniy-2,minix+2,miniy+2,fill="grey11")
@@ -257,8 +262,8 @@ class VuePlanete(Perspective):
                #self.parent.afficherBatiment(joueur,systemeid,planeteid,x,y,nom)
                pass
                 
-        #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["ville"])
-        #Centre sur la ville principal.
+        #self.canevas.create_image(p.posXatterrissage,p.posYatterrissage,image=self.images["Ville"])
+        #Centre sur la Ville principal.
         canl=int(scrollBarX-400)/self.largeur
         canh=int(scrollBarY-400)/self.hauteur
         
@@ -309,7 +314,7 @@ class VuePlanete(Perspective):
         self.images["Panneau_Solaire"] = ImageTk.PhotoImage(im)
         
         im = Image.open("./images/Batiments/Ville1.png")
-        self.images["ville"] = ImageTk.PhotoImage(im)
+        self.images["Ville"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville2.png")
         self.images["Ville2"] = ImageTk.PhotoImage(im)
         im = Image.open("./images/Batiments/Ville3.png")
@@ -388,9 +393,10 @@ class VuePlanete(Perspective):
         self.minimap.delete("vehiculetank")
         self.canevas.delete("vehiculehelicoptere")
         self.minimap.delete("vehiculehelicoptere")
+        self.canevas.delete("projectile")
         #self.canevas.delete("selecteur")
         self.afficherselection()
-        #e=self.UA2pixel
+        e=self.KM2pixel
         for i in mod.joueurscles:
             i=mod.joueurs[i]
             if i.nouveauMessageChatTxt != None:
@@ -425,6 +431,15 @@ class VuePlanete(Perspective):
                     #mini-map   
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "springGreen3", tags=("vehiculetank"))                  
                     
+                    if j.projectile!=None:
+                        for pro in j.projectile:
+                            #print("ici")
+                            x=pro.x
+                            y=pro.y
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
+                            
                 elif isinstance(j, vehiculehelicoptere):
                     if (j.angledegre >= 0 and j.angledegre <= 45) or (j.angledegre >= 315 and j.angledegre <= 360):#gauche
                         im=self.parent.modes["planetes"][j.planeteid].images["vehiculehelicopteregauche"]
@@ -438,7 +453,14 @@ class VuePlanete(Perspective):
                     self.parent.modes["planetes"][j.planeteid].canevas.create_image(x,y,image=im, tags = (i.nom, j.planeteid,x ,y ,"vehiculehelicoptere",j.id) ) 
                     #mini-map
                     self.parent.modes["planetes"][j.planeteid].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = "steelBlue1", tags=("vehiculehelicoptere"))
-                               
+                    
+                    if j.projectile!=None:     
+                        for pro in j.projectile:
+                            x=pro.x*e
+                            y=pro.y*e
+                            taille = pro.taille
+                            couleur = pro.couleur
+                            self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile")) 
 
          
          
@@ -446,34 +468,34 @@ class VuePlanete(Perspective):
         pass
                
     def afficherselection(self):
-        '''
+        self.canevas.delete("select","selecteur") 
+        joueur=self.modele.joueurs[self.parent.nom]
         if self.maselection!=None:
-            #e=self.UA2pixel
-            joueur=self.modele.joueurs[self.parent.nom]
-            if self.maselection[4]=="vehiculetank":
+            x = int(self.maselection[2]) - 50
+            y = int(self.maselection[3]) - 50
+            self.canevas.create_rectangle(x,y,x+100,y+100,dash=(2,2),outline=joueur.couleur,tags=("select","selecteur"))            
+        if len(self.mesSelections) !=0:
+            for v in self.mesSelections:
                 for i in joueur.vehiculeplanetaire:
-                    if i.id == self.maselection[1]:
+                    if i.id == v[5]:                    
                         x=i.x
                         y=i.y
-                        t=10
-                        self.canevas
-                        
-                        
-                        self.canevas.create_rectangle((x*e)-t,(y*e)-t,(x*e)+t,(y*e)+t,dash=(2,2),
-                                                    outline=joueur.couleur,
-                                                    tags=("select","selecteur"))
-        '''
+                        t=25
+                        if(x != None and y != None) :
+                            self.canevas.create_rectangle((x)-t,(y)-t,(x)+t,(y)+t,dash=(2,2),
+                                                        outline=joueur.couleur,
+                                                        tags=("select","selecteur"))    
             
     def cliquerGauche(self, evt):
-        self.canevas.delete("selectionner") 
+        self.canevas.delete("selectionner","select","selecteur", "lblCoutRessources") 
         t=self.canevas.gettags("current")
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)
         self.maselection = None
+        self.mesSelections.clear()
         self.initX = x
         self.initY = y
-        if t[0] != 'current':
-            
+        if t[0] != 'current':            
             if t[4] == 'tuile':
                 self.montresystemeselection()
             elif t[4] == 'vehiculetank' or t[4] == 'vehiculehelicoptere':
@@ -481,23 +503,38 @@ class VuePlanete(Perspective):
                 self.montreAmeliorationVehicule()
                 self.mesSelections.append(t)               
             else:
+                
                 self.montreAmeliorationBatiments()
-                print("t")
-                print(t)
+                self.lblRessourcesAmelioration.pack_forget()
+                self.lblProductionRessources.pack_forget()
+                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Aucune amélioration disponible")
+                self.lblProductionRessources = Label(self.cadreAmeliorationBatiments, text="Ce bâtiment ne produit aucune ressource")
+                
+                #affiche le label de cout d'amélioration pour le batiment sur lequel on a cliqué
                 nomBatiment = t[4]
-                ressourcesAmelioration = dictionnaireCoutAllocationAgeBatiments[nomBatiment]
+                nomProchainNiveau = "Ville"
+                for systeme in self.parent.modele.systemes:
+                    if systeme.id == self.systeme:
+                        for planete in systeme.planetes:
+                            if planete.id == self.planete:
+                                for infra in planete.infrastructures:
+                                    if infra.nomBatiment == nomBatiment:
+                                        if len(infra.listeNiveaux):
+                                            nomProchainNiveau = infra.listeNiveaux[0]
+                                            print(nomProchainNiveau)
+                                            break
+                                        
+                ressourcesAmelioration = dictionnaireCoutAllocationAgeBatiments[nomProchainNiveau][0]
                 chaineListeRessources = ""
-                for ressource in ressourcesAmelioration:
-                    if ressource[0] != Ressource():
-                        for ress in ressource[0].dictRess:
-                            if ress != 0:
-                                chaineListeRessources += " " + ress + " : " + ressource[0].dictRess[ress] + "\n"
-                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration\n" + chaineListeRessources)
+                for ress in ressourcesAmelioration.dictRess:
+                    if ressourcesAmelioration.dictRess[ress] != 0:
+                        chaineListeRessources += " " + ress + " : " + str(ressourcesAmelioration.dictRess[ress]) + "\n"
+                if chaineListeRessources != "":
+                    self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration\n" + chaineListeRessources)
                 self.lblRessourcesAmelioration.pack()
                 self.maselection = t
-
+                
             if self.macommande != None and t[5]=='0':
-                    print("Creer vrai batiment")
                     if (self.macommande == "vehiculetank" or self.macommande == "vehiculehelicoptere"):
                         x=self.canevas.canvasx(evt.x)
                         y=self.canevas.canvasy(evt.y)
@@ -506,15 +543,11 @@ class VuePlanete(Perspective):
                         y=int(t[2])
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                    self.maselection=None                  
-
-        print(self.mesSelections)
-        print(self.parent.nom)
-        
+                    self.maselection=None                              
+     
     def cliquerDroite(self, evt):
-        self.canevas.delete("selectionner") 
+        self.canevas.delete("selectionner","select","selecteur") 
         t=self.canevas.gettags("current")
-        print("Select ", t)
         if len(self.mesSelections) != 0:
             if t[4] == "vehiculetank" or t[4] == "vehiculehelicoptere":
                 xdeplacement = float(t[2])
@@ -523,16 +556,14 @@ class VuePlanete(Perspective):
                 xdeplacement = self.canevas.canvasx(evt.x)
                 ydeplacement = self.canevas.canvasy(evt.y)            
             for vehicule in self.mesSelections:
-                self.parent.parent.ciblerdestinationvehicule(vehicule[0], xdeplacement,ydeplacement, t[5], vehicule[5])
-                print("v id des p-t? ",t[5])
-        
+                self.parent.parent.ciblerdestinationvehicule(vehicule[0], xdeplacement,ydeplacement, t[5], vehicule[5])        
     
     def maintenirGauche(self, evt):
         joueur=self.modele.joueurs[self.parent.nom]
         self.mesSelections.clear() 
         x=self.canevas.canvasx(evt.x)
         y=self.canevas.canvasy(evt.y)                 
-        self.canevas.delete("selectionner")       
+        self.canevas.delete("selectionner","select","selecteur")       
         self.canevas.create_rectangle(self.initX,self.initY,x,y,dash=(2,2),outline=joueur.couleur,tags=("selectionner"))
         pluspetitx = hlp.valeurminimal(self.initX,x)
         plusgrandx = hlp.valeurmaximal(self.initX,x)

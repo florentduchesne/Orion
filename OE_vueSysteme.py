@@ -193,7 +193,7 @@ class VueSysteme(Perspective):
                             jx=j.x*e
                             jy=j.y*e
                             x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-       
+                            #print(x,y)
                             angle = int(math.degrees(j.angleinverse))
     
                                             
@@ -239,22 +239,14 @@ class VueSysteme(Perspective):
     
                             
                             if isinstance(j, VaisseauAttaque):
-                                if j.projectile!=None:
+                                if j.projectile!=None: 
                                     for pro in j.projectile:
                                         x=pro.x*e
                                         y=pro.y*e
                                         taille = pro.taille
                                         couleur = pro.couleur
-                                        self.canevas.create_oval(x-10,y-10,x+10,y+10,fill="blue",tags=("projectile"))
-                                        self.canevas.create_line(x*e,y*e,pro.x,y,fill="white",width=2, tags=("projectile"))
-                                        
-                                for pro in j.projectile:
-                                    x=pro.x*e
-                                    y=pro.y*e
-                                    taille = pro.taille
-                                    couleur = pro.couleur
-                                    self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
-                                    #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
+                                        self.canevas.create_oval(x-10,y-10,x+10,y+10,fill=couleur,tags=("projectile"))
+                                        #self.canevas.create_line(j.x*e,j.y*e,j.cibleAttaque.x*e,j.cibleAttaque.y*e,fill="white",width=2, tags=("projectile"))
 
             for j in i.stationspatiaux:
                 if j.systemeid==self.systeme.id:
@@ -321,7 +313,7 @@ class VueSysteme(Perspective):
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",v.id))
     
-        
+        print(x,y)
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")   
         self.maselection = None
@@ -335,7 +327,6 @@ class VueSysteme(Perspective):
         self.btnvueplanete.configure(bg=self.couleurBoutonDesactive, command=self.voirplanete, state=DISABLED)
         
         #liste de tuples 1: le type de la selection(planete, vaisseau), 2: le id de la selection
-        print(t)
         if len(t) != 0:
             if t[1] == "planete":
                 self.maselection=[self.parent.nom,t[1],t[2],t[5],t[6],t[4]]  # prop, type, id; self.canevas.find_withtag(CURRENT)#[0]
@@ -353,7 +344,6 @@ class VueSysteme(Perspective):
             elif t[1] == "vaisseauinterstellaire":
                 self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
                 self.pasVoyager() 
-        print(self.maselection)
           
     def cliquerDroite(self, evt):
         t=self.canevas.gettags("current")
@@ -364,7 +354,6 @@ class VueSysteme(Perspective):
         xy2=evt.x,evt.y       
         if len(self.mesSelections) != 0:
             for v in self.mesSelections:
-                print(v)
                 xy = (xy[0],xy[1])
                 if len(t) != 0:
                     if t[1] == "planete":
@@ -376,18 +365,6 @@ class VueSysteme(Perspective):
                 else:
                     self.parent.parent.ciblerEspace(v[2],self.systeme.id,xy)
 
-        
-    def cliquerCentre(self, evt):
-        xy2=evt.x,evt.y
-        self.canevas.delete("selectionner") 
-        t=self.canevas.gettags("current")
-        if len(t) != 0:
-            if t[6] == "mere":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2))
-                self.montrevaisseauxselection()
-            elif t[1] == "vaisseauinterstellaire":
-                self.mesSelections.append((self.parent.nom,t[1],t[2],xy2)) 
-                self.pasVoyager() 
                     
     def montrevaisseauxselection(self):
         self.changecadreetat(self.cadrevoyage)

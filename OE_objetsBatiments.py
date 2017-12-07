@@ -190,7 +190,7 @@ class StationSpatiale():
             
             if self.tempsRecharge==0:
                 
-                p=Projectile(self,self.cibleAttaque)
+                p=Projectile(self,self.cibleAttaque,0.05)
                 self.projectile.append(p)
                 p.ciblerdestination()
                 self.tempsRecharge=15
@@ -279,7 +279,7 @@ class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.
     def __init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment = "Ville", proprio="inconnu"):
         print("ressource")
         print(dictionnaireProductionRessources[nomBatiment].dictRess["humain"])
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", dictionnaireProductionRessources[nomBatiment], listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "Ville", dictionnaireProductionRessources[nomBatiment], listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
         self.taille=20
         
 class Hopital(BatimentInfrastructure):
