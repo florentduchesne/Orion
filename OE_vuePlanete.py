@@ -198,7 +198,6 @@ class VuePlanete(Perspective):
         self.messageChatCout("vehiculetank1", dictionnaireCoutVehicule)
         self.maselection=None
     def creervehiculehelicoptere(self):
-        print("bouton")
         self.macommande="vehiculehelicoptere"
         self.messageChatCout("vehiculehelicoptere1", dictionnaireCoutVehicule)
         self.maselection=None
@@ -418,7 +417,6 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
-                print(j)
                 #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
@@ -449,7 +447,6 @@ class VuePlanete(Perspective):
                     
                     if j.projectile!=None:
                         for pro in j.projectile:
-                            #print("ici")
                             x=pro.x
                             y=pro.y
                             taille = pro.taille

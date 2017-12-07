@@ -333,7 +333,6 @@ class VueSysteme(Perspective):
                     if vaisseauX >= pluspetitx and vaisseauX <= plusgrandx and vaisseauY >= pluspetity and vaisseauY <= plusgrandy:                    
                         self.mesSelections.append((self.parent.nom,"vaisseauinterstellaire",v.id))
     
-        print(x,y)
     def cliquerGauche(self,evt):
         self.canevas.delete("selectionner")   
         self.maselection = None
