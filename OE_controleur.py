@@ -143,7 +143,8 @@ class Controleur():
         
     ######################CREATION BATIMENT######################
     def creerBatiment(self, joueur, systeme, planete, x, y, nomBatiment):
-        self.actions.append([self.monnom,"creerbatiment",[self.monnom,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
+        print("creer batiment controleur : " + joueur)
+        self.actions.append([joueur,"creerbatiment",[joueur,systeme,planete,x,y, nomBatiment]])#mon nom, fonction a appeler, parametres
         
     ######################AFFICHAGE BATIMENT#####################
     def effacerBatiment(self, planeteid, nomBatiment, batimentid):
