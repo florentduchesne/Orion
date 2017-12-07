@@ -208,13 +208,13 @@ class Vue():
         self.canevaslobby.pack()
         self.listelobby=Listbox(bg="#84d4f1",borderwidth=0,relief=FLAT)
         
-        self.diametre=Entry(bg="#18c0ff")
+        self.diametre=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.diametre.insert(0, 50)        
         
-        self.densitestellaire=Entry(bg="#18c0ff")
+        self.densitestellaire=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.densitestellaire.insert(0, 50)
         
-        self.qteIA=Entry(bg="#18c0ff")
+        self.qteIA=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.qteIA.insert(0, 0)
         
         self.btnlancerpartie=Button(text="Lancer partie",bg="#0092ca",command=self.lancerpartie,state=DISABLED)
@@ -380,11 +380,11 @@ class Vue():
                 im=self.modes["planetes"][i].images[nom]
                 self.modes["planetes"][i].effacerBatiment(batimentid)
       
-    def afficherBatiment(self,nomjoueur,systemeid,planeteid,x,y,nom,batimentid):
+    def afficherBatiment(self,joueur,systemeid,planeteid,x,y,nom,batimentid):
         for i in self.modes["planetes"].keys():
             if i == planeteid:
                 im=self.modes["planetes"][i].images[nom]
-                self.modes["planetes"][i].afficherBatiment(x, y, im, (nomjoueur, planeteid,x ,y ,nom, batimentid))
+                self.modes["planetes"][i].afficherBatiment(x, y, im, (joueur, planeteid,x ,y ,nom, batimentid))
                 
     def affichervehiculetank(self,joueur,systemeid,planeteid,x,y,idvehicule):
         for i in self.modes["planetes"].keys():
@@ -397,7 +397,6 @@ class Vue():
             if i == planeteid:
                 im=self.modes["planetes"][i].images["vehiculehelicopterebas"]
                 self.modes["planetes"][i].canevas.create_image(x,y,image=im, tags = (joueur, planeteid,x ,y ,"vehiculehelicoptere",idvehicule) ) 
-                
 
     def afficherbouclier(self,joueur,systemid,planeteid,x,y,couleur, nomBatiment):
         for i in self.modes["planetes"].keys():

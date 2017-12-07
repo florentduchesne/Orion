@@ -97,7 +97,8 @@ class Planete():
             self.parent.parent.parent.nouveauMessageSystemChat("Vous avez atteint le maximum","de ville!")
             return False
         coord = self.coordonneesPossiblesVilles[nbVilles]#coordonnee de depart
-        self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100,"Ville")
+        print("je colonise une planete au nom de : " + nomJoueur)
+        self.parent.parent.parent.creerBatiment(nomJoueur, self.parent.id, self.id, coord[0] * 100, coord[1] * 100, "Ville")
         self.dicRessourceParJoueur[nomJoueur] = Ressource()
         self.parent.parent.parent.nouveauMessageSystemChat("Planète colonisée!")
         return True
