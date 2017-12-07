@@ -15,6 +15,7 @@ class VueSysteme(Perspective):
     def __init__(self,parent):
         Perspective.__init__(self,parent)
         self.modele=self.parent.modele
+        self.joueur=self.modele.joueurs[self.parent.nom]
         self.planetes={}
         self.systeme=None
         self.maselection=None
@@ -200,6 +201,10 @@ class VueSysteme(Perspective):
         self.canevas.delete("selecteur")
         self.canevas.delete("projectile")
         self.canevas.delete("stationspatiale")
+        self.minimap.delete("chasseurmini")
+        self.minimap.delete("colonisateurmini")
+        self.minimap.delete("tankmini")
+        self.minimap.delete("meremini")
         self.afficherselection()
         e=self.UA2pixel
         for i in mod.joueurscles:
@@ -214,37 +219,25 @@ class VueSysteme(Perspective):
                             jx=j.x*e
                             jy=j.y*e
                             x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                            #print(x,y)
                             angle = int(math.degrees(j.angleinverse))
-    
-                                            
-                         #   if (isinstance(j, VaisseauChasseur)):
-                        #        jx=j.x*e
-                       #         jy=j.y*e
-                      #          x2,y2=hlp.getAngledPoint(j.angletrajet,8,jx,jy)
-                                #x1,y1=hlp.getAngledPoint(j.angletrajet,4,jx,jy)
-                               # x0,y0=hlp.getAngledPoint(j.angleinverse,4,jx,jy)
-                              #  x,y=hlp.getAngledPoint(j.angleinverse,7,jx,jy)
-                                
-                          
-                                #self.canevas.create_line(x,y,x0,y0,fill="yellow",width=3,
-                                 #                        tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",))
-                                #self.canevas.create_line(x0,y0,x1,y1,fill=i.couleur,width=4,
-                                  #                       tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y))
-                               # self.canevas.create_line(x1,y1,x2,y2,fill="red",width=2,
-                                #                         tags=(j.proprietaire,"vaisseauinterstellaire",j.id,"artefact"))
-                                
+
                             if isinstance(j,VaisseauChasseur):
                                 if not j.dansVaisseauMere:
                                     tag =("chasseur"+str(angle))
                                     im=self.parent.modes["systemes"][j.idSysteme].images[tag]
                                     self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"chasseur") )
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("chasseurmini"))
     
                             elif isinstance(j,VaisseauColonisation) :
                                 if not j.dansVaisseauMere:
                                     tag =("colonisateur"+str(angle))
                                     im=self.parent.modes["systemes"][j.idSysteme].images[tag]     
                                     self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"colonisateur") )  
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("colonisateurmini"))
     
             
                             elif isinstance(j, VaisseauTank) :
@@ -252,11 +245,17 @@ class VueSysteme(Perspective):
                                     tag =("tank"+str(angle))
                                     im=self.parent.modes["systemes"][j.idSysteme].images[tag]
                                     self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"tank") )
+                                    minix = (x *200) / self.largeur 
+                                    miniy = (y *200) / self.largeur 
+                                    self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("tankmini"))
                             
                             elif isinstance(j, VaisseauMere) :
                                 tag =("mere"+str(angle))
                                 im=self.parent.modes["systemes"][j.idSysteme].images[tag]
                                 self.parent.modes["systemes"][j.idSysteme].canevas.create_image(x,y,image=im, tags = (j.proprietaire,"vaisseauinterstellaire",j.id,"artefact",x,y,"mere") )
+                                minix = (x *200) / self.largeur 
+                                miniy = (y *200) / self.largeur 
+                                self.parent.modes["systemes"][j.idSysteme].minimap.create_rectangle(minix-2, miniy-2, minix+2, miniy+2, fill = i.couleur, tags=("meremini"))
     
                             
                             if isinstance(j, VaisseauAttaque):
