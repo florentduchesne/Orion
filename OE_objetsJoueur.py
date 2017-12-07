@@ -146,7 +146,7 @@ class Joueur():
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, proprio = nom)
                                 p.infrastructures.append(batiment)
-                                self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
+                                self.parent.parent.afficherBatiment(self, systemeid, planeteid, x, y, nomBatiment, batiment.id)
 
     def atterrirplanete(self,d):
         nom,systeid,planeid=d
