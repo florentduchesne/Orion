@@ -58,6 +58,7 @@ class Vaisseau():
                         print("ceci est un vaisseau colonisateur")
                         print("propriétaire : " + self.proprietaire)
                         if self.cible.coloniser(self.proprietaire):
+                            self.parent.parent.parent.initPlanetePourTous(self.cible.parent.id,self.cible.id)
                             #self.parent.systemesvisites.append(Systeme)
                             return "colonisation"
                 self.cible=None

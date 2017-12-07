@@ -9,6 +9,7 @@ from OE_coord import *
 from DictionnaireCoutsVaisseaux import *
 
 
+
 class Joueur():
     def __init__(self,parent,nom,systemeorigine,couleur):
         self.parent=parent
@@ -50,7 +51,8 @@ class Joueur():
                       "viderVaisseau": self.viderVaisseau,
                       "recolterBatiment":self.recolterRessources,
                       "voyageSystem":self.voyageSystem,
-                      "nouveauMessageChat":self.nouveauMessageChat}
+                      "nouveauMessageChat":self.nouveauMessageChat,
+                      "initplanete":self.initplanete}
                     #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
@@ -107,7 +109,13 @@ class Joueur():
                     if planete.id == planeteID:
                         return planete
         
-
+    def initplanete(self,param):
+        from OE_vuePlanete import VuePlanete
+        idSys, idPlan = param
+        s = VuePlanete(self.parent.parent.vue,idSys, idPlan)
+        self.parent.parent.vue.modes["planetes"][idPlan] = s
+        s.initplanete(idSys, idPlan)
+        
     def creerBatiment(self, listeparams):
         print("créer batiment")
         print("mon nom : " + self.nom)

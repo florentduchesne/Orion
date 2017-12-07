@@ -44,6 +44,9 @@ class Controleur():
     def lancerpartie(self,diametre=5,densitestellaire=5,qteIA=0): # reponse du bouton de lancement de simulation (pour celui qui a parti le serveur seulement)
         rep=self.serveur.lancerpartie(diametre,densitestellaire,qteIA) 
    ## ----------- FIN --
+   
+    def initPlanetePourTous(self, idSys,idPla):
+        self.actions.append([self.monnom,"initplanete",[idSys,idPla]])
 
     def inscrirejoueur(self):
         ipserveur=self.vue.ipsplash.get() # lire le IP dans le champ du layout
