@@ -62,6 +62,8 @@ dictionnaireProductionRessources = {
     "Ferme1":Ressource(bois=50),
     "Ferme2":Ressource(bois=50),
     "Ville":Ressource(humain=0.1),
+    "Ville2":Ressource(humain=0.2),
+    "Ville3":Ressource(humain=0.5),
     "laboratoire":Ressource(),
     "ecole":Ressource(),
     "Banque":Ressource(),

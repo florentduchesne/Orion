@@ -5,6 +5,8 @@ from helper import Helper as hlp
 from OE_vuePerspective import *
 import OE_objetsBatiments
 from OE_objetsVehicule import vehiculeTank, vehiculehelicoptere
+from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAgeBatiments, dictionnaireProductionRessources
+from OE_objetsRessource import Ressource
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -480,6 +482,18 @@ class VuePlanete(Perspective):
                 self.mesSelections.append(t)               
             else:
                 self.montreAmeliorationBatiments()
+                print("t")
+                print(t)
+                nomBatiment = t[4]
+                ressourcesAmelioration = dictionnaireCoutAllocationAgeBatiments[nomBatiment]
+                chaineListeRessources = ""
+                for ressource in ressourcesAmelioration:
+                    if ressource[0] != Ressource():
+                        for ress in ressource[0].dictRess:
+                            if ress != 0:
+                                chaineListeRessources += " " + ress + " : " + ressource[0].dictRess[ress] + "\n"
+                self.lblRessourcesAmelioration = Label(self.cadreAmeliorationBatiments, text="Ressources amélioration\n" + chaineListeRessources)
+                self.lblRessourcesAmelioration.pack()
                 self.maselection = t
 
             if self.macommande != None and t[5]=='0':
