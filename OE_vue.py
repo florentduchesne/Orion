@@ -83,12 +83,8 @@ class Vue():
         self.dictionnaireLabelsJoueur["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         self.dictionnaireLabelsJoueur["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        #self.dictionnaireLabelsJoueur["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))   
-        #self.dictionnaireLabelsJoueur["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
-        self.dictionnaireLabelsJoueur["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurJoueur), Label(cadre,text="0",bg=self.couleurJoueur))
         
         i = 2
         
@@ -114,13 +110,8 @@ class Vue():
         self.dictionnaireLabelsPlanete["bois"] = (Label(cadre,image=self.images["bois"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["bronze"] = (Label(cadre,image=self.images["bronze"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["charbon"] = (Label(cadre,image=self.images["charbon"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["uranium"] = (Label(cadre,image=self.images["uranium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["titanium"] = (Label(cadre,image=self.images["titanium"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
         self.dictionnaireLabelsPlanete["metasic"] = (Label(cadre,image=self.images["metasic"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        #self.dictionnaireLabelsPlanete["sante"] = (Label(cadre,image=self.images["sante"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        #self.dictionnaireLabelsPlanete["argent"] = (Label(cadre,image=self.images["argent"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        self.dictionnaireLabelsPlanete["point_science"] = (Label(cadre,image=self.images["point_science"],bg=self.couleurPlanet), Label(cadre,text="0",bg=self.couleurPlanet))
-        
         
         i = 2
         for d in self.dictionnaireLabelsPlanete:
@@ -134,9 +125,9 @@ class Vue():
             if self.parent.modele.joueurs[i].nom == self.parent.monnom:
                 for j in self.dictionnaireLabelsJoueur: 
                     if j == "humain":
-                        self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess["allocation humain"])+" / "+str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
+                        self.dictionnaireLabelsJoueur[j][1].config(text = str(int(self.parent.modele.joueurs[i].ressources.dictRess["allocation humain"]))+" / "+str(int(self.parent.modele.joueurs[i].ressources.dictRess[j])))
                     elif j == "electricite":
-                        self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess["allocation electricite"])+" / "+str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
+                        self.dictionnaireLabelsJoueur[j][1].config(text = str(int(self.parent.modele.joueurs[i].ressources.dictRess["allocation electricite"]))+" / "+str(int(self.parent.modele.joueurs[i].ressources.dictRess[j])))
                     else:
                         self.dictionnaireLabelsJoueur[j][1].config(text = str(self.parent.modele.joueurs[i].ressources.dictRess[j]))
         if(isinstance(self.modecourant, VuePlanete)):
@@ -146,9 +137,9 @@ class Vue():
                         for j in self.dictionnaireLabelsPlanete: 
                             if self.parent.monnom in planete.dicRessourceParJoueur:
                                 if j == "humain":
-                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation humain"]))+" / "+str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j])))
                                 elif j == "electricite":
-                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"])+" / "+str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
+                                    self.dictionnaireLabelsPlanete[j][1].config(text = str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess["allocation electricite"]))+" / "+str(int(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j])))
                                 else:
                                     self.dictionnaireLabelsPlanete[j][1].config(text = str(planete.dicRessourceParJoueur[self.parent.monnom].dictRess[j]))
                             else:
@@ -241,7 +232,7 @@ class Vue():
         self.diametre.insert(0, 50)        
         
         self.densitestellaire=Entry(bg="#18c0ff")
-        self.densitestellaire.insert(0, 25)
+        self.densitestellaire.insert(0, 50)
         
         self.qteIA=Entry(bg="#18c0ff")
         self.qteIA.insert(0, 0)
@@ -264,9 +255,9 @@ class Vue():
         self.canevaslobby.create_window(260,375,window=self.btnlancerpartie,width=100,height=30)
         
         #RENDRE LES TEXTBOX NON ACCESSIBLE POUR CHANGER LEUR VALEURS
-        #self.diametre.config(state=DISABLED)
-        #self.densitestellaire.config(state=DISABLED)
-        #self.qteIA.config(state=DISABLED)
+        self.diametre.config(state=NORMAL)
+        self.densitestellaire.config(state=NORMAL)
+        self.qteIA.config(state=DISABLED)
 
     def voirgalaxie(self):
         # A FAIRE comme pour voirsysteme et voirplanete, tester si on a deja la vuegalaxie

@@ -123,6 +123,9 @@ class Controleur():
         
     def voyageSystem(self,idSystem,idvais):
         self.actions.append([self.monnom,"voyageSystem",[idSystem,idvais]])
+    
+    def viderVaisseau(self,idpropri,idvais):
+        self.actions.append([self.monnom,"viderVaisseau",[idpropri,idvais]])
            
     def ciblerdestinationvehicule(self, idorigine, x, y, idplanete, idvehicule ):
         self.actions.append([self.monnom, "ciblerdestinationvehicule", [idorigine,x,y,idplanete, idvehicule]])

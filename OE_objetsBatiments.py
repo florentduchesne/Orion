@@ -2,6 +2,7 @@ from OE_objetsRessource import *
 import math
 from OE_constructeurBatimentHelper import ConstructeurBatimentHelper
 from DictionnaireCoutAllocationAgeBatiments import *
+from OE_projectile import *
 
 def verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):
     for infra in planete.infrastructures:
@@ -25,7 +26,7 @@ class BatimentRessources():
         self.productionRessources = production
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -39,6 +40,7 @@ class BatimentRessources():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
@@ -54,7 +56,7 @@ class BatimentManufacture():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -68,22 +70,24 @@ class BatimentManufacture():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
 #super-classe des hopitaux, des hotels de ville, des laboratoires, etc.
 class BatimentInfrastructure():
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, listeNiveaux = [], proprio = "patate"):
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment, productionRessources, listeNiveaux = [], proprio = "patate"):
         self.parent=parent
         self.id=idSuivant
         self.x=x
         self.y=y
         self.systemeid=systemeid
         self.planeteid=planeteid
+        self.productionRessources = productionRessources
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = 100
+        self.vie = 100
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -97,12 +101,13 @@ class BatimentInfrastructure():
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     #self.productionRessources = dictionnaireProductionRessources[self.nomBatiment]
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
         
 #super-classe des defenses
 class BatimentDefense():
-    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, pv, listeNiveaux = [], proprio = "patate"):
+    def __init__(self,parent,nom,idSysteme, planeteid,x,y, idSuivant, nomBatiment, vie, listeNiveaux = [], proprio = "patate"):
         self.parent = parent
         self.id=idSuivant
         self.x=x
@@ -112,7 +117,7 @@ class BatimentDefense():
         self.nomBatiment = nomBatiment
         self.listeNiveaux = listeNiveaux
         self.proprietaire = proprio
-        self.pv = pv
+        self.vie = vie
         
     def ameliorer(self, joueur, planete):
         if(len(self.listeNiveaux) > 0):
@@ -125,6 +130,7 @@ class BatimentDefense():
                     self.listeNiveaux.remove(self.nomBatiment)
                     joueur.parent.parent.nouveauMessageSystemChat("Bâtiment amélioré!")
                     joueur.parent.parent.afficherBatiment(joueur.nom,self.systemeid,self.planeteid,self.x,self.y, self.nomBatiment, self.id)
+                    self.vie *= 2
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucune amélioration possible!")
      
@@ -144,8 +150,24 @@ class StationSpatiale():
         self.planetey = self.y
         self.orbite = planete.taille + 0.3
         self.couleurJoueur = couleurJoueur
+        
+        
+        """variable pour attaque"""
+        
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 2
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=5
+        #======================================================
+        """RESSOURCE"""
+        self.besoinhumain=50
+        self.besoinelectricite= 100
+        self.titanium=1000
+
         """STRUCTURE"""
-        self.vie=15000
+        self.vie=300
         self.dommage=50
         self.protection=100
         #======================================================
@@ -162,13 +184,30 @@ class StationSpatiale():
         if self.nom.ressource - coutTitanium > 0:
             pass
 
+    def attaquer(self):       
+        if self.cibleAttaque.vie>0:
+            self.enAttaque=True
+            
+            if self.tempsRecharge==0:
+                
+                p=Projectile(self,self.cibleAttaque,0.05)
+                self.projectile.append(p)
+                p.ciblerdestination()
+                self.tempsRecharge=15
+            else:
+                self.tempsRecharge=self.tempsRecharge-1
+            
 
+        else: 
+            self.enAttaque=False         
+            self.listeCibleAttaquer.remove(self.cibleAttaque)
+            
+            self.cibleAttaque=None  
+            
 class Mur(BatimentDefense):
     def __init__(self,parent,nom,systemeid,planeteid,x,y,idsuivant, nomBatiment = "mur", proprio = "patate"):
         BatimentDefense.__init__(self, parent, nom, systemeid, planeteid, x, y, idsuivant, nomBatiment, 1000, listeNiveaux=[], proprio = proprio)
         #======================================================
-        """RESSOURCE"""
-        self.bois=300
         """STRUCTURE"""
         self.protection=100 
         #======================================================
@@ -232,30 +271,20 @@ class CampBucherons(BatimentRessources):
         BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Camp_Bucherons2", "Camp_Bucherons3"], proprio = proprio)
 
 class CentraleElectrique(BatimentRessources):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "centraleElectrique", proprio = "patate"):
-        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = ["Centrale_Nucleaire", "Eolienne", "PanneauSolaire"], proprio = proprio)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Centrale_Charbon", proprio = "patate"):
+        BatimentRessources.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], listeNiveaux = [], proprio = proprio)
     
 ################BATIMENTS INFRASTRUCTURES################
 class Ville(BatimentInfrastructure):#self, proprio.nom, self.id, planeteProprio.id, self.parent.createurId.prochainid()
     def __init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment = "Ville", proprio="inconnu"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "ville", listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
+        print("ressource")
+        print(dictionnaireProductionRessources[nomBatiment].dictRess["humain"])
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, "Ville", dictionnaireProductionRessources[nomBatiment], listeNiveaux=["Ville2", "Ville3"], proprio=proprio)
         self.taille=20
-        
-class Hopital(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "hopital", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
-        
-class Laboratoire(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "laboratoire", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
-
-class Ecole(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "ecole", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
 
 class Banque(BatimentInfrastructure):
-    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "banque", proprio = "patate"):
-        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, proprio = proprio)
+    def __init__(self,parent,nom,systemeid,planeteid,x,y,idSuivant, nomBatiment = "Banque", proprio = "patate"):
+        BatimentInfrastructure.__init__(self, parent, nom, systemeid, planeteid, x, y, idSuivant, nomBatiment, dictionnaireProductionRessources[nomBatiment], proprio = proprio)
 
 ################BATIMENTS MANUFACTURES################
 class UsineVehicule(BatimentManufacture):

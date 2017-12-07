@@ -54,8 +54,11 @@ class Vaisseau():
                 rep=self.cible
                 self.base=self.cible
                 if(isinstance(self, VaisseauColonisation)):
-                    if self.cible.coloniser(self.proprietaire):
-                        return "colonisation"
+                    if not self.dansVaisseauMere :  
+                        print("ceci est un vaisseau colonisateur")
+                        if self.cible.coloniser(self.proprietaire):
+                            #self.parent.systemesvisites.append(Systeme)
+                            return "colonisation"
                 self.cible=None
             return rep#on retourne la cible
         elif self.cible and isinstance(self.cible, Vaisseau):
@@ -102,13 +105,12 @@ class VaisseauAttaque(Vaisseau):
         Vaisseau.__init__(self,parent,nom,systeme,idSuivant,idSysteme,x,y,typeVaisseau)
         self.attaque = Degats
         self.range = portee
-        self.cibleAttaque=None 
         self.enAttaque=False
-        self.listeCibleAttaquer=[]
         self.augmentationDomamage = 2
         self.augmentationVie = 2
         self.augmentationPortee = 1
         self.listeCibleAttaquer=[]
+        self.listeCibleAttaquerStation=[]
         self.cibleAttaque= None
         self.attaque = 1
         self.projectile=[]
@@ -121,14 +123,13 @@ class VaisseauAttaque(Vaisseau):
             self.enAttaque=True
 
             if self.tempsRecharge==0:
-                p=Projectile(self,self.cibleAttaque)
+                p=Projectile(self,self.cibleAttaque,0.05)
                 self.projectile.append(p)
                 p.ciblerdestination()
                 self.tempsRecharge=10
             else:
                 self.tempsRecharge=self.tempsRecharge-1
             
-
         else: 
             self.enAttaque=False         
             self.listeCibleAttaquer.remove(self.cibleAttaque)
@@ -246,10 +247,27 @@ class VaisseauMere(VaisseauAttaque):
             if self.maxVaisseau > len(self.vaisseau) :
                 self.vaisseau.append(self.vaisseauaAjouter)
                 self.vaisseauaAjouter.dansVaisseauMere = True
+                self.vaisseauaAjouter.x = None
+                self.vaisseauaAjouter.y = None
+                
             else : 
                 print ("Vaisseau Mere Plein")
         else :
             ("un vaisseau Mere ne peut pas rentre dans un autre vaisseau Mere")
+    
+    def SortirVaisseau (self) :
+        print ("allo")
+        if not self.dansGalaxie:
+            print("ici")
+            for v in range (len(self.vaisseau)):
+                print("pas de probleme")
+                self.vaisseau[v].dansVaisseauMere = False
+                self.vaisseau[v].idSysteme = self.idSysteme
+                self.vaisseau[v].x = self.x + v
+                self.vaisseau[v].y = self.y + v
+                self.vaisseau[v] = []
+        else :
+            print("Le vaisseau Mere peut se vider que dans un systeme")
     
     def augmentation(self) :
         self.niveau += 1

@@ -103,7 +103,9 @@ class Modele():
                         if(isinstance(infra, BatimentRessources)):
                             #if(planete.ressourceACollecter.estPlusGrandOuEgal(infra.productionRessources)):
                             planete.ressourceACollecter.soustraireRessources(infra.productionRessources)#diminue les ressources disponibles sur la planete
-                            planete.dicRessourceParJoueur[infra.proprietaire].additionnerRessources(infra.productionRessources)#augmente les ressources de la planet
+                            planete.dicRessourceParJoueur[infra.proprietaire].additionnerRessources(infra.productionRessources)#augmente les ressources de la planete
+                        elif isinstance(infra, Ville):
+                            planete.dicRessourceParJoueur[infra.proprietaire].additionnerRessources(infra.productionRessources)#augmente les ressources de la planete
                         if isinstance(infra, Banque):
                             self.joueurs[infra.proprietaire].ressources.additionnerRessources(planete.dicRessourceParJoueur[infra.proprietaire])
                             planete.dicRessourceParJoueur[infra.proprietaire] = Ressource()

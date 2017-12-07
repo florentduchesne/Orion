@@ -46,19 +46,17 @@ class Joueur():
                       "ciblerEspace":self.ciblerEspace,
                       "voyageGalax":self.voyageGalax,
                       "voyageSystem":self.voyageSystem,
+                      "viderVaisseau": self.viderVaisseau,
                       "recolterBatiment":self.recolterRessources,
                       "voyageSystem":self.voyageSystem,
                       "nouveauMessageChat":self.nouveauMessageChat}
-                      #"vaisseauAttaque":self.attaque
+                    #"vaisseauAttaque":self.attaque
         self.listeSousClassesBatiment = {"Mine1":Mine,
                                          "Camp_Bucherons1":CampBucherons,
                                          "Usine_Vehicule":UsineVehicule,
                                          "Usine_Vaisseau1":UsineVaisseau,
                                          "Usine_Drone":UsineDrone,
                                          "Centrale_Charbon":CentraleElectrique,
-                                         "Hopital1":Hopital,
-                                         "Ecole":Ecole,
-                                         "Laboratoire":Laboratoire,
                                          "Puit1":Puit,
                                          "Banque":Banque,
                                          "Ferme1":Ferme,
@@ -68,6 +66,13 @@ class Joueur():
                                          "Bouclier":Bouclier,
                                          "Ville":Ville
                                          }
+        self.listeClassesVaisseaux = {"chasseur":VaisseauChasseur,
+                                      "colonisateur":VaisseauColonisation,
+                                      "tank":VaisseauTank,
+                                      "mere":VaisseauMere
+                                      
+                                      
+            }
       
     def creerstationspatiale(self,listeparams):
         idsystem,idplanete=listeparams
@@ -100,9 +105,10 @@ class Joueur():
         villeTrouvee = False
         for i in self.systemesvisites:
             if i.id==systemeid:
-                for j in i.planetes:
-                    if j.id==planeteid:
-                        for infra in j.infrastructures:#on vérifie si le joueur possede une Ville sur la planete (ou s'il est en train de coloniser)
+                for p in i.planetes:
+                    if p.id==planeteid:
+                        for infra in p.infrastructures:#on vérifie si le joueur possede une Ville sur la planete (ou s'il est en train de coloniser)
+                            print("ville donc peut creer")
                             if isinstance(infra, Ville):
                                 if infra.proprietaire == nom:
                                     villeTrouvee = True
@@ -115,18 +121,19 @@ class Joueur():
                                 self.creervehiculehelicoptere(listeparams)
                                 return
                             if(nomBatiment == "Bouclier"):
-                                aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
+                                aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(p.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
                                 if(aAssezDeRessources):
                                     batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, proprio = nom)
-                                    j.infrastructures.append(batiment)
+                                    p.infrastructures.append(batiment)
                                     self.parent.parent.afficherbouclier(nom,systemeid,planeteid,x,y,self.couleur,nomBatiment)
                                 return
                             
                             ###SI PAS DE CAS SPECIAUX, ON APPELLE LE CONSTRUCTEUR GENERAL###
-                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(j.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
+                            
+                            aAssezDeRessources = self.parent.constructeurBatimentHelper.construireBatiment(p.dicRessourceParJoueur[nom], self.ressources, nomBatiment)
                             if(aAssezDeRessources):
                                 batiment=self.listeSousClassesBatiment[nomBatiment](self,nom,systemeid,planeteid,x,y,self.parent.createurId.prochainid(), nomBatiment, proprio = nom)
-                                j.infrastructures.append(batiment)
+                                p.infrastructures.append(batiment)
                                 self.parent.parent.afficherBatiment(self.nom, systemeid, planeteid, x, y, nomBatiment, batiment.id)
 
     def atterrirplanete(self,d):
@@ -165,7 +172,7 @@ class Joueur():
                             ressourcesTotales = Ressource()
                             ressourcesTotales.additionnerRessources(self.ressources)
                             ressourcesTotales.additionnerRessources(p.dicRessourceParJoueur[self.nom])
-                            coutVaisseau = dictionnaireCoutsVaisseaux[VaisseauAttaque][0]
+                            coutVaisseau = dictionnaireCoutsVaisseaux[self.listeClassesVaisseaux[typeVaisseau]][0]
                             if(ressourcesTotales.estPlusGrandOuEgal(coutVaisseau)):
                                 self.ressources.soustraireRessourcesJoueurETPlanet(p.dicRessourceParJoueur[self.nom], coutVaisseau)
                             
@@ -183,7 +190,7 @@ class Joueur():
                                 elif typeVaisseau == "mere" :
                                     v=VaisseauMere(self,self.nom,i,self.parent.createurId.prochainid(),i.id,p.x,p.y,self.vaisseauAttaque, self.vaisseauPortee,type,self.maxVaisseauMere)#self.niveauVaisseau)
                                     self.vaisseauxinterstellaires.append(v)
-                              
+                                #print(v.x,v.y)
                                 return 1            
 
     def creervehiculetank(self, listeparams):
@@ -301,9 +308,21 @@ class Joueur():
                     if j.id==idSystem:
                         i.idSysteme=j.id
                         i.dansGalaxie=False
-                        i.x=25-2
-                        i.y=25-2
+                        i.x=self.parent.diametre/2-2
+                        i.y=self.parent.diametre/2-2
                         self.objetgalaxie.remove(i)
+                        self.visitersysteme(idSystem)
+    
+    def viderVaisseau (self,ids):
+        idpropri,idVais=ids
+        for i in self.vaisseauxinterstellaires:
+            if i.id == idVais:
+                if isinstance(i, VaisseauMere):
+                    print("coudonc")
+                    i.SortirVaisseau()
+                    print ("pourtant je passe")
+                else :
+                    print("Seulement un vaisseau Mere peut être vider")
                         
     def recolterRessources(self, id):
         idSysteme, idPlanete = id
@@ -347,7 +366,7 @@ class Joueur():
                                 ##placer le bouton coloniser...
                                 self.systemesvisites.append(rep)
                                 self.parent.changerproprietaire(self.nom,self.couleur,rep)
-            if isinstance(i, VaisseauAttaque):
+            if isinstance(i, VaisseauAttaque) or isinstance(i, StationSpatiale):
                 for protil in i.projectile:
                     if protil.cible == None:
                         i.projectile.remove(protil)
@@ -364,10 +383,20 @@ class Joueur():
                             self.systemesvisites.append(rep)
                             self.parent.changerproprietaire(self.nom,self.couleur,rep)
                 '''
-        
+            for protil in i.projectile:
+                    if protil.cible == None:
+                        i.projectile.remove(protil)
+                    else:
+                        protil.avancer() 
+            
+            
         for i in self.stationspatiaux:
                 i.orbiter()
-                
+                for protil in i.projectile:
+                    if protil.cible == None:
+                        i.projectile.remove(protil)
+                    else:
+                        protil.avancer() 
                 
     
         
@@ -390,7 +419,33 @@ class Joueur():
                                     distance = hlp.calcDistance(vaisseau.x,vaisseau.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
                                     if distance < vaisseau.range:
                                         vaisseau.listeCibleAttaquer.append(vaisseauEnnemi)
-
+                                        #print("vaisseau detecter")
+                        
+                        vaisseau.listeCibleAttaquerStation.clear()                        
+                        for stationEnnemi in j.stationspatiaux:
+                            if vaisseau.idSysteme== stationEnnemi.systemeid:
+                                distance = hlp.calcDistance(vaisseau.x,vaisseau.y,stationEnnemi.x,stationEnnemi.y)
+                                if distance < vaisseau.range:
+                                    vaisseau.listeCibleAttaquer.append(stationEnnemi)
+                
+                for station in self.stationspatiaux:
+                    station.listeCibleAttaquer.clear()
+                    for vaisseauEnnemi in j.vaisseauxinterstellaires:
+                        if station.systemeid == vaisseauEnnemi.idSysteme:
+                            if not vaisseauEnnemi.dansVaisseauMere :
+                                distance = hlp.calcDistance(station.x,station.y,vaisseauEnnemi.x,vaisseauEnnemi.y)
+                                if distance < station.range:
+                                    station.listeCibleAttaquer.append(vaisseauEnnemi)
+                                    #print("vaisseau detecter")
+                
+                for tank in self.vehiculeplanetaire:         
+                    tank.listeCibleAttaquer.clear()
+                    for tankEnnemi in j.vehiculeplanetaire:                    
+                        if tank.planeteid == tankEnnemi.planeteid:                        
+                            distance = hlp.calcDistance(tank.x,tank.y,tankEnnemi.x,tankEnnemi.y)                           
+                            if distance < tank.range:                                
+                                tank.listeCibleAttaquer.append(tankEnnemi)
+                                
                             
                     
     def choisirCible(self):    
@@ -399,12 +454,15 @@ class Joueur():
                 vseau.cibleAttaque=None
                 if len(vseau.listeCibleAttaquer)>0:
                     vseau.cibleAttaque = vseau.listeCibleAttaquer[0]
-                    vseau.attaquer()   
+                    vseau.attaquer()  
+                elif len(vseau.listeCibleAttaquerStation)>0:
+                    vseau.cibleAttaque = vseau.listeCibleAttaquerStation[0]
+                    vseau.attaquer()  
                 else:
                     pass      
                
 #            elif vseau.cible != None:
- #               if vseau.cible.proprietaire == "espace":
+#               if vseau.cible.proprietaire == "espace":
 #                    pass
 #                else:
 #                    vseau.attaquerPlanette()
@@ -412,16 +470,38 @@ class Joueur():
 #                vseau.cibleAttaque=vseau.planetteCible
 #                vseau.attaquer()  
                 
-        #for pnette in self.planetescontrolees:
-        #    pnette.cibleAttaque=None
-        #    if len(pnette.listeCibleAttaquer)>0: 
-        #       pnette.cibleAttaque = pnette.listeCibleAttaquer[0]
-        #       pnette.attaquer()       
+
+        for station in self.stationspatiaux:       
+            station.cibleAttaque=None
+            #print(station.listeCibleAttaquer)
+            if len(station.listeCibleAttaquer)>0:
+                station.cibleAttaque = station.listeCibleAttaquer[0]
+                station.attaquer()   
+            else:
+                pass  
+            
         
+        for tank in self.vehiculeplanetaire:
+            tank.cibleAttaque=None
+            if len(tank.listeCibleAttaquer)>0:
+                tank.cibleAttaque = tank.listeCibleAttaquer[0]
+                tank.attaquer()   
+            else:
+                pass  
+            
+
     def retirerVaiseauMort(self):
         for vseau in self.vaisseauxinterstellaires:
             if vseau.vie<1:
                 self.vaisseauxinterstellaires.remove(vseau)
+                
+        for station in self.stationspatiaux:
+            if station.vie<1:
+                self.stationspatiaux.remove(station)    
+                
+        for tank in self.vehiculeplanetaire:
+            if tank.vie<1:
+                self.vehiculeplanetaire.remove(tank)
                 
     def nouveauMessageChat(self,txt):
         self.nouveauMessageChatTxt = txt
