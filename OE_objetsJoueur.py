@@ -414,7 +414,9 @@ class Joueur():
                         protil.avancer() 
                 
         for i in self.listeBatiment:
-            if isinstance(i, BatimentDefense):
+            if isinstance(i, Mur):
+                pass
+            elif isinstance(i, BatimentDefense)  :
                 for protil in i.projectile:
                     if protil.cible == None:
                         i.projectile.remove(protil)
@@ -473,7 +475,9 @@ class Joueur():
                                 tank.listeCibleAttaquer.append(batiment)
                                 
                 for batiment in j.listeBatiment:
-                    if isinstance(batiment, BatimentDefense):
+                    if isinstance(batiment, Mur):
+                        pass
+                    elif isinstance(batiment, BatimentDefense):
                         batiment.listeCibleAttaquer.clear()
                         for tankEnnemi in self.vehiculeplanetaire: 
                             if tankEnnemi.proprietaire != batiment.proprietaire:
@@ -516,7 +520,9 @@ class Joueur():
                 pass  
         
         for batiment in self.listeBatiment:
-            if isinstance(batiment, BatimentDefense):
+            if isinstance(batiment, Mur):
+                        pass
+            elif isinstance(batiment, BatimentDefense):
                 batiment.cibleAttaque=None
                 if len(batiment.listeCibleAttaquer)>0:
                     batiment.cibleAttaque = batiment.listeCibleAttaquer[0]

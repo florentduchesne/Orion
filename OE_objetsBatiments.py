@@ -175,6 +175,14 @@ class BatimentDefense():
         self.vie = vie
         self.productionRessources = Ressource()
         
+        """variable pour attaque"""
+        self.listeCibleAttaquer=[]
+        self.cibleAttaque= None
+        self.attaque = 0.5
+        self.projectile=[]
+        self.tempsRecharge=0
+        self.range=500
+        
     def recalculerProduction(self):
         for ressource in self.productionRessources.dictRess:
             print("ancienne production : " + str(self.productionRessources.dictRess[ressource]))
@@ -193,13 +201,7 @@ class BatimentDefense():
         else:
             joueur.parent.parent.nouveauMessageSystemChat("Aucun humain disponible")
         
-        """variable pour attaque"""
-        self.listeCibleAttaquer=[]
-        self.cibleAttaque= None
-        self.attaque = 0.5
-        self.projectile=[]
-        self.tempsRecharge=0
-        self.range=500
+
         
     def ameliorer(self, joueur, planete):
         if verifierSiJoueurAUneVilleSurLaPlanete(joueur, planete):

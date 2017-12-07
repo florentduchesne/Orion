@@ -10,7 +10,7 @@ from DictionnaireCoutAllocationAgeBatiments import dictionnaireCoutAllocationAge
 from OE_objetsRessource import Ressource
 from test.test_iterlen import NoneLengthHint
 from OE_objetsJoueur import Joueur
-from OE_objetsBatiments import BatimentDefense
+from OE_objetsBatiments import BatimentDefense,Mur
 
 class VuePlanete(Perspective):
     def __init__(self,parent,syste,plane):
@@ -91,8 +91,8 @@ class VuePlanete(Perspective):
         self.btncreercanon.pack(side=TOP)
         self.btncreertour=Button(self.cadreDefense,text="Creer Tour",command=self.creertour, bg=self.couleurBouton)
         self.btncreertour.pack(side=TOP)
-        self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier, bg=self.couleurBouton)
-        self.btncreerbouclier.pack(side=TOP)
+        #self.btncreerbouclier=Button(self.cadreDefense,text="Creer Bouclier",command=self.creerbouclier, bg=self.couleurBouton)
+        #self.btncreerbouclier.pack(side=TOP)
         self.btnRetour=Button(self.cadreDefense,text="Retour",command=self.Retour, bg=self.couleurBouton)
         self.btnRetour.pack(side=BOTTOM)
         ##############Vehicule##############
@@ -427,7 +427,6 @@ class VuePlanete(Perspective):
                 self.nouveauMessageChat(i.nouveauMessageChatTxt)
                 i.nouveauMessageChatTxt = None
             for j in i.vehiculeplanetaire:
-                #if j.idSysteme==self.systeme.id:
                 jx=j.x
                 jy=j.y
                 #jx=j.x*e
@@ -488,7 +487,9 @@ class VuePlanete(Perspective):
 
             for batiment in i.listeBatiment:
                 if isinstance(batiment, BatimentDefense):
-                    if batiment.projectile!=None:     
+                    if isinstance(batiment, Mur):
+                        pass
+                    elif batiment.projectile!=None:     
                         for pro in batiment.projectile:
                             x=pro.x
                             y=pro.y
@@ -587,7 +588,8 @@ class VuePlanete(Perspective):
                         y=int(t[2])
                     self.parent.parent.creerBatiment(self.parent.nom,self.systemeid,self.planeteid,x,y, self.macommande)
                     self.macommande = None
-                    self.maselection=None                              
+                    self.maselection=None
+        print("JE PRINT SELF.MASELECTION: ",self.maselection)                     
      
     def cliquerDroite(self, evt):
         self.canevas.delete("selectionner","select","selecteur") 
