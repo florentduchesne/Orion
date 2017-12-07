@@ -341,7 +341,6 @@ class Vue():
         #g=self.modes["planetes"]
         #g = self.modes["planetes"]
         g.labid.config(text=self.nom)
-        g.labid.config(fg=mod.joueurs[self.nom].couleur)
         
         g.chargeimages()
         g.afficherdecor() #pourrait etre remplace par une image fait avec PIL -> moins d'objets
