@@ -126,7 +126,7 @@ class vehiculehelicoptere(Vehicule):
         self.attaque = 0.5
         self.projectile=[]
         self.tempsRecharge=0
-        self.range=5
+        self.range=100
         
 dictionnaireCoutVehicule={
 "vehiculetank1":[Ressource(bois=10, bronze=10), Ressource(allocationElectricite=5, allocationHumain=5), 1],
