@@ -37,6 +37,7 @@ class VueSysteme(Perspective):
         self.canevas.config(scrollregion=(0,0,self.largeur,self.hauteur))
         
         self.labid.bind("<Button>",self.identifierplanetemere)
+        self.labid.config(bg=self.modele.joueurs[self.parent.parent.monnom].couleur)
         self.btncreervaisseau=Button(self.cadreetataction,text="Creer Vaisseau",command=self.AfficherChoixVaisseau, bg=self.couleurBouton)
         self.btncreervaisseau.pack()
         

@@ -25,6 +25,7 @@ class VueGalaxie(Perspective):
         self.couleurBouton = "#0092ca"
         self.couleurBoutonDesactive = "#50a2c1"
         
+        self.labid.config(bg=self.modele.joueurs[self.parent.parent.monnom].couleur, foreground="black")
         
         self.AL2pixel=self.modele.diametre*2
         self.largeur=int(self.modele.diametre*self.AL2pixel)

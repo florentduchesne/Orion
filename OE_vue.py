@@ -208,10 +208,10 @@ class Vue():
         self.canevaslobby.pack()
         self.listelobby=Listbox(bg="#84d4f1",borderwidth=0,relief=FLAT)
         
-        self.diametre=Entry(bg="#18c0ff")
+        self.diametre=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.diametre.insert(0, 50)        
         
-        self.densitestellaire=Entry(bg="#18c0ff")
+        self.densitestellaire=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
         self.densitestellaire.insert(0, 50)
         
         self.qteIA=Entry(bg="#18c0ff", disabledbackground="#50a2c1")
@@ -341,7 +341,6 @@ class Vue():
         #g=self.modes["planetes"]
         #g = self.modes["planetes"]
         g.labid.config(text=self.nom)
-        g.labid.config(fg=mod.joueurs[self.nom].couleur)
         
         g.chargeimages()
         g.afficherdecor() #pourrait etre remplace par une image fait avec PIL -> moins d'objets
